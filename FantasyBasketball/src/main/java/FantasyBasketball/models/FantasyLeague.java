@@ -1,6 +1,8 @@
 package FantasyBasketball.models;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 public class FantasyLeague {
 
@@ -11,6 +13,7 @@ public class FantasyLeague {
     private int leagueSize;
     private Date leagueStartDate;
     private Date leagueEndDate;
+    private Set<User> participants = new HashSet<>();
 
     // class methods
     public int getLeagueID() {
@@ -59,6 +62,14 @@ public class FantasyLeague {
 
     public void setLeagueEndDate(Date leagueEndDate) {
         this.leagueEndDate = leagueEndDate;
+    }
+
+    public Set<User> getParticipants() {
+        return participants;
+    }
+
+    public void setParticipants(Set<User> participants) {
+        this.participants = participants;
     }
 
 }
