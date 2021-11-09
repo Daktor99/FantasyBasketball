@@ -1,22 +1,57 @@
 package FantasyBasketball.models;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "fantasyTeam")
 public class FantasyTeam {
 
     // data members
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "teamID")
     private int teamID;
+
+    @Column(name = "teamName")
     private String teamName;
+
+    @Column(name = "ownerID")
     private int ownerID;
+
+    @Column(name = "leagueID")
     private int leagueID;
+
+    @Column(name = "startPGID")
     private int startPG;
+
+    @Column(name = "startSGID")
     private int startSG;
+
+    @Column(name = "startSFID")
     private int startSF;
+
+    @Column(name = "startPFID")
     private int statPF;
+
+    @Column(name = "startCID")
     private int startC;
+
+    @Column(name = "bench1ID")
     private int bench1;
+
+    @Column(name = "bench2ID")
     private int bench2;
+
+    @Column(name = "teamWins")
     private int teamWins;
+
+    @Column(name = "teamLosses")
     private int teamLosses;
+
+    @Column(name = "pointsScored")
     private int pointsScored;
+
+    @Column(name = "pointsAgainst")
     private int pointsAgainst;
 
     // class methods

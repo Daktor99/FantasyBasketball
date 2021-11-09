@@ -1,18 +1,36 @@
 package FantasyBasketball.models;
 
+import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+@Entity
+@Table(name = "fantasyLeague")
 public class FantasyLeague {
 
     // data members
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "leagueID")
     private int leagueID;
+
+    @Column(name = "leagueName")
     private String leagueName;
+
+    @Column(name = "adminID")
     private int adminID;
+
+    @Column(name = "leagueSize")
     private int leagueSize;
+
+    @Column(name = "leagueStartDate")
     private Date leagueStartDate;
+
+    @Column(name = "leagueEndDate")
     private Date leagueEndDate;
+
+    @ManyToMany(mappedBy = "fantasyLeague", fetch = FetchType.LAZY)
     private Set<User> participants = new HashSet<>();
 
     // class methods

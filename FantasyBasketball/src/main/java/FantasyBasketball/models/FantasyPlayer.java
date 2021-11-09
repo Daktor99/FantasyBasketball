@@ -1,23 +1,42 @@
 package FantasyBasketball.models;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "fantasyPlayer")
 public class FantasyPlayer {
 
     // data members
-    private int playedID;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "playerID")
+    private int playerID;
+
+    @Column(name = "teamID")
     private int teamID;
+
+    @Column(name = "firstName")
     private String firstName;
+
+    @Column(name = "lastName")
     private String lastName;
+
+    @Column(name = "position")
     private String position;
-    private int points;
+
+//    @Column(name = "points")
+//    private int points;
+
+    @Column(name = "nbaTeam")
     private String nbaTeam;
 
     // class methods
-    public int getPlayedID() {
-        return playedID;
+    public int getPlayerID() {
+        return playerID;
     }
 
-    public void setPlayedID(int playedID) {
-        this.playedID = playedID;
+    public void setPlayedID(int playerID) {
+        this.playerID = playerID;
     }
 
     public int getTeamID() {
@@ -52,13 +71,13 @@ public class FantasyPlayer {
         this.position = position;
     }
 
-    public int getPoints() {
-        return points;
-    }
-
-    public void setPoints(int points) {
-        this.points = points;
-    }
+//    public int getPoints() {
+//        return points;
+//    }
+//
+//    public void setPoints(int points) {
+//        this.points = points;
+//    }
 
     public String getNbaTeam() {
         return nbaTeam;

@@ -1,32 +1,82 @@
 package FantasyBasketball.models;
 
+import javax.persistence.*;
 import java.util.Date;
 
+@Entity
+@Table(name = "fantasyGame")
 public class FantasyGame {
 
     // data members
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "scheduleID")
     private int scheduleID;
+
+    @Column(name = "leagueID")
     private int leagueID;
+
+    @Column(name = "homeTeamID")
     private int homeTeamID;
+
+    @Column(name = "awayTeamID")
     private int awayTeamID;
+
+    @Column(name = "gameStartDate")
     private Date gameStartDate;
+
+    @Column(name = "gameEndDate")
     private Date gameEndDate;
+
+    @Column(name = "winnerID")
     private int winner;
+
+    @Column(name = "homePoints")
     private int homePoints;
+
+    @Column(name = "awayPoints")
     private int awayPoints;
+
+    @Column(name = "homeStartPGID")
     private int startHomePG;
+
+    @Column(name = "homeStartSGID")
     private int startHomeSG;
+
+    @Column(name = "homeStartSFID")
     private int startHomeSF;
+
+    @Column(name = "homeStartPFID")
     private int startHomePF;
+
+    @Column(name = "homeStartCID")
     private int startHomeC;
+
+    @Column(name = "homeBench1ID")
     private int homebench1;
+
+    @Column(name = "homeBench2ID")
     private int homebench2;
+
+    @Column(name = "awayStartPGID")
     private int startAwayPG;
+
+    @Column(name = "awayStartSGID")
     private int startAwaySG;
+
+    @Column(name = "awayStartSFID")
     private int startAwaySF;
+
+    @Column(name = "awayStartPFID")
     private int startAwayPF;
+
+    @Column(name = "awayStartCID")
     private int startAwayC;
+
+    @Column(name = "awayBench1ID")
     private int awaybench1;
+
+    @Column(name = "awayBench2ID")
     private int awaybench2;
 
 
