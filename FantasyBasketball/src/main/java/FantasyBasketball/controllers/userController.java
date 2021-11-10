@@ -19,9 +19,14 @@ public class userController {
     @Autowired
     userService userService;
 
-    @RequestMapping(value = "/getById", method = RequestMethod.GET)
-    public ResponseEntity<?> getByID(@RequestParam(value = "userID", required = true) Integer userID) {
-        List<User> result = userService.getByID(userID);
+    @RequestMapping(value = "/users", method = RequestMethod.GET)
+    public ResponseEntity<?> getByID(@RequestParam(value = "user_id", required = false) Integer user_id,
+                                     @RequestParam(value = "email", required = false) String email,
+                                     @RequestParam(value = "username", required = false) String username,
+                                     @RequestParam(value = "first_name", required = false) String first_name,
+                                     @RequestParam(value = "last_name", required = false) String last_name) {
+        List<User> result = userService.getUsersByTemplate(user_id, email, username, first_name, last_name);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
 }
