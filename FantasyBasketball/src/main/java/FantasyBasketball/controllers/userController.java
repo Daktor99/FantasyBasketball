@@ -6,10 +6,7 @@ import FantasyBasketball.services.userService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,7 +17,7 @@ public class userController {
     userService userService;
 
     @RequestMapping(value = "/users", method = RequestMethod.GET)
-    public ResponseEntity<?> getByID(@RequestParam(value = "user_id", required = false) Integer user_id,
+    public ResponseEntity<?> getUsersByTemplate(@RequestParam(value = "user_id", required = false) Integer user_id,
                                      @RequestParam(value = "email", required = false) String email,
                                      @RequestParam(value = "username", required = false) String username,
                                      @RequestParam(value = "first_name", required = false) String first_name,
@@ -29,4 +26,21 @@ public class userController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/users", method = RequestMethod.POST)
+    public ResponseEntity<?> postUser(@RequestBody User newUser) {
+        List<User> result = userService.postUser(newUser);
+        return new ResponseEntity<>(result, HttpStatus.CREATED);
+    }
+
+    @RequestMapping(value = "/users", method = RequestMethod.PUT)
+    public ResponseEntity<?> updateUser(@RequestBody User newUser) {
+        List<User> result = userService.updateUser(newUser);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/users", method = RequestMethod.DELETE)
+    public ResponseEntity<?> deleteUser(@RequestParam(value = "user_id", required = true) Integer user_id) {
+        userService.deleteUserById(user_id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
