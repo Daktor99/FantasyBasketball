@@ -1,5 +1,7 @@
 package FantasyBasketball.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -11,19 +13,25 @@ public class User {
     // Data members
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty("user_id")
     @Column(name = "user_id")
     private Integer userID;
 
     @Column(name = "username")
+    @JsonProperty("username")
     private String username;
 
     @Column(name = "email")
+    @JsonProperty("email")
     private String email;
 
     @Column(name = "first_name")
+    @JsonProperty("first_name")
     private String firstName;
 
     @Column(name = "last_name")
+    @JsonProperty("last_name")
     private String lastName;
 
 //    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
