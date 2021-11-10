@@ -1,10 +1,12 @@
 package FantasyBasketball.models;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "fantasyStats")
-public class FantasyStats {
+@IdClass(FantasyStatsID.class)
+public class FantasyStats implements Serializable {
 
     // data members
     @Id
@@ -45,6 +47,7 @@ public class FantasyStats {
     private int totPoints;
 
     // class methods
+
     public int getPlayerID() {
         return playerID;
     }
