@@ -13,14 +13,49 @@ import java.util.Optional;
 public class userService {
 
     @Autowired
-    private userRepository repo;
+    private userRepository userRepo;
 
-    public List<User> getByID(int userID) {
-        Optional<User> result = repo.findById(userID);
+    // find by ID
+    public List<User> getByID(Integer userID) {
+        Optional<User> result = userRepo.findById(userID);
         if (result.isPresent()) {
             User userResult = result.get();
             return List.of(userResult);
         }
         return Collections.emptyList();
+    }
+
+    // get operation
+    public List<User> getUsersByTemplate(Integer user_id,
+                                         String email,
+                                         String username,
+                                         String first_name,
+                                         String last_name) {
+        return userRepo.findByTemplate(user_id, email, username, first_name, last_name);
+    }
+
+    // post operation
+    public List<User> postUser(User user) {
+        User result = userRepo.save(user);
+        return List.of(result);
+    }
+
+    // put operation
+    public List<User> updateUser(User user) throws IllegalArgumentException {
+        if (getByID(user.getUserID()).size() >= 1) {
+            User result = userRepo.save(user);
+            return List.of(result);
+        } else {
+            throw new IllegalArgumentException("Resource not found by ID in DB, cannot update");
+        }
+    }
+
+    // delete operation
+    public void deleteUserById(User user) {
+        if (getByID(user.getUserID()).size() >= 1) {
+            userRepo.deleteById(user.getUserID());
+        } else {
+            throw new IllegalArgumentException("Resource not found in DB, cannot delete");
+        }
     }
 }
