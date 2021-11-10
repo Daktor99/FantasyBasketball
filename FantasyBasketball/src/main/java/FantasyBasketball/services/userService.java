@@ -36,6 +36,7 @@ public class userService {
 
     // post operation
     public List<User> postUser(User user) {
+        user.setUserID(0);
         User result = userRepo.save(user);
         return List.of(result);
     }
@@ -51,9 +52,9 @@ public class userService {
     }
 
     // delete operation
-    public void deleteUserById(User user) {
-        if (getByID(user.getUserID()).size() >= 1) {
-            userRepo.deleteById(user.getUserID());
+    public void deleteUserById(Integer user_id) {
+        if (getByID(user_id).size() == 1) {
+            userRepo.deleteById(user_id);
         } else {
             throw new IllegalArgumentException("Resource not found in DB, cannot delete");
         }
