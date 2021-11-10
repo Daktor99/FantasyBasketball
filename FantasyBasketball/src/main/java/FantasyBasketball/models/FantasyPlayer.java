@@ -9,16 +9,16 @@ public class FantasyPlayer {
     // data members
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "playerID")
+    @Column(name = "player_id")
     private int playerID;
 
-    @Column(name = "teamID")
+    @Column(name = "team_id")
     private int teamID;
 
-    @Column(name = "firstName")
+    @Column(name = "first_name")
     private String firstName;
 
-    @Column(name = "lastName")
+    @Column(name = "last_name")
     private String lastName;
 
     @Column(name = "position")
@@ -27,7 +27,7 @@ public class FantasyPlayer {
 //    @Column(name = "points")
 //    private int points;
 
-    @Column(name = "nbaTeam")
+    @Column(name = "nba_team")
     private String nbaTeam;
 
     // class methods

@@ -26,17 +26,17 @@ public class User {
     @Column(name = "lastName")
     private String lastName;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    @JoinTable(name = "user_fantasyLeague",
-            joinColumns = {@JoinColumn(name = "userID",
-                    referencedColumnName = "userID",
-                    nullable = false,
-                    updatable = false)},
-            inverseJoinColumns = {@JoinColumn(name = "leagueID",
-                    referencedColumnName = "leagueID",
-                    nullable = false,
-                    updatable = false)})
-    private Set<User> userLeagues = new HashSet<>();
+//    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+//    @JoinTable(name = "user_fantasyLeague",
+//            joinColumns = {@JoinColumn(name = "userID",
+//                    referencedColumnName = "userID",
+//                    nullable = false,
+//                    updatable = false)},
+//            inverseJoinColumns = {@JoinColumn(name = "leagueID",
+//                    referencedColumnName = "leagueID",
+//                    nullable = false,
+//                    updatable = false)})
+//    private Set<User> userLeagues = new HashSet<>();
 
     // class methods
     public int getUserID() {
@@ -79,11 +79,11 @@ public class User {
         this.lastName = lastName;
     }
 
-    public Set<User> getUserLeagues() {
-        return userLeagues;
-    }
-
-    public void setUserLeagues(Set<User> userLeagues) {
-        this.userLeagues = userLeagues;
-    }
+//    public Set<User> getUserLeagues() {
+//        return userLeagues;
+//    }
+//
+//    public void setUserLeagues(Set<User> userLeagues) {
+//        this.userLeagues = userLeagues;
+//    }
 }

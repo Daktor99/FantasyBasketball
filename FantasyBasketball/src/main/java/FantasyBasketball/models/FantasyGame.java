@@ -10,73 +10,73 @@ public class FantasyGame {
     // data members
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "scheduleID")
+    @Column(name = "schedule_id")
     private int scheduleID;
 
-    @Column(name = "leagueID")
+    @Column(name = "league_id")
     private int leagueID;
 
-    @Column(name = "homeTeamID")
+    @Column(name = "home_team_id")
     private int homeTeamID;
 
-    @Column(name = "awayTeamID")
+    @Column(name = "away_team_id")
     private int awayTeamID;
 
-    @Column(name = "gameStartDate")
+    @Column(name = "game_start_date")
     private Date gameStartDate;
 
-    @Column(name = "gameEndDate")
+    @Column(name = "game_end_date")
     private Date gameEndDate;
 
-    @Column(name = "winnerID")
+    @Column(name = "winner_id")
     private int winner;
 
-    @Column(name = "homePoints")
+    @Column(name = "home_points")
     private int homePoints;
 
-    @Column(name = "awayPoints")
+    @Column(name = "away_points")
     private int awayPoints;
 
-    @Column(name = "homeStartPGID")
+    @Column(name = "home_start_pg_id")
     private int startHomePG;
 
-    @Column(name = "homeStartSGID")
+    @Column(name = "home_start_sg_id")
     private int startHomeSG;
 
-    @Column(name = "homeStartSFID")
+    @Column(name = "home_start_sf_id")
     private int startHomeSF;
 
-    @Column(name = "homeStartPFID")
+    @Column(name = "home_start_pf_id")
     private int startHomePF;
 
-    @Column(name = "homeStartCID")
+    @Column(name = "home_start_c_id")
     private int startHomeC;
 
-    @Column(name = "homeBench1ID")
+    @Column(name = "home_bench_1_id")
     private int homebench1;
 
-    @Column(name = "homeBench2ID")
+    @Column(name = "home_bench_2_id")
     private int homebench2;
 
-    @Column(name = "awayStartPGID")
+    @Column(name = "away_start_pg_id")
     private int startAwayPG;
 
-    @Column(name = "awayStartSGID")
+    @Column(name = "away_start_sg_id")
     private int startAwaySG;
 
-    @Column(name = "awayStartSFID")
+    @Column(name = "away_start_sf_id")
     private int startAwaySF;
 
-    @Column(name = "awayStartPFID")
+    @Column(name = "away_start_pf_id")
     private int startAwayPF;
 
-    @Column(name = "awayStartCID")
+    @Column(name = "away_start_c_id")
     private int startAwayC;
 
-    @Column(name = "awayBench1ID")
+    @Column(name = "away_bench_1_id")
     private int awaybench1;
 
-    @Column(name = "awayBench2ID")
+    @Column(name = "away_bench_2_id")
     private int awaybench2;
 
 

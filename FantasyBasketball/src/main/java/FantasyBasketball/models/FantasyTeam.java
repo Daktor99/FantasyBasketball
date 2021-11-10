@@ -9,49 +9,49 @@ public class FantasyTeam {
     // data members
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "teamID")
+    @Column(name = "team_id")
     private int teamID;
 
-    @Column(name = "teamName")
+    @Column(name = "team_name")
     private String teamName;
 
-    @Column(name = "ownerID")
+    @Column(name = "owner_id")
     private int ownerID;
 
-    @Column(name = "leagueID")
+    @Column(name = "league_id")
     private int leagueID;
 
-    @Column(name = "startPGID")
+    @Column(name = "start_pg_id")
     private int startPG;
 
-    @Column(name = "startSGID")
+    @Column(name = "start_sg_id")
     private int startSG;
 
-    @Column(name = "startSFID")
+    @Column(name = "start_sf_id")
     private int startSF;
 
-    @Column(name = "startPFID")
+    @Column(name = "start_pf_id")
     private int statPF;
 
-    @Column(name = "startCID")
+    @Column(name = "start_c_id")
     private int startC;
 
-    @Column(name = "bench1ID")
+    @Column(name = "bench_1_id")
     private int bench1;
 
-    @Column(name = "bench2ID")
+    @Column(name = "bench_2_id")
     private int bench2;
 
-    @Column(name = "teamWins")
+    @Column(name = "team_wins")
     private int teamWins;
 
-    @Column(name = "teamLosses")
+    @Column(name = "team_losses")
     private int teamLosses;
 
-    @Column(name = "pointsScored")
+    @Column(name = "points_scored")
     private int pointsScored;
 
-    @Column(name = "pointsAgainst")
+    @Column(name = "points_against")
     private int pointsAgainst;
 
     // class methods

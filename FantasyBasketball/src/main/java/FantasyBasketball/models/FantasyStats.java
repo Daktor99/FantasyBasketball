@@ -9,39 +9,39 @@ public class FantasyStats {
     // data members
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "playerID")
+    @Column(name = "player_id")
     private int playerID;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "scheduleID")
+    @Column(name = "schedule_id")
     private int scheduleID;
 
-    @Column(name = "3P")
+    @Column(name = "3_p")
     private int threeP;
 
-    @Column(name = "2P")
+    @Column(name = "2_p")
     private int twoP;
 
-    @Column(name = "FT")
+    @Column(name = "ft")
     private int freeThrows;
 
-    @Column(name = "R")
+    @Column(name = "r")
     private int rebounds;
 
-    @Column(name = "A")
+    @Column(name = "a")
     private int assists;
 
-    @Column(name = "B")
+    @Column(name = "b")
     private int blocks;
 
-    @Column(name = "S")
+    @Column(name = "s")
     private int steals;
 
-    @Column(name = "TO")
+    @Column(name = "to")
     private int turnovers;
 
-    @Column(name = "totPoints")
+    @Column(name = "tot_points")
     private int totPoints;
 
     // class methods
