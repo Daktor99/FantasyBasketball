@@ -24,9 +24,8 @@ public class userService {
         if (result.isPresent()) {
             User userResult = result.get();
             return List.of(userResult);
-        }
-        else {
-            throw new resourceNotFoundException("User not found by ID in DB, cannot update");
+        } else {
+            throw new resourceNotFoundException("User not found by ID in DB.");
         }
     }
 
@@ -52,7 +51,7 @@ public class userService {
             User result = userRepo.save(user);
             return List.of(result);
         } else {
-            throw new resourceNotFoundException("User not found by ID in DB, cannot update");
+            throw new resourceNotFoundException("User not found by ID in DB, cannot update.");
         }
     }
 
