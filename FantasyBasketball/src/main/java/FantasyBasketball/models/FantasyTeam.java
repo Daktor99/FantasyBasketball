@@ -1,5 +1,7 @@
 package FantasyBasketball.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 
 @Entity
@@ -10,56 +12,72 @@ public class FantasyTeam {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "team_id")
-    private int teamID;
+    @JsonProperty("team_id")
+    private Integer teamID;
 
     @Column(name = "team_name")
+    @JsonProperty("team_name")
     private String teamName;
 
     @Column(name = "owner_id")
-    private int ownerID;
+    @JsonProperty("owner_id")
+    private Integer ownerID;
 
     @Column(name = "league_id")
-    private int leagueID;
+    @JsonProperty("league_id")
+    private Integer leagueID;
 
     @Column(name = "start_pg_id")
-    private int startPG;
+    @JsonProperty("start_pg_id")
+    private Integer startPG;
 
     @Column(name = "start_sg_id")
-    private int startSG;
+    @JsonProperty("start_sg_id")
+    private Integer startSG;
 
     @Column(name = "start_sf_id")
-    private int startSF;
+    @JsonProperty("start_sf_id")
+    private Integer startSF;
 
     @Column(name = "start_pf_id")
-    private int statPF;
+    @JsonProperty("start_pf_id")
+    private Integer statPF;
 
     @Column(name = "start_c_id")
-    private int startC;
+    @JsonProperty("start_c_id")
+    private Integer startC;
 
     @Column(name = "bench_1_id")
-    private int bench1;
+    @JsonProperty("bench_1_id")
+    private Integer bench1;
 
     @Column(name = "bench_2_id")
-    private int bench2;
+    @JsonProperty("bench_2_id")
+    private Integer bench2;
 
     @Column(name = "team_wins")
-    private int teamWins;
+    @JsonProperty("team_wins")
+    private Integer teamWins;
 
     @Column(name = "team_losses")
-    private int teamLosses;
+    @JsonProperty("team_losses")
+    private Integer teamLosses;
 
     @Column(name = "points_scored")
-    private int pointsScored;
+    @JsonProperty("points_scored")
+    private Integer pointsScored;
 
     @Column(name = "points_against")
-    private int pointsAgainst;
+    @JsonProperty("points_against")
+    private Integer pointsAgainst;
 
     // class methods
-    public int getTeamID() {
+
+    public Integer getTeamID() {
         return teamID;
     }
 
-    public void setTeamID(int teamID) {
+    public void setTeamID(Integer teamID) {
         this.teamID = teamID;
     }
 
@@ -71,107 +89,107 @@ public class FantasyTeam {
         this.teamName = teamName;
     }
 
-    public int getOwnerID() {
+    public Integer getOwnerID() {
         return ownerID;
     }
 
-    public void setOwnerID(int ownerID) {
+    public void setOwnerID(Integer ownerID) {
         this.ownerID = ownerID;
     }
 
-    public int getLeagueID() {
+    public Integer getLeagueID() {
         return leagueID;
     }
 
-    public void setLeagueID(int leagueID) {
+    public void setLeagueID(Integer leagueID) {
         this.leagueID = leagueID;
     }
 
-    public int getStartPG() {
+    public Integer getStartPG() {
         return startPG;
     }
 
-    public void setStartPG(int startPG) {
+    public void setStartPG(Integer startPG) {
         this.startPG = startPG;
     }
 
-    public int getStartSG() {
+    public Integer getStartSG() {
         return startSG;
     }
 
-    public void setStartSG(int startSG) {
+    public void setStartSG(Integer startSG) {
         this.startSG = startSG;
     }
 
-    public int getStartSF() {
+    public Integer getStartSF() {
         return startSF;
     }
 
-    public void setStartSF(int startSF) {
+    public void setStartSF(Integer startSF) {
         this.startSF = startSF;
     }
 
-    public int getStatPF() {
+    public Integer getStatPF() {
         return statPF;
     }
 
-    public void setStatPF(int statPF) {
+    public void setStatPF(Integer statPF) {
         this.statPF = statPF;
     }
 
-    public int getStartC() {
+    public Integer getStartC() {
         return startC;
     }
 
-    public void setStartC(int startC) {
+    public void setStartC(Integer startC) {
         this.startC = startC;
     }
 
-    public int getBench1() {
+    public Integer getBench1() {
         return bench1;
     }
 
-    public void setBench1(int bench1) {
+    public void setBench1(Integer bench1) {
         this.bench1 = bench1;
     }
 
-    public int getBench2() {
+    public Integer getBench2() {
         return bench2;
     }
 
-    public void setBench2(int bench2) {
+    public void setBench2(Integer bench2) {
         this.bench2 = bench2;
     }
 
-    public int getTeamWins() {
+    public Integer getTeamWins() {
         return teamWins;
     }
 
-    public void setTeamWins(int teamWins) {
+    public void setTeamWins(Integer teamWins) {
         this.teamWins = teamWins;
     }
 
-    public int getTeamLosses() {
+    public Integer getTeamLosses() {
         return teamLosses;
     }
 
-    public void setTeamLosses(int teamLosses) {
+    public void setTeamLosses(Integer teamLosses) {
         this.teamLosses = teamLosses;
     }
 
-    public int getPointsScored() {
+    public Integer getPointsScored() {
         return pointsScored;
     }
 
-    public void setPointsScored(int pointsScored) {
+    public void setPointsScored(Integer pointsScored) {
         this.pointsScored = pointsScored;
     }
 
-    public int getPointsAgainst() {
+    public Integer getPointsAgainst() {
         return pointsAgainst;
     }
 
-    public void setPointsAgainst(int pointsAgainst) {
+    public void setPointsAgainst(Integer pointsAgainst) {
         this.pointsAgainst = pointsAgainst;
     }
 }
