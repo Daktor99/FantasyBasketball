@@ -5,11 +5,15 @@ import FantasyBasketball.exceptions.userNotFoundException;
 import FantasyBasketball.models.User;
 import FantasyBasketball.repositories.userRepository;
 import FantasyBasketball.services.userService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import java.nio.charset.Charset;
 import java.util.List;
 
 @RestController
@@ -18,6 +22,14 @@ public class userController {
     @Autowired
     userService userService;
 
+    private static final Logger log = LoggerFactory.getLogger(userController.class);
+
+    private final HttpServletRequest request;
+
+    // default constructor for userController class
+    @Autowired
+    public userController(HttpServletRequest request) { this.request = request; }
+
     @RequestMapping(value = "/users", method = RequestMethod.GET)
     public ResponseEntity<?> getUsersByTemplate(@RequestParam(value = "user_id", required = false) Integer user_id,
                                      @RequestParam(value = "email", required = false) String email,
@@ -25,8 +37,22 @@ public class userController {
                                      @RequestParam(value = "first_name", required = false) String first_name,
                                      @RequestParam(value = "last_name", required = false) String last_name) {
 
-        List<User> result = userService.getUsersByTemplate(user_id, email, username, first_name, last_name);
-        return new ResponseEntity<>(result, HttpStatus.OK);
+        try {
+
+            // log GET request
+            if (request.getQueryString() != null) {
+                log.info("GET: " + request.getRequestURL() + "?" + request.getQueryString());
+            } else {
+                log.info("GET: " + request.getRequestURL());
+            }
+
+            List<User> result = userService.getUsersByTemplate(user_id, email, username, first_name, last_name);
+            return new ResponseEntity<>(result, HttpStatus.OK);
+
+        } catch (Exception e) {
+            log.error("Exception on GET: ", e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @RequestMapping(value = "/users", method = RequestMethod.POST)
@@ -34,6 +60,7 @@ public class userController {
 
         try {
 
+            log.info("POST: " + request.getRequestURL());
             // Checks to make sure the input is valid to insert in DB
             userService.checkPostInputs(newUser);
 
@@ -46,6 +73,7 @@ public class userController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
         } catch (Exception e) {
             // all other exceptions
+            log.error("Exception on POST: ", e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -54,6 +82,7 @@ public class userController {
     public ResponseEntity<?> updateUser(@RequestBody User user) {
         try {
 
+            log.info("PUT: " + request.getRequestURL());
             // Checks to make sure the input is valid to insert in DB
             userService.checkPutInputs(user);
 
@@ -68,6 +97,7 @@ public class userController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             // all other exceptions
+            log.error("Exception on PUT: ", e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -75,12 +105,20 @@ public class userController {
     @RequestMapping(value = "/users", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteUser(@RequestParam(value = "user_id", required = true) Integer user_id) {
         try {
+
+            if (request.getQueryString() != null) {
+                log.info("DELETE: " + request.getRequestURL() + "?" + request.getQueryString());
+            } else {
+                log.info("DELETE: " + request.getRequestURL());
+            }
+
             userService.deleteUserById(user_id);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (userNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             // all other exceptions
+            log.error("Exception on DELETE: ", e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
