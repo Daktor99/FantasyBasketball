@@ -61,6 +61,8 @@ public class userController {
         try {
 
             log.info("POST: " + request.getRequestURL());
+            log.info(newUser.toString());
+
             // Checks to make sure the input is valid to insert in DB
             userService.checkPostInputs(newUser);
 
@@ -83,6 +85,8 @@ public class userController {
         try {
 
             log.info("PUT: " + request.getRequestURL());
+            log.info(user.toString());
+
             // Checks to make sure the input is valid to insert in DB
             userService.checkPutInputs(user);
 
@@ -106,11 +110,7 @@ public class userController {
     public ResponseEntity<?> deleteUser(@RequestParam(value = "user_id", required = true) Integer user_id) {
         try {
 
-            if (request.getQueryString() != null) {
-                log.info("DELETE: " + request.getRequestURL() + "?" + request.getQueryString());
-            } else {
-                log.info("DELETE: " + request.getRequestURL());
-            }
+            log.info("DELETE: " + request.getRequestURL() + "?" + request.getQueryString());
 
             userService.deleteUserById(user_id);
             return new ResponseEntity<>(HttpStatus.OK);
