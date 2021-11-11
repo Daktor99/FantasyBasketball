@@ -11,16 +11,16 @@ public class FantasyGame {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "schedule_id")
-    private int scheduleID;
+    private Integer scheduleID;
 
     @Column(name = "league_id")
-    private int leagueID;
+    private Integer leagueID;
 
     @Column(name = "home_team_id")
-    private int homeTeamID;
+    private Integer homeTeamID;
 
     @Column(name = "away_team_id")
-    private int awayTeamID;
+    private Integer awayTeamID;
 
     @Column(name = "game_start_date")
     private Date gameStartDate;
@@ -29,87 +29,89 @@ public class FantasyGame {
     private Date gameEndDate;
 
     @Column(name = "winner_id")
-    private int winner;
+    private Integer winner;
 
     @Column(name = "home_points")
-    private int homePoints;
+    private Integer homePoints;
 
     @Column(name = "away_points")
-    private int awayPoints;
+    private Integer awayPoints;
 
     @Column(name = "home_start_pg_id")
-    private int startHomePG;
+    private Integer startHomePG;
 
     @Column(name = "home_start_sg_id")
-    private int startHomeSG;
+    private Integer startHomeSG;
 
     @Column(name = "home_start_sf_id")
-    private int startHomeSF;
+    private Integer startHomeSF;
 
     @Column(name = "home_start_pf_id")
-    private int startHomePF;
+    private Integer startHomePF;
 
     @Column(name = "home_start_c_id")
-    private int startHomeC;
+    private Integer startHomeC;
 
     @Column(name = "home_bench_1_id")
-    private int homebench1;
+    private Integer homebench1;
 
     @Column(name = "home_bench_2_id")
-    private int homebench2;
+    private Integer homebench2;
 
     @Column(name = "away_start_pg_id")
-    private int startAwayPG;
+    private Integer startAwayPG;
 
     @Column(name = "away_start_sg_id")
-    private int startAwaySG;
+    private Integer startAwaySG;
 
     @Column(name = "away_start_sf_id")
-    private int startAwaySF;
+    private Integer startAwaySF;
 
     @Column(name = "away_start_pf_id")
-    private int startAwayPF;
+    private Integer startAwayPF;
 
     @Column(name = "away_start_c_id")
-    private int startAwayC;
+    private Integer startAwayC;
 
     @Column(name = "away_bench_1_id")
-    private int awaybench1;
+    private Integer awaybench1;
 
     @Column(name = "away_bench_2_id")
-    private int awaybench2;
+    private Integer awaybench2;
 
 
     // class methods
-    public int getScheduleID() {
+
+
+    public Integer getScheduleID() {
         return scheduleID;
     }
 
-    public void setScheduleID(int scheduleID) {
+    public void setScheduleID(Integer scheduleID) {
         this.scheduleID = scheduleID;
     }
 
-    public int getLeagueID() {
+    public Integer getLeagueID() {
         return leagueID;
     }
 
-    public void setLeagueID(int leagueID) {
+    public void setLeagueID(Integer leagueID) {
         this.leagueID = leagueID;
     }
 
-    public int getHomeTeamID() {
+    public Integer getHomeTeamID() {
         return homeTeamID;
     }
 
-    public void setHomeTeamID(int homeTeamID) {
+    public void setHomeTeamID(Integer homeTeamID) {
         this.homeTeamID = homeTeamID;
     }
 
-    public int getAwayTeamID() {
+    public Integer getAwayTeamID() {
         return awayTeamID;
     }
 
-    public void setAwayTeamID(int awayTeamID) {
+    public void setAwayTeamID(Integer awayTeamID) {
         this.awayTeamID = awayTeamID;
     }
 
@@ -129,140 +131,139 @@ public class FantasyGame {
         this.gameEndDate = gameEndDate;
     }
 
-    public int getWinner() {
+    public Integer getWinner() {
         return winner;
     }
 
-    public void setWinner(int winner) {
+    public void setWinner(Integer winner) {
         this.winner = winner;
     }
 
-    public int getHomePoints() {
+    public Integer getHomePoints() {
         return homePoints;
     }
 
-    public void setHomePoints(int homePoints) {
+    public void setHomePoints(Integer homePoints) {
         this.homePoints = homePoints;
     }
 
-    public int getAwayPoints() {
+    public Integer getAwayPoints() {
         return awayPoints;
     }
 
-    public void setAwayPoints(int awayPoints) {
+    public void setAwayPoints(Integer awayPoints) {
         this.awayPoints = awayPoints;
     }
 
-    public int getStartHomePG() {
+    public Integer getStartHomePG() {
         return startHomePG;
     }
 
-    public void setStartHomePG(int startHomePG) {
+    public void setStartHomePG(Integer startHomePG) {
         this.startHomePG = startHomePG;
     }
 
-    public int getStartHomeSG() {
+    public Integer getStartHomeSG() {
         return startHomeSG;
     }
 
-    public void setStartHomeSG(int startHomeSG) {
+    public void setStartHomeSG(Integer startHomeSG) {
         this.startHomeSG = startHomeSG;
     }
 
-    public int getStartHomeSF() {
+    public Integer getStartHomeSF() {
         return startHomeSF;
     }
 
-    public void setStartHomeSF(int startHomeSF) {
+    public void setStartHomeSF(Integer startHomeSF) {
         this.startHomeSF = startHomeSF;
     }
 
-    public int getStartHomePF() {
+    public Integer getStartHomePF() {
         return startHomePF;
     }
 
-    public void setStartHomePF(int startHomePF) {
+    public void setStartHomePF(Integer startHomePF) {
         this.startHomePF = startHomePF;
     }
 
-    public int getStartHomeC() {
+    public Integer getStartHomeC() {
         return startHomeC;
     }
 
-    public void setStartHomeC(int startHomeC) {
+    public void setStartHomeC(Integer startHomeC) {
         this.startHomeC = startHomeC;
     }
 
-    public int getHomebench1() {
+    public Integer getHomebench1() {
         return homebench1;
     }
 
-    public void setHomebench1(int homebench1) {
+    public void setHomebench1(Integer homebench1) {
         this.homebench1 = homebench1;
     }
 
-    public int getHomebench2() {
+    public Integer getHomebench2() {
         return homebench2;
     }
 
-    public void setHomebench2(int homebench2) {
+    public void setHomebench2(Integer homebench2) {
         this.homebench2 = homebench2;
     }
 
-    public int getStartAwayPG() {
+    public Integer getStartAwayPG() {
         return startAwayPG;
     }
 
-    public void setStartAwayPG(int startAwayPG) {
+    public void setStartAwayPG(Integer startAwayPG) {
         this.startAwayPG = startAwayPG;
     }
 
-    public int getStartAwaySG() {
+    public Integer getStartAwaySG() {
         return startAwaySG;
     }
 
-    public void setStartAwaySG(int startAwaySG) {
+    public void setStartAwaySG(Integer startAwaySG) {
         this.startAwaySG = startAwaySG;
     }
 
-    public int getStartAwaySF() {
+    public Integer getStartAwaySF() {
         return startAwaySF;
     }
 
-    public void setStartAwaySF(int startAwaySF) {
+    public void setStartAwaySF(Integer startAwaySF) {
         this.startAwaySF = startAwaySF;
     }
 
-    public int getStartAwayPF() {
+    public Integer getStartAwayPF() {
         return startAwayPF;
     }
 
-    public void setStartAwayPF(int startAwayPF) {
+    public void setStartAwayPF(Integer startAwayPF) {
         this.startAwayPF = startAwayPF;
     }
 
-    public int getStartAwayC() {
+    public Integer getStartAwayC() {
         return startAwayC;
     }
 
-    public void setStartAwayC(int startAwayC) {
+    public void setStartAwayC(Integer startAwayC) {
         this.startAwayC = startAwayC;
     }
 
-    public int getAwaybench1() {
+    public Integer getAwaybench1() {
         return awaybench1;
     }
 
-    public void setAwaybench1(int awaybench1) {
+    public void setAwaybench1(Integer awaybench1) {
         this.awaybench1 = awaybench1;
     }
 
-    public int getAwaybench2() {
+    public Integer getAwaybench2() {
         return awaybench2;
     }
 
-    public void setAwaybench2(int awaybench2) {
+    public void setAwaybench2(Integer awaybench2) {
         this.awaybench2 = awaybench2;
     }
-
 }
