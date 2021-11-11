@@ -94,4 +94,17 @@ public class User {
 //    public void setUserLeagues(Set<User> userLeagues) {
 //        this.userLeagues = userLeagues;
 //    }
+
+
+    @Override
+    public String toString() {
+        return "\nUser { " +
+                "\n\t userID=" + userID +
+                ",\n\t username='" + username + '\'' +
+                ",\n\t email='" + email + '\'' +
+                ",\n\t firstName='" + firstName + '\'' +
+                ",\n\t lastName='" + lastName + '\'' +
+                '}';
+    }
+
 }
