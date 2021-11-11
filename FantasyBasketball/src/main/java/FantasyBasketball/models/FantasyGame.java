@@ -266,4 +266,33 @@ public class FantasyGame {
     public void setAwaybench2(Integer awaybench2) {
         this.awaybench2 = awaybench2;
     }
+
+    @Override
+    public String toString() {
+        return "\nFantasyGame {" +
+                "\n\tscheduleID=" + scheduleID +
+                ",\n\t leagueID=" + leagueID +
+                ",\n\t homeTeamID=" + homeTeamID +
+                ",\n\t awayTeamID=" + awayTeamID +
+                ",\n\t gameStartDate=" + gameStartDate +
+                ",\n\t gameEndDate=" + gameEndDate +
+                ",\n\t winner=" + winner +
+                ",\n\t homePoints=" + homePoints +
+                ",\n\t awayPoints=" + awayPoints +
+                ",\n\t startHomePG=" + startHomePG +
+                ",\n\t startHomeSG=" + startHomeSG +
+                ",\n\t startHomeSF=" + startHomeSF +
+                ",\n\t startHomePF=" + startHomePF +
+                ",\n\t startHomeC=" + startHomeC +
+                ",\n\t homebench1=" + homebench1 +
+                ",\n\t homebench2=" + homebench2 +
+                ",\n\t startAwayPG=" + startAwayPG +
+                ",\n\t startAwaySG=" + startAwaySG +
+                ",\n\t startAwaySF=" + startAwaySF +
+                ",\n\t startAwayPF=" + startAwayPF +
+                ",\n\t startAwayC=" + startAwayC +
+                ",\n\t awaybench1=" + awaybench1 +
+                ",\n\t awaybench2=" + awaybench2 +
+                "\n\t}";
+    }
 }
