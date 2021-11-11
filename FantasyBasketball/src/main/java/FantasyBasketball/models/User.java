@@ -47,11 +47,11 @@ public class User {
 //    private Set<User> userLeagues = new HashSet<>();
 
     // class methods
-    public int getUserID() {
+    public Integer getUserID() {
         return userID;
     }
 
-    public void setUserID(int userID) {
+    public void setUserID(Integer userID) {
         this.userID = userID;
     }
 
