@@ -1,7 +1,6 @@
 package FantasyBasketball.repositories;
 
 import FantasyBasketball.models.FantasyGame;
-import FantasyBasketball.models.User;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -56,7 +55,7 @@ public interface fantasyGameRepository extends CrudRepository<FantasyGame, Integ
                                             "(:away_bench_1_id is NULL or away_bench_1_id = :away_bench_1_id) and\n" +
                                             "(:away_bench_2_id is NULL or away_bench_2_id = :away_bench_2_id) and\n",
                                             nativeQuery = true)
-    List<User> findByTemplate(@Param("schedule_id")      Integer schedule_id,
+    List<FantasyGame> findByTemplate(@Param("schedule_id")      Integer schedule_id,
                               @Param("league_id")        Integer league_id,
                               @Param("home_team_id")     Integer home_team_id,
                               @Param("away_team_id")     Integer away_team_id,
