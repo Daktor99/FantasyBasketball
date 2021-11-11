@@ -32,9 +32,9 @@ public interface userRepository extends CrudRepository<User, Integer> {
 
     @Query(value = "select * from user where ((:user_id is NULL or user_id = :user_id) and\n" +
             "                          (:email is NULL or email = :email) and\n" +
-            "                          (:username is NULL or username = :username) and\n" +
-            "                          (:first_name is NULL or first_name = :first_name) and\n" +
-            "                          (:last_name is NULL or last_name = :last_name))", nativeQuery = true)
+            "                          (:username is NULL or username LIKE %:username%) and\n" +
+            "                          (:first_name is NULL or first_name LIKE %:first_name%) and\n" +
+            "                          (:last_name is NULL or last_name LIKE %:last_name%))", nativeQuery = true)
     List<User> findByTemplate(@Param("user_id") Integer user_id,
                               @Param("email") String email,
                               @Param("username") String username,
