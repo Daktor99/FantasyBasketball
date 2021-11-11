@@ -1,7 +1,7 @@
 package FantasyBasketball.services;
 
-import FantasyBasketball.exceptions.userException;
-import FantasyBasketball.exceptions.userNotFoundException;
+import FantasyBasketball.exceptions.resourceException;
+import FantasyBasketball.exceptions.resourceNotFoundException;
 import FantasyBasketball.models.User;
 import FantasyBasketball.repositories.userRepository;
 import org.apache.commons.validator.routines.EmailValidator;
@@ -19,14 +19,14 @@ public class userService {
     private userRepository userRepo;
 
     // find by ID
-    public List<User> getByID(Integer userID) throws userNotFoundException {
+    public List<User> getByID(Integer userID) throws resourceNotFoundException {
         Optional<User> result = userRepo.findById(userID);
         if (result.isPresent()) {
             User userResult = result.get();
             return List.of(userResult);
         }
         else {
-            throw new userNotFoundException("User not found by ID in DB, cannot update");
+            throw new resourceNotFoundException("User not found by ID in DB, cannot update");
         }
     }
 
@@ -47,21 +47,21 @@ public class userService {
     }
 
     // put operation
-    public List<User> updateUser(User user) throws userNotFoundException {
+    public List<User> updateUser(User user) throws resourceNotFoundException {
         if(userRepo.existsById(user.getUserID())) {
             User result = userRepo.save(user);
             return List.of(result);
         } else {
-            throw new userNotFoundException("User not found by ID in DB, cannot update");
+            throw new resourceNotFoundException("User not found by ID in DB, cannot update");
         }
     }
 
     // delete operation
-    public void deleteUserById(Integer user_id) throws userNotFoundException {
+    public void deleteUserById(Integer user_id) throws resourceNotFoundException {
         if(userRepo.existsById(user_id)) {
             userRepo.deleteById(user_id);
         } else {
-            throw new userNotFoundException("User not found in DB, cannot delete");
+            throw new resourceNotFoundException("User not found in DB, cannot delete");
         }
     }
 
@@ -79,36 +79,36 @@ public class userService {
     }
 
     // check and sanitize inputs
-    private void checkInputs(User user) throws userException {
+    private void checkInputs(User user) throws resourceException {
 
         try {
             if (!isValidEmail(user.getEmail())) {
-                throw new userException("Email is invalid");
+                throw new resourceException("Email is invalid");
             } else if (checkIfInvalid(user.getEmail())) {
-                throw new userException("Email must be between 1-128 characters.");
+                throw new resourceException("Email must be between 1-128 characters.");
             } else if (checkIfInvalid(user.getUsername())) {
-                throw new userException("Username must be between 1-128 characters.");
+                throw new resourceException("Username must be between 1-128 characters.");
             } else if (checkIfInvalid(user.getFirstName())) {
-                throw new userException("First name must be between 1-128 characters.");
+                throw new resourceException("First name must be between 1-128 characters.");
             } else if (checkIfInvalid(user.getLastName())) {
-                throw new userException("Last name must be between 1-128 characters.");
+                throw new resourceException("Last name must be between 1-128 characters.");
             }
         } catch (NullPointerException e) {
-            throw new userException("User formatted incorrectly please provide the following:\n" +
+            throw new resourceException("User formatted incorrectly please provide the following:\n" +
                     "username, email, first_name, last_name");
         }
     }
 
-    public void checkPostInputs(User user) throws userException {
+    public void checkPostInputs(User user) throws resourceException {
         if (user.getUserID() != null) {
-            throw new userException("Do not provide user_id.");
+            throw new resourceException("Do not provide user_id.");
         }
         checkInputs(user);
     }
 
-    public void checkPutInputs(User user) throws userException {
+    public void checkPutInputs(User user) throws resourceException {
         if (user.getUserID() == null) {
-            throw new userException("User formatted incorrectly please provide the following:\n" +
+            throw new resourceException("User formatted incorrectly please provide the following:\n" +
                     "user_id, username, email, first_name, last_name");
         }
         checkInputs(user);

@@ -1,7 +1,7 @@
 package FantasyBasketball.controllers;
 
-import FantasyBasketball.exceptions.userException;
-import FantasyBasketball.exceptions.userNotFoundException;
+import FantasyBasketball.exceptions.resourceException;
+import FantasyBasketball.exceptions.resourceNotFoundException;
 import FantasyBasketball.models.User;
 import FantasyBasketball.repositories.userRepository;
 import FantasyBasketball.services.userService;
@@ -70,7 +70,7 @@ public class userController {
             List<User> result = userService.postUser(newUser);
             return new ResponseEntity<>(result, HttpStatus.CREATED);
 
-        } catch(userException e) {
+        } catch(resourceException e) {
             // exception thrown if User instance is not formatted correctly
             return new ResponseEntity<>(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
         } catch (Exception e) {
@@ -93,10 +93,10 @@ public class userController {
             // Regular put
             List<User> result = userService.updateUser(user);
             return new ResponseEntity<>(result, HttpStatus.OK);
-        } catch (userException e) {
+        } catch (resourceException e) {
             // exception thrown if User instance is not formatted correctly
             return new ResponseEntity<>(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
-        } catch (userNotFoundException e) {
+        } catch (resourceNotFoundException e) {
             // If user not found in the database, throw exception not found
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception e) {
@@ -114,7 +114,7 @@ public class userController {
 
             userService.deleteUserById(user_id);
             return new ResponseEntity<>(HttpStatus.OK);
-        } catch (userNotFoundException e) {
+        } catch (resourceNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             // all other exceptions
