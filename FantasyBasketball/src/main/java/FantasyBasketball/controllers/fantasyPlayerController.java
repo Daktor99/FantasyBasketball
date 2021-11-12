@@ -60,19 +60,34 @@ public class fantasyPlayerController {
     //
     //
 
+
+    @RequestMapping(value = "/players", method = RequestMethod.POST)
+    public ResponseEntity<?> createPlayers(@RequestBody FantasyPlayer player) {
+        try {
+
+            log.info("POST: " + request.getRequestURL());
+            log.info(player.toString());
+
+            // Regular put
+            List<FantasyPlayer> result = fantasyPlayerService.postFantasyPlayer(player);
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        } catch (Exception e) {
+            // all other exceptions
+            log.error("Exception on PUT: ", e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @RequestMapping(value = "/players", method = RequestMethod.PUT)
     public ResponseEntity<?> updatePlayers(@RequestBody FantasyPlayer player) {
         try {
 
-            log.info("PUT: " + request.getRequestURL());
+            log.info("POST: " + request.getRequestURL());
             log.info(player.toString());
 
             // Regular put
             List<FantasyPlayer> result = fantasyPlayerService.updateFantasyPlayer(player);
             return new ResponseEntity<>(result, HttpStatus.OK);
-        } catch (resourceNotFoundException e) {
-            // If league not found in the database, throw exception not found
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             // all other exceptions
             log.error("Exception on PUT: ", e);
