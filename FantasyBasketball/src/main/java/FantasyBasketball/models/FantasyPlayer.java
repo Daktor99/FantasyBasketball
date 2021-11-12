@@ -30,6 +30,9 @@ public class FantasyPlayer {
     @Column(name = "nba_team")
     private String nbaTeam;
 
+    @Column(name = "league_id")
+    private Integer leagueID;
+
     // class methods
     public int getPlayerID() {
         return playerID;
@@ -85,5 +88,13 @@ public class FantasyPlayer {
 
     public void setNbaTeam(String nbaTeam) {
         this.nbaTeam = nbaTeam;
+    }
+
+    public int getLeagueID() {
+        return leagueID;
+    }
+
+    public void setLeagueID(int leagueID) {
+        this.leagueID = leagueID;
     }
 }
