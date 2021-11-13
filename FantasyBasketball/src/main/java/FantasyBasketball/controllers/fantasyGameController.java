@@ -104,7 +104,7 @@ public class fantasyGameController {
             log.info("Exception on PUT:", e);
             return new ResponseEntity<>(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
         } catch (DataIntegrityViolationException e) {
-            log.error("Exception on POST: ", e);
+            log.error("Exception on PUT: ", e);
             return new ResponseEntity<>("This action is not allowed, please check values and try again.", HttpStatus.UNPROCESSABLE_ENTITY);
         } catch (Exception e) {
             log.info("Exception on PUT:", e);
@@ -126,7 +126,7 @@ public class fantasyGameController {
             log.error("Exception on DELETE: " + e.getMessage());
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (DataIntegrityViolationException e) {
-            log.error("Exception on POST: ", e);
+            log.error("Exception on DELETE: ", e);
             return new ResponseEntity<>("This action is not allowed, please check values and try again.", HttpStatus.UNPROCESSABLE_ENTITY);
         } catch (Exception e) {
             log.error("Exception on DELETE: ", e);
