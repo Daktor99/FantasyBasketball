@@ -22,12 +22,21 @@ public class FantasyLeagueUtility {
     private fantasyLeagueService leagueService;
 
     @Autowired
+<<<<<<< Updated upstream
     private fantasyPlayerService playerService;
+=======
+    private static fantasyPlayerService playerService;
+
+>>>>>>> Stashed changes
 
     // Try doing this only once as then copy the data from th first copy
 
 
+<<<<<<< Updated upstream
     public void jsontest() throws IOException {
+=======
+    public static void jsontest() throws IOException {
+>>>>>>> Stashed changes
         JSONObject json = readJsonFromUrl("https://www.balldontlie.io/api/v1/players?per_page=100");
         //System.out.println(json.toString());
         JSONObject API_data = (JSONObject) json.get("meta");
@@ -38,7 +47,11 @@ public class FantasyLeagueUtility {
         }
     }
 
+<<<<<<< Updated upstream
     public void json_page(String url) throws IOException {
+=======
+    public static void json_page(String url) throws IOException {
+>>>>>>> Stashed changes
         JSONObject json = readJsonFromUrl(url);
         //System.out.println(json.toString());
         JSONArray json_data = (JSONArray) json.get("data");
@@ -60,7 +73,11 @@ public class FantasyLeagueUtility {
         }
     }
 
+<<<<<<< Updated upstream
     private String readAll(Reader rd) throws IOException {
+=======
+    private static String readAll(Reader rd) throws IOException {
+>>>>>>> Stashed changes
         StringBuilder sb = new StringBuilder();
         int cp;
         while ((cp = rd.read()) != -1) {
@@ -69,7 +86,11 @@ public class FantasyLeagueUtility {
         return sb.toString();
     }
 
+<<<<<<< Updated upstream
     public JSONObject readJsonFromUrl(String url) throws IOException, JSONException {
+=======
+    public static JSONObject readJsonFromUrl(String url) throws IOException, JSONException {
+>>>>>>> Stashed changes
         InputStream is = new URL(url).openStream();
         try {
             BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
@@ -80,4 +101,8 @@ public class FantasyLeagueUtility {
             is.close();
         }
     }
+<<<<<<< Updated upstream
 }
+=======
+}
+>>>>>>> Stashed changes
