@@ -8,6 +8,7 @@ import FantasyBasketball.services.fantasyTeamService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -33,7 +34,7 @@ public class fantasyTeamController {
     @Autowired
     public fantasyTeamController(HttpServletRequest request) { this.request = request; }
 
-    @RequestMapping(value = "/teams", method = RequestMethod.GET)
+    @RequestMapping(value = "/fantasyTeams", method = RequestMethod.GET)
     public ResponseEntity<?> getTeamsByTemplate(@RequestParam(value = "team_id", required = false) Integer team_id,
                                                 @RequestParam(value = "team_name", required = false) String team_name,
                                                 @RequestParam(value = "owner_id", required = false) Integer owner_id,
@@ -57,7 +58,7 @@ public class fantasyTeamController {
         }
     }
 
-    @RequestMapping(value = "/teams", method = RequestMethod.POST)
+    @RequestMapping(value = "/fantasyTeams", method = RequestMethod.POST)
     public ResponseEntity<?> postTeam(@RequestBody FantasyTeam newTeam) {
 
         try {
@@ -75,6 +76,9 @@ public class fantasyTeamController {
         } catch(resourceException e) {
             // exception thrown if User instance is not formatted correctly
             return new ResponseEntity<>(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
+        } catch (DataIntegrityViolationException e) {
+            log.error("Exception on POST: ", e);
+            return new ResponseEntity<>("This action is not allowed, please check values and try again.", HttpStatus.UNPROCESSABLE_ENTITY);
         } catch (Exception e) {
             // all other exceptions
             log.error("Exception on POST: ", e);
@@ -82,7 +86,7 @@ public class fantasyTeamController {
         }
     }
 
-    @RequestMapping(value = "/teams", method = RequestMethod.PUT)
+    @RequestMapping(value = "/fantasyTeams", method = RequestMethod.PUT)
     public ResponseEntity<?> updateTeam(@RequestBody FantasyTeam team) {
         try {
 
@@ -101,6 +105,9 @@ public class fantasyTeamController {
         } catch (resourceNotFoundException e) {
             // If user not found in the database, throw exception not found
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (DataIntegrityViolationException e) {
+            log.error("Exception on PUT: ", e);
+            return new ResponseEntity<>("This action is not allowed, please check values and try again.", HttpStatus.UNPROCESSABLE_ENTITY);
         } catch (Exception e) {
             // all other exceptions
             log.error("Exception on PUT: ", e);
@@ -108,7 +115,7 @@ public class fantasyTeamController {
         }
     }
 
-    @RequestMapping(value = "/teams", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/fantasyTeams", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteTeam(@RequestParam(value = "team_id", required = true) Integer team_id) {
         try {
 
@@ -118,6 +125,9 @@ public class fantasyTeamController {
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (resourceNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (DataIntegrityViolationException e) {
+            log.error("Exception on DELETE: ", e);
+            return new ResponseEntity<>("This action is not allowed, please check values and try again.", HttpStatus.UNPROCESSABLE_ENTITY);
         } catch (Exception e) {
             // all other exceptions
             log.error("Exception on DELETE: ", e);

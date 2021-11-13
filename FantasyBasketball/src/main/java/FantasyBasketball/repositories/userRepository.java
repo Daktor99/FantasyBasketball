@@ -13,7 +13,7 @@ import java.util.List;
         (in the form): function_name(parameter:parameter_type):return_type
         save(entity:S):S
         saveAll(entities:Iterable<S>):Iterable<S>
-        findById(id:ID):Optional<T>
+        findById(id:T):Optional<T>
         existsById(id:ID):boolean
         findAll():Iterable<T>
         findAllById(ids:Iterable<ID>)Iterable<T>

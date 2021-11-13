@@ -1,10 +1,12 @@
 package FantasyBasketball.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "fantasyStats")
+@Table(name = "fantasy_stats")
 @IdClass(FantasyStatsID.class)
 public class FantasyStats implements Serializable {
 
@@ -18,6 +20,10 @@ public class FantasyStats implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "schedule_id")
     private int scheduleID;
+
+    @Column(name = "client_id")
+    @JsonProperty("client_id")
+    private Integer clientID = 1;
 
     @Column(name = "3_p")
     private int threeP;
@@ -64,6 +70,14 @@ public class FantasyStats implements Serializable {
         this.scheduleID = scheduleID;
     }
 
+    public Integer getClientID() {
+        return clientID;
+    }
+
+    public void setClientID(Integer clientID) {
+        this.clientID = clientID;
+    }
+
     public int getThreeP() {
         return threeP;
     }
@@ -80,11 +94,11 @@ public class FantasyStats implements Serializable {
         this.twoP = twoP;
     }
 
-    public int getFreeT() {
+    public int getFreeThrows() {
         return freeThrows;
     }
 
-    public void setFreeT(int freeThrows) {
+    public void setFreeThrows(int freeThrows) {
         this.freeThrows = freeThrows;
     }
 

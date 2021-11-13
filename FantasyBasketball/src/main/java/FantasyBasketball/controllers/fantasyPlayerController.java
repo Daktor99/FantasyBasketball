@@ -5,6 +5,7 @@ import FantasyBasketball.exceptions.resourceNotFoundException;
 import FantasyBasketball.models.FantasyPlayer;
 import FantasyBasketball.services.fantasyPlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +31,7 @@ public class fantasyPlayerController {
     public fantasyPlayerController(HttpServletRequest request) { this.request = request; }
 
 
-    @RequestMapping(value = "/players", method = RequestMethod.GET)
+    @RequestMapping(value = "/fantasyPlayers", method = RequestMethod.GET)
     public ResponseEntity<?> getPlayersByTemplate(@RequestParam(value = "player_id", required = false) Integer player_id,
                                                   @RequestParam(value = "team_id", required = false) Integer team_id,
                                                   @RequestParam(value = "position", required = false) String position,
@@ -61,7 +62,7 @@ public class fantasyPlayerController {
     //
 
 
-    @RequestMapping(value = "/players", method = RequestMethod.POST)
+    @RequestMapping(value = "/fantasyPlayers", method = RequestMethod.POST)
     public ResponseEntity<?> createPlayers(@RequestBody FantasyPlayer player) {
         try {
 
@@ -71,6 +72,9 @@ public class fantasyPlayerController {
             // Regular put
             List<FantasyPlayer> result = fantasyPlayerService.postFantasyPlayer(player);
             return new ResponseEntity<>(result, HttpStatus.OK);
+        } catch (DataIntegrityViolationException e) {
+            log.error("Exception on POST: ", e);
+            return new ResponseEntity<>("This action is not allowed, please check values and try again.", HttpStatus.UNPROCESSABLE_ENTITY);
         } catch (Exception e) {
             // all other exceptions
             log.error("Exception on PUT: ", e);
@@ -78,7 +82,7 @@ public class fantasyPlayerController {
         }
     }
 
-    @RequestMapping(value = "/players", method = RequestMethod.PUT)
+    @RequestMapping(value = "/fantasyPlayers", method = RequestMethod.PUT)
     public ResponseEntity<?> updatePlayers(@RequestBody FantasyPlayer player) {
         try {
 
@@ -88,6 +92,9 @@ public class fantasyPlayerController {
             // Regular put
             List<FantasyPlayer> result = fantasyPlayerService.updateFantasyPlayer(player);
             return new ResponseEntity<>(result, HttpStatus.OK);
+        } catch (DataIntegrityViolationException e) {
+            log.error("Exception on PUT: ", e);
+            return new ResponseEntity<>("This action is not allowed, please check values and try again.", HttpStatus.UNPROCESSABLE_ENTITY);
         } catch (Exception e) {
             // all other exceptions
             log.error("Exception on PUT: ", e);

@@ -6,6 +6,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -35,7 +36,7 @@ public interface fantasyGameRepository extends CrudRepository<FantasyGame, Integ
                                                 "(:league_id is NULL or league_id = :league_id) and\n" +
                                                 "(:home_team_id is NULL or home_team_id = :home_team_id) and\n" +
                                                 "(:away_team_id is NULL or away_team_id = :away_team_id) and\n" +
-                                                "(:game_start_date is NULL or game_start_date = :game_start_date))" +
+                                                "(:game_start_date is NULL or game_start_date = :game_start_date) and\n" +
                                                 "(:game_end_date is NULL or game_end_date = :game_end_date) and\n" +
                                                 "(:winner_id is NULL or winner_id = :winner_id))",
                                                 nativeQuery = true)
@@ -43,7 +44,7 @@ public interface fantasyGameRepository extends CrudRepository<FantasyGame, Integ
                                   @Param("league_id")               Integer league_id,
                                   @Param("home_team_id")            Integer home_team_id,
                                   @Param("away_team_id")            Integer away_team_id,
-                                  @Param("game_start_date")         Date game_start_date,
-                                  @Param("game_end_date")           Date game_end_date,
+                                  @Param("game_start_date")         LocalDate game_start_date,
+                                  @Param("game_end_date")           LocalDate game_end_date,
                                   @Param("winner_id")               Integer winner_id);
 }

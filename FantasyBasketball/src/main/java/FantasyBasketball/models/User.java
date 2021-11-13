@@ -13,10 +13,13 @@ public class User {
     // Data members
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty("user_id")
     @Column(name = "user_id")
     private Integer userID;
+
+    @Column(name = "client_id")
+    @JsonProperty("client_id")
+    private Integer clientID = 1;
 
     @Column(name = "username")
     @JsonProperty("username")
@@ -53,6 +56,14 @@ public class User {
 
     public void setUserID(Integer userID) {
         this.userID = userID;
+    }
+
+    public Integer getClientID() {
+        return clientID;
+    }
+
+    public void setClientID(Integer clientID) {
+        this.clientID = clientID;
     }
 
     public String getUsername() {
@@ -100,6 +111,7 @@ public class User {
     public String toString() {
         return "\nUser { " +
                 "\n\t userID=" + userID +
+                "\n\t clientID=" + clientID +
                 ",\n\t username='" + username + '\'' +
                 ",\n\t email='" + email + '\'' +
                 ",\n\t firstName='" + firstName + '\'' +

@@ -1,6 +1,9 @@
 package FantasyBasketball.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -11,73 +14,100 @@ public class FantasyGame {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "schedule_id")
+    @JsonProperty("schedule_id")
     private Integer scheduleID;
 
     @Column(name = "league_id")
+    @JsonProperty("league_id")
     private Integer leagueID;
 
+    @Column(name = "client_id")
+    @JsonProperty("client_id")
+    private Integer clientID = 1;
+
     @Column(name = "home_team_id")
+    @JsonProperty("home_team_id")
     private Integer homeTeamID;
 
     @Column(name = "away_team_id")
+    @JsonProperty("away_team_id")
     private Integer awayTeamID;
 
     @Column(name = "game_start_date")
-    private Date gameStartDate;
+    @JsonProperty("game_start_date")
+    private LocalDate gameStartDate;
 
     @Column(name = "game_end_date")
-    private Date gameEndDate;
+    @JsonProperty("game_end_date")
+    private LocalDate gameEndDate;
 
     @Column(name = "winner_id")
+    @JsonProperty("winner_id")
     private Integer winner;
 
     @Column(name = "home_points")
-    private Integer homePoints;
+    @JsonProperty("home_points")
+    private Integer homePoints = 0;
 
     @Column(name = "away_points")
-    private Integer awayPoints;
+    @JsonProperty("away_points")
+    private Integer awayPoints = 0;
 
     @Column(name = "home_start_pg_id")
+    @JsonProperty("home_start_pg_id")
     private Integer startHomePG;
 
     @Column(name = "home_start_sg_id")
+    @JsonProperty("home_start_sg_id")
     private Integer startHomeSG;
 
     @Column(name = "home_start_sf_id")
+    @JsonProperty("home_start_sf_id")
     private Integer startHomeSF;
 
     @Column(name = "home_start_pf_id")
+    @JsonProperty("home_start_pf_id")
     private Integer startHomePF;
 
     @Column(name = "home_start_c_id")
+    @JsonProperty("home_start_c_id")
     private Integer startHomeC;
 
     @Column(name = "home_bench_1_id")
-    private Integer homebench1;
+    @JsonProperty("home_bench_1_id")
+    private Integer homeBench1;
 
     @Column(name = "home_bench_2_id")
-    private Integer homebench2;
+    @JsonProperty("home_bench_2_id")
+    private Integer homeBench2;
 
     @Column(name = "away_start_pg_id")
+    @JsonProperty("away_start_pg_id")
     private Integer startAwayPG;
 
     @Column(name = "away_start_sg_id")
+    @JsonProperty("away_start_sg_id")
     private Integer startAwaySG;
 
     @Column(name = "away_start_sf_id")
+    @JsonProperty("away_start_sf_id")
     private Integer startAwaySF;
 
     @Column(name = "away_start_pf_id")
+    @JsonProperty("away_start_pf_id")
     private Integer startAwayPF;
 
     @Column(name = "away_start_c_id")
+    @JsonProperty("away_start_c_id")
     private Integer startAwayC;
 
     @Column(name = "away_bench_1_id")
-    private Integer awaybench1;
+    @JsonProperty("away_bench_1_id")
+    private Integer awayBench1;
 
     @Column(name = "away_bench_2_id")
-    private Integer awaybench2;
+    @JsonProperty("away_bench_2_id")
+    private Integer awayBench2;
 
 
     // class methods
@@ -99,6 +129,14 @@ public class FantasyGame {
         this.leagueID = leagueID;
     }
 
+    public Integer getClientID() {
+        return clientID;
+    }
+
+    public void setClientID(Integer clientID) {
+        this.clientID = clientID;
+    }
+
     public Integer getHomeTeamID() {
         return homeTeamID;
     }
@@ -115,19 +153,19 @@ public class FantasyGame {
         this.awayTeamID = awayTeamID;
     }
 
-    public Date getGameStartDate() {
+    public LocalDate getGameStartDate() {
         return gameStartDate;
     }
 
-    public void setGameStartDate(Date gameStartDate) {
+    public void setGameStartDate(LocalDate gameStartDate) {
         this.gameStartDate = gameStartDate;
     }
 
-    public Date getGameEndDate() {
+    public LocalDate getGameEndDate() {
         return gameEndDate;
     }
 
-    public void setGameEndDate(Date gameEndDate) {
+    public void setGameEndDate(LocalDate gameEndDate) {
         this.gameEndDate = gameEndDate;
     }
 
@@ -195,20 +233,20 @@ public class FantasyGame {
         this.startHomeC = startHomeC;
     }
 
-    public Integer getHomebench1() {
-        return homebench1;
+    public Integer getHomeBench1() {
+        return homeBench1;
     }
 
-    public void setHomebench1(Integer homebench1) {
-        this.homebench1 = homebench1;
+    public void setHomeBench1(Integer homeBench1) {
+        this.homeBench1 = homeBench1;
     }
 
-    public Integer getHomebench2() {
-        return homebench2;
+    public Integer getHomeBench2() {
+        return homeBench2;
     }
 
-    public void setHomebench2(Integer homebench2) {
-        this.homebench2 = homebench2;
+    public void setHomeBench2(Integer homeBench2) {
+        this.homeBench2 = homeBench2;
     }
 
     public Integer getStartAwayPG() {
@@ -251,20 +289,20 @@ public class FantasyGame {
         this.startAwayC = startAwayC;
     }
 
-    public Integer getAwaybench1() {
-        return awaybench1;
+    public Integer getAwayBench1() {
+        return awayBench1;
     }
 
-    public void setAwaybench1(Integer awaybench1) {
-        this.awaybench1 = awaybench1;
+    public void setAwayBench1(Integer awayBench1) {
+        this.awayBench1 = awayBench1;
     }
 
-    public Integer getAwaybench2() {
-        return awaybench2;
+    public Integer getAwayBench2() {
+        return awayBench2;
     }
 
-    public void setAwaybench2(Integer awaybench2) {
-        this.awaybench2 = awaybench2;
+    public void setAwayBench2(Integer awayBench2) {
+        this.awayBench2 = awayBench2;
     }
 
     @Override
@@ -272,6 +310,7 @@ public class FantasyGame {
         return "\nFantasyGame {" +
                 "\n\tscheduleID=" + scheduleID +
                 ",\n\t leagueID=" + leagueID +
+                ",\n\t clientID=" + clientID +
                 ",\n\t homeTeamID=" + homeTeamID +
                 ",\n\t awayTeamID=" + awayTeamID +
                 ",\n\t gameStartDate=" + gameStartDate +
@@ -284,15 +323,15 @@ public class FantasyGame {
                 ",\n\t startHomeSF=" + startHomeSF +
                 ",\n\t startHomePF=" + startHomePF +
                 ",\n\t startHomeC=" + startHomeC +
-                ",\n\t homebench1=" + homebench1 +
-                ",\n\t homebench2=" + homebench2 +
+                ",\n\t homeBench1=" + homeBench1 +
+                ",\n\t homeBench2=" + homeBench2 +
                 ",\n\t startAwayPG=" + startAwayPG +
                 ",\n\t startAwaySG=" + startAwaySG +
                 ",\n\t startAwaySF=" + startAwaySF +
                 ",\n\t startAwayPF=" + startAwayPF +
                 ",\n\t startAwayC=" + startAwayC +
-                ",\n\t awaybench1=" + awaybench1 +
-                ",\n\t awaybench2=" + awaybench2 +
+                ",\n\t awayBench1=" + awayBench1 +
+                ",\n\t awayBench2=" + awayBench2 +
                 "\n\t}";
     }
 }
