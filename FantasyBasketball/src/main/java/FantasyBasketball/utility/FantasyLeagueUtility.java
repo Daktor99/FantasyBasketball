@@ -51,7 +51,7 @@ public class FantasyLeagueUtility {
             player.setLastName((String) players_info.get("last_name"));
             player.setNbaTeam((String) players_team_info.get("full_name"));
             player.setPosition((String) players_info.get("position"));
-            playerService.postFantasyPlayer(player);
+            //playerService.postFantasyPlayer(player);
 
             System.out.println(players_team_info.get("full_name"));
             System.out.println(players_info.get("last_name"));
