@@ -1,7 +1,6 @@
 package FantasyBasketball.services;
 
 import FantasyBasketball.models.FantasyPlayer;
-import FantasyBasketball.models.User;
 import FantasyBasketball.repositories.fantasyPlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

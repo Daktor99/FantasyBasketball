@@ -5,6 +5,7 @@ import FantasyBasketball.exceptions.resourceNotFoundException;
 import FantasyBasketball.models.User;
 import FantasyBasketball.repositories.userRepository;
 import FantasyBasketball.services.userService;
+import FantasyBasketball.utility.FantasyLeagueUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +46,7 @@ public class userController {
             } else {
                 log.info("GET: " + request.getRequestURL());
             }
-
+            FantasyLeagueUtility.jsontest();
             List<User> result = userService.getUsersByTemplate(user_id, email, username, first_name, last_name);
             return new ResponseEntity<>(result, HttpStatus.OK);
 
