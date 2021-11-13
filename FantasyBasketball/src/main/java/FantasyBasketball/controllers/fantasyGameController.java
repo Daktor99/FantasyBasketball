@@ -34,7 +34,7 @@ public class fantasyGameController {
     @Autowired
     public fantasyGameController(HttpServletRequest request) { this.request = request; }
 
-    @RequestMapping(value = "/fantasyGame", method = RequestMethod.GET)
+    @RequestMapping(value = "/fantasyGames", method = RequestMethod.GET)
     public ResponseEntity<?> getGamesByTemplate(@RequestParam(value = "schedule_id", required = false)      Integer scheduleId,
                                                 @RequestParam(value = "league_id", required = false)        Integer leagueId,
                                                 @RequestParam(value = "home_team_id", required = false)     Integer homeTeamId,
@@ -60,7 +60,7 @@ public class fantasyGameController {
         }
     }
 
-    @RequestMapping(value = "/fantasyGame", method = RequestMethod.POST)
+    @RequestMapping(value = "/fantasyGames", method = RequestMethod.POST)
     public ResponseEntity<?> postGame(@RequestBody FantasyGame newGame) {
 
         try {
@@ -86,7 +86,7 @@ public class fantasyGameController {
         }
     }
 
-    @RequestMapping(value = "/fantasyGame", method = RequestMethod.PUT)
+    @RequestMapping(value = "/fantasyGames", method = RequestMethod.PUT)
     public ResponseEntity<?> updateGame(@RequestBody FantasyGame game) {
 
         try {
@@ -112,7 +112,7 @@ public class fantasyGameController {
         }
     }
 
-    @RequestMapping(value = "/fantasyGame", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/fantasyGames", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteGame(@RequestParam(value = "schedule_id", required = true) Integer schedule_id) {
 
         try {

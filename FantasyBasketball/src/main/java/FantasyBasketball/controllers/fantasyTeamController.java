@@ -34,7 +34,7 @@ public class fantasyTeamController {
     @Autowired
     public fantasyTeamController(HttpServletRequest request) { this.request = request; }
 
-    @RequestMapping(value = "/fantasyTeam", method = RequestMethod.GET)
+    @RequestMapping(value = "/fantasyTeams", method = RequestMethod.GET)
     public ResponseEntity<?> getTeamsByTemplate(@RequestParam(value = "team_id", required = false) Integer team_id,
                                                 @RequestParam(value = "team_name", required = false) String team_name,
                                                 @RequestParam(value = "owner_id", required = false) Integer owner_id,
@@ -58,7 +58,7 @@ public class fantasyTeamController {
         }
     }
 
-    @RequestMapping(value = "/fantasyTeam", method = RequestMethod.POST)
+    @RequestMapping(value = "/fantasyTeams", method = RequestMethod.POST)
     public ResponseEntity<?> postTeam(@RequestBody FantasyTeam newTeam) {
 
         try {
@@ -86,7 +86,7 @@ public class fantasyTeamController {
         }
     }
 
-    @RequestMapping(value = "/fantasyTeam", method = RequestMethod.PUT)
+    @RequestMapping(value = "/fantasyTeams", method = RequestMethod.PUT)
     public ResponseEntity<?> updateTeam(@RequestBody FantasyTeam team) {
         try {
 
@@ -115,7 +115,7 @@ public class fantasyTeamController {
         }
     }
 
-    @RequestMapping(value = "/fantasyTeam", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/fantasyTeams", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteTeam(@RequestParam(value = "team_id", required = true) Integer team_id) {
         try {
 
