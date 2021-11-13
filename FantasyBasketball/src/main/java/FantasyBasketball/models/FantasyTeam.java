@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "fantasyTeam")
+@Table(name = "fantasy_team")
 public class FantasyTeam {
 
     // data members
@@ -14,6 +14,10 @@ public class FantasyTeam {
     @Column(name = "team_id")
     @JsonProperty("team_id")
     private Integer teamID;
+
+    @Column(name = "client_id")
+    @JsonProperty("client_id")
+    private Integer clientID = 1;
 
     @Column(name = "team_name")
     @JsonProperty("team_name")
@@ -79,6 +83,14 @@ public class FantasyTeam {
 
     public void setTeamID(Integer teamID) {
         this.teamID = teamID;
+    }
+
+    public Integer getClientID() {
+        return clientID;
+    }
+
+    public void setClientID(Integer clientID) {
+        this.clientID = clientID;
     }
 
     public String getTeamName() {
@@ -191,5 +203,27 @@ public class FantasyTeam {
 
     public void setPointsAgainst(Integer pointsAgainst) {
         this.pointsAgainst = pointsAgainst;
+    }
+
+    @Override
+    public String toString() {
+        return "\nFantasyTeam {" +
+                "\n\tteamID=" + teamID +
+                ",\n\t clientID=" + clientID +
+                ",\n\t teamName='" + teamName + '\'' +
+                ",\n\t ownerID=" + ownerID +
+                ",\n\t leagueID=" + leagueID +
+                ",\n\t startPG=" + startPG +
+                ",\n\t startSG=" + startSG +
+                ",\n\t startSF=" + startSF +
+                ",\n\t statPF=" + statPF +
+                ",\n\t startC=" + startC +
+                ",\n\t bench1=" + bench1 +
+                ",\n\t bench2=" + bench2 +
+                ",\n\t teamWins=" + teamWins +
+                ",\n\t teamLosses=" + teamLosses +
+                ",\n\t pointsScored=" + pointsScored +
+                ",\n\t pointsAgainst=" + pointsAgainst +
+                "\n\t}";
     }
 }

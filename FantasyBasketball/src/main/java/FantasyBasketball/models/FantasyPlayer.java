@@ -13,11 +13,15 @@ public class FantasyPlayer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "player_id")
     @JsonProperty("player_id")
-    private int playerID;
+    private Integer playerID;
 
     @Column(name = "team_id")
     @JsonProperty("team_id")
-    private int teamID;
+    private Integer teamID;
+
+    @Column(name = "client_id")
+    @JsonProperty("client_id")
+    private Integer clientID = 1;
 
     @Column(name = "first_name")
     @JsonProperty("first_name")
@@ -43,20 +47,28 @@ public class FantasyPlayer {
     private Integer leagueID;
 
     // class methods
-    public int getPlayerID() {
+    public Integer getPlayerID() {
         return playerID;
     }
 
-    public void setPlayedID(int playerID) {
+    public void setPlayedID(Integer playerID) {
         this.playerID = playerID;
     }
 
-    public int getTeamID() {
+    public Integer getTeamID() {
         return teamID;
     }
 
-    public void setTeamID(int teamID) {
+    public void setTeamID(Integer teamID) {
         this.teamID = teamID;
+    }
+
+    public Integer getClientID() {
+        return clientID;
+    }
+
+    public void setClientID(Integer clientID) {
+        this.clientID = clientID;
     }
 
     public String getFirstName() {
@@ -83,14 +95,6 @@ public class FantasyPlayer {
         this.position = position;
     }
 
-//    public int getPoints() {
-//        return points;
-//    }
-//
-//    public void setPoints(int points) {
-//        this.points = points;
-//    }
-
     public String getNbaTeam() {
         return nbaTeam;
     }
@@ -99,11 +103,34 @@ public class FantasyPlayer {
         this.nbaTeam = nbaTeam;
     }
 
-    public int getLeagueID() {
+    public Integer getLeagueID() {
         return leagueID;
     }
 
-    public void setLeagueID(int leagueID) {
+    public void setLeagueID(Integer leagueID) {
         this.leagueID = leagueID;
+    }
+
+    //    public int getPoints() {
+//        return points;
+//    }
+//
+//    public void setPoints(int points) {
+//        this.points = points;
+//    }
+
+
+    @Override
+    public String toString() {
+        return "\nFantasyPlayer {" +
+                "\n\t playerID=" + playerID +
+                ",\n\t teamID=" + teamID +
+                ",\n\t clientID=" + clientID +
+                ",\n\t firstName='" + firstName + '\'' +
+                ",\n\t lastName='" + lastName + '\'' +
+                ",\n\t position='" + position + '\'' +
+                ",\n\t nbaTeam='" + nbaTeam + '\'' +
+                ",\n\t leagueID=" + leagueID +
+                "\n\t}";
     }
 }
