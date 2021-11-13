@@ -1,13 +1,16 @@
 package FantasyBasketball.services;
 
+import FantasyBasketball.exceptions.resourceException;
 import FantasyBasketball.exceptions.resourceNotFoundException;
 import FantasyBasketball.models.FantasyGame;
 import FantasyBasketball.repositories.fantasyGameRepository;
+import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,25 +32,12 @@ public class fantasyGameService {
     }
 
     // get operation
-    public List<FantasyGame> getGamesByTemplate(Integer schedule_id,      Integer league_id,
-                                                Integer home_team_id,     Integer away_team_id,
-                                                Date game_start_date,     Date game_end_date,
-                                                Integer winner_id,
-                                                Integer home_points,      Integer away_points,
-                                                Integer home_start_pg_id, Integer home_start_sg_id,
-                                                Integer home_start_sf_id, Integer home_start_pf_id,
-                                                Integer home_start_c_id,
-                                                Integer home_bench_1_id, Integer home_bench_2_id,
-                                                Integer away_start_pg_id, Integer away_start_sg_id,
-                                                Integer away_start_sf_id, Integer away_start_pf_id,
-                                                Integer away_start_c_id,
-                                                Integer away_bench_1_id, Integer away_bench_2_id) {
+    public List<FantasyGame> getGamesByTemplate(Integer schedule_id,        Integer league_id,
+                                                Integer home_team_id,       Integer away_team_id,
+                                                LocalDate game_start_date,  LocalDate game_end_date,
+                                                Integer winner_id) {
         return gameRepo.findByTemplate(schedule_id, league_id, home_team_id, away_team_id,
-                game_start_date, game_end_date, winner_id, home_points, away_points,
-                home_start_pg_id, home_start_sg_id, home_start_sf_id, home_start_pf_id, home_start_c_id,
-                home_bench_1_id, home_bench_2_id,
-                away_start_pg_id, away_start_sg_id, away_start_sf_id, away_start_pf_id, away_start_c_id,
-                away_bench_1_id, away_bench_2_id);
+                game_start_date, game_end_date, winner_id);
     }
 
     // post operation
@@ -76,4 +66,39 @@ public class fantasyGameService {
         }
     }
 
+    public void checkPostInputs(FantasyGame game) throws resourceException {
+        if (game.getScheduleID() != null) {
+            throw new resourceException("Do not provide schedule_id.");
+        }
+        checkInputs(game);
+    }
+
+    public void checkPutInputs(FantasyGame game) throws resourceException {
+        try {
+            if (game.getScheduleID() == null) {
+                throw new resourceException("Must provide schedule_id to update Game.");
+            }
+            checkInputs(game);
+        } catch (NullPointerException e) {
+            throw new resourceException("Fantasy game formatted incorrectly, please provide at least the following:\n" +
+                    "schedule_id, leagueID, home_team_id, away_team_id, game_start_date, game_end_date.");
+        }
+
+    }
+
+    private void checkInputs(FantasyGame game) throws resourceException {
+        try {
+            LocalDate startDate = game.getGameStartDate();
+            LocalDate endDate   = game.getGameEndDate();
+            int daysBetween     = Period.between(startDate, endDate).getDays();
+            if (endDate.isBefore(startDate)) {
+                throw new resourceException("Start Date must be before End Date");
+            } else if (daysBetween > 14) {
+                throw new resourceException("Start Date and End Date cannot be more than 14 days apart.");
+            }
+        } catch (NullPointerException e) {
+            throw new resourceException("Fantasy game formatted incorrectly, please provide at least the following:\n" +
+                    "schedule_id, leagueID, home_team_id, away_team_id, game_start_date, game_end_date.");
+        }
+    }
 }
