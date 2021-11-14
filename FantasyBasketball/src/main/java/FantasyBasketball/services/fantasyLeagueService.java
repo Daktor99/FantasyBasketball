@@ -6,11 +6,11 @@ import FantasyBasketball.models.FantasyLeague;
 import FantasyBasketball.models.User;
 import FantasyBasketball.repositories.fantasyLeagueRepository;
 import FantasyBasketball.repositories.userRepository;
-import org.hibernate.type.TrueFalseType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -72,11 +72,9 @@ public class fantasyLeagueService {
     // helper function: check is given start and end dates for league are valid
     public Boolean checkDates(LocalDate league_start_date, LocalDate league_end_date) throws resourceException {
         LocalDate today = LocalDate.now();
-        LocalDate start = league_start_date;
-        LocalDate end = league_end_date;
-        if (start.compareTo(today) >= 0) {
-            if (start.compareTo(end) < 0) {
-                if (DAYS.between(start, end) >= 14) {
+        if (league_start_date.compareTo(today) >= 0) {
+            if (league_start_date.compareTo(league_end_date) < 0) {
+                if (DAYS.between(league_start_date, league_end_date) >= 14) {
                     return Boolean.TRUE;
                 } else {
                     throw new resourceException("Attempted league duration is less than 2 weeks.");
@@ -92,6 +90,10 @@ public class fantasyLeagueService {
     // post operation
     public List<FantasyLeague> postLeagues(FantasyLeague fantasyLeague) throws resourceException {
         fantasyLeague.setLeagueID(0);
+
+        //This client_id will be updated later
+        fantasyLeague.setClientID(1);
+
         if (checkAdmin(fantasyLeague.getAdminID())) {
             if (checkDates(fantasyLeague.getLeagueStartDate(), fantasyLeague.getLeagueEndDate())) {
                 FantasyLeague result = leagueRepo.save(fantasyLeague);
@@ -106,12 +108,12 @@ public class fantasyLeagueService {
 
     // helper function: check if two given fantasy leagues are equivalent except for league name
     public Boolean checkEqualWithoutLeagueName(FantasyLeague referenceLeague, FantasyLeague compareLeague) {
-        if (referenceLeague.getLeagueID() == compareLeague.getLeagueID() &&
-                referenceLeague.getClientID() == compareLeague.getClientID() &&
-                referenceLeague.getAdminID() == compareLeague.getAdminID() &&
-                referenceLeague.getLeagueSize() == compareLeague.getLeagueSize() &&
-                referenceLeague.getLeagueStartDate() == compareLeague.getLeagueEndDate() &&
-                referenceLeague.getLeagueEndDate() == compareLeague.getLeagueEndDate()
+        if (referenceLeague.getLeagueID().equals(compareLeague.getLeagueID()) &&
+                referenceLeague.getClientID().equals(compareLeague.getClientID()) &&
+                referenceLeague.getAdminID().equals(compareLeague.getAdminID()) &&
+                referenceLeague.getLeagueSize().equals(compareLeague.getLeagueSize()) &&
+                referenceLeague.getLeagueStartDate().equals(compareLeague.getLeagueEndDate()) &&
+                referenceLeague.getLeagueEndDate().equals(compareLeague.getLeagueEndDate())
         ) {
             return Boolean.TRUE;
         } else {
@@ -122,6 +124,10 @@ public class fantasyLeagueService {
     // put operation
     public List<FantasyLeague> updateLeagues(FantasyLeague fantasyLeague) throws resourceNotFoundException, resourceException {
         if (leagueRepo.existsById(fantasyLeague.getLeagueID())) {
+
+            //This client_id will be updated later
+            fantasyLeague.setClientID(1);
+
             FantasyLeague result = leagueRepo.save(fantasyLeague);
             FantasyLeague referenceLeague = leagueRepo.save(fantasyLeague);
             if (checkEqualWithoutLeagueName(referenceLeague, fantasyLeague)) {

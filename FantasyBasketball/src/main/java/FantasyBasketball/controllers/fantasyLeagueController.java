@@ -34,7 +34,6 @@ public class fantasyLeagueController {
 
     @RequestMapping(value = "/leagues", method = RequestMethod.GET)
     public ResponseEntity<?> getLeaguesByTemplate(@RequestParam(value = "league_id", required = false) Integer league_id,
-                                                  @RequestParam(value = "client_id", required = false) Integer client_id,
                                                   @RequestParam(value = "league_name", required = false) String league_name,
                                                   @RequestParam(value = "admin_id", required = false) Integer admin_id,
                                                   @RequestParam(value = "league_size", required = false) Integer league_size,
@@ -49,6 +48,8 @@ public class fantasyLeagueController {
                 log.info("GET: " + request.getRequestURL());
             }
 
+            //This client_id will be updated later
+            Integer client_id = 1;
             List<FantasyLeague> result = fantasyLeagueService.getLeaguesByTemplate(league_id,
                     client_id,
                     league_name,

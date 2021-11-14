@@ -4,46 +4,48 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
-@Table(name = "fantasy_league")
+@Table(name = "fantasyLeague")
 public class FantasyLeague {
 
     // data members
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonProperty("league_id")
     @Column(name = "league_id")
+    @JsonProperty("league_id")
     private Integer leagueID;
 
-    @JsonProperty("client_id")
     @Column(name = "client_id")
+    @JsonProperty("client_id")
     private Integer clientID;
 
-    @JsonProperty("league_name")
     @Column(name = "league_name")
+    @JsonProperty("league_name")
     private String leagueName;
 
-    @JsonProperty("admin_id")
     @Column(name = "admin_id")
+    @JsonProperty("admin_id")
     private Integer adminID;
 
-    @JsonProperty("league_size")
     @Column(name = "league_size")
+    @JsonProperty("league_size")
     private Integer leagueSize;
 
-    @JsonProperty("league_start_date")
     @Column(name = "league_start_date")
+    @JsonProperty("league_start_date")
     private LocalDate leagueStartDate;
 
-    @JsonProperty("league_end_date")
     @Column(name = "league_end_date")
+    @JsonProperty("league_end_date")
     private LocalDate leagueEndDate;
 
 //    @ManyToMany(mappedBy = "fantasyLeague", fetch = FetchType.LAZY)
 //    private Set<User> participants = new HashSet<>();
 
     // class methods
+
     public Integer getLeagueID() {
         return leagueID;
     }
@@ -100,6 +102,7 @@ public class FantasyLeague {
         this.leagueEndDate = leagueEndDate;
     }
 
+
 //    public Set<User> getParticipants() {
 //        return participants;
 //    }
@@ -108,19 +111,4 @@ public class FantasyLeague {
 //        this.participants = participants;
 //    }
 
-    // TODO: do i need to do @Override public String toString() {}???
-
-
-    @Override
-    public String toString() {
-        return "FantasyLeague {" +
-                "\n\tleagueID = " + leagueID +
-                ",\n\tclientID = " + clientID +
-                ",\n\tleagueName = '" + leagueName + '\'' +
-                ",\n\tadminID = " + adminID +
-                ",\n\tleagueSize = " + leagueSize +
-                ",\n\tleagueStartDate = " + leagueStartDate +
-                ",\n\tleagueEndDate = " + leagueEndDate +
-                "\n\t}";
-    }
 }
