@@ -30,7 +30,7 @@ import java.util.List;
 
 @Repository
 public interface fantasyPlayerRepository extends CrudRepository<FantasyPlayer, Integer> {
-    @Query(value = "select * from fantasyPlayer where ((:player_id is NULL or player_id = :player_id) and\n" +
+    @Query(value = "select * from fantasy_player where ((:player_id is NULL or player_id = :player_id) and\n" +
             "                          (:team_id is NULL or team_id = :team_id) and\n" +
             "                          (:position is NULL or position LIKE %:position%) and\n" +
             "                          (:first_name is NULL or first_name LIKE %:first_name%) and\n" +

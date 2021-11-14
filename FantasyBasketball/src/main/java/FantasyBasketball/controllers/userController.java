@@ -1,5 +1,4 @@
 package FantasyBasketball.controllers;
-
 import FantasyBasketball.exceptions.resourceException;
 import FantasyBasketball.exceptions.resourceNotFoundException;
 import FantasyBasketball.models.User;
@@ -44,7 +43,6 @@ public class userController {
             } else {
                 log.info("GET: " + request.getRequestURL());
             }
-
             List<User> result = userService.getUsersByTemplate(user_id, email, username, first_name, last_name);
             return new ResponseEntity<>(result, HttpStatus.OK);
 

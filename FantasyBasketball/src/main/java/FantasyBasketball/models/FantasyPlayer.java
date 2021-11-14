@@ -47,11 +47,21 @@ public class FantasyPlayer {
     private Integer leagueID;
 
     // class methods
+    public FantasyPlayer() {
+        this.playerID=1;
+        this.teamID=0;
+        this.clientID=1;
+        this.firstName=null;
+        this.lastName=null;
+        this.nbaTeam=null;
+        this.leagueID=1;
+    }
+  
     public Integer getPlayerID() {
         return playerID;
     }
 
-    public void setPlayedID(Integer playerID) {
+    public void setPlayerID(Integer playerID) {
         this.playerID = playerID;
     }
 
@@ -133,4 +143,5 @@ public class FantasyPlayer {
                 ",\n\t leagueID=" + leagueID +
                 "\n\t}";
     }
+
 }

@@ -37,6 +37,25 @@ public class User {
     @JsonProperty("last_name")
     private String lastName;
 
+    public User() {
+        this.userID=0;
+        this.email=null;
+        this.username=null;
+        this.firstName=null;
+        this.lastName=null;
+    }
+    public User(Integer user_id,
+                String email,
+                String username,
+                String first_name,
+                String last_name) {
+        this.userID=user_id;
+        this.email=email;
+        this.username=username;
+        this.firstName=first_name;
+        this.lastName=last_name;
+    }
+
 //    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 //    @JoinTable(name = "user_fantasyLeague",
 //            joinColumns = {@JoinColumn(name = "userID",
