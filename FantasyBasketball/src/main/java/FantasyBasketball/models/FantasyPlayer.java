@@ -17,7 +17,7 @@ public class FantasyPlayer {
 
     @Column(name = "team_id")
     @JsonProperty("team_id")
-    private int teamID;
+    private Integer teamID;
 
     @Column(name = "first_name")
     @JsonProperty("first_name")
@@ -42,17 +42,14 @@ public class FantasyPlayer {
     @JsonProperty("league_id")
     private Integer leagueID;
 
-    // class methods
-<<<<<<< Updated upstream
-    public int getPlayerID() {
-        return playerID;
-    }
+    @Column(name = "client_id")
+    @JsonProperty("client_id")
+    private Integer clientID;
 
-    public void setPlayedID(int playerID) {
-=======
+    // class methods
     public FantasyPlayer() {
         this.playerID=1;
-        this.teamID=null;
+        this.teamID=0;
         this.clientID=1;
         this.firstName=null;
         this.lastName=null;
@@ -65,7 +62,6 @@ public class FantasyPlayer {
     }
 
     public void setPlayerID(Integer playerID) {
->>>>>>> Stashed changes
         this.playerID = playerID;
     }
 
@@ -124,4 +120,14 @@ public class FantasyPlayer {
     public void setLeagueID(int leagueID) {
         this.leagueID = leagueID;
     }
+
+    public int getClientID() {
+        return clientID;
+    }
+
+    public void setClientID(int clientID) {
+        this.clientID = clientID;
+    }
+
+
 }
