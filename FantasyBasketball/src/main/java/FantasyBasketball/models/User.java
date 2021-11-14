@@ -38,7 +38,7 @@ public class User {
     private String lastName;
 
     public User() {
-        this.userID=0;
+        this.userID=null;
         this.clientID=null;
         this.email=null;
         this.username=null;
