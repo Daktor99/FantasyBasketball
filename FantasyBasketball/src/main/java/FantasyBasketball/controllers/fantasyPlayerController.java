@@ -3,6 +3,7 @@ package FantasyBasketball.controllers;
 import FantasyBasketball.exceptions.resourceException;
 import FantasyBasketball.exceptions.resourceNotFoundException;
 import FantasyBasketball.models.FantasyPlayer;
+import FantasyBasketball.utilities.FantasyLeagueUtility;
 import FantasyBasketball.services.fantasyPlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -48,7 +49,6 @@ public class fantasyPlayerController {
             } else {
                 log.info("GET: " + request.getRequestURL());
             }
-
             List<FantasyPlayer> result = fantasyPlayerService.getPlayerByTemplate(player_id, team_id, position, first_name, last_name,nba_team,league_id);
             return new ResponseEntity<>(result, HttpStatus.OK);
 
