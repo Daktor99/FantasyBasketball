@@ -34,6 +34,7 @@ public interface fantasyGameRepository extends CrudRepository<FantasyGame, Integ
 
     @Query(value = "select * from fantasy_game where ((:schedule_id is NULL or schedule_id = :schedule_id) and\n" +
                                                 "(:league_id is NULL or league_id = :league_id) and\n" +
+                                                "(:client_id is NULL or client_id = :client_id) and\n" +
                                                 "(:home_team_id is NULL or home_team_id = :home_team_id) and\n" +
                                                 "(:away_team_id is NULL or away_team_id = :away_team_id) and\n" +
                                                 "(:game_start_date is NULL or game_start_date = :game_start_date) and\n" +
@@ -41,10 +42,11 @@ public interface fantasyGameRepository extends CrudRepository<FantasyGame, Integ
                                                 "(:winner_id is NULL or winner_id = :winner_id))",
                                                 nativeQuery = true)
     List<FantasyGame> findByTemplate(@Param("schedule_id")          Integer schedule_id,
-                                  @Param("league_id")               Integer league_id,
-                                  @Param("home_team_id")            Integer home_team_id,
-                                  @Param("away_team_id")            Integer away_team_id,
-                                  @Param("game_start_date")         LocalDate game_start_date,
-                                  @Param("game_end_date")           LocalDate game_end_date,
-                                  @Param("winner_id")               Integer winner_id);
+                                     @Param("league_id")               Integer league_id,
+                                     @Param("client_id")               Integer client_id,
+                                     @Param("home_team_id")            Integer home_team_id,
+                                     @Param("away_team_id")            Integer away_team_id,
+                                     @Param("game_start_date")         LocalDate game_start_date,
+                                     @Param("game_end_date")           LocalDate game_end_date,
+                                     @Param("winner_id")               Integer winner_id);
 }

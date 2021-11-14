@@ -30,11 +30,15 @@ public class fantasyGameService {
     }
 
     // get operation
-    public List<FantasyGame> getGamesByTemplate(Integer schedule_id,        Integer league_id,
-                                                Integer home_team_id,       Integer away_team_id,
-                                                LocalDate game_start_date,  LocalDate game_end_date,
+    public List<FantasyGame> getGamesByTemplate(Integer schedule_id,
+                                                Integer league_id,
+                                                Integer client_id,
+                                                Integer home_team_id,
+                                                Integer away_team_id,
+                                                LocalDate game_start_date,
+                                                LocalDate game_end_date,
                                                 Integer winner_id) {
-        return gameRepo.findByTemplate(schedule_id, league_id, home_team_id, away_team_id,
+        return gameRepo.findByTemplate(schedule_id, league_id, client_id, home_team_id, away_team_id,
                 game_start_date, game_end_date, winner_id);
     }
 
