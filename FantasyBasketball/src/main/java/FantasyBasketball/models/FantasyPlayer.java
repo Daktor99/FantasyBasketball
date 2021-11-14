@@ -43,11 +43,29 @@ public class FantasyPlayer {
     private Integer leagueID;
 
     // class methods
+<<<<<<< Updated upstream
     public int getPlayerID() {
         return playerID;
     }
 
     public void setPlayedID(int playerID) {
+=======
+    public FantasyPlayer() {
+        this.playerID=1;
+        this.teamID=null;
+        this.clientID=1;
+        this.firstName=null;
+        this.lastName=null;
+        this.nbaTeam=null;
+        this.leagueID=1;
+    }
+
+    public Integer getPlayerID() {
+        return playerID;
+    }
+
+    public void setPlayerID(Integer playerID) {
+>>>>>>> Stashed changes
         this.playerID = playerID;
     }
 

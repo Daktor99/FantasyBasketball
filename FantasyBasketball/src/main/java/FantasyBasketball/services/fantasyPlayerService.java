@@ -44,7 +44,7 @@ public class fantasyPlayerService {
 
     // post operation
     public List<FantasyPlayer> postFantasyPlayer(FantasyPlayer player) {
-        player.setPlayedID(0);
+        player.setPlayerID(0);
         FantasyPlayer result = playerRepo.save(player);
         return List.of(result);
     }
