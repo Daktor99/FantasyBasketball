@@ -29,6 +29,7 @@ public class userService {
     }
 
     // get operation
+    // TODO: ADD CLIENT COLUMN AND ensure that ClientID MUST BE GIVEN
     public List<User> getUsersByTemplate(Integer user_id,
                                          String email,
                                          String username,
@@ -63,7 +64,7 @@ public class userService {
         }
     }
 
-    //uses email validator tool to check if email is valid
+    // uses email validator tool to check if email is valid
     public boolean isValidEmail(String email) {
         return EmailValidator.getInstance().isValid(email);
     }
