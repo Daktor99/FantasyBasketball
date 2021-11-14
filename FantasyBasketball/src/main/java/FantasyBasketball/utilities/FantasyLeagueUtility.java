@@ -2,6 +2,7 @@ package FantasyBasketball.utilities;
 
 import FantasyBasketball.services.fantasyLeagueService;
 import FantasyBasketball.services.fantasyPlayerService;
+import FantasyBasketball.repositories.fantasyPlayerRepository;
 import FantasyBasketball.models.FantasyPlayer;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -19,47 +20,34 @@ import org.json.JSONArray;
 
 public class FantasyLeagueUtility {
 
-    @Autowired
-    private fantasyLeagueService leagueService;
-
-    @Autowired
-    private fantasyPlayerService playerService;
-
     // Try doing this only once as then copy the data from th first copy
 
 
-    public void jsontest() throws IOException {
+    public void API_player_importation(fantasyPlayerRepository playerRepo) throws IOException {
         JSONObject json = readJsonFromUrl("https://www.balldontlie.io/api/v1/players?per_page=100");
         //System.out.println(json.toString());
         JSONObject API_data = (JSONObject) json.get("meta");
         for (int i = (int) API_data.get("current_page"); i < (int) API_data.get("total_pages"); i++){
             String url = "https://www.balldontlie.io/api/v1/players/?per_page=100&page=" + i;
             System.out.println(url);
-            json_page(url);
+            API_each_page_to_player(url, playerRepo);
         }
     }
 
-    public void json_page(String url) throws IOException {
+    public void API_each_page_to_player(String url,fantasyPlayerRepository playerRepo) throws IOException {
         JSONObject json = readJsonFromUrl(url);
-        //System.out.println(json.toString());
         JSONArray json_data = (JSONArray) json.get("data");
         for (int i=0;i<json_data.length();i++){
             JSONObject players_info = (JSONObject) json_data.get(i);
             JSONObject players_team_info = (JSONObject) players_info.get("team");
             FantasyPlayer player = new FantasyPlayer();
+            FantasyPlayer new_player= player.setNewPlayer(0,1,1,
+                    (String) players_info.get("first_name"),
+                    (String) players_info.get("last_name"),
+                    (String) players_team_info.get("full_name"),
+                    (String) players_info.get("position"),1);
 
-            player.setFirstName((String) players_info.get("first_name"));
-            player.setLastName((String) players_info.get("last_name"));
-            player.setNbaTeam((String) players_team_info.get("full_name"));
-            player.setPosition((String) players_info.get("position"));
-            player.setClientID(1);
-            player.setLeagueID(1);
-            playerService.postFantasyPlayer(player);
-
-            System.out.println(players_team_info.get("full_name"));
-            System.out.println(players_info.get("last_name"));
-            System.out.println(players_info.get("first_name"));
-            System.out.println(players_info.get("position"));
+            playerRepo.save(new_player);
         }
     }
 

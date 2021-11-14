@@ -6,9 +6,12 @@ import FantasyBasketball.models.FantasyLeague;
 import FantasyBasketball.models.User;
 import FantasyBasketball.repositories.fantasyLeagueRepository;
 import FantasyBasketball.repositories.userRepository;
+import FantasyBasketball.repositories.fantasyPlayerRepository;
+import FantasyBasketball.utilities.FantasyLeagueUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
@@ -24,6 +27,9 @@ public class fantasyLeagueService {
 
     @Autowired
     fantasyLeagueRepository leagueRepo;
+
+    @Autowired
+    fantasyPlayerRepository playerRepo;
 
     // helper function: get clientID
     // TODO: Get clientID from something like... session?
@@ -88,7 +94,7 @@ public class fantasyLeagueService {
     }
 
     // post operation
-    public List<FantasyLeague> postLeagues(FantasyLeague fantasyLeague) throws resourceException {
+    public List<FantasyLeague> postLeagues(FantasyLeague fantasyLeague) throws resourceException, IOException {
         fantasyLeague.setLeagueID(0);
 
         //This client_id will be updated later
@@ -96,6 +102,10 @@ public class fantasyLeagueService {
 
         if (checkAdmin(fantasyLeague.getAdminID())) {
             if (checkDates(fantasyLeague.getLeagueStartDate(), fantasyLeague.getLeagueEndDate())) {
+                // Player Importation is done when league is posted
+                FantasyLeagueUtility leagueUtility=new FantasyLeagueUtility();
+                leagueUtility.API_player_importation(playerRepo);
+
                 FantasyLeague result = leagueRepo.save(fantasyLeague);
                 return List.of(result);
             } else {

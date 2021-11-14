@@ -54,6 +54,7 @@ public class FantasyPlayer {
         this.firstName=null;
         this.lastName=null;
         this.nbaTeam=null;
+        this.position=null;
         this.leagueID=1;
     }
   
@@ -119,6 +120,21 @@ public class FantasyPlayer {
 
     public void setLeagueID(Integer leagueID) {
         this.leagueID = leagueID;
+    }
+
+    public FantasyPlayer setNewPlayer(Integer playerID, Integer teamID,
+                                      Integer clientID, String firstName,
+                                      String lastName, String nbaTeam,
+                                      String position, Integer leagueID) {
+        this.playerID=playerID;
+        this.teamID=teamID;
+        this.clientID=clientID;
+        this.firstName=firstName;
+        this.lastName=lastName;
+        this.nbaTeam=nbaTeam;
+        this.position=position;
+        this.leagueID=leagueID;
+        return this;
     }
 
     //    public int getPoints() {
