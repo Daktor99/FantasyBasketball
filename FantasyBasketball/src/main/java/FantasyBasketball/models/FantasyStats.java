@@ -25,28 +25,28 @@ public class FantasyStats implements Serializable {
     @JsonProperty("client_id")
     private Integer clientID = 1;
 
-    @Column(name = "3_p")
+    @Column(name = "three_points")
     private int threeP;
 
-    @Column(name = "2_p")
+    @Column(name = "two_points")
     private int twoP;
 
-    @Column(name = "ft")
+    @Column(name = "free_throws")
     private int freeThrows;
 
-    @Column(name = "r")
+    @Column(name = "rebounds")
     private int rebounds;
 
-    @Column(name = "a")
+    @Column(name = "assists")
     private int assists;
 
-    @Column(name = "b")
+    @Column(name = "blocks")
     private int blocks;
 
-    @Column(name = "s")
+    @Column(name = "steals")
     private int steals;
 
-    @Column(name = "to")
+    @Column(name = "turnovers")
     private int turnovers;
 
     @Column(name = "tot_points")

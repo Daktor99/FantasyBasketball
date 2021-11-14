@@ -32,15 +32,15 @@ public interface fantasyStatsRepository extends CrudRepository<FantasyStats, Int
     @Query(value = "select * from fantasy_stats where ((:player_id is NULL or player_id = :player_id) and\n" +
             "                           (:schedule_id is NULL or schedule_id = :schedule_id) and\n" +
             "                           (:client_id is NULL or client_id = :client_id) and\n" +
-            "                           (:threeP is NULL or threeP = :threeP) and\n" +
-            "                           (:twoP is NULL or twoP = :twoP) and\n" +
-            "                           (:freeThrows is NULL or freeThrows = :freeThrows) and\n" +
+            "                           (:threeP is NULL or three_points = :threeP) and\n" +
+            "                           (:twoP is NULL or two_points = :twoP) and\n" +
+            "                           (:freeThrows is NULL or free_throws = :freeThrows) and\n" +
             "                           (:rebounds is NULL or rebounds = :rebounds) and\n" +
             "                           (:assists is NULL or assists = :assists) and\n" +
             "                           (:blocks is NULL or blocks = :blocks) and\n" +
             "                           (:steals is NULL or steals = :steals) and\n" +
             "                           (:turnovers is NULL or turnovers = :turnovers) and\n" +
-            "                           (:totPoints is NULL or totPoints = :totPoints))", nativeQuery = true)
+            "                           (:totPoints is NULL or tot_points = :totPoints))", nativeQuery = true)
     List<FantasyStats> findByTemplate(@Param("player_id") Integer player_id,
                                       @Param("schedule_id") Integer schedule_id,
                                       @Param("client_id") Integer client_id,
@@ -54,17 +54,17 @@ public interface fantasyStatsRepository extends CrudRepository<FantasyStats, Int
                                       @Param("turnovers") Integer turnovers,
                                       @Param("totPoints") Integer totPoints);
 
-    @Query(value = "select * from fantasyStats where ((:player_id is NULL or player_id = :player_id) and\n" +
-            "                           (:schedule_id is NULL or schedule_id = :schedule_id)", nativeQuery = true)
+    @Query(value = "select * from fantasy_stats where ((:player_id is NULL or player_id = :player_id) and\n" +
+            "                           (:schedule_id is NULL or schedule_id = :schedule_id))", nativeQuery = true)
     List<FantasyStats> findByPlayerIDAndScheduleID(@Param("player_id") Integer player_id,
                                       @Param("schedule_id") Integer schedule_id);
 
-    @Query(value = "delete * from fantasyStats where (:schedule_id = schedule_id)", nativeQuery = true)
+    @Query(value = "delete from fantasy_stats where (:schedule_id = schedule_id)", nativeQuery = true)
     List<FantasyStats> deleteByScheduleID(Integer schedule_id);
 
-    @Query(value = "delete * from fantasyStats where (:player_id = player_id)", nativeQuery = true)
+    @Query(value = "delete from fantasy_stats where (:player_id = player_id)", nativeQuery = true)
     List<FantasyStats> deleteByPlayerId(Integer player_id);
 
-    @Query(value = "delete * from fantasyStats where ((:schedule_id = schedule_id) and (:player_id = player_id))", nativeQuery = true)
+    @Query(value = "delete from fantasy_stats where ((:schedule_id = schedule_id) and (:player_id = player_id))", nativeQuery = true)
     List<FantasyStats> deleteByPlayerIDAndScheduleID(Integer schedule_id, Integer player_id);
 }
