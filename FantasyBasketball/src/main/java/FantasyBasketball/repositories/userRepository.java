@@ -18,7 +18,7 @@ import java.util.List;
         findAll():Iterable<T>
         findAllById(ids:Iterable<ID>)Iterable<T>
         count():long
-        deleteById(idLID):void
+        deleteById(id:ID):void
         delete(entity:T):void
         deleteAllById(ids:Iterable<? extends ID>):void
         deleteAll(entities:Iterable<? extends T>):void
