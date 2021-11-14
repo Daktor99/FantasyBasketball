@@ -21,6 +21,10 @@ public class FantasyGame {
     @JsonProperty("league_id")
     private Integer leagueID;
 
+    @Column(name = "client_id")
+    @JsonProperty("client_id")
+    private Integer clientID = 1;
+
     @Column(name = "home_team_id")
     @JsonProperty("home_team_id")
     private Integer homeTeamID;
@@ -123,6 +127,14 @@ public class FantasyGame {
 
     public void setLeagueID(Integer leagueID) {
         this.leagueID = leagueID;
+    }
+
+    public Integer getClientID() {
+        return clientID;
+    }
+
+    public void setClientID(Integer clientID) {
+        this.clientID = clientID;
     }
 
     public Integer getHomeTeamID() {
@@ -298,6 +310,7 @@ public class FantasyGame {
         return "\nFantasyGame {" +
                 "\n\tscheduleID=" + scheduleID +
                 ",\n\t leagueID=" + leagueID +
+                ",\n\t clientID=" + clientID +
                 ",\n\t homeTeamID=" + homeTeamID +
                 ",\n\t awayTeamID=" + awayTeamID +
                 ",\n\t gameStartDate=" + gameStartDate +

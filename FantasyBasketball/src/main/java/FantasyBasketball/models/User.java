@@ -17,6 +17,10 @@ public class User {
     @Column(name = "user_id")
     private Integer userID;
 
+    @Column(name = "client_id")
+    @JsonProperty("client_id")
+    private Integer clientID = 1;
+
     @Column(name = "username")
     @JsonProperty("username")
     private String username;
@@ -73,6 +77,14 @@ public class User {
         this.userID = userID;
     }
 
+    public Integer getClientID() {
+        return clientID;
+    }
+
+    public void setClientID(Integer clientID) {
+        this.clientID = clientID;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -118,6 +130,7 @@ public class User {
     public String toString() {
         return "\nUser { " +
                 "\n\t userID=" + userID +
+                "\n\t clientID=" + clientID +
                 ",\n\t username='" + username + '\'' +
                 ",\n\t email='" + email + '\'' +
                 ",\n\t firstName='" + firstName + '\'' +
