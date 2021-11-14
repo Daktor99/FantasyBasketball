@@ -77,7 +77,7 @@ public class userService {
     }
 
     // check and sanitize inputs
-    private void checkInputs(User user) throws resourceException {
+    public void checkInputs(User user) throws resourceException {
 
         try {
             if (!isValidEmail(user.getEmail())) {
