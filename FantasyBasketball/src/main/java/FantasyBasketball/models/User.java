@@ -39,17 +39,20 @@ public class User {
 
     public User() {
         this.userID=0;
+        this.clientID=null;
         this.email=null;
         this.username=null;
         this.firstName=null;
         this.lastName=null;
     }
     public User(Integer user_id,
+                Integer client_id,
                 String email,
                 String username,
                 String first_name,
                 String last_name) {
         this.userID=user_id;
+        this.clientID=client_id;
         this.email=email;
         this.username=username;
         this.firstName=first_name;

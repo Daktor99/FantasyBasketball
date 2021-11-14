@@ -51,6 +51,7 @@ public class userTests {
 
         // Initialize user before postUser called
         User beforeUser = new User(null,
+                1,
                 "patip@gmail.com",
                 "pap2154",
                 "Pati",
@@ -58,6 +59,7 @@ public class userTests {
 
         // Create newly inserted User
         User afterUser = new User(21,
+                1,
                 "patip@gmail.com",
                 "pap2154",
                 "Pati",
@@ -76,6 +78,7 @@ public class userTests {
 
         // Initialize updated user
         User updatedUser = new User(2,
+                1,
                 "emanueld@gmail.com",
                 "edaka",
                 "Emanuelito",
@@ -98,6 +101,7 @@ public class userTests {
 
         // Initialize updated user
         User updatedUser = new User(10,
+                1,
                 "emanueld@gmail.com",
                 "edaka",
                 "Emanuelito",
@@ -156,6 +160,7 @@ public class userTests {
 
         // Initialize test user with invalid email
         User testUser = new User(2,
+                1,
                 "emanueldgmail.com",
                 "edaka",
                 "Emanuelito",
@@ -170,6 +175,7 @@ public class userTests {
 
         // Initialize test user with invalid email
         User testUser = new User(2,
+                1,
                 null,
                 "edaka",
                 "Emanuelito",
@@ -184,6 +190,7 @@ public class userTests {
 
         // Initialize test user with invalid username
         User testUser = new User(2,
+                1,
                 "emanueld@gmail.com",
                 "     ",
                 "Emanuelito",
@@ -198,6 +205,7 @@ public class userTests {
 
         // Initialize test user with invalid username
         User testUser = new User(2,
+                1,
                 "emanueld@gmail.com",
                 null,
                 "Emanuelito",
@@ -212,6 +220,7 @@ public class userTests {
 
         // Initialize test user with invalid first name
         User testUser = new User(2,
+                1,
                 "emanueld@gmail.com",
                 "edaka",
                 "     ",
@@ -226,6 +235,7 @@ public class userTests {
 
         // Initialize test user with invalid first name
         User testUser = new User(2,
+                1,
                 "emanueld@gmail.com",
                 "edaka",
                 null,
@@ -240,6 +250,7 @@ public class userTests {
 
         // Initialize test user with invalid last name
         User testUser = new User(2,
+                1,
                 "emanueld@gmail.com",
                 "edaka",
                 "Emanuel",
@@ -254,6 +265,7 @@ public class userTests {
 
         // Initialize test user with invalid last name
         User testUser = new User(2,
+                1,
                 "emanueld@gmail.com",
                 "edaka",
                 "Emanuel",
@@ -268,6 +280,7 @@ public class userTests {
 
         // Initialize test user with user_id that is not null
         User testUser = new User(2,
+                1,
                 "emanueld@gmail.com",
                 "edaka",
                 "Emanuel",
@@ -281,6 +294,7 @@ public class userTests {
     public void testCheckPutInputs() throws resourceException {
         // Initialize test user with user_id that is null
         User testUser = new User(null,
+                1,
                 "emanueld@gmail.com",
                 "edaka",
                 "Emanuel",

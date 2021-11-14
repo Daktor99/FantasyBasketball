@@ -31,16 +31,20 @@ public class userService {
     // get operation
     // TODO: ADD CLIENT COLUMN AND ensure that ClientID MUST BE GIVEN
     public List<User> getUsersByTemplate(Integer user_id,
+                                         Integer client_id,
                                          String email,
                                          String username,
                                          String first_name,
                                          String last_name) {
-        return userRepo.findByTemplate(user_id, email, username, first_name, last_name);
+        return userRepo.findByTemplate(user_id, client_id, email, username, first_name, last_name);
     }
 
     // post operation
     public List<User> postUser(User user) {
         user.setUserID(0);
+
+        // This client_id will be updated later
+        user.setClientID(1);
         User result = userRepo.save(user);
         return List.of(result);
     }
@@ -48,6 +52,9 @@ public class userService {
     // put operation
     public List<User> updateUser(User user) throws resourceNotFoundException {
         if(userRepo.existsById(user.getUserID())) {
+            // This client_id will be updated later
+            user.setClientID(1);
+
             User result = userRepo.save(user);
             return List.of(result);
         } else {
