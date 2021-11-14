@@ -49,7 +49,9 @@ public class fantasyPlayerController {
             } else {
                 log.info("GET: " + request.getRequestURL());
             }
-            List<FantasyPlayer> result = fantasyPlayerService.getPlayerByTemplate(player_id, team_id, position, first_name, last_name,nba_team,league_id);
+            //This client_id will be updated later
+            Integer client_id = 1;
+            List<FantasyPlayer> result = fantasyPlayerService.getPlayerByTemplate(player_id, client_id, team_id, position, first_name, last_name,nba_team,league_id);
             return new ResponseEntity<>(result, HttpStatus.OK);
 
         } catch (Exception e) {

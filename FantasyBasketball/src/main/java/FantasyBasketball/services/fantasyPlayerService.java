@@ -1,6 +1,7 @@
 package FantasyBasketball.services;
 
 import FantasyBasketball.models.FantasyPlayer;
+import FantasyBasketball.models.User;
 import FantasyBasketball.repositories.fantasyPlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,7 @@ public class fantasyPlayerService {
 
     // get operation
     public List<FantasyPlayer> getPlayerByTemplate(Integer player_id,
+                                                   Integer client_id,
                                           Integer team_id,
                                           String position,
                                           String first_name,
@@ -34,6 +36,7 @@ public class fantasyPlayerService {
                                           String nba_team,
                                           Integer league_id) {
         return playerRepo.findByTemplate(player_id,
+                client_id,
                 team_id,
                 position,
                 first_name,
@@ -45,6 +48,10 @@ public class fantasyPlayerService {
     // post operation
     public List<FantasyPlayer> postFantasyPlayer(FantasyPlayer player) {
         player.setPlayerID(0);
+
+        //This client_id will be updated later
+        player.setClientID(1);
+
         FantasyPlayer result = playerRepo.save(player);
         return List.of(result);
     }
@@ -52,6 +59,10 @@ public class fantasyPlayerService {
     // put operation
     public List<FantasyPlayer> updateFantasyPlayer(FantasyPlayer player) throws resourceNotFoundException {
         if(playerRepo.existsById(player.getPlayerID())) {
+
+            //This client_id will be updated later
+            player.setClientID(1);
+
             FantasyPlayer result = playerRepo.save(player);
             return List.of(result);
         } else {

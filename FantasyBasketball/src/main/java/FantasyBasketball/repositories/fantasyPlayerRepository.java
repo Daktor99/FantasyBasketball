@@ -32,16 +32,18 @@ import java.util.List;
 public interface fantasyPlayerRepository extends CrudRepository<FantasyPlayer, Integer> {
     @Query(value = "select * from fantasy_player where ((:player_id is NULL or player_id = :player_id) and\n" +
             "                          (:team_id is NULL or team_id = :team_id) and\n" +
+            "                          (:client_id is NULL or client_id = :client_id) and\n" +
             "                          (:position is NULL or position LIKE %:position%) and\n" +
             "                          (:first_name is NULL or first_name LIKE %:first_name%) and\n" +
             "                          (:last_name is NULL or last_name LIKE %:last_name%) and\n" +
             "                          (:nba_team is NULL or nba_team LIKE %:nba_team% ) and\n" +
             "                          (:league_id is NULL or league_id = :league_id))", nativeQuery = true)
     List<FantasyPlayer> findByTemplate(@Param("player_id") Integer player_id,
-                              @Param("team_id") Integer team_id,
-                              @Param("position") String position,
-                              @Param("first_name") String first_name,
-                              @Param("last_name") String last_name,
-                              @Param("nba_team") String nba_team,
-                              @Param("league_id") Integer league_id);
+                                       @Param("client_id") Integer client_id,
+                                       @Param("team_id") Integer team_id,
+                                       @Param("position") String position,
+                                       @Param("first_name") String first_name,
+                                       @Param("last_name") String last_name,
+                                       @Param("nba_team") String nba_team,
+                                       @Param("league_id") Integer league_id);
 }
