@@ -31,13 +31,15 @@ import java.util.List;
 public interface fantasyTeamRepository extends CrudRepository<FantasyTeam, Integer> {
 
     @Query(value = "select * from fantasy_team where ((:team_id is NULL or team_id = :team_id) and\n" +
+            "                          (:client_id is NULL or client_id = :client_id) and\n" +
             "                          (:team_name is NULL or team_name LIKE :team_name) and\n" +
             "                          (:owner_id is NULL or owner_id = :owner_id) and\n" +
             "                          (:league_id is NULL or league_id = :league_id))",
             nativeQuery = true)
     List<FantasyTeam> findByTemplate(@Param("team_id") Integer team_id,
-                              @Param("team_name") String team_name,
-                              @Param("owner_id") Integer owner_id,
-                              @Param("league_id") Integer league_id);
+                                     @Param("client_id") Integer client_id,
+                                     @Param("team_name") String team_name,
+                                     @Param("owner_id") Integer owner_id,
+                                     @Param("league_id") Integer league_id);
 
 }
