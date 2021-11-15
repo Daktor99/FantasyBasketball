@@ -27,6 +27,10 @@ public class FantasyStats implements Serializable {
     @JsonProperty("client_id")
     private Integer clientID = 1;
 
+    @Column(name = "league_id")
+    @JsonProperty("league_id")
+    private Integer leagueID;
+
     @Column(name = "3_p")
     @JsonProperty("3_p")
     private int threeP;
@@ -63,6 +67,13 @@ public class FantasyStats implements Serializable {
     @JsonProperty("tot_points")
     private int totPoints;
 
+    public FantasyStats(Integer player_id, Integer schedule_id, Integer client_id, Integer league_id) {
+        this.playerID = player_id;
+        this.scheduleID = schedule_id;
+        this.clientID = client_id;
+        this.leagueID = league_id;
+    }
+
     // class methods
 
     public Integer getPlayerID() {
@@ -87,6 +98,14 @@ public class FantasyStats implements Serializable {
 
     public void setClientID(Integer clientID) {
         this.clientID = clientID;
+    }
+
+    public Integer getLeagueID() {
+        return leagueID;
+    }
+
+    public void setLeagueID(Integer leagueID) {
+        this.leagueID = leagueID;
     }
 
     public int getThreeP() {
@@ -159,5 +178,24 @@ public class FantasyStats implements Serializable {
 
     public void setTotPoints(int totPoints) {
         this.totPoints = totPoints;
+    }
+
+    @Override
+    public String toString() {
+        return "FantasyStats {" +
+                "\n\tplayerID=" + playerID +
+                ",\n\t scheduleID=" + scheduleID +
+                ",\n\t clientID=" + clientID +
+                ",\n\t leagueID=" + leagueID +
+                ",\n\t threeP=" + threeP +
+                ",\n\t twoP=" + twoP +
+                ",\n\t freeThrows=" + freeThrows +
+                ",\n\t rebounds=" + rebounds +
+                ",\n\t assists=" + assists +
+                ",\n\t blocks=" + blocks +
+                ",\n\t steals=" + steals +
+                ",\n\t turnovers=" + turnovers +
+                ",\n\t totPoints=" + totPoints +
+                "\n\t}";
     }
 }
