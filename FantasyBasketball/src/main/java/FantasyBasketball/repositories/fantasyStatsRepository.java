@@ -61,8 +61,10 @@ public interface fantasyStatsRepository extends CrudRepository<FantasyStats, Int
             @Param("totPoints") Integer totPoints);
 
     @Query(value = "select * from fantasy_stats where ((:player_id is NULL or player_id = :player_id) and\n" +
-            "                           (:schedule_id is NULL or schedule_id = :schedule_id))", nativeQuery = true)
+            "                           (:schedule_id is NULL or schedule_id = :schedule_id) and\n" +
+            "                           (league_id = :league_id))", nativeQuery = true)
     List<FantasyStats> findByPlayerIDAndScheduleID(@Param("player_id") Integer player_id,
-                                      @Param("schedule_id") Integer schedule_id);
+                                                   @Param("schedule_id") Integer schedule_id,
+                                                   @Param("league_id") Integer league_id);
 
 }

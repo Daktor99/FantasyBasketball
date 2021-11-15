@@ -153,7 +153,7 @@ public class fantasyStatsController {
             log.info("Fantasy Stats entry has been updated successfully");
             return new ResponseEntity<>(result, HttpStatus.OK);
         } catch (Exception e) {
-            log.error("Exception on POST: ", e);
+            log.error("Exception on PUT: ", e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -161,7 +161,8 @@ public class fantasyStatsController {
     @RequestMapping(value = "/fantasyStats", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteStats(@RequestParam(value = "stats_id", required = false) Integer stats_id,
                                          @RequestParam(value = "player_id", required = false) Integer player_id,
-                                         @RequestParam(value = "schedule_id", required = false) Integer schedule_id) {
+                                         @RequestParam(value = "schedule_id", required = false) Integer schedule_id,
+                                         @RequestParam(value = "league_id", required = false) Integer league_id) {
 
         // TODO: Implement authentication so client_id gets filled up automatically by whoever requests it
         int client_id = 1;
@@ -171,7 +172,12 @@ public class fantasyStatsController {
                 client_id,
                 player_id,
                 schedule_id);
-        if (stats_id == null && player_id == null && schedule_id == null) {
+
+        if (league_id == null) {
+            log.error("Cannot delete data without a league_id provided.");
+            return new ResponseEntity<>("Cannot delete data without a league_id provided.",
+                    HttpStatus.BAD_REQUEST);
+        } else if (stats_id == null && player_id == null && schedule_id == null) {
             log.error("Cannot delete data with no player_id, stats_id, schedule_id");
             return new ResponseEntity<>("Cannot delete data with no player_id, stats_id, schedule_id",
                     HttpStatus.BAD_REQUEST);
@@ -184,14 +190,15 @@ public class fantasyStatsController {
                 return new ResponseEntity<>(HttpStatus.OK);
             }
             else{
-                List<FantasyStats> deleted_stats = fantasyStatsService.deleteStats(player_id, schedule_id);
+                List<FantasyStats> deleted_stats = fantasyStatsService.deleteStats(player_id, schedule_id, league_id);
                 log.info("Fantasy Stats entry has been deleted successfully");
                 return new ResponseEntity<>(deleted_stats, HttpStatus.OK);
             }
         } catch (resourceNotFoundException e) {
+            log.error("Exception on DELETE: ", e);
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception e) {
-            log.error("Exception on POST: ", e);
+            log.error("Exception on DELETE: ", e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

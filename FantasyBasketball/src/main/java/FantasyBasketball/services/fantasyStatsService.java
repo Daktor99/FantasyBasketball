@@ -62,8 +62,12 @@ public class fantasyStatsService {
     }
 
     // delete operations
-    public List<FantasyStats> deleteStats(Integer player_id, Integer schedule_id) throws resourceNotFoundException {
-        List<FantasyStats> stats_to_delete = statsRepo.findByPlayerIDAndScheduleID(player_id, schedule_id);
+    public List<FantasyStats> deleteStats(Integer player_id, Integer schedule_id, Integer league_id) throws resourceNotFoundException {
+
+        List<FantasyStats> stats_to_delete = statsRepo.findByPlayerIDAndScheduleID(player_id, schedule_id, league_id);
+        if (stats_to_delete.size() == 0) {
+            throw new resourceNotFoundException("Fantasy Stats not found in DB, cannot delete");
+        }
 
         for (FantasyStats stat_to_delete:stats_to_delete) {
             deleteStatsByID(stat_to_delete.getStats_id());
