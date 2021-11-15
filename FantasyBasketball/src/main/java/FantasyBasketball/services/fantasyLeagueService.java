@@ -199,5 +199,4 @@ public class fantasyLeagueService {
         }
         checkInputs(fantasyLeague);
     }
-
 }
