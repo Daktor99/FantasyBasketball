@@ -6,196 +6,224 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
+//@IdClass(FantasyStatsID.class)
 @Table(name = "fantasy_stats")
-@IdClass(FantasyStatsID.class)
 public class FantasyStats implements Serializable {
 
     // data members
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "stats_id")
+    @JsonProperty("stats_id")
+    private Integer stats_id;
+
+//    @Id
     @Column(name = "player_id")
     @JsonProperty("player_id")
-    private Integer playerID;
+    private Integer player_id;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Id
     @Column(name = "schedule_id")
     @JsonProperty("schedule_id")
-    private Integer scheduleID;
+    private Integer schedule_id;
 
     @Column(name = "client_id")
     @JsonProperty("client_id")
-    private Integer clientID = 1;
+    private Integer client_id;
 
-    @Column(name = "league_id")
-    @JsonProperty("league_id")
-    private Integer leagueID;
+    @Column(name = "three_points")
+    @JsonProperty("three_points")
+    private int three_points;
 
-    @Column(name = "3_p")
-    @JsonProperty("3_p")
-    private Integer threeP;
+    @Column(name = "two_points")
+    @JsonProperty("two_points")
+    private int two_points;
 
-    @Column(name = "2_p")
-    @JsonProperty("2_p")
-    private Integer twoP;
+    @Column(name = "free_throws")
+    @JsonProperty("free_throws")
+    private int free_throws;
 
-    @Column(name = "ft")
-    @JsonProperty("ft")
-    private Integer freeThrows;
+    @Column(name = "rebounds")
+    @JsonProperty("rebounds")
+    private int rebounds;
 
-    @Column(name = "r")
-    @JsonProperty("r")
-    private Integer rebounds;
+    @Column(name = "assists")
+    @JsonProperty("assists")
+    private int assists;
 
-    @Column(name = "a")
-    @JsonProperty("a")
-    private Integer assists;
+    @Column(name = "blocks")
+    @JsonProperty("blocks")
+    private int blocks;
 
-    @Column(name = "b")
-    @JsonProperty("b")
-    private Integer blocks;
+    @Column(name = "steals")
+    @JsonProperty("steals")
+    private int steals;
 
-    @Column(name = "s")
-    @JsonProperty("s")
-    private Integer steals;
-
-    @Column(name = "to")
-    @JsonProperty("to")
-    private Integer turnovers;
+    @Column(name = "turnovers")
+    @JsonProperty("turnovers")
+    private int turnovers;
 
     @Column(name = "tot_points")
     @JsonProperty("tot_points")
-    private Integer totPoints;
-
-    public FantasyStats(Integer player_id, Integer schedule_id, Integer client_id, Integer league_id) {
-        this.playerID = player_id;
-        this.scheduleID = schedule_id;
-        this.clientID = client_id;
-        this.leagueID = league_id;
-    }
+    private int tot_points;
 
     // class methods
-
-    public Integer getPlayerID() {
-        return playerID;
+    public FantasyStats() {
+        this.stats_id=null;
+        this.client_id=null;
+        this.schedule_id=null;
+        this.player_id=null;
     }
 
-    public void setPlayerID(Integer playerID) {
-        this.playerID = playerID;
+    public FantasyStats(Integer player_id,
+                        Integer schedule_id,
+                        Integer client_id,
+                        Integer three_points,
+                        Integer two_points,
+                        Integer free_throws,
+                        Integer rebounds,
+                        Integer assists,
+                        Integer blocks,
+                        Integer steals,
+                        Integer turnovers,
+                        Integer tot_points) {
+        this.stats_id = stats_id;
+        this.player_id = player_id;
+        this.schedule_id = schedule_id;
+        this.client_id = client_id;
+        this.three_points = three_points;
+        this.two_points = two_points;
+        this.free_throws = free_throws;
+        this.rebounds = rebounds;
+        this.assists = assists;
+        this.blocks = blocks;
+        this.steals = steals;
+        this.turnovers = turnovers;
+        this.tot_points = tot_points;
+
     }
 
-    public Integer getScheduleID() {
-        return scheduleID;
+    public void setStats_id(Integer stats_id) {
+        this.stats_id = stats_id;
+    }
+    public Integer getStats_id() {
+        return stats_id;
     }
 
-    public void setScheduleID(Integer scheduleID) {
-        this.scheduleID = scheduleID;
+    public Integer getPlayer_id() {
+        return player_id;
     }
 
-    public Integer getClientID() {
-        return clientID;
+    public void setPlayer_id(int playerID) {
+        this.player_id = playerID;
     }
 
-    public void setClientID(Integer clientID) {
-        this.clientID = clientID;
+    public Integer getSchedule_id() {
+        return schedule_id;
     }
 
-    public Integer getLeagueID() {
-        return leagueID;
+    public void setSchedule_id(int scheduleID) {
+        this.schedule_id = scheduleID;
     }
 
-    public void setLeagueID(Integer leagueID) {
-        this.leagueID = leagueID;
+    public Integer getClient_id() {
+        return client_id;
     }
 
-    public Integer getThreeP() {
-        return threeP;
+    public void setClient_id(Integer clientID) {
+        this.client_id = clientID;
     }
 
-    public void setThreeP(Integer threeP) {
-        this.threeP = threeP;
+    public int getThree_points() {
+        return three_points;
     }
 
-    public Integer getTwoP() {
-        return twoP;
+    public void setThree_points(int threeP) {
+        this.three_points = threeP;
     }
 
-    public void setTwoP(Integer twoP) {
-        this.twoP = twoP;
+    public int getTwo_points() {
+        return two_points;
     }
 
-    public Integer getFreeThrows() {
-        return freeThrows;
+    public void setTwo_points(int twoP) {
+        this.two_points = twoP;
     }
 
-    public void setFreeThrows(Integer freeThrows) {
-        this.freeThrows = freeThrows;
+    public int getFree_throws() {
+        return free_throws;
     }
 
-    public Integer getRebounds() {
+    public void setFree_throws(int freeThrows) {
+        this.free_throws = freeThrows;
+    }
+
+    public int getRebounds() {
         return rebounds;
     }
 
-    public void setRebounds(Integer rebounds) {
+    public void setRebounds(int rebounds) {
         this.rebounds = rebounds;
     }
 
-    public Integer getAssists() {
+    public int getAssists() {
         return assists;
     }
 
-    public void setAssists(Integer assists) {
+    public void setAssists(int assists) {
         this.assists = assists;
     }
 
-    public Integer getBlocks() {
+    public int getBlocks() {
         return blocks;
     }
 
-    public void setBlocks(Integer blocks) {
+    public void setBlocks(int blocks) {
         this.blocks = blocks;
     }
 
-    public Integer getSteals() {
+    public int getSteals() {
         return steals;
     }
 
-    public void setSteals(Integer steals) {
+    public void setSteals(int steals) {
         this.steals = steals;
     }
 
-    public Integer getTurnovers() {
+    public int getTurnovers() {
         return turnovers;
     }
 
-    public void setTurnovers(Integer turnovers) {
+    public void setTurnovers(int turnovers) {
         this.turnovers = turnovers;
     }
 
-    public Integer getTotPoints() {
-        return totPoints;
+    public int getTot_points() {
+        return tot_points;
     }
 
-    public void setTotPoints(Integer totPoints) {
-        this.totPoints = totPoints;
+    public void setTot_points(int totPoints) {
+        this.tot_points = totPoints;
     }
+
 
     @Override
     public String toString() {
-        return "FantasyStats {" +
-                "\n\tplayerID=" + playerID +
-                ",\n\t scheduleID=" + scheduleID +
-                ",\n\t clientID=" + clientID +
-                ",\n\t leagueID=" + leagueID +
-                ",\n\t threeP=" + threeP +
-                ",\n\t twoP=" + twoP +
-                ",\n\t freeThrows=" + freeThrows +
+        return "\nFantasyPlayer {" +
+                "\n\t stats_id=" + stats_id +
+                ",\n\t player_id=" + player_id +
+                ",\n\t schedule_id=" + schedule_id +
+                ",\n\t client_id='" + client_id + '\'' +
+                ",\n\t three_points='" + three_points + '\'' +
+                ",\n\t two_points='" + two_points + '\'' +
+                ",\n\t free_throws='" + free_throws + '\'' +
                 ",\n\t rebounds=" + rebounds +
-                ",\n\t assists=" + assists +
-                ",\n\t blocks=" + blocks +
-                ",\n\t steals=" + steals +
+                ",\n\t assists='" + assists + '\'' +
+                ",\n\t blocks='" + blocks + '\'' +
+                ",\n\t steals='" + steals + '\'' +
                 ",\n\t turnovers=" + turnovers +
-                ",\n\t totPoints=" + totPoints +
+                ",\n\t tot_points=" + tot_points +
                 "\n\t}";
     }
+
 }

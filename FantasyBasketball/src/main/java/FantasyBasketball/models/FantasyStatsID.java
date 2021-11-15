@@ -8,6 +8,7 @@ public class FantasyStatsID implements Serializable {
 
     private int scheduleID;
 
+    // Had to create this constructor since the creation of fantasyStats was not working
     public FantasyStatsID(){}
 
     public FantasyStatsID(int playerID, int scheduleID) {

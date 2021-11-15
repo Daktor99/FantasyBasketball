@@ -10,6 +10,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,36 +34,38 @@ public class fantasyStatsController {
 
     @RequestMapping(value = "/fantasyStats", method = RequestMethod.GET)
     public ResponseEntity<?> getFantasyStatsByTemplate(
+            @RequestParam(value = "stats_id", required = false) Integer stats_id,
             @RequestParam(value = "player_id", required = false) Integer player_id,
             @RequestParam(value = "schedule_id", required = false) Integer schedule_id,
-            @RequestParam(value = "league_id", required = false) Integer league_id,
-            @RequestParam(value = "threeP", required = false) Integer threeP,
-            @RequestParam(value = "twoP", required = false) Integer twoP,
-            @RequestParam(value = "freeThrows", required = false) Integer freeThrows,
+            @RequestParam(value = "three_points", required = false) Integer threeP,
+            @RequestParam(value = "two_points", required = false) Integer twoP,
+            @RequestParam(value = "free_throws", required = false) Integer freeThrows,
             @RequestParam(value = "rebounds", required = false) Integer rebounds,
             @RequestParam(value = "assists", required = false) Integer assists,
             @RequestParam(value = "blocks", required = false) Integer blocks,
             @RequestParam(value = "steals", required = false) Integer steals,
             @RequestParam(value = "turnovers", required = false) Integer turnovers,
-            @RequestParam(value = "totPoints", required = false) Integer totPoints) {
+            @RequestParam(value = "tot_points", required = false) Integer totPoints) {
 
         // TODO: Implement authentication so client_id gets filled up automatically
-        Integer client_id = 1;
+        int client_id = 1;
 
         // Log request
         log.info("client with id {} is calling getFantasyStatsByTemplate with " +
+                        "stats_id {}, " +
                         "player_id {}, " +
                         "schedule_id {}, " +
-                        "threeP {}, " +
-                        "twoP {}, " +
-                        "freeThrows {}, " +
+                        "three_points {}, " +
+                        "two_points {}, " +
+                        "free_throws {}, " +
                         "rebounds {}, " +
                         "assists {}, " +
                         "blocks {}, " +
                         "steals {}, " +
                         "turnovers {}, " +
-                        "totPoints {}",
+                        "tot_points {}",
                 client_id,
+                stats_id,
                 player_id,
                 schedule_id,
                 threeP,
@@ -77,10 +80,10 @@ public class fantasyStatsController {
 
         try {
             List<FantasyStats> result =  fantasyStatsService.getStatsByTemplate(
+                    stats_id,
                     player_id,
                     schedule_id,
                     client_id,
-                    league_id,
                     threeP,
                     twoP,
                     freeThrows,
@@ -100,18 +103,21 @@ public class fantasyStatsController {
     }
 
     @RequestMapping(value = "/fantasyStats", method = RequestMethod.POST)
-    public ResponseEntity<?> createStats(@RequestParam FantasyStats stats) {
+    public ResponseEntity<?> createStats(@RequestBody FantasyStats newStats) {
 
         // TODO: Implement authentication so client_id gets filled up automatically
-        Integer client_id = 1;
+        newStats.setClient_id(1);
+
         log.info("client with id {} is creating FantasyStats with " +
                         "player_id {}, " +
                         "schedule_id {}, ",
-                client_id,
-                stats.getPlayerID(),
-                stats.getScheduleID());
+                newStats.getClient_id(),
+                newStats.getPlayer_id(),
+                newStats.getSchedule_id());
+        log.info(newStats.toString());
+
         try {
-            List<FantasyStats> result = fantasyStatsService.postStats(stats);
+            List<FantasyStats> result = fantasyStatsService.postStats(newStats);
             log.info("Fantasy Stats entry has been created successfully");
             return new ResponseEntity<>(result, HttpStatus.OK);
         } catch (DataIntegrityViolationException e) {
@@ -124,16 +130,17 @@ public class fantasyStatsController {
     }
 
     @RequestMapping(value = "/fantasyStats", method = RequestMethod.PUT)
-    public ResponseEntity<?> updateStats(@RequestParam FantasyStats stats) {
+    public ResponseEntity<?> updateStats(@RequestBody FantasyStats stats) {
 
         // TODO: Implement authentication so client_id gets filled up automatically
-        Integer client_id = 1;
+        stats.setClient_id(1);
+
         log.info("client with id {} is updating FantasyStats with " +
                         "player_id {}, " +
                         "schedule_id {}, ",
-                client_id,
-                stats.getPlayerID(),
-                stats.getScheduleID());
+                stats.getClient_id(),
+                stats.getPlayer_id(),
+                stats.getSchedule_id());
 
 
         try{
@@ -148,21 +155,28 @@ public class fantasyStatsController {
     }
 
     @RequestMapping(value = "/fantasyStats", method = RequestMethod.DELETE)
-    public ResponseEntity<?> deleteStats(@RequestParam Integer player_id,
-                                         @RequestParam Integer schedule_id) {
+    public ResponseEntity<?> deleteStats(@RequestParam(value = "stats_id", required = false) Integer stats_id,
+                                         @RequestParam(value = "player_id", required = false) Integer player_id,
+                                         @RequestParam(value = "schedule_id", required = false) Integer schedule_id) {
 
         // TODO: Implement authentication so client_id gets filled up automatically by whoever requests it
-        Integer client_id = 1;
+        int client_id = 1;
         log.info("client with id {} is deleting FantasyStats with " +
                         "player_id {}, " +
                         "schedule_id {}, ",
                 client_id,
                 player_id,
                 schedule_id);
+        if (stats_id == null && player_id == null && schedule_id == null) {
+            log.error("Cannot delete data with no player_id, stats_id, schedule_id");
+            return new ResponseEntity<>("Cannot delete data with no player_id, stats_id, schedule_id",
+                    HttpStatus.BAD_REQUEST);
+        }
+
         try {
-            fantasyStatsService.deleteStats(player_id, schedule_id);
+            List<FantasyStats> deleted_stats = fantasyStatsService.deleteStats(player_id, schedule_id);
             log.info("Fantasy Stats entry has been deleted successfully");
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(deleted_stats, HttpStatus.OK);
         } catch (resourceNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception e) {
