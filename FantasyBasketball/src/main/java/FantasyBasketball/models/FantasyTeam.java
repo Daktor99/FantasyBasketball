@@ -45,7 +45,7 @@ public class FantasyTeam {
 
     @Column(name = "start_pf_id")
     @JsonProperty("start_pf_id")
-    private Integer statPF;
+    private Integer startPF;
 
     @Column(name = "start_c_id")
     @JsonProperty("start_c_id")
@@ -141,12 +141,12 @@ public class FantasyTeam {
         this.startSF = startSF;
     }
 
-    public Integer getStatPF() {
-        return statPF;
+    public Integer getStartPF() {
+        return startPF;
     }
 
-    public void setStatPF(Integer statPF) {
-        this.statPF = statPF;
+    public void setStartPF(Integer startPF) {
+        this.startPF = startPF;
     }
 
     public Integer getStartC() {
@@ -216,7 +216,7 @@ public class FantasyTeam {
                 ",\n\t startPG=" + startPG +
                 ",\n\t startSG=" + startSG +
                 ",\n\t startSF=" + startSF +
-                ",\n\t statPF=" + statPF +
+                ",\n\t statPF=" + startPF +
                 ",\n\t startC=" + startC +
                 ",\n\t bench1=" + bench1 +
                 ",\n\t bench2=" + bench2 +
