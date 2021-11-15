@@ -178,9 +178,16 @@ public class fantasyStatsController {
         }
 
         try {
-            List<FantasyStats> deleted_stats = fantasyStatsService.deleteStats(player_id, schedule_id);
-            log.info("Fantasy Stats entry has been deleted successfully");
-            return new ResponseEntity<>(deleted_stats, HttpStatus.OK);
+            if (stats_id !=  null){
+                fantasyStatsService.deleteStatsByID(stats_id);
+                log.info("Fantasy Stats by stats_id deleted successfully");
+                return new ResponseEntity<>(HttpStatus.OK);
+            }
+            else{
+                List<FantasyStats> deleted_stats = fantasyStatsService.deleteStats(player_id, schedule_id);
+                log.info("Fantasy Stats entry has been deleted successfully");
+                return new ResponseEntity<>(deleted_stats, HttpStatus.OK);
+            }
         } catch (resourceNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception e) {
