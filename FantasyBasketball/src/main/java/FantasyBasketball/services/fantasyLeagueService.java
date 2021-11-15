@@ -206,6 +206,7 @@ public class fantasyLeagueService {
             throw new resourceException("checkPutInputs: Please provide league_id.");
         }
         checkInputs(fantasyLeague);
+    }
 
     // generation and saving of games
     public List<Integer> getTeamIDs(Integer league_id, Integer client_id) throws resourceException {
@@ -248,7 +249,8 @@ public class fantasyLeagueService {
         } // end week looping
 
         // save all of the games in gameList into DB and return the list of all saved games
-        return (List<FantasyGame>) gameRepo.saveAll(gameList);
+        List<FantasyGame> result = (List<FantasyGame>) gameRepo.saveAll(gameList);
+        return result;
     }
 
 }

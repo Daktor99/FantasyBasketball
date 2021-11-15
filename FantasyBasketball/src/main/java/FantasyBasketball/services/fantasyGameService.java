@@ -103,4 +103,12 @@ public class fantasyGameService {
                     "schedule_id, leagueID, home_team_id, away_team_id, game_start_date, game_end_date.");
         }
     }
+
+    public List<FantasyGame> getGamesForWeek(LocalDate current_date) {
+        return gameRepo.findGamesGivenDate(current_date);
+    }
+
+    public void generateStatsForGame(FantasyGame game) {
+
+    }
 }
