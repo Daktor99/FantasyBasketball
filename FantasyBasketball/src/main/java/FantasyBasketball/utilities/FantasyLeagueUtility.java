@@ -13,6 +13,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
 import org.json.JSONException;
@@ -23,40 +24,46 @@ public class FantasyLeagueUtility {
 
     // Try doing this only once as then copy the data from th first copy
 
-
+    // Function to start API calls to get player information from BallDontLie API
     public void API_player_importation(fantasyPlayerRepository playerRepo) throws IOException {
         JSONObject json = readJsonFromUrl("https://www.balldontlie.io/api/v1/players?per_page=100");
         JSONObject API_data = (JSONObject) json.get("meta");
-
+        // Grabbing data page by page
         for (int i = (int) API_data.get("current_page"); i < (int) API_data.get("total_pages"); i++){
             String url = "https://www.balldontlie.io/api/v1/players/?per_page=100&page=" + i;
             API_each_page_to_player(url, playerRepo);
         }
     }
 
+    // Function for each page url call to upload player in database
     public void API_each_page_to_player(String url,fantasyPlayerRepository playerRepo) throws IOException {
         JSONObject json = readJsonFromUrl(url);
         JSONArray json_data = (JSONArray) json.get("data");
 
+        // For each player in the page
         for (int i=0;i<json_data.length();i++){
             JSONObject players_info = (JSONObject) json_data.get(i);
             JSONObject players_team_info = (JSONObject) players_info.get("team");
 
             String pos=(String) players_info.get("position");
-
+            // Current players
             if (!Objects.equals(pos, "") && (players_info.get("height_feet")!= JSONObject.NULL)) {
                 FantasyPlayer player = new FantasyPlayer();
+                // Construct player
                 FantasyPlayer new_player = player.setNewPlayer(0, 1, 1,
                         (String) players_info.get("first_name"),
                         (String) players_info.get("last_name"),
                         (String) players_team_info.get("full_name"),
                         (String) players_info.get("position"), 1,
                         (Integer) players_info.get("id"));
+
+                // Save player in database
                 playerRepo.save(new_player);
             }
         }
     }
 
+    // Convert API response to a String
     private static String readAll(Reader rd) throws IOException {
         StringBuilder sb = new StringBuilder();
         int cp;
@@ -65,11 +72,11 @@ public class FantasyLeagueUtility {
         }
         return sb.toString();
     }
-
+    // Read APi response
     public static JSONObject readJsonFromUrl(String url) throws IOException, JSONException {
         InputStream is = new URL(url).openStream();
         try {
-            BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
+            BufferedReader rd = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
             String jsonText = readAll(rd);
             JSONObject json = new JSONObject(jsonText);
             return json;
