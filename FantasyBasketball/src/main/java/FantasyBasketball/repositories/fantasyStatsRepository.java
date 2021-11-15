@@ -32,6 +32,7 @@ public interface fantasyStatsRepository extends CrudRepository<FantasyStats, Int
     @Query(value = "select * from fantasy_stats where ((:player_id is NULL or player_id = :player_id) and\n" +
             "                           (:schedule_id is NULL or schedule_id = :schedule_id) and\n" +
             "                           (:client_id is NULL or client_id = :client_id) and\n" +
+            "                           (:league_id is NULL or league_id = :league_id) and\n" +
             "                           (:threeP is NULL or threeP = :threeP) and\n" +
             "                           (:twoP is NULL or twoP = :twoP) and\n" +
             "                           (:freeThrows is NULL or freeThrows = :freeThrows) and\n" +
@@ -44,6 +45,7 @@ public interface fantasyStatsRepository extends CrudRepository<FantasyStats, Int
     List<FantasyStats> findByTemplate(@Param("player_id") Integer player_id,
                                       @Param("schedule_id") Integer schedule_id,
                                       @Param("client_id") Integer client_id,
+                                      @Param("league_id") Integer league_id,
                                       @Param("threeP") Integer threeP,
                                       @Param("twoP") Integer twoP,
                                       @Param("freeThrows") Integer freeThrows,

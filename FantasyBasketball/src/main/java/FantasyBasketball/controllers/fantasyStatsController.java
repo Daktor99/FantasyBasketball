@@ -35,6 +35,7 @@ public class fantasyStatsController {
     public ResponseEntity<?> getFantasyStatsByTemplate(
             @RequestParam(value = "player_id", required = false) Integer player_id,
             @RequestParam(value = "schedule_id", required = false) Integer schedule_id,
+            @RequestParam(value = "league_id", required = false) Integer league_id,
             @RequestParam(value = "threeP", required = false) Integer threeP,
             @RequestParam(value = "twoP", required = false) Integer twoP,
             @RequestParam(value = "freeThrows", required = false) Integer freeThrows,
@@ -46,7 +47,7 @@ public class fantasyStatsController {
             @RequestParam(value = "totPoints", required = false) Integer totPoints) {
 
         // TODO: Implement authentication so client_id gets filled up automatically
-        int client_id = 1;
+        Integer client_id = 1;
 
         // Log request
         log.info("client with id {} is calling getFantasyStatsByTemplate with " +
@@ -79,6 +80,7 @@ public class fantasyStatsController {
                     player_id,
                     schedule_id,
                     client_id,
+                    league_id,
                     threeP,
                     twoP,
                     freeThrows,
@@ -101,7 +103,7 @@ public class fantasyStatsController {
     public ResponseEntity<?> createStats(@RequestParam FantasyStats stats) {
 
         // TODO: Implement authentication so client_id gets filled up automatically
-        int client_id = 1;
+        Integer client_id = 1;
         log.info("client with id {} is creating FantasyStats with " +
                         "player_id {}, " +
                         "schedule_id {}, ",
@@ -125,7 +127,7 @@ public class fantasyStatsController {
     public ResponseEntity<?> updateStats(@RequestParam FantasyStats stats) {
 
         // TODO: Implement authentication so client_id gets filled up automatically
-        int client_id = 1;
+        Integer client_id = 1;
         log.info("client with id {} is updating FantasyStats with " +
                         "player_id {}, " +
                         "schedule_id {}, ",
@@ -146,10 +148,11 @@ public class fantasyStatsController {
     }
 
     @RequestMapping(value = "/fantasyStats", method = RequestMethod.DELETE)
-    public ResponseEntity<?> deleteStats(@RequestParam Integer player_id, Integer schedule_id) {
+    public ResponseEntity<?> deleteStats(@RequestParam Integer player_id,
+                                         @RequestParam Integer schedule_id) {
 
         // TODO: Implement authentication so client_id gets filled up automatically by whoever requests it
-        int client_id = 1;
+        Integer client_id = 1;
         log.info("client with id {} is deleting FantasyStats with " +
                         "player_id {}, " +
                         "schedule_id {}, ",
