@@ -33,39 +33,39 @@ public class FantasyStats implements Serializable {
 
     @Column(name = "3_p")
     @JsonProperty("3_p")
-    private int threeP;
+    private Integer threeP;
 
     @Column(name = "2_p")
     @JsonProperty("2_p")
-    private int twoP;
+    private Integer twoP;
 
     @Column(name = "ft")
     @JsonProperty("ft")
-    private int freeThrows;
+    private Integer freeThrows;
 
     @Column(name = "r")
     @JsonProperty("r")
-    private int rebounds;
+    private Integer rebounds;
 
     @Column(name = "a")
     @JsonProperty("a")
-    private int assists;
+    private Integer assists;
 
     @Column(name = "b")
     @JsonProperty("b")
-    private int blocks;
+    private Integer blocks;
 
     @Column(name = "s")
     @JsonProperty("s")
-    private int steals;
+    private Integer steals;
 
     @Column(name = "to")
     @JsonProperty("to")
-    private int turnovers;
+    private Integer turnovers;
 
     @Column(name = "tot_points")
     @JsonProperty("tot_points")
-    private int totPoints;
+    private Integer totPoints;
 
     public FantasyStats(Integer player_id, Integer schedule_id, Integer client_id, Integer league_id) {
         this.playerID = player_id;
@@ -80,7 +80,7 @@ public class FantasyStats implements Serializable {
         return playerID;
     }
 
-    public void setPlayerID(int playerID) {
+    public void setPlayerID(Integer playerID) {
         this.playerID = playerID;
     }
 
@@ -88,7 +88,7 @@ public class FantasyStats implements Serializable {
         return scheduleID;
     }
 
-    public void setScheduleID(int scheduleID) {
+    public void setScheduleID(Integer scheduleID) {
         this.scheduleID = scheduleID;
     }
 
@@ -108,75 +108,75 @@ public class FantasyStats implements Serializable {
         this.leagueID = leagueID;
     }
 
-    public int getThreeP() {
+    public Integer getThreeP() {
         return threeP;
     }
 
-    public void setThreeP(int threeP) {
+    public void setThreeP(Integer threeP) {
         this.threeP = threeP;
     }
 
-    public int getTwoP() {
+    public Integer getTwoP() {
         return twoP;
     }
 
-    public void setTwoP(int twoP) {
+    public void setTwoP(Integer twoP) {
         this.twoP = twoP;
     }
 
-    public int getFreeThrows() {
+    public Integer getFreeThrows() {
         return freeThrows;
     }
 
-    public void setFreeThrows(int freeThrows) {
+    public void setFreeThrows(Integer freeThrows) {
         this.freeThrows = freeThrows;
     }
 
-    public int getRebounds() {
+    public Integer getRebounds() {
         return rebounds;
     }
 
-    public void setRebounds(int rebounds) {
+    public void setRebounds(Integer rebounds) {
         this.rebounds = rebounds;
     }
 
-    public int getAssists() {
+    public Integer getAssists() {
         return assists;
     }
 
-    public void setAssists(int assists) {
+    public void setAssists(Integer assists) {
         this.assists = assists;
     }
 
-    public int getBlocks() {
+    public Integer getBlocks() {
         return blocks;
     }
 
-    public void setBlocks(int blocks) {
+    public void setBlocks(Integer blocks) {
         this.blocks = blocks;
     }
 
-    public int getSteals() {
+    public Integer getSteals() {
         return steals;
     }
 
-    public void setSteals(int steals) {
+    public void setSteals(Integer steals) {
         this.steals = steals;
     }
 
-    public int getTurnovers() {
+    public Integer getTurnovers() {
         return turnovers;
     }
 
-    public void setTurnovers(int turnovers) {
+    public void setTurnovers(Integer turnovers) {
         this.turnovers = turnovers;
     }
 
-    public int getTotPoints() {
+    public Integer getTotPoints() {
         return totPoints;
     }
 
-    public void setTotPoints(int totPoints) {
+    public void setTotPoints(Integer totPoints) {
         this.totPoints = totPoints;
     }
 
