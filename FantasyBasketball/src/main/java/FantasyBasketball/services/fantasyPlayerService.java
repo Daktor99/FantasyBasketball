@@ -80,5 +80,11 @@ public class fantasyPlayerService {
         }
     }
 
+    public List<FantasyPlayer> getAvailablePlayers(Integer team_id, Integer league_id, Integer client_id) {
+        return playerRepo.getAvailablePlayers(team_id,
+                league_id,
+                client_id);
+    }
+
 
 }
