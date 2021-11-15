@@ -42,4 +42,8 @@ public interface fantasyTeamRepository extends CrudRepository<FantasyTeam, Integ
                                      @Param("owner_id") Integer owner_id,
                                      @Param("league_id") Integer league_id);
 
+    @Query(value = "select team_id from fantasy_team where league_id = :league_id and client_id = :client_id", nativeQuery = true)
+    List<Integer> findTeamsInLeague(@Param("league_id") Integer league_id,
+                                    @Param("client_id") Integer client_id);
+
 }
