@@ -179,7 +179,7 @@ public class fantasyLeagueService {
     public void checkPutInputs(FantasyLeague fantasyLeague) throws resourceException {
         if (fantasyLeague.getLeagueID() != null) {
             throw new resourceException("League formatted incorrectly please provide the following:\n" +
-                    "league_name, admin_id, league_size, league_start_date, league_end_date");
+                    "league_name, admin_id, league_size, league_start_date, league_end_date.");
         }
         checkInputs(fantasyLeague);
     }
