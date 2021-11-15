@@ -34,6 +34,7 @@ public interface fantasyStatsRepository extends CrudRepository<FantasyStats, Int
             "                           (:player_id is NULL or player_id = :player_id) and\n" +
             "                           (:schedule_id is NULL or schedule_id = :schedule_id) and\n" +
             "                           (:client_id is NULL or client_id = :client_id) and\n" +
+            "                           (:league_id is NULL or league_id = :league_id) and\n" +
             "                           (:threeP is NULL or three_points = :threeP) and\n" +
             "                           (:twoP is NULL or two_points = :twoP) and\n" +
             "                           (:freeThrows is NULL or free_throws = :freeThrows) and\n" +
@@ -48,6 +49,7 @@ public interface fantasyStatsRepository extends CrudRepository<FantasyStats, Int
             @Param("player_id") Integer player_id,
             @Param("schedule_id") Integer schedule_id,
             @Param("client_id") Integer client_id,
+            @Param("league_id") Integer league_id,
             @Param("threeP") Integer threeP,
             @Param("twoP") Integer twoP,
             @Param("freeThrows") Integer freeThrows,

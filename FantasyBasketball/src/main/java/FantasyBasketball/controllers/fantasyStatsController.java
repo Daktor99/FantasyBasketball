@@ -37,6 +37,7 @@ public class fantasyStatsController {
             @RequestParam(value = "stats_id", required = false) Integer stats_id,
             @RequestParam(value = "player_id", required = false) Integer player_id,
             @RequestParam(value = "schedule_id", required = false) Integer schedule_id,
+            @RequestParam(value = "league_id", required = false) Integer league_id,
             @RequestParam(value = "three_points", required = false) Integer threeP,
             @RequestParam(value = "two_points", required = false) Integer twoP,
             @RequestParam(value = "free_throws", required = false) Integer freeThrows,
@@ -55,6 +56,7 @@ public class fantasyStatsController {
                         "stats_id {}, " +
                         "player_id {}, " +
                         "schedule_id {}, " +
+                        "league_id {}, " +
                         "three_points {}, " +
                         "two_points {}, " +
                         "free_throws {}, " +
@@ -68,6 +70,7 @@ public class fantasyStatsController {
                 stats_id,
                 player_id,
                 schedule_id,
+                league_id,
                 threeP,
                 twoP,
                 freeThrows,
@@ -84,6 +87,7 @@ public class fantasyStatsController {
                     player_id,
                     schedule_id,
                     client_id,
+                    league_id,
                     threeP,
                     twoP,
                     freeThrows,
