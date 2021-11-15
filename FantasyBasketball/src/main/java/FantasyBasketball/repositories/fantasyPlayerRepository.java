@@ -48,4 +48,12 @@ public interface fantasyPlayerRepository extends CrudRepository<FantasyPlayer, I
                                        @Param("nba_team") String nba_team,
                                        @Param("league_id") Integer league_id,
                                        @Param("ball_api_id") Integer ball_api_id);
+
+    @Query(value = "select * from fantasy_player where ((:team_id is NULL) and\n" +
+                    "(:league_id = :league_id) and\n" +
+                    "(:client_id = :client_id))",
+                    nativeQuery = true)
+    List<FantasyPlayer> getAvailablePlayers(@Param("team_id") Integer team_id,
+                                            @Param("league_id") Integer league_id,
+                                            @Param("client_id") Integer client_id);
 }
