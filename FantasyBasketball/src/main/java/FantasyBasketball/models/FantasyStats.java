@@ -14,11 +14,13 @@ public class FantasyStats implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "player_id")
+    @JsonProperty("player_id")
     private Integer playerID;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "schedule_id")
+    @JsonProperty("schedule_id")
     private Integer scheduleID;
 
     @Column(name = "client_id")
@@ -26,30 +28,39 @@ public class FantasyStats implements Serializable {
     private Integer clientID = 1;
 
     @Column(name = "3_p")
+    @JsonProperty("3_p")
     private int threeP;
 
     @Column(name = "2_p")
+    @JsonProperty("2_p")
     private int twoP;
 
     @Column(name = "ft")
+    @JsonProperty("ft")
     private int freeThrows;
 
     @Column(name = "r")
+    @JsonProperty("r")
     private int rebounds;
 
     @Column(name = "a")
+    @JsonProperty("a")
     private int assists;
 
     @Column(name = "b")
+    @JsonProperty("b")
     private int blocks;
 
     @Column(name = "s")
+    @JsonProperty("s")
     private int steals;
 
     @Column(name = "to")
+    @JsonProperty("to")
     private int turnovers;
 
     @Column(name = "tot_points")
+    @JsonProperty("tot_points")
     private int totPoints;
 
     // class methods
