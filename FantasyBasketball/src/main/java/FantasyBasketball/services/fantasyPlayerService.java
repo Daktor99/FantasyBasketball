@@ -34,7 +34,8 @@ public class fantasyPlayerService {
                                           String first_name,
                                           String last_name,
                                           String nba_team,
-                                          Integer league_id) {
+                                          Integer league_id,
+                                                   Integer ballapiID) {
         return playerRepo.findByTemplate(player_id,
                 client_id,
                 team_id,
@@ -42,7 +43,8 @@ public class fantasyPlayerService {
                 first_name,
                 last_name,
                 nba_team,
-                league_id);
+                league_id,
+                ballapiID);
     }
 
     // post operation

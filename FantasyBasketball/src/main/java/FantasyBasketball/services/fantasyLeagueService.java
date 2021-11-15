@@ -9,9 +9,12 @@ import FantasyBasketball.repositories.fantasyGameRepository;
 import FantasyBasketball.repositories.fantasyLeagueRepository;
 import FantasyBasketball.repositories.fantasyTeamRepository;
 import FantasyBasketball.repositories.userRepository;
+import FantasyBasketball.repositories.fantasyPlayerRepository;
+import FantasyBasketball.utilities.FantasyLeagueUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -25,6 +28,9 @@ public class fantasyLeagueService {
 
     @Autowired
     fantasyLeagueRepository leagueRepo;
+
+    @Autowired
+    fantasyPlayerRepository playerRepo;
 
     @Autowired
     fantasyTeamRepository teamRepo;
@@ -95,7 +101,7 @@ public class fantasyLeagueService {
     }
 
     // post operation
-    public List<FantasyLeague> postLeagues(FantasyLeague fantasyLeague) throws resourceException {
+    public List<FantasyLeague> postLeagues(FantasyLeague fantasyLeague) throws resourceException, IOException {
         fantasyLeague.setLeagueID(0);
 
         //This client_id will be updated later
@@ -103,6 +109,10 @@ public class fantasyLeagueService {
 
         if (checkAdmin(fantasyLeague.getAdminID())) {
             if (checkDates(fantasyLeague.getLeagueStartDate(), fantasyLeague.getLeagueEndDate())) {
+                // Player Importation is done when league is posted
+                FantasyLeagueUtility leagueUtility=new FantasyLeagueUtility();
+                leagueUtility.API_player_importation(playerRepo);
+
                 FantasyLeague result = leagueRepo.save(fantasyLeague);
                 return List.of(result);
             } else {
@@ -196,7 +206,6 @@ public class fantasyLeagueService {
             throw new resourceException("checkPutInputs: Please provide league_id.");
         }
         checkInputs(fantasyLeague);
-    }
 
     // generation and saving of games
     public List<Integer> getTeamIDs(Integer league_id, Integer client_id) throws resourceException {

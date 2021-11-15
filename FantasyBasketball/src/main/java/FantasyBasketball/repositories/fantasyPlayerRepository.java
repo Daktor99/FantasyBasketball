@@ -37,7 +37,8 @@ public interface fantasyPlayerRepository extends CrudRepository<FantasyPlayer, I
             "                          (:first_name is NULL or first_name LIKE %:first_name%) and\n" +
             "                          (:last_name is NULL or last_name LIKE %:last_name%) and\n" +
             "                          (:nba_team is NULL or nba_team LIKE %:nba_team% ) and\n" +
-            "                          (:league_id is NULL or league_id = :league_id))", nativeQuery = true)
+            "                          (:league_id is NULL or league_id = :league_id) and\n" +
+            "                          (:ball_api_id is NULL or ball_api_id=:ball_api_id))", nativeQuery = true)
     List<FantasyPlayer> findByTemplate(@Param("player_id") Integer player_id,
                                        @Param("client_id") Integer client_id,
                                        @Param("team_id") Integer team_id,
@@ -45,5 +46,6 @@ public interface fantasyPlayerRepository extends CrudRepository<FantasyPlayer, I
                                        @Param("first_name") String first_name,
                                        @Param("last_name") String last_name,
                                        @Param("nba_team") String nba_team,
-                                       @Param("league_id") Integer league_id);
+                                       @Param("league_id") Integer league_id,
+                                       @Param("ball_api_id") Integer ball_api_id);
 }

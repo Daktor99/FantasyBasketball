@@ -39,7 +39,8 @@ public class fantasyPlayerController {
                                                   @RequestParam(value = "first_name", required = false) String first_name,
                                                   @RequestParam(value = "last_name", required = false) String last_name,
                                                   @RequestParam(value = "nba_team", required = false) String nba_team,
-                                                  @RequestParam(value = "league_id", required = false) Integer league_id) {
+                                                  @RequestParam(value = "league_id", required = false) Integer league_id,
+                                                  @RequestParam(value = "ball_api_id", required = false) Integer ball_api_id) {
 
         try {
 
@@ -51,7 +52,7 @@ public class fantasyPlayerController {
             }
             //This client_id will be updated later
             Integer client_id = 1;
-            List<FantasyPlayer> result = fantasyPlayerService.getPlayerByTemplate(player_id, client_id, team_id, position, first_name, last_name,nba_team,league_id);
+            List<FantasyPlayer> result = fantasyPlayerService.getPlayerByTemplate(player_id, client_id, team_id, position, first_name, last_name,nba_team,league_id,ball_api_id);
             return new ResponseEntity<>(result, HttpStatus.OK);
 
         } catch (Exception e) {
