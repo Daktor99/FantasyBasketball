@@ -2,17 +2,18 @@ package FantasyBasketball.services;
 
 import FantasyBasketball.exceptions.resourceException;
 import FantasyBasketball.exceptions.resourceNotFoundException;
+import FantasyBasketball.models.FantasyGame;
 import FantasyBasketball.models.FantasyLeague;
 import FantasyBasketball.models.User;
+import FantasyBasketball.repositories.fantasyGameRepository;
 import FantasyBasketball.repositories.fantasyLeagueRepository;
+import FantasyBasketball.repositories.fantasyTeamRepository;
 import FantasyBasketball.repositories.userRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 
@@ -24,6 +25,12 @@ public class fantasyLeagueService {
 
     @Autowired
     fantasyLeagueRepository leagueRepo;
+
+    @Autowired
+    fantasyTeamRepository teamRepo;
+
+    @Autowired
+    fantasyGameRepository gameRepo;
 
     // helper function: get clientID
     // TODO: Get clientID from something like... session?
@@ -188,6 +195,50 @@ public class fantasyLeagueService {
                     "league_name, admin_id, league_size, league_start_date, league_end_date");
         }
         checkInputs(fantasyLeague);
+    }
+
+    // generation and saving of games
+    public List<Integer> getTeamIDs(Integer league_id, Integer client_id) throws resourceException {
+
+        List<Integer> result = teamRepo.findTeamsInLeague(league_id, client_id);
+
+        // check to make sure teams registered with league is even
+        if (result.size() % 2 != 0) {
+            throw new resourceException("Number of teams must be even.");
+        }
+        return result;
+    }
+
+    public List<FantasyGame> postGames(Hashtable<LocalDate, List<List<Integer>>> schedule, Integer league_id, Integer client_id) {
+
+        // making list of games to be saved
+        List<FantasyGame> gameList = new ArrayList<>();
+
+        // getting all key of schedule
+        Set<LocalDate> startDates = schedule.keySet();
+
+        // loop through each week of matchups
+        for(LocalDate startDate: startDates) {
+
+            // loop through each individual matchup
+            for(List<Integer> matchup: schedule.get(startDate)) {
+                // initialize variables for insertion
+                Integer home_team_id = matchup.get(0);
+                Integer away_team_id = matchup.get(1);
+                LocalDate endDate    = startDate.plusWeeks(1);
+
+                // initialize FantasyGame instance & make sure scheduleID is not null (0 by default)
+                FantasyGame game = new FantasyGame(league_id, client_id, home_team_id, away_team_id, startDate, endDate);
+                game.setScheduleID(0);
+
+                // add this in list of games to be entered into DB
+                gameList.add(game);
+            } // end matchup looping
+
+        } // end week looping
+
+        // save all of the games in gameList into DB and return the list of all saved games
+        return (List<FantasyGame>) gameRepo.saveAll(gameList);
     }
 
 }
