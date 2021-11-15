@@ -29,7 +29,9 @@ import java.util.List;
 
 @Repository
 public interface fantasyStatsRepository extends CrudRepository<FantasyStats, Integer> {
-    @Query(value = "select * from fantasy_stats where ((:player_id is NULL or player_id = :player_id) and\n" +
+    @Query(value = "select * from fantasy_stats where (" +
+            "                           (:stats_id is NULL or stats_id = :stats_id) and\n " +
+            "                           (:player_id is NULL or player_id = :player_id) and\n" +
             "                           (:schedule_id is NULL or schedule_id = :schedule_id) and\n" +
             "                           (:client_id is NULL or client_id = :client_id) and\n" +
             "                           (:threeP is NULL or three_points = :threeP) and\n" +
@@ -41,30 +43,24 @@ public interface fantasyStatsRepository extends CrudRepository<FantasyStats, Int
             "                           (:steals is NULL or steals = :steals) and\n" +
             "                           (:turnovers is NULL or turnovers = :turnovers) and\n" +
             "                           (:totPoints is NULL or tot_points = :totPoints))", nativeQuery = true)
-    List<FantasyStats> findByTemplate(@Param("player_id") Integer player_id,
-                                      @Param("schedule_id") Integer schedule_id,
-                                      @Param("client_id") Integer client_id,
-                                      @Param("threeP") Integer threeP,
-                                      @Param("twoP") Integer twoP,
-                                      @Param("freeThrows") Integer freeThrows,
-                                      @Param("rebounds") Integer rebounds,
-                                      @Param("assists") Integer assists,
-                                      @Param("blocks") Integer blocks,
-                                      @Param("steals") Integer steals,
-                                      @Param("turnovers") Integer turnovers,
-                                      @Param("totPoints") Integer totPoints);
+    List<FantasyStats> findByTemplate(
+            @Param("stats_id") Integer stats_id,
+            @Param("player_id") Integer player_id,
+            @Param("schedule_id") Integer schedule_id,
+            @Param("client_id") Integer client_id,
+            @Param("threeP") Integer threeP,
+            @Param("twoP") Integer twoP,
+            @Param("freeThrows") Integer freeThrows,
+            @Param("rebounds") Integer rebounds,
+            @Param("assists") Integer assists,
+            @Param("blocks") Integer blocks,
+            @Param("steals") Integer steals,
+            @Param("turnovers") Integer turnovers,
+            @Param("totPoints") Integer totPoints);
 
     @Query(value = "select * from fantasy_stats where ((:player_id is NULL or player_id = :player_id) and\n" +
             "                           (:schedule_id is NULL or schedule_id = :schedule_id))", nativeQuery = true)
     List<FantasyStats> findByPlayerIDAndScheduleID(@Param("player_id") Integer player_id,
                                       @Param("schedule_id") Integer schedule_id);
 
-    @Query(value = "delete from fantasy_stats where (:schedule_id = schedule_id)", nativeQuery = true)
-    List<FantasyStats> deleteByScheduleID(Integer schedule_id);
-
-    @Query(value = "delete from fantasy_stats where (:player_id = player_id)", nativeQuery = true)
-    List<FantasyStats> deleteByPlayerId(Integer player_id);
-
-    @Query(value = "delete from fantasy_stats where ((:schedule_id = schedule_id) and (:player_id = player_id))", nativeQuery = true)
-    List<FantasyStats> deleteByPlayerIDAndScheduleID(Integer schedule_id, Integer player_id);
 }
