@@ -29,9 +29,10 @@ public class fantasyStatsService {
     }
 
     // get operation
-    public List<FantasyStats> getStatsByTemplate(Integer client_id,
-                                                 Integer player_id,
+    public List<FantasyStats> getStatsByTemplate(Integer player_id,
                                                  Integer schedule_id,
+                                                 Integer client_id,
+                                                 Integer league_id,
                                                  Integer threeP,
                                                  Integer twoP,
                                                  Integer freeThrows,
@@ -41,9 +42,10 @@ public class fantasyStatsService {
                                                  Integer steals,
                                                  Integer turnovers,
                                                  Integer totPoints) {
-        return statsRepo.findByTemplate(client_id,
-                player_id,
+        return statsRepo.findByTemplate(player_id,
                 schedule_id,
+                client_id,
+                league_id,
                 threeP,
                 twoP,
                 freeThrows,
