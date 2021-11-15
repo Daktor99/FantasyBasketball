@@ -14,12 +14,12 @@ public class FantasyStats implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "player_id")
-    private int playerID;
+    private Integer playerID;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "schedule_id")
-    private int scheduleID;
+    private Integer scheduleID;
 
     @Column(name = "client_id")
     @JsonProperty("client_id")
@@ -54,7 +54,7 @@ public class FantasyStats implements Serializable {
 
     // class methods
 
-    public int getPlayerID() {
+    public Integer getPlayerID() {
         return playerID;
     }
 
@@ -62,7 +62,7 @@ public class FantasyStats implements Serializable {
         this.playerID = playerID;
     }
 
-    public int getScheduleID() {
+    public Integer getScheduleID() {
         return scheduleID;
     }
 
