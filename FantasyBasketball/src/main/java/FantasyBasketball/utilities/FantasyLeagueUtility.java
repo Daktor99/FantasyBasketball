@@ -14,6 +14,8 @@ import java.io.Reader;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import org.json.JSONException;
@@ -39,7 +41,7 @@ public class FantasyLeagueUtility {
     public void API_each_page_to_player(String url,fantasyPlayerRepository playerRepo) throws IOException {
         JSONObject json = readJsonFromUrl(url);
         JSONArray json_data = (JSONArray) json.get("data");
-
+        List<FantasyPlayer> player_page_list=new ArrayList<>();
         // For each player in the page
         for (int i=0;i<json_data.length();i++){
             JSONObject players_info = (JSONObject) json_data.get(i);
@@ -57,10 +59,12 @@ public class FantasyLeagueUtility {
                         (String) players_info.get("position"), 1,
                         (Integer) players_info.get("id"));
 
-                // Save player in database
-                playerRepo.save(new_player);
+                // Save player in list
+                player_page_list.add(new_player);
             }
         }
+        // Save player in database
+        playerRepo.saveAll(player_page_list);
     }
 
     // Convert API response to a String
