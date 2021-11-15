@@ -4,13 +4,16 @@ import FantasyBasketball.exceptions.resourceException;
 import FantasyBasketball.exceptions.resourceNotFoundException;
 import FantasyBasketball.models.FantasyGame;
 import FantasyBasketball.models.FantasyLeague;
+import FantasyBasketball.models.FantasyPlayer;
 import FantasyBasketball.repositories.fantasyLeagueRepository;
 import FantasyBasketball.services.fantasyLeagueService;
+import FantasyBasketball.services.fantasyPlayerService;
 import FantasyBasketball.services.fantasyTeamService;
 import FantasyBasketball.utilities.robinRoundScheduler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +30,9 @@ public class fantasyLeagueController {
 
     @Autowired
     fantasyLeagueService fantasyLeagueService;
+
+    @Autowired
+    fantasyPlayerService fantasyPlayerService;
 
     private static final Logger log = LoggerFactory.getLogger(fantasyLeagueController.class);
 
@@ -171,4 +177,53 @@ public class fantasyLeagueController {
         }
     }
 
+    @RequestMapping(value = "/fantasyLeague/draft/draftPlayer", method = RequestMethod.PUT)
+    public ResponseEntity<?> updateDraftedPlayer(@RequestBody FantasyPlayer fantasyPlayer) {
+        try {
+
+            log.info("PUT: " + request.getRequestURL());
+            log.info(fantasyPlayer.toString());
+
+            // Regular put
+            List<FantasyPlayer> result = fantasyPlayerService.updateFantasyPlayer(fantasyPlayer);
+            return new ResponseEntity<>(result, HttpStatus.OK);
+
+        } catch (resourceNotFoundException e) {
+            // If league not found in the database, throw exception not found
+            log.error("Exception on PUT: " + e.getMessage());
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (DataIntegrityViolationException e) {
+            log.error("Exception on PUT: ", e);
+            return new ResponseEntity<>("This action is not allowed, please check values and try again.",
+                    HttpStatus.UNPROCESSABLE_ENTITY);
+        } catch (Exception e) {
+            // all other exceptions
+            log.error("Exception on PUT: ", e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @RequestMapping(value = "/fantasyLeague/draft/availablePlayers", method = RequestMethod.GET)
+    public ResponseEntity<?> getAvailablePlayers( @RequestParam(value = "team_id", required = false) Integer team_id,
+                                                  @RequestParam(value = "league_id", required = false) Integer league_id,
+                                                  @RequestParam(value = "client_id", required = false) Integer client_id) {
+        try {
+
+            // log GET request
+            if (request.getQueryString() != null) {
+                log.info("GET: " + request.getRequestURL() + "?" + request.getQueryString());
+            } else {
+                log.info("GET: " + request.getRequestURL());
+            }
+
+            List<FantasyPlayer> result = fantasyPlayerService.getAvailablePlayers(team_id,
+                    league_id,
+                    client_id);
+            return new ResponseEntity<>(result, HttpStatus.OK);
+
+        } catch (Exception e) {
+            log.error("Exception on GET: ", e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
