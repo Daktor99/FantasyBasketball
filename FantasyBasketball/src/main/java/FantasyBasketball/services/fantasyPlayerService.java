@@ -28,24 +28,32 @@ public class fantasyPlayerService {
 
     // get operation
     public List<FantasyPlayer> getPlayerByTemplate(Integer player_id,
+                                                   Integer client_id,
                                           Integer team_id,
                                           String position,
                                           String first_name,
                                           String last_name,
                                           String nba_team,
-                                          Integer league_id) {
+                                          Integer league_id,
+                                                   Integer ballapiID) {
         return playerRepo.findByTemplate(player_id,
+                client_id,
                 team_id,
                 position,
                 first_name,
                 last_name,
                 nba_team,
-                league_id);
+                league_id,
+                ballapiID);
     }
 
     // post operation
     public List<FantasyPlayer> postFantasyPlayer(FantasyPlayer player) {
-        player.setPlayedID(0);
+        player.setPlayerID(0);
+
+        //This client_id will be updated later
+        player.setClientID(1);
+
         FantasyPlayer result = playerRepo.save(player);
         return List.of(result);
     }
@@ -53,6 +61,10 @@ public class fantasyPlayerService {
     // put operation
     public List<FantasyPlayer> updateFantasyPlayer(FantasyPlayer player) throws resourceNotFoundException {
         if(playerRepo.existsById(player.getPlayerID())) {
+
+            //This client_id will be updated later
+            player.setClientID(1);
+
             FantasyPlayer result = playerRepo.save(player);
             return List.of(result);
         } else {
@@ -66,6 +78,12 @@ public class fantasyPlayerService {
         } else {
             throw new resourceNotFoundException("Player not found in DB, cannot delete");
         }
+    }
+
+    public List<FantasyPlayer> getAvailablePlayers(Integer team_id, Integer league_id, Integer client_id) {
+        return playerRepo.getAvailablePlayers(team_id,
+                league_id,
+                client_id);
     }
 
 

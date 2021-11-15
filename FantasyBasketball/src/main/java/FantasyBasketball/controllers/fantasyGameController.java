@@ -51,7 +51,9 @@ public class fantasyGameController {
                 log.info("GET: " + request.getRequestURL());
             }
 
-            List<FantasyGame> result = gameService.getGamesByTemplate(scheduleId, leagueId, homeTeamId, awayTeamId,
+            // This client_id will be updated later
+            Integer client_id = 1;
+            List<FantasyGame> result = gameService.getGamesByTemplate(scheduleId, leagueId, client_id, homeTeamId, awayTeamId,
                                                                         gameStartDate, gameEndDate, winnerId);
             return new ResponseEntity<>(result, HttpStatus.OK);
         } catch (Exception e) {

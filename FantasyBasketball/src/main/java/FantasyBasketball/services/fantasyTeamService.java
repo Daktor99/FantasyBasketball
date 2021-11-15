@@ -30,10 +30,12 @@ public class fantasyTeamService {
 
     // get operation
     public List<FantasyTeam> getTeamsByTemplate(Integer team_id,
+                                                Integer client_id,
                                                 String team_name,
                                                 Integer owner_id,
                                                 Integer league_id) {
         return teamRepo.findByTemplate(team_id,
+                client_id,
                 team_name,
                 owner_id,
                 league_id);
@@ -42,6 +44,9 @@ public class fantasyTeamService {
     // post operation
     public List<FantasyTeam> postTeam(FantasyTeam team) {
         team.setTeamID(0);
+
+        // This client_id will be updated later
+        team.setClientID(1);
         FantasyTeam result = teamRepo.save(team);
         return List.of(result);
     }
@@ -49,6 +54,9 @@ public class fantasyTeamService {
     // put operation
     public List<FantasyTeam> updateTeam(FantasyTeam team) throws resourceNotFoundException {
         if(teamRepo.existsById(team.getTeamID())) {
+
+            //This client_id will be updated later
+            team.setClientID(1);
             FantasyTeam result = teamRepo.save(team);
             return List.of(result);
         } else {

@@ -112,6 +112,44 @@ public class FantasyGame {
 
     // class methods
 
+    public FantasyGame() {
+        this.scheduleID = null;
+        this.leagueID = null;
+        this.clientID = null;
+        this.homeTeamID = null;
+        this.awayTeamID = null;
+        this.gameStartDate = null;
+        this.gameEndDate = null;
+        this.winner = null;
+        this.homePoints = 0;
+        this.awayPoints = 0;
+        this.startHomePG = null;
+        this.startHomeSG = null;
+        this.startHomeSF = null;
+        this.startHomePF = null;
+        this.startHomeC = null;
+        this.homeBench1 = null;
+        this.homeBench2 = null;
+        this.startAwayPG = null;
+        this.startAwaySG = null;
+        this.startAwaySF = null;
+        this.startAwayPF = null;
+        this.startAwayC = null;
+        this.awayBench1 = null;
+        this.awayBench2 = null;
+
+    }
+
+
+    public FantasyGame(Integer leagueID, Integer clientID, Integer homeTeamID, Integer awayTeamID, LocalDate gameStartDate, LocalDate gameEndDate) {
+        this.scheduleID = null;
+        this.leagueID = leagueID;
+        this.clientID = clientID;
+        this.homeTeamID = homeTeamID;
+        this.awayTeamID = awayTeamID;
+        this.gameStartDate = gameStartDate;
+        this.gameEndDate = gameEndDate;
+    }
 
     public Integer getScheduleID() {
         return scheduleID;

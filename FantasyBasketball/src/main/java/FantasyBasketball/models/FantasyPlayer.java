@@ -46,12 +46,27 @@ public class FantasyPlayer {
     @JsonProperty("league_id")
     private Integer leagueID;
 
+    @Column(name = "ball_api_id")
+    @JsonProperty("ball_api_id")
+    private Integer ballapiID;
+
     // class methods
+    public FantasyPlayer() {
+        this.playerID=1;
+        this.teamID=0;
+        this.clientID=1;
+        this.firstName=null;
+        this.lastName=null;
+        this.nbaTeam=null;
+        this.position=null;
+        this.leagueID=1;
+    }
+  
     public Integer getPlayerID() {
         return playerID;
     }
 
-    public void setPlayedID(Integer playerID) {
+    public void setPlayerID(Integer playerID) {
         this.playerID = playerID;
     }
 
@@ -111,6 +126,23 @@ public class FantasyPlayer {
         this.leagueID = leagueID;
     }
 
+    public FantasyPlayer setNewPlayer(Integer playerID, Integer teamID,
+                                      Integer clientID, String firstName,
+                                      String lastName, String nbaTeam,
+                                      String position, Integer leagueID,
+                                      Integer ballapiID) {
+        this.playerID=playerID;
+        this.teamID=teamID;
+        this.clientID=clientID;
+        this.firstName=firstName;
+        this.lastName=lastName;
+        this.nbaTeam=nbaTeam;
+        this.position=position;
+        this.leagueID=leagueID;
+        this.ballapiID=ballapiID;
+        return this;
+    }
+
     //    public int getPoints() {
 //        return points;
 //    }
@@ -132,5 +164,13 @@ public class FantasyPlayer {
                 ",\n\t nbaTeam='" + nbaTeam + '\'' +
                 ",\n\t leagueID=" + leagueID +
                 "\n\t}";
+    }
+
+    public Integer getBallapiID() {
+        return ballapiID;
+    }
+
+    public void setBallapiID(Integer ballapiID) {
+        this.ballapiID = ballapiID;
     }
 }

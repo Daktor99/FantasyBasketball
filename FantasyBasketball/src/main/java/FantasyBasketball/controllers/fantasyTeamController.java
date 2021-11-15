@@ -49,7 +49,9 @@ public class fantasyTeamController {
                 log.info("GET: " + request.getRequestURL());
             }
 
-            List<FantasyTeam> result = fantasyTeamService.getTeamsByTemplate(team_id, team_name, owner_id, league_id);
+            // This client id will be updated later
+            Integer client_id = 1;
+            List<FantasyTeam> result = fantasyTeamService.getTeamsByTemplate(team_id, client_id, team_name, owner_id, league_id);
             return new ResponseEntity<>(result, HttpStatus.OK);
 
         } catch (Exception e) {
