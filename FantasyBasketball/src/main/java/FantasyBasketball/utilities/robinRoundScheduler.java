@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Hashtable;
 import java.util.List;
 
@@ -30,11 +31,13 @@ public class robinRoundScheduler {
     }
 
     public List<Integer> getFirstHalf(List<Integer> teamList) {
-        return teamList.subList(0, teamList.size()/2 - 1);
+        return teamList.subList(0, teamList.size()/2);
     }
 
     public List<Integer> getSecondHalf(List<Integer> teamList) {
-        return teamList.subList(teamList.size()/2, teamList.size() - 1);
+        List<Integer> result = teamList.subList(teamList.size()/2, teamList.size());
+        Collections.reverse(result);
+        return result;
     }
 
     public List<Integer> updateFirstHalf(List<Integer> firstHalf, Integer new_element) {
@@ -68,13 +71,11 @@ public class robinRoundScheduler {
         // Initialize a list of match ups
         List<List<Integer>> matchupList = new ArrayList<>();
 
-        // Initialize a list of elements from first and second half that create a match up
-        List<Integer> matchup = new ArrayList<>();
-
         // Loop through the elements of two lists and create match ups
         for(int i = 0; i < firstHalf.size(); i++) {
 
-            matchup.clear();
+            // Initialize a list of elements from first and second half that create a match up
+            List<Integer> matchup = new ArrayList<>();
             matchup.add(firstHalf.get(i));
             matchup.add(secondHalf.get(i));
 
@@ -83,12 +84,11 @@ public class robinRoundScheduler {
         return matchupList;
     }
 
-    public Hashtable<LocalDate, List<List<Integer>>> createSchedule(Integer numWeeks, List<Integer> teamList) {
+    public Hashtable<LocalDate, List<List<Integer>>> createSchedule() {
 
         // Split the list of teams into first and second half
-        List<Integer> firstHalf= getFirstHalf(teamList);
-
-        List<Integer> secondHalf= getSecondHalf(teamList);
+        List<Integer> firstHalf= getFirstHalf(this.teamList);
+        List<Integer> secondHalf= getSecondHalf(this.teamList);
 
         // Initialize a Hashtable for schedule where key=week number, value=list of match ups
         Hashtable<LocalDate, List<List<Integer>>> schedule = new Hashtable<>();
@@ -97,7 +97,7 @@ public class robinRoundScheduler {
         List<List<Integer>> matchupList;
 
         //Assign a list of match ups for each week
-        for(int i = 0; i < numWeeks; i++) {
+        for(int i = 0; i < this.weeksOfPlay; i++) {
 
             // Create match ups
             matchupList = createMatchups(firstHalf, secondHalf);
