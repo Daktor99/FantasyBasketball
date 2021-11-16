@@ -1,0 +1,164 @@
+{
+	"id": "b4f6dadd-0030-4f69-a19d-6d39269d2657",
+	"name": "Fantasy Stats",
+	"timestamp": "2021-11-16T06:06:01.158Z",
+	"collection_id": "16329253-4584465c-987f-423f-9b8a-6d7992a7a065",
+	"folder_id": 0,
+	"environment_id": "0",
+	"totalPass": 4,
+	"totalFail": 0,
+	"results": [
+		{
+			"id": "12c9110e-a48a-4aad-b996-9097ef653880",
+			"name": "get fantasyStats",
+			"url": "http://localhost:8080/fantasyStats",
+			"time": 50,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response Body Printout= ([{\"stats_id\":1,\"player_id\":14928,\"schedule_id\":86,\"client_id\":1,\"league_id\":1,\"three_points\":0,\"two_points\":0,\"free_throws\":0,\"rebounds\":0,\"assists\":0,\"blocks\":0,\"steals\":0,\"turnovers\":0,\"tot_points\":0},{\"stats_id\":9,\"player_id\":14928,\"schedule_id\":82,\"client_id\":1,\"league_id\":1,\"three_points\":0,\"two_points\":0,\"free_throws\":0,\"rebounds\":0,\"assists\":0,\"blocks\":0,\"steals\":0,\"turnovers\":0,\"tot_points\":0},{\"stats_id\":11,\"player_id\":14928,\"schedule_id\":86,\"client_id\":1,\"league_id\":1,\"three_points\":0,\"two_points\":0,\"free_throws\":0,\"rebounds\":0,\"assists\":0,\"blocks\":0,\"steals\":0,\"turnovers\":0,\"tot_points\":0},{\"stats_id\":12,\"player_id\":14928,\"schedule_id\":86,\"client_id\":1,\"league_id\":1,\"three_points\":0,\"two_points\":0,\"free_throws\":0,\"rebounds\":0,\"assists\":0,\"blocks\":0,\"steals\":0,\"turnovers\":0,\"tot_points\":0},{\"stats_id\":13,\"player_id\":14928,\"schedule_id\":82,\"client_id\":1,\"league_id\":1,\"three_points\":0,\"two_points\":0,\"free_throws\":0,\"rebounds\":0,\"assists\":0,\"blocks\":0,\"steals\":0,\"turnovers\":0,\"tot_points\":0}])": true
+			},
+			"testPassFailCounts": {
+				"Response Body Printout= ([{\"stats_id\":1,\"player_id\":14928,\"schedule_id\":86,\"client_id\":1,\"league_id\":1,\"three_points\":0,\"two_points\":0,\"free_throws\":0,\"rebounds\":0,\"assists\":0,\"blocks\":0,\"steals\":0,\"turnovers\":0,\"tot_points\":0},{\"stats_id\":9,\"player_id\":14928,\"schedule_id\":82,\"client_id\":1,\"league_id\":1,\"three_points\":0,\"two_points\":0,\"free_throws\":0,\"rebounds\":0,\"assists\":0,\"blocks\":0,\"steals\":0,\"turnovers\":0,\"tot_points\":0},{\"stats_id\":11,\"player_id\":14928,\"schedule_id\":86,\"client_id\":1,\"league_id\":1,\"three_points\":0,\"two_points\":0,\"free_throws\":0,\"rebounds\":0,\"assists\":0,\"blocks\":0,\"steals\":0,\"turnovers\":0,\"tot_points\":0},{\"stats_id\":12,\"player_id\":14928,\"schedule_id\":86,\"client_id\":1,\"league_id\":1,\"three_points\":0,\"two_points\":0,\"free_throws\":0,\"rebounds\":0,\"assists\":0,\"blocks\":0,\"steals\":0,\"turnovers\":0,\"tot_points\":0},{\"stats_id\":13,\"player_id\":14928,\"schedule_id\":82,\"client_id\":1,\"league_id\":1,\"three_points\":0,\"two_points\":0,\"free_throws\":0,\"rebounds\":0,\"assists\":0,\"blocks\":0,\"steals\":0,\"turnovers\":0,\"tot_points\":0}])": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				50
+			],
+			"allTests": [
+				{
+					"Response Body Printout= ([{\"stats_id\":1,\"player_id\":14928,\"schedule_id\":86,\"client_id\":1,\"league_id\":1,\"three_points\":0,\"two_points\":0,\"free_throws\":0,\"rebounds\":0,\"assists\":0,\"blocks\":0,\"steals\":0,\"turnovers\":0,\"tot_points\":0},{\"stats_id\":9,\"player_id\":14928,\"schedule_id\":82,\"client_id\":1,\"league_id\":1,\"three_points\":0,\"two_points\":0,\"free_throws\":0,\"rebounds\":0,\"assists\":0,\"blocks\":0,\"steals\":0,\"turnovers\":0,\"tot_points\":0},{\"stats_id\":11,\"player_id\":14928,\"schedule_id\":86,\"client_id\":1,\"league_id\":1,\"three_points\":0,\"two_points\":0,\"free_throws\":0,\"rebounds\":0,\"assists\":0,\"blocks\":0,\"steals\":0,\"turnovers\":0,\"tot_points\":0},{\"stats_id\":12,\"player_id\":14928,\"schedule_id\":86,\"client_id\":1,\"league_id\":1,\"three_points\":0,\"two_points\":0,\"free_throws\":0,\"rebounds\":0,\"assists\":0,\"blocks\":0,\"steals\":0,\"turnovers\":0,\"tot_points\":0},{\"stats_id\":13,\"player_id\":14928,\"schedule_id\":82,\"client_id\":1,\"league_id\":1,\"three_points\":0,\"two_points\":0,\"free_throws\":0,\"rebounds\":0,\"assists\":0,\"blocks\":0,\"steals\":0,\"turnovers\":0,\"tot_points\":0}])": true
+				}
+			]
+		},
+		{
+			"id": "0515cdb1-da5c-47bb-9ee1-d2797a2b8d1d",
+			"name": "get fantasyStats by stats_id",
+			"url": "http://localhost:8080/fantasyStats?stats_id=1",
+			"time": 124,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response Body Printout= ([{\"stats_id\":1,\"player_id\":14928,\"schedule_id\":86,\"client_id\":1,\"league_id\":1,\"three_points\":0,\"two_points\":0,\"free_throws\":0,\"rebounds\":0,\"assists\":0,\"blocks\":0,\"steals\":0,\"turnovers\":0,\"tot_points\":0}])": true
+			},
+			"testPassFailCounts": {
+				"Response Body Printout= ([{\"stats_id\":1,\"player_id\":14928,\"schedule_id\":86,\"client_id\":1,\"league_id\":1,\"three_points\":0,\"two_points\":0,\"free_throws\":0,\"rebounds\":0,\"assists\":0,\"blocks\":0,\"steals\":0,\"turnovers\":0,\"tot_points\":0}])": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				124
+			],
+			"allTests": [
+				{
+					"Response Body Printout= ([{\"stats_id\":1,\"player_id\":14928,\"schedule_id\":86,\"client_id\":1,\"league_id\":1,\"three_points\":0,\"two_points\":0,\"free_throws\":0,\"rebounds\":0,\"assists\":0,\"blocks\":0,\"steals\":0,\"turnovers\":0,\"tot_points\":0}])": true
+				}
+			]
+		},
+		{
+			"id": "a71c8205-da11-4e95-8c33-a34f98eb436d",
+			"name": "add fantasyStats",
+			"url": "http://localhost:8080/fantasyStats",
+			"time": 314,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response Body Printout= ([{\"stats_id\":14,\"player_id\":14928,\"schedule_id\":86,\"client_id\":1,\"league_id\":1,\"three_points\":0,\"two_points\":0,\"free_throws\":0,\"rebounds\":0,\"assists\":0,\"blocks\":0,\"steals\":0,\"turnovers\":0,\"tot_points\":0}])": true
+			},
+			"testPassFailCounts": {
+				"Response Body Printout= ([{\"stats_id\":14,\"player_id\":14928,\"schedule_id\":86,\"client_id\":1,\"league_id\":1,\"three_points\":0,\"two_points\":0,\"free_throws\":0,\"rebounds\":0,\"assists\":0,\"blocks\":0,\"steals\":0,\"turnovers\":0,\"tot_points\":0}])": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				314
+			],
+			"allTests": [
+				{
+					"Response Body Printout= ([{\"stats_id\":14,\"player_id\":14928,\"schedule_id\":86,\"client_id\":1,\"league_id\":1,\"three_points\":0,\"two_points\":0,\"free_throws\":0,\"rebounds\":0,\"assists\":0,\"blocks\":0,\"steals\":0,\"turnovers\":0,\"tot_points\":0}])": true
+				}
+			]
+		},
+		{
+			"id": "0fa56e7b-cbfe-4925-881f-8fd8caa0332f",
+			"name": "update fantasyStats",
+			"url": "http://localhost:8080/fantasyStats",
+			"time": 138,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response Body Printout= ([{\"stats_id\":14,\"player_id\":14928,\"schedule_id\":82,\"client_id\":1,\"league_id\":1,\"three_points\":0,\"two_points\":0,\"free_throws\":0,\"rebounds\":0,\"assists\":0,\"blocks\":0,\"steals\":0,\"turnovers\":0,\"tot_points\":0}])": true
+			},
+			"testPassFailCounts": {
+				"Response Body Printout= ([{\"stats_id\":14,\"player_id\":14928,\"schedule_id\":82,\"client_id\":1,\"league_id\":1,\"three_points\":0,\"two_points\":0,\"free_throws\":0,\"rebounds\":0,\"assists\":0,\"blocks\":0,\"steals\":0,\"turnovers\":0,\"tot_points\":0}])": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				138
+			],
+			"allTests": [
+				{
+					"Response Body Printout= ([{\"stats_id\":14,\"player_id\":14928,\"schedule_id\":82,\"client_id\":1,\"league_id\":1,\"three_points\":0,\"two_points\":0,\"free_throws\":0,\"rebounds\":0,\"assists\":0,\"blocks\":0,\"steals\":0,\"turnovers\":0,\"tot_points\":0}])": true
+				}
+			]
+		},
+		{
+			"id": "73faa1dc-5acc-4c32-ab6b-1b69554c2ce8",
+			"name": "delete fantasyStats",
+			"url": "http://localhost:8080/fantasyStats?stats_id=14&player_id=14928&client_id=1&league_id=1",
+			"time": 158,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				158
+			],
+			"allTests": [
+				{}
+			]
+		}
+	],
+	"count": 1,
+	"totalTime": 784,
+	"collection": {
+		"requests": [
+			{
+				"id": "12c9110e-a48a-4aad-b996-9097ef653880",
+				"method": "GET"
+			},
+			{
+				"id": "0515cdb1-da5c-47bb-9ee1-d2797a2b8d1d",
+				"method": "GET"
+			},
+			{
+				"id": "a71c8205-da11-4e95-8c33-a34f98eb436d",
+				"method": "POST"
+			},
+			{
+				"id": "0fa56e7b-cbfe-4925-881f-8fd8caa0332f",
+				"method": "PUT"
+			},
+			{
+				"id": "73faa1dc-5acc-4c32-ab6b-1b69554c2ce8",
+				"method": "DELETE"
+			}
+		]
+	}
+}

@@ -1,0 +1,164 @@
+{
+	"id": "0d341747-6a5e-48b9-b2be-04c5d7e589ef",
+	"name": "Fantasy League",
+	"timestamp": "2021-11-16T05:06:54.799Z",
+	"collection_id": "16329253-74909756-eba7-4210-b442-adacb917a162",
+	"folder_id": 0,
+	"environment_id": "0",
+	"totalPass": 4,
+	"totalFail": 0,
+	"results": [
+		{
+			"id": "0260e827-d836-495c-adeb-d48515536347",
+			"name": "get fantasyLeagues",
+			"url": "http://localhost:8080/fantasyLeagues",
+			"time": 37,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response Body Printout= ([{\"league_id\":1,\"client_id\":1,\"league_name\":\"Emanuel's League\",\"admin_id\":1,\"league_size\":8,\"league_start_date\":\"2021-08-08\",\"league_end_date\":\"2021-12-30\"},{\"league_id\":2,\"client_id\":1,\"league_name\":\"IZZI LEAGUE MWAHAHA\",\"admin_id\":1,\"league_size\":3,\"league_start_date\":\"2021-12-11\",\"league_end_date\":\"2022-01-30\"},{\"league_id\":3,\"client_id\":1,\"league_name\":\"API\",\"admin_id\":1,\"league_size\":3,\"league_start_date\":\"2021-12-11\",\"league_end_date\":\"2022-01-30\"},{\"league_id\":4,\"client_id\":1,\"league_name\":\"API\",\"admin_id\":1,\"league_size\":3,\"league_start_date\":\"2021-12-11\",\"league_end_date\":\"2022-01-30\"},{\"league_id\":5,\"client_id\":1,\"league_name\":\"API\",\"admin_id\":1,\"league_size\":3,\"league_start_date\":\"2021-12-11\",\"league_end_date\":\"2022-01-30\"},{\"league_id\":6,\"client_id\":1,\"league_name\":\"API\",\"admin_id\":1,\"league_size\":3,\"league_start_date\":\"2021-12-11\",\"league_end_date\":\"2022-01-30\"},{\"league_id\":7,\"client_id\":1,\"league_name\":\"API\",\"admin_id\":1,\"league_size\":3,\"league_start_date\":\"2021-12-11\",\"league_end_date\":\"2022-01-30\"},{\"league_id\":8,\"client_id\":1,\"league_name\":\"Emanuel's Second League\",\"admin_id\":1,\"league_size\":8,\"league_start_date\":\"2021-12-15\",\"league_end_date\":\"2022-05-30\"},{\"league_id\":9,\"client_id\":1,\"league_name\":\"API\",\"admin_id\":1,\"league_size\":3,\"league_start_date\":\"2021-12-11\",\"league_end_date\":\"2022-01-30\"},{\"league_id\":12,\"client_id\":1,\"league_name\":\"API\",\"admin_id\":1,\"league_size\":3,\"league_start_date\":\"2021-12-11\",\"league_end_date\":\"2022-01-30\"},{\"league_id\":13,\"client_id\":1,\"league_name\":\"API\",\"admin_id\":1,\"league_size\":3,\"league_start_date\":\"2021-12-11\",\"league_end_date\":\"2022-01-30\"},{\"league_id\":14,\"client_id\":1,\"league_name\":\"API\",\"admin_id\":1,\"league_size\":3,\"league_start_date\":\"2021-12-11\",\"league_end_date\":\"2022-01-30\"},{\"league_id\":15,\"client_id\":1,\"league_name\":\"API\",\"admin_id\":1,\"league_size\":3,\"league_start_date\":\"2021-12-11\",\"league_end_date\":\"2022-01-30\"},{\"league_id\":16,\"client_id\":1,\"league_name\":\"PATIS third_COLDshower.\",\"admin_id\":1,\"league_size\":8,\"league_start_date\":\"2021-12-12\",\"league_end_date\":\"2021-12-31\"},{\"league_id\":18,\"client_id\":1,\"league_name\":\"blahblahblahblahblah\",\"admin_id\":4,\"league_size\":4,\"league_start_date\":\"2021-12-11\",\"league_end_date\":\"2022-01-30\"},{\"league_id\":24,\"client_id\":1,\"league_name\":\"fake league\",\"admin_id\":4,\"league_size\":4,\"league_start_date\":\"2021-12-12\",\"league_end_date\":\"2022-01-13\"},{\"league_id\":25,\"client_id\":1,\"league_name\":\"API\",\"admin_id\":1,\"league_size\":4,\"league_start_date\":\"2021-12-11\",\"league_end_date\":\"2022-01-30\"},{\"league_id\":26,\"client_id\":1,\"league_name\":\"fake fake league\",\"admin_id\":4,\"league_size\":10,\"league_start_date\":\"2021-12-12\",\"league_end_date\":\"2022-01-13\"},{\"league_id\":36,\"client_id\":1,\"league_name\":\"Test League\",\"admin_id\":1,\"league_size\":10,\"league_start_date\":\"2021-12-08\",\"league_end_date\":\"2021-12-30\"}])": true
+			},
+			"testPassFailCounts": {
+				"Response Body Printout= ([{\"league_id\":1,\"client_id\":1,\"league_name\":\"Emanuel's League\",\"admin_id\":1,\"league_size\":8,\"league_start_date\":\"2021-08-08\",\"league_end_date\":\"2021-12-30\"},{\"league_id\":2,\"client_id\":1,\"league_name\":\"IZZI LEAGUE MWAHAHA\",\"admin_id\":1,\"league_size\":3,\"league_start_date\":\"2021-12-11\",\"league_end_date\":\"2022-01-30\"},{\"league_id\":3,\"client_id\":1,\"league_name\":\"API\",\"admin_id\":1,\"league_size\":3,\"league_start_date\":\"2021-12-11\",\"league_end_date\":\"2022-01-30\"},{\"league_id\":4,\"client_id\":1,\"league_name\":\"API\",\"admin_id\":1,\"league_size\":3,\"league_start_date\":\"2021-12-11\",\"league_end_date\":\"2022-01-30\"},{\"league_id\":5,\"client_id\":1,\"league_name\":\"API\",\"admin_id\":1,\"league_size\":3,\"league_start_date\":\"2021-12-11\",\"league_end_date\":\"2022-01-30\"},{\"league_id\":6,\"client_id\":1,\"league_name\":\"API\",\"admin_id\":1,\"league_size\":3,\"league_start_date\":\"2021-12-11\",\"league_end_date\":\"2022-01-30\"},{\"league_id\":7,\"client_id\":1,\"league_name\":\"API\",\"admin_id\":1,\"league_size\":3,\"league_start_date\":\"2021-12-11\",\"league_end_date\":\"2022-01-30\"},{\"league_id\":8,\"client_id\":1,\"league_name\":\"Emanuel's Second League\",\"admin_id\":1,\"league_size\":8,\"league_start_date\":\"2021-12-15\",\"league_end_date\":\"2022-05-30\"},{\"league_id\":9,\"client_id\":1,\"league_name\":\"API\",\"admin_id\":1,\"league_size\":3,\"league_start_date\":\"2021-12-11\",\"league_end_date\":\"2022-01-30\"},{\"league_id\":12,\"client_id\":1,\"league_name\":\"API\",\"admin_id\":1,\"league_size\":3,\"league_start_date\":\"2021-12-11\",\"league_end_date\":\"2022-01-30\"},{\"league_id\":13,\"client_id\":1,\"league_name\":\"API\",\"admin_id\":1,\"league_size\":3,\"league_start_date\":\"2021-12-11\",\"league_end_date\":\"2022-01-30\"},{\"league_id\":14,\"client_id\":1,\"league_name\":\"API\",\"admin_id\":1,\"league_size\":3,\"league_start_date\":\"2021-12-11\",\"league_end_date\":\"2022-01-30\"},{\"league_id\":15,\"client_id\":1,\"league_name\":\"API\",\"admin_id\":1,\"league_size\":3,\"league_start_date\":\"2021-12-11\",\"league_end_date\":\"2022-01-30\"},{\"league_id\":16,\"client_id\":1,\"league_name\":\"PATIS third_COLDshower.\",\"admin_id\":1,\"league_size\":8,\"league_start_date\":\"2021-12-12\",\"league_end_date\":\"2021-12-31\"},{\"league_id\":18,\"client_id\":1,\"league_name\":\"blahblahblahblahblah\",\"admin_id\":4,\"league_size\":4,\"league_start_date\":\"2021-12-11\",\"league_end_date\":\"2022-01-30\"},{\"league_id\":24,\"client_id\":1,\"league_name\":\"fake league\",\"admin_id\":4,\"league_size\":4,\"league_start_date\":\"2021-12-12\",\"league_end_date\":\"2022-01-13\"},{\"league_id\":25,\"client_id\":1,\"league_name\":\"API\",\"admin_id\":1,\"league_size\":4,\"league_start_date\":\"2021-12-11\",\"league_end_date\":\"2022-01-30\"},{\"league_id\":26,\"client_id\":1,\"league_name\":\"fake fake league\",\"admin_id\":4,\"league_size\":10,\"league_start_date\":\"2021-12-12\",\"league_end_date\":\"2022-01-13\"},{\"league_id\":36,\"client_id\":1,\"league_name\":\"Test League\",\"admin_id\":1,\"league_size\":10,\"league_start_date\":\"2021-12-08\",\"league_end_date\":\"2021-12-30\"}])": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				37
+			],
+			"allTests": [
+				{
+					"Response Body Printout= ([{\"league_id\":1,\"client_id\":1,\"league_name\":\"Emanuel's League\",\"admin_id\":1,\"league_size\":8,\"league_start_date\":\"2021-08-08\",\"league_end_date\":\"2021-12-30\"},{\"league_id\":2,\"client_id\":1,\"league_name\":\"IZZI LEAGUE MWAHAHA\",\"admin_id\":1,\"league_size\":3,\"league_start_date\":\"2021-12-11\",\"league_end_date\":\"2022-01-30\"},{\"league_id\":3,\"client_id\":1,\"league_name\":\"API\",\"admin_id\":1,\"league_size\":3,\"league_start_date\":\"2021-12-11\",\"league_end_date\":\"2022-01-30\"},{\"league_id\":4,\"client_id\":1,\"league_name\":\"API\",\"admin_id\":1,\"league_size\":3,\"league_start_date\":\"2021-12-11\",\"league_end_date\":\"2022-01-30\"},{\"league_id\":5,\"client_id\":1,\"league_name\":\"API\",\"admin_id\":1,\"league_size\":3,\"league_start_date\":\"2021-12-11\",\"league_end_date\":\"2022-01-30\"},{\"league_id\":6,\"client_id\":1,\"league_name\":\"API\",\"admin_id\":1,\"league_size\":3,\"league_start_date\":\"2021-12-11\",\"league_end_date\":\"2022-01-30\"},{\"league_id\":7,\"client_id\":1,\"league_name\":\"API\",\"admin_id\":1,\"league_size\":3,\"league_start_date\":\"2021-12-11\",\"league_end_date\":\"2022-01-30\"},{\"league_id\":8,\"client_id\":1,\"league_name\":\"Emanuel's Second League\",\"admin_id\":1,\"league_size\":8,\"league_start_date\":\"2021-12-15\",\"league_end_date\":\"2022-05-30\"},{\"league_id\":9,\"client_id\":1,\"league_name\":\"API\",\"admin_id\":1,\"league_size\":3,\"league_start_date\":\"2021-12-11\",\"league_end_date\":\"2022-01-30\"},{\"league_id\":12,\"client_id\":1,\"league_name\":\"API\",\"admin_id\":1,\"league_size\":3,\"league_start_date\":\"2021-12-11\",\"league_end_date\":\"2022-01-30\"},{\"league_id\":13,\"client_id\":1,\"league_name\":\"API\",\"admin_id\":1,\"league_size\":3,\"league_start_date\":\"2021-12-11\",\"league_end_date\":\"2022-01-30\"},{\"league_id\":14,\"client_id\":1,\"league_name\":\"API\",\"admin_id\":1,\"league_size\":3,\"league_start_date\":\"2021-12-11\",\"league_end_date\":\"2022-01-30\"},{\"league_id\":15,\"client_id\":1,\"league_name\":\"API\",\"admin_id\":1,\"league_size\":3,\"league_start_date\":\"2021-12-11\",\"league_end_date\":\"2022-01-30\"},{\"league_id\":16,\"client_id\":1,\"league_name\":\"PATIS third_COLDshower.\",\"admin_id\":1,\"league_size\":8,\"league_start_date\":\"2021-12-12\",\"league_end_date\":\"2021-12-31\"},{\"league_id\":18,\"client_id\":1,\"league_name\":\"blahblahblahblahblah\",\"admin_id\":4,\"league_size\":4,\"league_start_date\":\"2021-12-11\",\"league_end_date\":\"2022-01-30\"},{\"league_id\":24,\"client_id\":1,\"league_name\":\"fake league\",\"admin_id\":4,\"league_size\":4,\"league_start_date\":\"2021-12-12\",\"league_end_date\":\"2022-01-13\"},{\"league_id\":25,\"client_id\":1,\"league_name\":\"API\",\"admin_id\":1,\"league_size\":4,\"league_start_date\":\"2021-12-11\",\"league_end_date\":\"2022-01-30\"},{\"league_id\":26,\"client_id\":1,\"league_name\":\"fake fake league\",\"admin_id\":4,\"league_size\":10,\"league_start_date\":\"2021-12-12\",\"league_end_date\":\"2022-01-13\"},{\"league_id\":36,\"client_id\":1,\"league_name\":\"Test League\",\"admin_id\":1,\"league_size\":10,\"league_start_date\":\"2021-12-08\",\"league_end_date\":\"2021-12-30\"}])": true
+				}
+			]
+		},
+		{
+			"id": "e6d1f31e-08ad-41c1-8741-f5245a1828c3",
+			"name": "get fantasyLeague by league_id",
+			"url": "http://localhost:8080/fantasyLeagues?league_id=1",
+			"time": 16,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response Body Printout= ([{\"league_id\":1,\"client_id\":1,\"league_name\":\"Emanuel's League\",\"admin_id\":1,\"league_size\":8,\"league_start_date\":\"2021-08-08\",\"league_end_date\":\"2021-12-30\"}])": true
+			},
+			"testPassFailCounts": {
+				"Response Body Printout= ([{\"league_id\":1,\"client_id\":1,\"league_name\":\"Emanuel's League\",\"admin_id\":1,\"league_size\":8,\"league_start_date\":\"2021-08-08\",\"league_end_date\":\"2021-12-30\"}])": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				16
+			],
+			"allTests": [
+				{
+					"Response Body Printout= ([{\"league_id\":1,\"client_id\":1,\"league_name\":\"Emanuel's League\",\"admin_id\":1,\"league_size\":8,\"league_start_date\":\"2021-08-08\",\"league_end_date\":\"2021-12-30\"}])": true
+				}
+			]
+		},
+		{
+			"id": "18964281-6843-4571-b516-44a70661255d",
+			"name": "add fantasyLeague",
+			"url": "http://localhost:8080/fantasyLeagues",
+			"time": 132,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Response Body Printout= ([{\"league_id\":39,\"client_id\":1,\"league_name\":\"Test League\",\"admin_id\":1,\"league_size\":10,\"league_start_date\":\"2021-12-08\",\"league_end_date\":\"2021-12-30\"}])": true
+			},
+			"testPassFailCounts": {
+				"Response Body Printout= ([{\"league_id\":39,\"client_id\":1,\"league_name\":\"Test League\",\"admin_id\":1,\"league_size\":10,\"league_start_date\":\"2021-12-08\",\"league_end_date\":\"2021-12-30\"}])": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				132
+			],
+			"allTests": [
+				{
+					"Response Body Printout= ([{\"league_id\":39,\"client_id\":1,\"league_name\":\"Test League\",\"admin_id\":1,\"league_size\":10,\"league_start_date\":\"2021-12-08\",\"league_end_date\":\"2021-12-30\"}])": true
+				}
+			]
+		},
+		{
+			"id": "c1625b7e-fd9d-44ac-b9c2-e9e274e4eb62",
+			"name": "update fantasyLeague",
+			"url": "http://localhost:8080/fantasyLeagues",
+			"time": 113,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response Body Printout= ([{\"league_id\":39,\"client_id\":1,\"league_name\":\"Test League put\",\"admin_id\":1,\"league_size\":10,\"league_start_date\":\"2021-12-08\",\"league_end_date\":\"2021-12-30\"}])": true
+			},
+			"testPassFailCounts": {
+				"Response Body Printout= ([{\"league_id\":39,\"client_id\":1,\"league_name\":\"Test League put\",\"admin_id\":1,\"league_size\":10,\"league_start_date\":\"2021-12-08\",\"league_end_date\":\"2021-12-30\"}])": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				113
+			],
+			"allTests": [
+				{
+					"Response Body Printout= ([{\"league_id\":39,\"client_id\":1,\"league_name\":\"Test League put\",\"admin_id\":1,\"league_size\":10,\"league_start_date\":\"2021-12-08\",\"league_end_date\":\"2021-12-30\"}])": true
+				}
+			]
+		},
+		{
+			"id": "7026d2b3-6286-4fa3-8a30-85f498846def",
+			"name": "delete fantasyLeague",
+			"url": "http://localhost:8080/fantasyLeagues?league_id=39",
+			"time": 122,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				122
+			],
+			"allTests": [
+				{}
+			]
+		}
+	],
+	"count": 1,
+	"totalTime": 420,
+	"collection": {
+		"requests": [
+			{
+				"id": "0260e827-d836-495c-adeb-d48515536347",
+				"method": "GET"
+			},
+			{
+				"id": "e6d1f31e-08ad-41c1-8741-f5245a1828c3",
+				"method": "GET"
+			},
+			{
+				"id": "18964281-6843-4571-b516-44a70661255d",
+				"method": "POST"
+			},
+			{
+				"id": "c1625b7e-fd9d-44ac-b9c2-e9e274e4eb62",
+				"method": "PUT"
+			},
+			{
+				"id": "7026d2b3-6286-4fa3-8a30-85f498846def",
+				"method": "DELETE"
+			}
+		]
+	}
+}

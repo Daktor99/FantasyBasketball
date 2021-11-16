@@ -1,0 +1,164 @@
+{
+	"id": "59d4bbc8-f46e-4c84-b97e-fc4a65d82dd6",
+	"name": "FantasyTeams",
+	"timestamp": "2021-11-16T04:13:03.619Z",
+	"collection_id": "16329253-8114e3a6-74a8-407f-8425-67f70172a103",
+	"folder_id": 0,
+	"environment_id": "0",
+	"totalPass": 4,
+	"totalFail": 0,
+	"results": [
+		{
+			"id": "cdcf91f3-936d-4926-aa28-acbbc99598b6",
+			"name": "get fantasyTeam",
+			"url": "http://localhost:8080/fantasyTeams",
+			"time": 38,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response Body Printout= ([{\"team_id\":1,\"client_id\":1,\"team_name\":\"Emanuel's Team\",\"owner_id\":1,\"league_id\":1,\"start_pg_id\":7243,\"start_sg_id\":6876,\"start_sf_id\":6829,\"start_pf_id\":7325,\"start_c_id\":6718,\"bench_1_id\":7369,\"bench_2_id\":6647,\"team_wins\":0,\"team_losses\":0,\"points_scored\":0,\"points_against\":0},{\"team_id\":3,\"client_id\":1,\"team_name\":\"Pati's Team\",\"owner_id\":2,\"league_id\":1,\"start_pg_id\":6732,\"start_sg_id\":6866,\"start_sf_id\":7008,\"start_pf_id\":7061,\"start_c_id\":6728,\"bench_1_id\":7118,\"bench_2_id\":7081,\"team_wins\":0,\"team_losses\":0,\"points_scored\":0,\"points_against\":0},{\"team_id\":4,\"client_id\":1,\"team_name\":\"Tom's Team\",\"owner_id\":3,\"league_id\":1,\"start_pg_id\":null,\"start_sg_id\":null,\"start_sf_id\":null,\"start_pf_id\":null,\"start_c_id\":null,\"bench_1_id\":null,\"bench_2_id\":null,\"team_wins\":0,\"team_losses\":0,\"points_scored\":0,\"points_against\":0},{\"team_id\":5,\"client_id\":1,\"team_name\":\"Izzi's Team\",\"owner_id\":4,\"league_id\":1,\"start_pg_id\":null,\"start_sg_id\":null,\"start_sf_id\":null,\"start_pf_id\":null,\"start_c_id\":null,\"bench_1_id\":null,\"bench_2_id\":null,\"team_wins\":0,\"team_losses\":0,\"points_scored\":0,\"points_against\":0},{\"team_id\":6,\"client_id\":1,\"team_name\":\"Steph's Team\",\"owner_id\":5,\"league_id\":1,\"start_pg_id\":null,\"start_sg_id\":null,\"start_sf_id\":null,\"start_pf_id\":null,\"start_c_id\":null,\"bench_1_id\":null,\"bench_2_id\":null,\"team_wins\":0,\"team_losses\":0,\"points_scored\":0,\"points_against\":0},{\"team_id\":7,\"client_id\":1,\"team_name\":\"Marion's Team\",\"owner_id\":6,\"league_id\":1,\"start_pg_id\":null,\"start_sg_id\":null,\"start_sf_id\":null,\"start_pf_id\":null,\"start_c_id\":null,\"bench_1_id\":null,\"bench_2_id\":null,\"team_wins\":0,\"team_losses\":0,\"points_scored\":0,\"points_against\":0}])": true
+			},
+			"testPassFailCounts": {
+				"Response Body Printout= ([{\"team_id\":1,\"client_id\":1,\"team_name\":\"Emanuel's Team\",\"owner_id\":1,\"league_id\":1,\"start_pg_id\":7243,\"start_sg_id\":6876,\"start_sf_id\":6829,\"start_pf_id\":7325,\"start_c_id\":6718,\"bench_1_id\":7369,\"bench_2_id\":6647,\"team_wins\":0,\"team_losses\":0,\"points_scored\":0,\"points_against\":0},{\"team_id\":3,\"client_id\":1,\"team_name\":\"Pati's Team\",\"owner_id\":2,\"league_id\":1,\"start_pg_id\":6732,\"start_sg_id\":6866,\"start_sf_id\":7008,\"start_pf_id\":7061,\"start_c_id\":6728,\"bench_1_id\":7118,\"bench_2_id\":7081,\"team_wins\":0,\"team_losses\":0,\"points_scored\":0,\"points_against\":0},{\"team_id\":4,\"client_id\":1,\"team_name\":\"Tom's Team\",\"owner_id\":3,\"league_id\":1,\"start_pg_id\":null,\"start_sg_id\":null,\"start_sf_id\":null,\"start_pf_id\":null,\"start_c_id\":null,\"bench_1_id\":null,\"bench_2_id\":null,\"team_wins\":0,\"team_losses\":0,\"points_scored\":0,\"points_against\":0},{\"team_id\":5,\"client_id\":1,\"team_name\":\"Izzi's Team\",\"owner_id\":4,\"league_id\":1,\"start_pg_id\":null,\"start_sg_id\":null,\"start_sf_id\":null,\"start_pf_id\":null,\"start_c_id\":null,\"bench_1_id\":null,\"bench_2_id\":null,\"team_wins\":0,\"team_losses\":0,\"points_scored\":0,\"points_against\":0},{\"team_id\":6,\"client_id\":1,\"team_name\":\"Steph's Team\",\"owner_id\":5,\"league_id\":1,\"start_pg_id\":null,\"start_sg_id\":null,\"start_sf_id\":null,\"start_pf_id\":null,\"start_c_id\":null,\"bench_1_id\":null,\"bench_2_id\":null,\"team_wins\":0,\"team_losses\":0,\"points_scored\":0,\"points_against\":0},{\"team_id\":7,\"client_id\":1,\"team_name\":\"Marion's Team\",\"owner_id\":6,\"league_id\":1,\"start_pg_id\":null,\"start_sg_id\":null,\"start_sf_id\":null,\"start_pf_id\":null,\"start_c_id\":null,\"bench_1_id\":null,\"bench_2_id\":null,\"team_wins\":0,\"team_losses\":0,\"points_scored\":0,\"points_against\":0}])": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				38
+			],
+			"allTests": [
+				{
+					"Response Body Printout= ([{\"team_id\":1,\"client_id\":1,\"team_name\":\"Emanuel's Team\",\"owner_id\":1,\"league_id\":1,\"start_pg_id\":7243,\"start_sg_id\":6876,\"start_sf_id\":6829,\"start_pf_id\":7325,\"start_c_id\":6718,\"bench_1_id\":7369,\"bench_2_id\":6647,\"team_wins\":0,\"team_losses\":0,\"points_scored\":0,\"points_against\":0},{\"team_id\":3,\"client_id\":1,\"team_name\":\"Pati's Team\",\"owner_id\":2,\"league_id\":1,\"start_pg_id\":6732,\"start_sg_id\":6866,\"start_sf_id\":7008,\"start_pf_id\":7061,\"start_c_id\":6728,\"bench_1_id\":7118,\"bench_2_id\":7081,\"team_wins\":0,\"team_losses\":0,\"points_scored\":0,\"points_against\":0},{\"team_id\":4,\"client_id\":1,\"team_name\":\"Tom's Team\",\"owner_id\":3,\"league_id\":1,\"start_pg_id\":null,\"start_sg_id\":null,\"start_sf_id\":null,\"start_pf_id\":null,\"start_c_id\":null,\"bench_1_id\":null,\"bench_2_id\":null,\"team_wins\":0,\"team_losses\":0,\"points_scored\":0,\"points_against\":0},{\"team_id\":5,\"client_id\":1,\"team_name\":\"Izzi's Team\",\"owner_id\":4,\"league_id\":1,\"start_pg_id\":null,\"start_sg_id\":null,\"start_sf_id\":null,\"start_pf_id\":null,\"start_c_id\":null,\"bench_1_id\":null,\"bench_2_id\":null,\"team_wins\":0,\"team_losses\":0,\"points_scored\":0,\"points_against\":0},{\"team_id\":6,\"client_id\":1,\"team_name\":\"Steph's Team\",\"owner_id\":5,\"league_id\":1,\"start_pg_id\":null,\"start_sg_id\":null,\"start_sf_id\":null,\"start_pf_id\":null,\"start_c_id\":null,\"bench_1_id\":null,\"bench_2_id\":null,\"team_wins\":0,\"team_losses\":0,\"points_scored\":0,\"points_against\":0},{\"team_id\":7,\"client_id\":1,\"team_name\":\"Marion's Team\",\"owner_id\":6,\"league_id\":1,\"start_pg_id\":null,\"start_sg_id\":null,\"start_sf_id\":null,\"start_pf_id\":null,\"start_c_id\":null,\"bench_1_id\":null,\"bench_2_id\":null,\"team_wins\":0,\"team_losses\":0,\"points_scored\":0,\"points_against\":0}])": true
+				}
+			]
+		},
+		{
+			"id": "b0f4f89b-fc62-4218-89f2-97c5880e4549",
+			"name": "get fantasyTeam by team_id",
+			"url": "http://localhost:8080/fantasyTeams?team_id=1",
+			"time": 16,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response Body Printout= ([{\"team_id\":1,\"client_id\":1,\"team_name\":\"Emanuel's Team\",\"owner_id\":1,\"league_id\":1,\"start_pg_id\":7243,\"start_sg_id\":6876,\"start_sf_id\":6829,\"start_pf_id\":7325,\"start_c_id\":6718,\"bench_1_id\":7369,\"bench_2_id\":6647,\"team_wins\":0,\"team_losses\":0,\"points_scored\":0,\"points_against\":0}])": true
+			},
+			"testPassFailCounts": {
+				"Response Body Printout= ([{\"team_id\":1,\"client_id\":1,\"team_name\":\"Emanuel's Team\",\"owner_id\":1,\"league_id\":1,\"start_pg_id\":7243,\"start_sg_id\":6876,\"start_sf_id\":6829,\"start_pf_id\":7325,\"start_c_id\":6718,\"bench_1_id\":7369,\"bench_2_id\":6647,\"team_wins\":0,\"team_losses\":0,\"points_scored\":0,\"points_against\":0}])": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				16
+			],
+			"allTests": [
+				{
+					"Response Body Printout= ([{\"team_id\":1,\"client_id\":1,\"team_name\":\"Emanuel's Team\",\"owner_id\":1,\"league_id\":1,\"start_pg_id\":7243,\"start_sg_id\":6876,\"start_sf_id\":6829,\"start_pf_id\":7325,\"start_c_id\":6718,\"bench_1_id\":7369,\"bench_2_id\":6647,\"team_wins\":0,\"team_losses\":0,\"points_scored\":0,\"points_against\":0}])": true
+				}
+			]
+		},
+		{
+			"id": "3244a6a7-808d-4e57-ba73-0d0a14ae64cf",
+			"name": "add fantasyTeam",
+			"url": "http://localhost:8080/fantasyTeams",
+			"time": 62,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Response Body Printout= ([{\"team_id\":10,\"client_id\":1,\"team_name\":\"Test Team\",\"owner_id\":1,\"league_id\":1,\"start_pg_id\":null,\"start_sg_id\":null,\"start_sf_id\":null,\"start_pf_id\":null,\"start_c_id\":null,\"bench_1_id\":null,\"bench_2_id\":null,\"team_wins\":0,\"team_losses\":0,\"points_scored\":0,\"points_against\":0}])": true
+			},
+			"testPassFailCounts": {
+				"Response Body Printout= ([{\"team_id\":10,\"client_id\":1,\"team_name\":\"Test Team\",\"owner_id\":1,\"league_id\":1,\"start_pg_id\":null,\"start_sg_id\":null,\"start_sf_id\":null,\"start_pf_id\":null,\"start_c_id\":null,\"bench_1_id\":null,\"bench_2_id\":null,\"team_wins\":0,\"team_losses\":0,\"points_scored\":0,\"points_against\":0}])": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				62
+			],
+			"allTests": [
+				{
+					"Response Body Printout= ([{\"team_id\":10,\"client_id\":1,\"team_name\":\"Test Team\",\"owner_id\":1,\"league_id\":1,\"start_pg_id\":null,\"start_sg_id\":null,\"start_sf_id\":null,\"start_pf_id\":null,\"start_c_id\":null,\"bench_1_id\":null,\"bench_2_id\":null,\"team_wins\":0,\"team_losses\":0,\"points_scored\":0,\"points_against\":0}])": true
+				}
+			]
+		},
+		{
+			"id": "1363bb2b-94a0-4308-9997-94484d6bb4d5",
+			"name": "update fantasyTeam",
+			"url": "http://localhost:8080/fantasyTeams",
+			"time": 110,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response Body Printout= ([{\"team_id\":10,\"client_id\":1,\"team_name\":\"Test Team\",\"owner_id\":1,\"league_id\":1,\"start_pg_id\":null,\"start_sg_id\":null,\"start_sf_id\":null,\"start_pf_id\":null,\"start_c_id\":null,\"bench_1_id\":null,\"bench_2_id\":null,\"team_wins\":0,\"team_losses\":0,\"points_scored\":0,\"points_against\":0}])": true
+			},
+			"testPassFailCounts": {
+				"Response Body Printout= ([{\"team_id\":10,\"client_id\":1,\"team_name\":\"Test Team\",\"owner_id\":1,\"league_id\":1,\"start_pg_id\":null,\"start_sg_id\":null,\"start_sf_id\":null,\"start_pf_id\":null,\"start_c_id\":null,\"bench_1_id\":null,\"bench_2_id\":null,\"team_wins\":0,\"team_losses\":0,\"points_scored\":0,\"points_against\":0}])": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				110
+			],
+			"allTests": [
+				{
+					"Response Body Printout= ([{\"team_id\":10,\"client_id\":1,\"team_name\":\"Test Team\",\"owner_id\":1,\"league_id\":1,\"start_pg_id\":null,\"start_sg_id\":null,\"start_sf_id\":null,\"start_pf_id\":null,\"start_c_id\":null,\"bench_1_id\":null,\"bench_2_id\":null,\"team_wins\":0,\"team_losses\":0,\"points_scored\":0,\"points_against\":0}])": true
+				}
+			]
+		},
+		{
+			"id": "08077340-8c4b-4312-97a9-e0b1b22cad0e",
+			"name": "delete fantasyTeam",
+			"url": "http://localhost:8080/fantasyTeams?team_id=10",
+			"time": 126,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				126
+			],
+			"allTests": [
+				{}
+			]
+		}
+	],
+	"count": 1,
+	"totalTime": 352,
+	"collection": {
+		"requests": [
+			{
+				"id": "cdcf91f3-936d-4926-aa28-acbbc99598b6",
+				"method": "GET"
+			},
+			{
+				"id": "b0f4f89b-fc62-4218-89f2-97c5880e4549",
+				"method": "GET"
+			},
+			{
+				"id": "3244a6a7-808d-4e57-ba73-0d0a14ae64cf",
+				"method": "POST"
+			},
+			{
+				"id": "1363bb2b-94a0-4308-9997-94484d6bb4d5",
+				"method": "PUT"
+			},
+			{
+				"id": "08077340-8c4b-4312-97a9-e0b1b22cad0e",
+				"method": "DELETE"
+			}
+		]
+	}
+}

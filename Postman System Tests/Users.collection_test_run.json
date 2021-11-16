@@ -1,0 +1,164 @@
+{
+	"id": "e53b8938-68a0-46b3-aea1-341fcff54356",
+	"name": "Users",
+	"timestamp": "2021-11-16T03:36:46.416Z",
+	"collection_id": "16329253-b6ce2a98-7094-4761-8fac-fa753be2e222",
+	"folder_id": 0,
+	"environment_id": "0",
+	"totalPass": 4,
+	"totalFail": 0,
+	"results": [
+		{
+			"id": "4a07dc27-0bcf-427c-b660-a51367963177",
+			"name": "get users",
+			"url": "http://localhost:8080/users",
+			"time": 38,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response Body Printout= ([{\"user_id\":1,\"client_id\":1,\"username\":\"edaka\",\"email\":\"emanueldaka@gmail.com\",\"first_name\":\"Emanuel\",\"last_name\":\"Daka\"},{\"user_id\":2,\"client_id\":1,\"username\":\"pap\",\"email\":\"pati@gmail.com\",\"first_name\":\"Patrycja\",\"last_name\":\"Przewoznik\"},{\"user_id\":3,\"client_id\":1,\"username\":\"tom\",\"email\":\"tom@gmail.com\",\"first_name\":\"Tom\",\"last_name\":\"Murdia\"},{\"user_id\":4,\"client_id\":1,\"username\":\"izzi\",\"email\":\"izzi@gmail.com\",\"first_name\":\"Isabella\",\"last_name\":\"Cho\"},{\"user_id\":5,\"client_id\":1,\"username\":\"steph\",\"email\":\"stephane@gmail.com\",\"first_name\":\"Stephane\",\"last_name\":\"Meunier\"},{\"user_id\":6,\"client_id\":1,\"username\":\"mdaka\",\"email\":\"mariondaka@gmail.com\",\"first_name\":\"Marion\",\"last_name\":\"Daka\"},{\"user_id\":7,\"client_id\":1,\"username\":\"tdaka\",\"email\":\"tatidaka@gmail.com\",\"first_name\":\"Tatjana\",\"last_name\":\"Daka\"},{\"user_id\":20,\"client_id\":1,\"username\":\"stoast\",\"email\":\"sophietoast@gmail.com\",\"first_name\":\"Sophie\",\"last_name\":\"Toastier\"}])": true
+			},
+			"testPassFailCounts": {
+				"Response Body Printout= ([{\"user_id\":1,\"client_id\":1,\"username\":\"edaka\",\"email\":\"emanueldaka@gmail.com\",\"first_name\":\"Emanuel\",\"last_name\":\"Daka\"},{\"user_id\":2,\"client_id\":1,\"username\":\"pap\",\"email\":\"pati@gmail.com\",\"first_name\":\"Patrycja\",\"last_name\":\"Przewoznik\"},{\"user_id\":3,\"client_id\":1,\"username\":\"tom\",\"email\":\"tom@gmail.com\",\"first_name\":\"Tom\",\"last_name\":\"Murdia\"},{\"user_id\":4,\"client_id\":1,\"username\":\"izzi\",\"email\":\"izzi@gmail.com\",\"first_name\":\"Isabella\",\"last_name\":\"Cho\"},{\"user_id\":5,\"client_id\":1,\"username\":\"steph\",\"email\":\"stephane@gmail.com\",\"first_name\":\"Stephane\",\"last_name\":\"Meunier\"},{\"user_id\":6,\"client_id\":1,\"username\":\"mdaka\",\"email\":\"mariondaka@gmail.com\",\"first_name\":\"Marion\",\"last_name\":\"Daka\"},{\"user_id\":7,\"client_id\":1,\"username\":\"tdaka\",\"email\":\"tatidaka@gmail.com\",\"first_name\":\"Tatjana\",\"last_name\":\"Daka\"},{\"user_id\":20,\"client_id\":1,\"username\":\"stoast\",\"email\":\"sophietoast@gmail.com\",\"first_name\":\"Sophie\",\"last_name\":\"Toastier\"}])": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				38
+			],
+			"allTests": [
+				{
+					"Response Body Printout= ([{\"user_id\":1,\"client_id\":1,\"username\":\"edaka\",\"email\":\"emanueldaka@gmail.com\",\"first_name\":\"Emanuel\",\"last_name\":\"Daka\"},{\"user_id\":2,\"client_id\":1,\"username\":\"pap\",\"email\":\"pati@gmail.com\",\"first_name\":\"Patrycja\",\"last_name\":\"Przewoznik\"},{\"user_id\":3,\"client_id\":1,\"username\":\"tom\",\"email\":\"tom@gmail.com\",\"first_name\":\"Tom\",\"last_name\":\"Murdia\"},{\"user_id\":4,\"client_id\":1,\"username\":\"izzi\",\"email\":\"izzi@gmail.com\",\"first_name\":\"Isabella\",\"last_name\":\"Cho\"},{\"user_id\":5,\"client_id\":1,\"username\":\"steph\",\"email\":\"stephane@gmail.com\",\"first_name\":\"Stephane\",\"last_name\":\"Meunier\"},{\"user_id\":6,\"client_id\":1,\"username\":\"mdaka\",\"email\":\"mariondaka@gmail.com\",\"first_name\":\"Marion\",\"last_name\":\"Daka\"},{\"user_id\":7,\"client_id\":1,\"username\":\"tdaka\",\"email\":\"tatidaka@gmail.com\",\"first_name\":\"Tatjana\",\"last_name\":\"Daka\"},{\"user_id\":20,\"client_id\":1,\"username\":\"stoast\",\"email\":\"sophietoast@gmail.com\",\"first_name\":\"Sophie\",\"last_name\":\"Toastier\"}])": true
+				}
+			]
+		},
+		{
+			"id": "58b498d5-b483-4a5d-a3fe-4d6fd305e065",
+			"name": "get user by user_id",
+			"url": "http://localhost:8080/users?user_id=1",
+			"time": 21,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response Body Printout= ([{\"user_id\":1,\"client_id\":1,\"username\":\"edaka\",\"email\":\"emanueldaka@gmail.com\",\"first_name\":\"Emanuel\",\"last_name\":\"Daka\"}])": true
+			},
+			"testPassFailCounts": {
+				"Response Body Printout= ([{\"user_id\":1,\"client_id\":1,\"username\":\"edaka\",\"email\":\"emanueldaka@gmail.com\",\"first_name\":\"Emanuel\",\"last_name\":\"Daka\"}])": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				21
+			],
+			"allTests": [
+				{
+					"Response Body Printout= ([{\"user_id\":1,\"client_id\":1,\"username\":\"edaka\",\"email\":\"emanueldaka@gmail.com\",\"first_name\":\"Emanuel\",\"last_name\":\"Daka\"}])": true
+				}
+			]
+		},
+		{
+			"id": "4648203e-1356-42c0-a07b-967b62f2497f",
+			"name": "add user",
+			"url": "http://localhost:8080/users",
+			"time": 66,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Response Body Printout= ([{\"user_id\":36,\"client_id\":1,\"username\":\"test\",\"email\":\"testing@gmail.com\",\"first_name\":\"Post\",\"last_name\":\"Test\"}])": true
+			},
+			"testPassFailCounts": {
+				"Response Body Printout= ([{\"user_id\":36,\"client_id\":1,\"username\":\"test\",\"email\":\"testing@gmail.com\",\"first_name\":\"Post\",\"last_name\":\"Test\"}])": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				66
+			],
+			"allTests": [
+				{
+					"Response Body Printout= ([{\"user_id\":36,\"client_id\":1,\"username\":\"test\",\"email\":\"testing@gmail.com\",\"first_name\":\"Post\",\"last_name\":\"Test\"}])": true
+				}
+			]
+		},
+		{
+			"id": "736ae743-4861-44fd-a29a-7f0f6899dcaa",
+			"name": "update user",
+			"url": "http://localhost:8080/users",
+			"time": 120,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response Body Printout= ([{\"user_id\":36,\"client_id\":1,\"username\":\"test\",\"email\":\"testing@gmail.com\",\"first_name\":\"Put\",\"last_name\":\"Test\"}])": true
+			},
+			"testPassFailCounts": {
+				"Response Body Printout= ([{\"user_id\":36,\"client_id\":1,\"username\":\"test\",\"email\":\"testing@gmail.com\",\"first_name\":\"Put\",\"last_name\":\"Test\"}])": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				120
+			],
+			"allTests": [
+				{
+					"Response Body Printout= ([{\"user_id\":36,\"client_id\":1,\"username\":\"test\",\"email\":\"testing@gmail.com\",\"first_name\":\"Put\",\"last_name\":\"Test\"}])": true
+				}
+			]
+		},
+		{
+			"id": "9019f8c8-bf0c-4b0f-8de4-ccad9e741570",
+			"name": "delete user",
+			"url": "http://localhost:8080/users?user_id=36",
+			"time": 126,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				126
+			],
+			"allTests": [
+				{}
+			]
+		}
+	],
+	"count": 1,
+	"totalTime": 371,
+	"collection": {
+		"requests": [
+			{
+				"id": "4a07dc27-0bcf-427c-b660-a51367963177",
+				"method": "GET"
+			},
+			{
+				"id": "58b498d5-b483-4a5d-a3fe-4d6fd305e065",
+				"method": "GET"
+			},
+			{
+				"id": "4648203e-1356-42c0-a07b-967b62f2497f",
+				"method": "POST"
+			},
+			{
+				"id": "736ae743-4861-44fd-a29a-7f0f6899dcaa",
+				"method": "PUT"
+			},
+			{
+				"id": "9019f8c8-bf0c-4b0f-8de4-ccad9e741570",
+				"method": "DELETE"
+			}
+		]
+	}
+}
