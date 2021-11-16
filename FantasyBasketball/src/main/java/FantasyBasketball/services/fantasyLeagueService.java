@@ -111,8 +111,8 @@ public class fantasyLeagueService {
             if (checkDates(fantasyLeague.getLeagueStartDate(), fantasyLeague.getLeagueEndDate())) {
 
                 // Player Importation is done when league is posted
-                FantasyLeagueUtility leagueUtility = new FantasyLeagueUtility();
-                leagueUtility.API_player_importation(playerRepo);
+                // FantasyLeagueUtility leagueUtility = new FantasyLeagueUtility();
+                // leagueUtility.API_player_importation(playerRepo);
 
                 FantasyLeague result = leagueRepo.save(fantasyLeague);
                 return List.of(result);
@@ -250,8 +250,7 @@ public class fantasyLeagueService {
         } // end week looping
 
         // save all of the games in gameList into DB and return the list of all saved games
-        List<FantasyGame> result = (List<FantasyGame>) gameRepo.saveAll(gameList);
-        return result;
+        return (List<FantasyGame>) gameRepo.saveAll(gameList);
     }
 
 }
