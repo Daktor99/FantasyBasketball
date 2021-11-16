@@ -114,13 +114,17 @@ public class fantasyStatsController {
 
         log.info("client with id {} is creating FantasyStats with " +
                         "player_id {}, " +
-                        "schedule_id {}, ",
+                        "schedule_id {}, " +
+                        "league_id {}",
                 newStats.getClient_id(),
                 newStats.getPlayer_id(),
-                newStats.getSchedule_id());
+                newStats.getSchedule_id(),
+                newStats.getLeague_id());
+
         log.info(newStats.toString());
 
         try {
+            fantasyStatsService.checkPostInputs(newStats);
             List<FantasyStats> result = fantasyStatsService.postStats(newStats);
             log.info("Fantasy Stats entry has been created successfully");
             return new ResponseEntity<>(result, HttpStatus.OK);
@@ -141,11 +145,14 @@ public class fantasyStatsController {
 
         log.info("client with id {} is updating FantasyStats with " +
                         "player_id {}, " +
-                        "schedule_id {}, ",
+                        "schedule_id {}, " +
+                        "league_id {}",
                 stats.getClient_id(),
                 stats.getPlayer_id(),
-                stats.getSchedule_id());
+                stats.getSchedule_id(),
+                stats.getLeague_id());
 
+        log.info(stats.toString());
 
         try{
             // TODO: This method will call the information from ball don't lie and update the Fantasy Stats
@@ -168,10 +175,12 @@ public class fantasyStatsController {
         int client_id = 1;
         log.info("client with id {} is deleting FantasyStats with " +
                         "player_id {}, " +
-                        "schedule_id {}, ",
+                        "schedule_id {}, " +
+                        "league_id {}",
                 client_id,
                 player_id,
-                schedule_id);
+                schedule_id,
+                league_id);
 
         if (league_id == null) {
             log.error("Cannot delete data without a league_id provided.");
@@ -190,7 +199,7 @@ public class fantasyStatsController {
                 return new ResponseEntity<>(HttpStatus.OK);
             }
             else{
-                List<FantasyStats> deleted_stats = fantasyStatsService.deleteStats(player_id, schedule_id, league_id);
+                List<FantasyStats> deleted_stats = fantasyStatsService.deleteStats(player_id, schedule_id, league_id, client_id);
                 log.info("Fantasy Stats entry has been deleted successfully");
                 return new ResponseEntity<>(deleted_stats, HttpStatus.OK);
             }

@@ -73,7 +73,7 @@ public class FantasyStats implements Serializable {
 
     // class methods
     public FantasyStats(Integer player_id, Integer schedule_id, Integer client_id, Integer league_id) {
-        this.stats_id = 0;
+        this.stats_id = null;
         this.player_id = player_id;
         this.schedule_id = schedule_id;
         this.client_id = client_id;

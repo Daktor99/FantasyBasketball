@@ -7,7 +7,6 @@ import FantasyBasketball.repositories.fantasyStatsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -62,9 +61,11 @@ public class fantasyStatsService {
     }
 
     // delete operations
-    public List<FantasyStats> deleteStats(Integer player_id, Integer schedule_id, Integer league_id) throws resourceNotFoundException {
-
-        List<FantasyStats> stats_to_delete = statsRepo.findByPlayerIDAndScheduleID(player_id, schedule_id, league_id);
+    public List<FantasyStats> deleteStats(Integer player_id, Integer schedule_id, Integer league_id, Integer client_id) throws resourceNotFoundException, resourceException {
+        if (player_id == null && schedule_id == null && league_id == null){
+            throw new resourceException("Provide at least player_id, schedule_id, or league_id");
+        }
+        List<FantasyStats> stats_to_delete = statsRepo.findByIDs(player_id, schedule_id, league_id, client_id);
         if (stats_to_delete.size() == 0) {
             throw new resourceNotFoundException("Fantasy Stats not found in DB, cannot delete");
         }
