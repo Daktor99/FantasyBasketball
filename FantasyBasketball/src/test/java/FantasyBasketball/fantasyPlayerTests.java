@@ -173,7 +173,7 @@ public class fantasyPlayerTests {
     }
 
     @Test
-    public void testFindByTemplate() {
+    public void testFindByTemplateFantasyPlayers() {
 
         // Initialize  FantasyPlayer
         FantasyPlayer player = new FantasyPlayer();
@@ -199,7 +199,7 @@ public class fantasyPlayerTests {
     }
 
     @Test
-    public void testPostStats(){
+    public void testPostFantasyPlayers(){
         // Initialize FantasyPlayer
         FantasyPlayer player = new FantasyPlayer();
         FantasyPlayer new_player = player.setNewPlayer(0, 1, 1,
@@ -215,7 +215,7 @@ public class fantasyPlayerTests {
         assertEquals(playerService.postFantasyPlayer(new_player).get(0).getPlayerID(), 0);
     }
     @Test
-    public void testGetAvailablePlayers() {
+    public void testGetAvailableFantasyPlayers() {
 
         // Initialize FantasyPlayer
         FantasyPlayer player = new FantasyPlayer();
