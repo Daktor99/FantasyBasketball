@@ -35,9 +35,6 @@ public class FantasyPlayer {
     @JsonProperty("position")
     private String position;
 
-//    @Column(name = "points")
-//    private int points;
-
     @Column(name = "nba_team")
     @JsonProperty("nba_team")
     private String nbaTeam;
@@ -51,6 +48,8 @@ public class FantasyPlayer {
     private Integer ballapiID;
 
     // class methods
+
+    //default constructor
     public FantasyPlayer() {
         this.playerID=1;
         this.teamID=0;
@@ -126,6 +125,14 @@ public class FantasyPlayer {
         this.leagueID = leagueID;
     }
 
+    public Integer getBallapiID() {
+        return ballapiID;
+    }
+
+    public void setBallapiID(Integer ballapiID) {
+        this.ballapiID = ballapiID;
+    }
+
     public FantasyPlayer setNewPlayer(Integer playerID, Integer teamID,
                                       Integer clientID, String firstName,
                                       String lastName, String nbaTeam,
@@ -143,15 +150,7 @@ public class FantasyPlayer {
         return this;
     }
 
-    //    public int getPoints() {
-//        return points;
-//    }
-//
-//    public void setPoints(int points) {
-//        this.points = points;
-//    }
-
-
+    // overriding toString() function
     @Override
     public String toString() {
         return "\nFantasyPlayer {" +
@@ -164,13 +163,5 @@ public class FantasyPlayer {
                 ",\n\t nbaTeam='" + nbaTeam + '\'' +
                 ",\n\t leagueID=" + leagueID +
                 "\n\t}";
-    }
-
-    public Integer getBallapiID() {
-        return ballapiID;
-    }
-
-    public void setBallapiID(Integer ballapiID) {
-        this.ballapiID = ballapiID;
     }
 }

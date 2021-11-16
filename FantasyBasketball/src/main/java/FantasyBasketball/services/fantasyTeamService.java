@@ -72,7 +72,7 @@ public class fantasyTeamService {
             throw new resourceNotFoundException("User not found in DB, cannot delete");
         }
     }
-
+    // Checking correct teamID and Length before posting
     public void checkPostInputs(FantasyTeam team) throws resourceException {
         try {
             if (team.getTeamID() != null) {
@@ -101,7 +101,7 @@ public class fantasyTeamService {
                                         "points_against");
         }
     }
-
+    // Checking correct teamID and Length before putting
     public void checkPutInputs(FantasyTeam team) throws resourceException {
         try {
             if (team.getTeamID() == null) {

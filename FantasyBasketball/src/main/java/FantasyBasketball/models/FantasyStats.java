@@ -97,6 +97,7 @@ public class FantasyStats implements Serializable {
         this.league_id = league_id;
     }
 
+    // constructor
     public FantasyStats(Integer stats_id,
                         Integer player_id,
                         Integer schedule_id,
@@ -238,7 +239,7 @@ public class FantasyStats implements Serializable {
         this.tot_points = totPoints;
     }
 
-
+    // overriding toString()
     @Override
     public String toString() {
         return "\nFantasyPlayer {" +
