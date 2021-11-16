@@ -41,6 +41,31 @@ public class FantasyLeague {
     @JsonProperty("league_end_date")
     private LocalDate leagueEndDate;
 
+    public FantasyLeague() {
+        this.leagueID=null;
+        this.clientID=null;
+        this.leagueName=null;
+        this.adminID=null;
+        this.leagueSize=null;
+        this.leagueStartDate=null;
+        this.leagueEndDate=null;
+    }
+    public FantasyLeague(Integer league_id,
+                         Integer client_id,
+                         String league_name,
+                         Integer admin_id,
+                         Integer league_size,
+                         LocalDate league_start_date,
+                         LocalDate league_end_date) {
+        this.leagueID=league_id;
+        this.clientID=client_id;
+        this.leagueName=league_name;
+        this.adminID=admin_id;
+        this.leagueSize=league_size;
+        this.leagueStartDate=league_start_date;
+        this.leagueEndDate=league_end_date;
+    }
+
 //    @ManyToMany(mappedBy = "fantasyLeague", fetch = FetchType.LAZY)
 //    private Set<User> participants = new HashSet<>();
 

@@ -93,7 +93,7 @@ public class fantasyLeagueService {
                     throw new resourceException("Attempted league duration is less than 2 weeks.");
                 }
             } else {
-                throw new resourceException("Attempted leagueStartDate is after leageEndDate.");
+                throw new resourceException("Attempted leagueStartDate is after leagueEndDate.");
             }
         } else {
             throw new resourceException("Attempted leagueStartDate occurs in the past.");
@@ -109,6 +109,7 @@ public class fantasyLeagueService {
 
         if (checkAdmin(fantasyLeague.getAdminID())) {
             if (checkDates(fantasyLeague.getLeagueStartDate(), fantasyLeague.getLeagueEndDate())) {
+
                 // Player Importation is done when league is posted
                 FantasyLeagueUtility leagueUtility=new FantasyLeagueUtility();
                 leagueUtility.API_player_importation(playerRepo);
@@ -176,14 +177,14 @@ public class fantasyLeagueService {
     }
 
     // check and sanitize inputs
-    private void checkInputs(FantasyLeague fantasyLeague) throws resourceException {
+    public void checkInputs(FantasyLeague fantasyLeague) throws resourceException {
         // NOTE: max league size is hardcoded to 14 for now
         Integer max = 14;
         try {
             if (checkIfInvalid(fantasyLeague.getLeagueName())) {
                 throw new resourceException("League name is invalid.");
-            } else if (fantasyLeague.getLeagueSize() < 0 && fantasyLeague.getLeagueSize() > max
-            && fantasyLeague.getLeagueSize()%2 == 0) {
+            } else if (fantasyLeague.getLeagueSize() < 0 || fantasyLeague.getLeagueSize() > max
+            || fantasyLeague.getLeagueSize()%2 == 0) {
                 throw new resourceException("League size is invalid. (League size must be an even number.)");
             }
         } catch (NullPointerException e) {
