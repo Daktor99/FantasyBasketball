@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Date;
 
 @Entity
 @Table(name = "fantasy_game")
@@ -112,6 +111,7 @@ public class FantasyGame {
 
     // class methods
 
+    // default constructor
     public FantasyGame() {
         this.scheduleID = null;
         this.leagueID = null;
@@ -140,7 +140,7 @@ public class FantasyGame {
 
     }
 
-
+    // constructor
     public FantasyGame(Integer leagueID, Integer clientID, Integer homeTeamID, Integer awayTeamID, LocalDate gameStartDate, LocalDate gameEndDate) {
         this.scheduleID = 1;
         this.leagueID = leagueID;
@@ -151,12 +151,15 @@ public class FantasyGame {
         this.gameEndDate = gameEndDate;
     }
 
+    // constructor with all parameters
     public FantasyGame(Integer scheduleID, Integer leagueID, Integer clientID,
                        Integer homeTeamID, Integer awayTeamID,
                        LocalDate gameStartDate, LocalDate gameEndDate,
                        Integer winner, Integer homePoints, Integer awayPoints,
-                       Integer startHomePG, Integer startHomeSG, Integer startHomeSF, Integer startHomePF, Integer startHomeC, Integer homeBench1, Integer homeBench2,
-                       Integer startAwayPG, Integer startAwaySG, Integer startAwaySF, Integer startAwayPF, Integer startAwayC, Integer awayBench1, Integer awayBench2) {
+                       Integer startHomePG, Integer startHomeSG, Integer startHomeSF, Integer startHomePF,
+                       Integer startHomeC, Integer homeBench1, Integer homeBench2,
+                       Integer startAwayPG, Integer startAwaySG, Integer startAwaySF, Integer startAwayPF,
+                       Integer startAwayC, Integer awayBench1, Integer awayBench2) {
         this.scheduleID = scheduleID;
         this.leagueID = leagueID;
         this.clientID = clientID;
@@ -375,6 +378,8 @@ public class FantasyGame {
         this.awayBench2 = awayBench2;
     }
 
+
+    // overriding toString() function
     @Override
     public String toString() {
         return "\nFantasyGame {" +

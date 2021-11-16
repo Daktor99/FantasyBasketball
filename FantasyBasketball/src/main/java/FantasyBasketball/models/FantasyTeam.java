@@ -77,6 +77,8 @@ public class FantasyTeam {
 
     // class methods
 
+    // default constructor
+
     public FantasyTeam() {
         this.teamID = null;
         this.clientID = 1;
@@ -129,6 +131,8 @@ public class FantasyTeam {
         this.pointsScored = pointsScored;
         this.pointsAgainst = pointsAgainst;
     }
+
+    // Getter and Setters
 
     public Integer getTeamID() {
         return teamID;
@@ -257,6 +261,8 @@ public class FantasyTeam {
     public void setPointsAgainst(Integer pointsAgainst) {
         this.pointsAgainst = pointsAgainst;
     }
+
+    // Return as JSON string
 
     @Override
     public String toString() {

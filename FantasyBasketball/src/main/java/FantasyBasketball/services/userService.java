@@ -104,14 +104,14 @@ public class userService {
                     "username, email, first_name, last_name");
         }
     }
-
+    // checking UserID before Posting
     public void checkPostInputs(User user) throws resourceException {
         if (user.getUserID() != null) {
             throw new resourceException("Do not provide user_id.");
         }
         checkInputs(user);
     }
-
+    // checking UserID before Putting
     public void checkPutInputs(User user) throws resourceException {
         if (user.getUserID() == null) {
             throw new resourceException("User formatted incorrectly please provide the following:\n" +
