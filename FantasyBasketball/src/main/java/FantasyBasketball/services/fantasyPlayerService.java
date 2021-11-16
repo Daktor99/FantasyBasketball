@@ -86,5 +86,11 @@ public class fantasyPlayerService {
                 client_id);
     }
 
+    public List<FantasyPlayer> draftFantasyPlayer(FantasyPlayer player) throws resourceNotFoundException {
+
+        FantasyPlayer dbPlayer = getByID(player.getPlayerID()).get(0);
+        dbPlayer.setTeamID(player.getTeamID());
+        return updateFantasyPlayer(dbPlayer);
+    }
 
 }

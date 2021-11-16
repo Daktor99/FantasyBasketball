@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -47,8 +48,8 @@ public class fantasyLeagueController {
                                                   @RequestParam(value = "league_name", required = false) String league_name,
                                                   @RequestParam(value = "admin_id", required = false) Integer admin_id,
                                                   @RequestParam(value = "league_size", required = false) Integer league_size,
-                                                  @RequestParam(value = "league_start_date", required = false) LocalDate league_start_date,
-                                                  @RequestParam(value = "league_end_date", required = false) LocalDate league_end_date) {
+                                                  @RequestParam(value = "league_start_date", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate league_start_date,
+                                                  @RequestParam(value = "league_end_date", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate league_end_date) {
         try {
 
             // log GET request
@@ -188,7 +189,7 @@ public class fantasyLeagueController {
             log.info(fantasyPlayer.toString());
 
             // Regular put
-            List<FantasyPlayer> result = fantasyPlayerService.updateFantasyPlayer(fantasyPlayer);
+            List<FantasyPlayer> result = fantasyPlayerService.draftFantasyPlayer(fantasyPlayer);
             return new ResponseEntity<>(result, HttpStatus.OK);
 
         } catch (resourceNotFoundException e) {
