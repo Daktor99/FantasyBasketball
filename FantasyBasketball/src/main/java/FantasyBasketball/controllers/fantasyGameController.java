@@ -96,6 +96,7 @@ public class fantasyGameController {
 
             log.info("PUT: " + request.getRequestURL());
             log.info(game.toString());
+            game.setClientID(1);
 
             // Check input to make sure no errors
             gameService.checkPutInputs(game);
