@@ -65,7 +65,7 @@
             * `client_id` (Type: Integer)
             * `ball_api_id` (Type: Integer)
       * `POST /fantasyPlayers`
-         * Description: This endpoint receives the details of a players to newly create. The user must be provided as a JSON, sent in the body of the POST request. The JSON in the request body must have fields exactly identical to those which are shown in the sample below.
+         * Description: This endpoint receives the details of a players to newly create. The players must be provided as a JSON, sent in the body of the POST request. The JSON in the request body must have fields exactly identical to those which are shown in the sample below.
          * Sample Request Body:
             * `{ "team_id: 0, "first_name": "snoop","last_name": "dogg", "position": "F","nba_team": "cali", "league_id": 1,"client_id":0}`
       * `PUT /fantasyPlayers`
@@ -87,7 +87,7 @@
             * `player_id` (Type: Integer)
    * ___FantasyLeagues___
       * `GET /fantasyLeagues`
-         * Description: This endpoint retrieves all teams that match the template given in the query parameters. No parameters are required.
+         * Description: This endpoint retrieves all leagues that match the template given in the query parameters. No parameters are required.
          * Sample Request: localhost:8080/fantasyLeagues?league_start_date=2021-12-12
          * Request Parameters:
             * `league_id` (Type: Integer)
@@ -97,7 +97,7 @@
             * `league_start_date` (Type: LocalDate)
             * `league_end_date` (Type: LocalDate)
       * `POST /fantasyLeagues`
-         * Description: This endpoint receives the details of a league to newly create. The user must be provided as a JSON, sent in the body of the POST request. The JSON in the request body must have fields exactly identical to those which are shown in the sample below.
+         * Description: This endpoint receives the details of a league to newly create. The league must be provided as a JSON, sent in the body of the POST request. The JSON in the request body must have fields exactly identical to those which are shown in the sample below.
          * Sample Request Body:
             * `{
                   "client_id": 1,
@@ -108,7 +108,7 @@
                   "league_end_date": "2021-12-31"
               }`
       * `PUT /fantasyLeagues`
-         * Description: This endpoint receives the details of a league to update. The user must be provided as a JSON, sent in the body of the POST request. The JSON in the request body must have a league_id field. Moreover, the only attribute of a league that may be modified after league creation is the league_name.
+         * Description: This endpoint receives the details of a league to update. The league must be provided as a JSON, sent in the body of the POST request. The JSON in the request body must have a league_id field. Moreover, the only attribute of a league that may be modified after league creation is the league_name.
          * Sample Request Body:
             * `{
                   "league_id": 40,
@@ -119,12 +119,49 @@
                   "league_start_date": "2021-12-12",
                   "league_end_date": "2021-12-31"
               }`
-      * `DELETE /fantasyTeams`
+      * `DELETE /fantasyLeagues`
          * Description: This endpoint receives the league_id of a league to delete. The league_id must be provided as a query parameter.
          * Sample Request: localhost:8080/fantasyLeagues?league_id=40
          * Request Parameters:
             * `league_id` (Type: Integer)
    * ___FantasyGames___
+      * `GET /fantasyGames`
+           * Description: This endpoint retrieves all stat sheets that represent a player's contribution during one game that match the template given in the query parameters. No parameters are required (providing no parameters will return all stats).
+           * Sample Request: localhost:8080/fantasyStats?league_id=1
+           * Request Parameters:
+              * `schedule_id` (Type: Integer)
+              * `league_id` (Type: Integer)
+              * `home_team_id` (Type: Integer)
+              * `away_team_id` (Type: Integer)
+              * `game_start_date` (Type: LocalDate)
+              * `game_end_date` (Type: LocalDate)
+              * `winner_id` (Type: Integer)
+      * `POST /fantasyGames`
+           * Description: This endpoint receives the details of a game to newly create. The game must be provided as a JSON, sent in the body of the POST request. The JSON in the request body must have at least the fields shown in the sample below.
+           * Sample Request Body:
+              * `{
+                  "league_id": 1,
+                  "home_team_id": 1,
+                  "away_team_id": 3,
+                  "game_start_date": "2021-12-08",
+                  "game_end_date": "2021-12-15"
+                 }`
+      * `PUT /fantasyGames`
+           * Description: This endpoint receives the details of a game to update. The game must be provided as a JSON, sent in the body of the PUT request. The JSON in the request body must have a schedule_id field.
+           * Sample Request Body:
+              * `{
+                  "schedule_id": 101,
+                  "league_id": 1,
+                  "home_team_id": 1,
+                  "away_team_id": 4,
+                  "game_start_date": "2021-12-08",
+                  "game_end_date": "2021-12-15"
+                 }`
+      * `DELETE /fantasyGames`
+           * Description: This endpoint receives the schedule_id of a league to delete. The schedule_id must be provided as a query parameter.
+           * Sample Request: localhost:8080/fantasyGames?schedule_id=40
+           * Request Parameters:
+              * `schedule_id` (Type: Integer)
 
 ## 2. System Tests Corresponding to API
 
