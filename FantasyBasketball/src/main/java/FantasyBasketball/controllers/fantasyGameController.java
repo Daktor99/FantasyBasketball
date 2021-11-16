@@ -69,6 +69,7 @@ public class fantasyGameController {
 
             log.info("POST: " + request.getRequestURL());
             log.info(newGame.toString());
+            newGame.setClientID(1);
 
             // Check inputs to make sure no errors
             gameService.checkPostInputs(newGame);
