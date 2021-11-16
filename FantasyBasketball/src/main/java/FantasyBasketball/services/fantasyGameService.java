@@ -3,12 +3,15 @@ package FantasyBasketball.services;
 import FantasyBasketball.exceptions.resourceException;
 import FantasyBasketball.exceptions.resourceNotFoundException;
 import FantasyBasketball.models.FantasyGame;
+import FantasyBasketball.models.FantasyStats;
 import FantasyBasketball.repositories.fantasyGameRepository;
+import FantasyBasketball.repositories.fantasyStatsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,6 +20,9 @@ public class fantasyGameService {
 
     @Autowired
     fantasyGameRepository gameRepo;
+
+    @Autowired
+    fantasyStatsRepository statsRepo;
 
     // find by ID
     public List<FantasyGame> getByID(Integer fantasyGameID) throws resourceNotFoundException {
@@ -108,7 +114,33 @@ public class fantasyGameService {
         return gameRepo.findGamesGivenDate(current_date);
     }
 
-    public void generateStatsForGame(FantasyGame game) {
+    public List<FantasyStats> generateStatsSheet(FantasyGame game) {
+
+        Integer schedule_id = game.getScheduleID();
+        Integer client_id   = game.getClientID();
+        Integer league_id   = game.getLeagueID();
+        List<FantasyStats> statsList = new ArrayList<>();
+
+        // adding stat sheets for home players
+        statsList.add(new FantasyStats(game.getStartHomePG(), schedule_id, client_id, league_id));
+        statsList.add(new FantasyStats(game.getStartHomeSG(), schedule_id, client_id, league_id));
+        statsList.add(new FantasyStats(game.getStartHomeSF(), schedule_id, client_id, league_id));
+        statsList.add(new FantasyStats(game.getStartHomePF(), schedule_id, client_id, league_id));
+        statsList.add(new FantasyStats(game.getStartHomeC(), schedule_id, client_id, league_id));
+        statsList.add(new FantasyStats(game.getHomeBench1(), schedule_id, client_id, league_id));
+        statsList.add(new FantasyStats(game.getHomeBench2(), schedule_id, client_id, league_id));
+
+        // adding stat sheets for away players
+        statsList.add(new FantasyStats(game.getStartAwayPG(), schedule_id, client_id, league_id));
+        statsList.add(new FantasyStats(game.getStartAwaySG(), schedule_id, client_id, league_id));
+        statsList.add(new FantasyStats(game.getStartAwaySF(), schedule_id, client_id, league_id));
+        statsList.add(new FantasyStats(game.getStartAwayPF(), schedule_id, client_id, league_id));
+        statsList.add(new FantasyStats(game.getStartAwayC(), schedule_id, client_id, league_id));
+        statsList.add(new FantasyStats(game.getAwayBench1(), schedule_id, client_id, league_id));
+        statsList.add(new FantasyStats(game.getAwayBench2(), schedule_id, client_id, league_id));
+
+        // save stats into db
+        return statsList;
 
     }
 }
