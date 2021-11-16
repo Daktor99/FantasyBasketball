@@ -188,7 +188,7 @@ public class fantasyLeagueController {
             log.info(fantasyPlayer.toString());
 
             // Regular put
-            List<FantasyPlayer> result = fantasyPlayerService.updateFantasyPlayer(fantasyPlayer);
+            List<FantasyPlayer> result = fantasyPlayerService.draftFantasyPlayer(fantasyPlayer);
             return new ResponseEntity<>(result, HttpStatus.OK);
 
         } catch (resourceNotFoundException e) {
