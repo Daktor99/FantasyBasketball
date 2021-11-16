@@ -2,10 +2,26 @@
 
 1. Documented API
    * Users
-      * GET /users
-         * (This endpoint retrieves all users that match the template given in the query parameters.)
-         * Query Parameters:
-            * 
+      * _GET /users_
+         * Description: This endpoint retrieves all users that match the template given in the query parameters. No parameters are required.
+         * Request Parameters:
+            * user_id (Type: Integer)
+            * email (Type: String)
+            * username (Type: String)
+            * first_name (Type: String)
+            * last_name (Type: String)
+      * _POST /users_
+         * Description: This endpoint receives the details of a user to newly create. The user must be provided as a JSON, sent in the body of the POST request. The JSON in the request body must have fields exactly identical to those which are shown in the sample below.
+         * Sample Request Body:
+            * { "client_id": 1, "username": "fake", "email": "fake@gmail.com", "first_name": "fakefirstname", "last_name": "fakelastname" }
+      * _PUT /users_
+         * Description: This endpoint receives the details of a user to update. The user must be provided as a JSON, sent in the body of the POST request. The JSON in the request body must have fields exactly identical to those which are shown in the sample below.
+         * Sample Request Body:
+            * { "user_id": 100, "client_id": 1, "username": "fake", "email": "fake@gmail.com", "first_name": "fakefirstname", "last_name": "fakelastname" }
+      * _DELETE /users_
+         * Description: This endpoint receives the user_id of a user to delete. The user_id must be provided as a query parameter.
+         * Request Parameters:
+            * user_id (Type: Integer)
    * FantasyTeam
       * 
    * FantasyStats
