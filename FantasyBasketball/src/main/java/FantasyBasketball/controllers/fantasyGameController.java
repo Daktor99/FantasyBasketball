@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -39,8 +40,8 @@ public class fantasyGameController {
                                                 @RequestParam(value = "league_id", required = false)        Integer leagueId,
                                                 @RequestParam(value = "home_team_id", required = false)     Integer homeTeamId,
                                                 @RequestParam(value = "away_team_id", required = false)     Integer awayTeamId,
-                                                @RequestParam(value = "game_start_date", required = false)  LocalDate gameStartDate,
-                                                @RequestParam(value = "game_end_date", required = false)    LocalDate gameEndDate,
+                                                @RequestParam(value = "game_start_date", required = false) @DateTimeFormat (iso = DateTimeFormat.ISO.DATE) LocalDate gameStartDate,
+                                                @RequestParam(value = "game_end_date", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate gameEndDate,
                                                 @RequestParam(value = "winner_id", required = false)        Integer winnerId) {
 
         try {
