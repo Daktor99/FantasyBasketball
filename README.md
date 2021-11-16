@@ -16,7 +16,7 @@
          * Sample Request Body:
             * `{ "client_id": 1, "username": "fake", "email": "fake@gmail.com", "first_name": "fakefirstname", "last_name": "fakelastname" }`
       * `PUT /users`
-         * Description: This endpoint receives the details of a user to update. The user must be provided as a JSON, sent in the body of the POST request. The JSON in the request body must have fields exactly identical to those which are shown in the sample below.
+         * Description: This endpoint receives the details of a user to update. The user must be provided as a JSON, sent in the body of the PUT request. The JSON in the request body must have fields exactly identical to those which are shown in the sample below.
          * Sample Request Body:
             * `{ "user_id": 100, "client_id": 1, "username": "fake", "email": "fake@gmail.com", "first_name": "fakefirstname", "last_name": "fakelastname" }`
       * `DELETE /users`
@@ -38,7 +38,7 @@
          * Sample Request Body:
             * `{ "team_name: "fake", "owner_id": 4, "league_id": 1 }`
       * `PUT /fantasyTeams`
-         * Description: This endpoint receives the details of a team to update. The user must be provided as a JSON, sent in the body of the POST request. The JSON in the request body must provide the team_id, and all other fields are optional.
+         * Description: This endpoint receives the details of a team to update. The user must be provided as a JSON, sent in the body of the PUT request. The JSON in the request body must provide the team_id, and all other fields are optional.
          * Sample Request Body:
             * `team_id` (Type: Integer)
             * `team_name` (Type: String)
@@ -50,6 +50,64 @@
          * Request Parameters:
             * `team_id` (Type: Integer)
    * ___FantasyStats___
+      * `GET /fantasyStats`
+         * Description: This endpoint retrieves all stats that match the template given in the query parameters. No parameters are required.
+         * Sample Request: `localhost:8080/fantasyStats?stats_id=1`
+         * Request Parameters:
+            * `stats_id` (Type: Integer)
+            * `player_id` (Type: Integer)
+            * `schedule_id` (Type: Integer)
+            * `league_id` (Type: Integer)
+            * `three_points` (Type: Integer)
+            * `two_points` (Type: Integer)
+            * `free_throws` (Type: Integer)
+            * `rebounds` (Type: Integer)
+            * `assists` (Type: Integer)
+            * `blocks` (Type: Integer)
+            * `steals` (Type: Integer)
+            * `turnovers` (Type: Integer)
+            * `tot_points` (Type: Integer)
+      * `POST /fantasyStats`
+         * Description: This endpoint receives the details of a stats entry to newly create. The stat details must be provided as a JSON, sent in the body of the POST request. The JSON in the request body must have fields exactly identical to those which are shown in the sample below.
+         * Sample Request Body:
+            * `{  
+                  "player_id": 14928,
+                  "schedule_id": 86,
+                  "league_id": 1,
+                  "three_points": 0,
+                  "two_points": 0,
+                  "free_throws": 0,
+                  "rebounds": 1,
+                  "assists": 3,
+                  "blocks": 6,
+                  "steals": 8,
+                  "turnovers": 1,
+                  "tot_points": 0 
+               }`
+      * `PUT /fantasyStats`
+         * Description: This endpoint receives the details of a stats entry to update. The stat details must be provided as a JSON, sent in the body of the PUT request. The JSON in the request body must provide a stats_id, and any assortment of the other fields to modify.
+         * Sample Request Body:
+            * `{ 
+                  "stats_id": 16,
+                  "player_id": 14928,
+                  "schedule_id": 86,
+                  "league_id": 1,
+                  "three_points": 1,
+                  "two_points": 1,
+                  "free_throws": 0,
+                  "rebounds": 1,
+                  "assists": 3,
+                  "blocks": 6,
+                  "steals": 8,
+                  "turnovers": 1,
+                  "tot_points": 5 
+               }`
+      * `DELETE /fantasyStats`
+         * Description: This endpoint receives the stats_id AND the league_id of a stats entry to delete. The stats_id and league_id must be provided as a query parameter.
+         * Sample Request: `localhost:8080/fantasyStats?stats_id=16&league_id=1`
+         * Request Parameters:
+            * `user_id` (Type: Integer)
+            * `league_id` (Type: Integer)
    * ___FantasyPlayers___
        * `GET /fantasyPlayers`
          * Description: This endpoint retrieves all players that match the template given in the query parameters. No parameters are required.
@@ -69,7 +127,7 @@
          * Sample Request Body:
             * `{ "team_id: 0, "first_name": "snoop","last_name": "dogg", "position": "F","nba_team": "cali", "league_id": 1,"client_id":0}`
       * `PUT /fantasyPlayers`
-         * Description: This endpoint receives the details of a players to update. The players must be provided as a JSON, sent in the body of the POST request. The JSON in the request body must provide the player_id, and all other fields are optional.
+         * Description: This endpoint receives the details of a players to update. The players must be provided as a JSON, sent in the body of the PUT request. The JSON in the request body must provide the player_id, and all other fields are optional.
          * Sample Request Body:
             * `player_id` (Type: Integer)
             * `team_id` (Type: Integer)
@@ -108,7 +166,7 @@
                   "league_end_date": "2021-12-31"
               }`
       * `PUT /fantasyLeagues`
-         * Description: This endpoint receives the details of a league to update. The league must be provided as a JSON, sent in the body of the POST request. The JSON in the request body must have a league_id field. Moreover, the only attribute of a league that may be modified after league creation is the league_name.
+         * Description: This endpoint receives the details of a league to update. The league must be provided as a JSON, sent in the body of the PUT request. The JSON in the request body must have a league_id field. Moreover, the only attribute of a league that may be modified after league creation is the league_name.
          * Sample Request Body:
             * `{
                   "league_id": 40,
