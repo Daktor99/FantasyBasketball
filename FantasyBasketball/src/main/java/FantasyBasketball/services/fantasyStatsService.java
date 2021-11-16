@@ -76,7 +76,7 @@ public class fantasyStatsService {
 
         return stats_to_delete;
     }
-
+    // delete stats using stat_id
     public void deleteStatsByID(Integer stats_id) throws resourceNotFoundException {
         if(statsRepo.existsById(stats_id)) {
             statsRepo.deleteById(stats_id);
@@ -92,7 +92,7 @@ public class fantasyStatsService {
 
         return List.of(result);
     }
-
+    // Post operation using fantasystat list
     public List<FantasyStats> postStatSheet(List<FantasyStats> statSheet) {
         return (List<FantasyStats>) statsRepo.saveAll(statSheet);
     }
@@ -106,7 +106,7 @@ public class fantasyStatsService {
             throw new resourceNotFoundException("Fantasy Stats not found in DB. Cannot update");
         }
     }
-
+    // Checking stats_id is valid
     public void checkPostInputs(FantasyStats stats) throws resourceException {
         if (stats.getStats_id() != null) {
             throw new resourceException("Do not provide stats_id.");

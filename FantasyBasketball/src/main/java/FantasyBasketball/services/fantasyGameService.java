@@ -74,13 +74,14 @@ public class fantasyGameService {
         }
     }
 
+    // Checking if game's schedule is null before posting
     public void checkPostInputs(FantasyGame game) throws resourceException {
         if (game.getScheduleID() != null) {
             throw new resourceException("Do not provide schedule_id.");
         }
         checkInputs(game);
     }
-
+    // Checking if game's schedule is null before putting
     public void checkPutInputs(FantasyGame game) throws resourceException {
             if (game.getScheduleID() == null) {
                 throw new resourceException("Must provide schedule_id to update Game.");
@@ -88,7 +89,7 @@ public class fantasyGameService {
             checkInputs(game);
 
     }
-
+    // Checking if game's start date and end date are correct
     private void checkInputs(FantasyGame game) throws resourceException {
         try {
             LocalDate startDate = game.getGameStartDate();
@@ -103,11 +104,18 @@ public class fantasyGameService {
             throw new resourceException("Fantasy game formatted incorrectly, please provide at least the following:\n schedule_id, leagueID, home_team_id, away_team_id, game_start_date, game_end_date.");
         }
     }
-
+    // Getting the games for the current_date
     public List<FantasyGame> getGamesForWeek(LocalDate current_date) {
         return gameRepo.findGamesGivenDate(current_date);
     }
 
+    // Generating FantasyStats from FantasyGame info
+    /*
+    * Takes a game and its corresponding players (starting home players and starting away players) and returns:
+    *
+    * List of Fantasy Stats in the order seen in FantasyGame
+    *
+    * */
     public List<FantasyStats> generateStatsSheet(FantasyGame game) {
 
         Integer schedule_id = game.getScheduleID();

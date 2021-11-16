@@ -79,7 +79,7 @@ public class fantasyPlayerService {
             throw new resourceNotFoundException("Player not found in DB, cannot delete");
         }
     }
-
+    // Get available players
     public List<FantasyPlayer> getAvailablePlayers(Integer team_id, Integer league_id, Integer client_id) {
         return playerRepo.getAvailablePlayers(team_id,
                 league_id,

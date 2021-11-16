@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Date;
 
 @Entity
 @Table(name = "fantasyLeague")
@@ -41,6 +40,8 @@ public class FantasyLeague {
     @JsonProperty("league_end_date")
     private LocalDate leagueEndDate;
 
+
+    // default constructor
     public FantasyLeague() {
         this.leagueID=null;
         this.clientID=null;
@@ -50,6 +51,8 @@ public class FantasyLeague {
         this.leagueStartDate=null;
         this.leagueEndDate=null;
     }
+
+    // constructor
     public FantasyLeague(Integer league_id,
                          Integer client_id,
                          String league_name,
@@ -65,9 +68,6 @@ public class FantasyLeague {
         this.leagueStartDate=league_start_date;
         this.leagueEndDate=league_end_date;
     }
-
-//    @ManyToMany(mappedBy = "fantasyLeague", fetch = FetchType.LAZY)
-//    private Set<User> participants = new HashSet<>();
 
     // class methods
 
@@ -127,13 +127,6 @@ public class FantasyLeague {
         this.leagueEndDate = leagueEndDate;
     }
 
-
-//    public Set<User> getParticipants() {
-//        return participants;
-//    }
-//
-//    public void setParticipants(Set<User> participants) {
-//        this.participants = participants;
-//    }
+    // TODO: Implement toString() function
 
 }

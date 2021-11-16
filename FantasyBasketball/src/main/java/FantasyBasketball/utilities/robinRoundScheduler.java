@@ -17,10 +17,10 @@ import java.util.List;
 
 public class robinRoundScheduler {
 
-    private List<Integer>   teamList;
-    private LocalDate       startDate;
-    private LocalDate       endDate;
-    private Integer         weeksOfPlay;
+    private final List<Integer>   teamList;
+    private final LocalDate       startDate;
+    private final LocalDate       endDate;
+    private final Integer         weeksOfPlay;
 
     // constructor
     public robinRoundScheduler(List<Integer> teamList, LocalDate startDate, LocalDate endDate) {
@@ -29,17 +29,17 @@ public class robinRoundScheduler {
         this.endDate    = endDate;
         this.weeksOfPlay= Math.toIntExact(ChronoUnit.WEEKS.between(startDate, endDate));
     }
-
+    // Getting first half of the team list
     public List<Integer> getFirstHalf(List<Integer> teamList) {
         return teamList.subList(0, teamList.size()/2);
     }
-
+    // Getting second half of the team list
     public List<Integer> getSecondHalf(List<Integer> teamList) {
         List<Integer> result = teamList.subList(teamList.size()/2, teamList.size());
         Collections.reverse(result);
         return result;
     }
-
+    // Updating first half for match-ups
     public List<Integer> updateFirstHalf(List<Integer> firstHalf, Integer new_element) {
 
         // shift all elements to the right except for first element
@@ -52,7 +52,7 @@ public class robinRoundScheduler {
 
         return firstHalf;
     }
-
+    // Updating second half for match-ups
     public List<Integer> updateSecondHalf(List<Integer> secondHalf, Integer new_element) {
 
         // shift all elements to the right except for first element
@@ -66,6 +66,7 @@ public class robinRoundScheduler {
         return secondHalf;
     }
 
+    // Creating unique match-ups
     public List<List<Integer>> createMatchups(List<Integer> firstHalf, List<Integer> secondHalf) {
 
         // Initialize a list of match ups
@@ -84,6 +85,7 @@ public class robinRoundScheduler {
         return matchupList;
     }
 
+    // This function combine all the functions above to create a schedule
     public Hashtable<LocalDate, List<List<Integer>>> createSchedule() {
 
         // Split the list of teams into first and second half

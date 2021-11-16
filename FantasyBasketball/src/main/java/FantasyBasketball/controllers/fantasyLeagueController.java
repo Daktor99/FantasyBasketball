@@ -93,6 +93,7 @@ public class fantasyLeagueController {
 
         } catch(resourceException e) {
             // exception thrown if League instance is not formatted correctly
+            log.error("Exception on POST: ", e);
             return new ResponseEntity<>(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
         } catch (Exception e) {
             // all other exceptions
@@ -116,9 +117,11 @@ public class fantasyLeagueController {
             return new ResponseEntity<>(result, HttpStatus.OK);
         } catch (resourceException e) {
             // exception thrown if League instance is not formatted correctly
+            log.error("Exception on PUT: ", e);
             return new ResponseEntity<>(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
         } catch (resourceNotFoundException e) {
             // If league not found in the database, throw exception not found
+            log.error("Exception on PUT: ", e);
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             // all other exceptions

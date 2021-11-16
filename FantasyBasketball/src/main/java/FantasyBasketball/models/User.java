@@ -37,6 +37,7 @@ public class User {
     @JsonProperty("last_name")
     private String lastName;
 
+    // Default Constructor
     public User() {
         this.userID=null;
         this.clientID=null;
@@ -58,18 +59,6 @@ public class User {
         this.firstName=first_name;
         this.lastName=last_name;
     }
-
-//    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-//    @JoinTable(name = "user_fantasyLeague",
-//            joinColumns = {@JoinColumn(name = "userID",
-//                    referencedColumnName = "userID",
-//                    nullable = false,
-//                    updatable = false)},
-//            inverseJoinColumns = {@JoinColumn(name = "leagueID",
-//                    referencedColumnName = "leagueID",
-//                    nullable = false,
-//                    updatable = false)})
-//    private Set<User> userLeagues = new HashSet<>();
 
     // class methods
     public Integer getUserID() {
@@ -120,14 +109,7 @@ public class User {
         this.lastName = lastName;
     }
 
-//    public Set<User> getUserLeagues() {
-//        return userLeagues;
-//    }
-//
-//    public void setUserLeagues(Set<User> userLeagues) {
-//        this.userLeagues = userLeagues;
-//    }
-
+    //  Return class as JSON String
 
     @Override
     public String toString() {
