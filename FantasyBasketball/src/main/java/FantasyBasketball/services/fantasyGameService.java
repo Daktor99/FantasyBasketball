@@ -82,15 +82,10 @@ public class fantasyGameService {
     }
 
     public void checkPutInputs(FantasyGame game) throws resourceException {
-        try {
             if (game.getScheduleID() == null) {
                 throw new resourceException("Must provide schedule_id to update Game.");
             }
             checkInputs(game);
-        } catch (NullPointerException e) {
-            throw new resourceException("Fantasy game formatted incorrectly, please provide at least the following:\n" +
-                    "schedule_id, leagueID, home_team_id, away_team_id, game_start_date, game_end_date.");
-        }
 
     }
 
@@ -101,12 +96,11 @@ public class fantasyGameService {
             int daysBetween     = Period.between(startDate, endDate).getDays();
             if (endDate.isBefore(startDate)) {
                 throw new resourceException("Start Date must be before End Date");
-            } else if (daysBetween > 14) {
+            } else if (daysBetween < 14) {
                 throw new resourceException("Start Date and End Date cannot be more than 14 days apart.");
             }
         } catch (NullPointerException e) {
-            throw new resourceException("Fantasy game formatted incorrectly, please provide at least the following:\n" +
-                    "schedule_id, leagueID, home_team_id, away_team_id, game_start_date, game_end_date.");
+            throw new resourceException("Fantasy game formatted incorrectly, please provide at least the following:\n schedule_id, leagueID, home_team_id, away_team_id, game_start_date, game_end_date.");
         }
     }
 

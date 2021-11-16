@@ -25,7 +25,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
@@ -186,6 +185,7 @@ public class fantasyGameTests {
 
         LocalDate startDate = LocalDate.of(2022, 12, 10);
         genericGame = new FantasyGame(1, 1, 1, 2, startDate, startDate.minusWeeks(1));
+        genericGame.setScheduleID(null);
         gameService.checkPostInputs(genericGame);
     }
 
@@ -195,6 +195,7 @@ public class fantasyGameTests {
 
         LocalDate startDate = LocalDate.of(2022, 12, 10);
         genericGame = new FantasyGame(1, 1, 1, 2, startDate, startDate.plusWeeks(1));
+        genericGame.setScheduleID(null);
         gameService.checkPostInputs(genericGame);
 
     }
@@ -205,7 +206,30 @@ public class fantasyGameTests {
 
         LocalDate startDate = LocalDate.of(2022, 12, 10);
         genericGame = new FantasyGame(1, 1, 1, 2, null, null);
+        genericGame.setScheduleID(null);
         gameService.checkPostInputs(genericGame);
+
+    }
+
+    // testing checkPostInputs with invalid scheduleID
+    @Test(expected = resourceException.class)
+    public void testCheckPutInputsNonNullScheduleID() throws resourceException {
+
+        LocalDate startDate = LocalDate.of(2022, 12, 10);
+        genericGame = new FantasyGame(1, 1, 1, 2, startDate, startDate.plusWeeks(1));
+        genericGame.setScheduleID(1);
+        gameService.checkPutInputs(genericGame);
+
+    }
+
+    // testing checkPostInputs with invalid scheduleID
+    @Test(expected = resourceException.class)
+    public void testCheckPutInputsNullScheduleID() throws resourceException {
+
+        LocalDate startDate = LocalDate.of(2022, 12, 10);
+        genericGame = new FantasyGame(1, 1, 1, 2, startDate, startDate.plusWeeks(1));
+        genericGame.setScheduleID(null);
+        gameService.checkPutInputs(genericGame);
 
     }
 
