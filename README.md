@@ -24,7 +24,7 @@
          * Sample Request: localhost:8080/users?user_id=1
          * Request Parameters:
             * user_id (Type: Integer)
-   * ___FantasyTeam___
+   * ___FantasyTeams___
       * _GET /fantasyTeams_
          * Description: This endpoint retrieves all teams that match the template given in the query parameters. No parameters are required.
          * Sample Request: localhost:8080/fantasyTeams?team_id=1
@@ -51,9 +51,35 @@
          * Sample Request: localhost:8080/fantasyTeams?team_id=11
          * Request Parameters:
             * team_id (Type: Integer)
-   * FantasyStats
-   * FantasyPlayer
-   * FantasyLeague
+   * ___FantasyStats___
+   * ___FantasyPlayers___
+   * ___FantasyLeagues___
+      * _GET /fantasyLeagues_
+         * Description: This endpoint retrieves all teams that match the template given in the query parameters. No parameters are required.
+         * Sample Request: localhost:8080/fantasyTeams?team_id=1
+         * Request Parameters:
+            * team_id (Type: Integer)
+            * team_name (Type: String)
+            * owner_id (Type: Integer)
+            * league_id (Type: Integer)
+      * _POST /fantasyLeagues_
+         * Description: This endpoint receives the details of a team to newly create. The user must be provided as a JSON, sent in the body of the POST request. The JSON in the request body must have fields exactly identical to those which are shown in the sample below.
+         * Sample Request Body:
+            * team_name (Type: String)
+            * owner_id (Type: Integer)
+            * league_id (Type: Integer)
+      * _PUT /fantasyLeagues_
+         * Description: This endpoint receives the details of a team to update. The user must be provided as a JSON, sent in the body of the POST request. The JSON in the request body must provide the team_id, and all other fields are optional.
+         * Sample Request Body:
+            * team_id (Type: Integer)
+            * team_name (Type: String)
+            * owner_id (Type: Integer)
+            * league_id (Type: Integer)
+      * _DELETE /fantasyTeams_
+         * Description: This endpoint receives the team_id of a team to delete. The team_id must be provided as a query parameter.
+         * Sample Request: localhost:8080/fantasyTeams?team_id=11
+         * Request Parameters:
+            * team_id (Type: Integer)
    * FantasyGame
 
 2. System Tests Corresponding to API
