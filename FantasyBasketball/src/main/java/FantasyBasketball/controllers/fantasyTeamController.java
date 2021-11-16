@@ -77,6 +77,7 @@ public class fantasyTeamController {
 
         } catch(resourceException e) {
             // exception thrown if User instance is not formatted correctly
+            log.error("Exception on POST: ", e);
             return new ResponseEntity<>(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
         } catch (DataIntegrityViolationException e) {
             log.error("Exception on POST: ", e);
@@ -103,6 +104,7 @@ public class fantasyTeamController {
             return new ResponseEntity<>(result, HttpStatus.OK);
         } catch (resourceException e) {
             // exception thrown if User instance is not formatted correctly
+            log.error("Exception on PUT: ", e);
             return new ResponseEntity<>(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
         } catch (resourceNotFoundException e) {
             // If user not found in the database, throw exception not found
@@ -126,6 +128,7 @@ public class fantasyTeamController {
             fantasyTeamService.deleteTeamById(team_id);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (resourceNotFoundException e) {
+            log.error("Exception on DELETE: ", e);
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (DataIntegrityViolationException e) {
             log.error("Exception on DELETE: ", e);

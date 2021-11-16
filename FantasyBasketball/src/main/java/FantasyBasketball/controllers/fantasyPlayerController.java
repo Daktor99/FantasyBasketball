@@ -104,4 +104,22 @@ public class fantasyPlayerController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @RequestMapping(value = "/fantasyPlayers", method = RequestMethod.DELETE)
+    public ResponseEntity<?> deletePlayer(@RequestParam(value = "player_id") Integer player_id) {
+
+        try {
+            log.info("DELETE: " + request.getRequestURL() + "?" + request.getQueryString());
+
+            fantasyPlayerService.deleteFantasyPlayerById(player_id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (resourceNotFoundException e) {
+            log.error("Exception on DELETE: ", e);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            log.error("Exception on DELETE: ", e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
 }
