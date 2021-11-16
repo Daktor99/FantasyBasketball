@@ -93,6 +93,10 @@ public class fantasyStatsService {
         return List.of(result);
     }
 
+    public List<FantasyStats> postStatSheet(List<FantasyStats> statSheet) {
+        return (List<FantasyStats>) statsRepo.saveAll(statSheet);
+    }
+
     // Put Operation
     public List<FantasyStats> updateStats(FantasyStats stats) throws resourceNotFoundException {
         if(statsRepo.existsById(stats.getStats_id())) {

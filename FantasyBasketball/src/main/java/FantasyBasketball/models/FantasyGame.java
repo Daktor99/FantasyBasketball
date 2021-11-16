@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
-@Table(name = "fantasyGame")
+@Table(name = "fantasy_game")
 public class FantasyGame {
 
     // data members
@@ -142,13 +142,45 @@ public class FantasyGame {
 
 
     public FantasyGame(Integer leagueID, Integer clientID, Integer homeTeamID, Integer awayTeamID, LocalDate gameStartDate, LocalDate gameEndDate) {
-        this.scheduleID = null;
+        this.scheduleID = 1;
         this.leagueID = leagueID;
         this.clientID = clientID;
         this.homeTeamID = homeTeamID;
         this.awayTeamID = awayTeamID;
         this.gameStartDate = gameStartDate;
         this.gameEndDate = gameEndDate;
+    }
+
+    public FantasyGame(Integer scheduleID, Integer leagueID, Integer clientID,
+                       Integer homeTeamID, Integer awayTeamID,
+                       LocalDate gameStartDate, LocalDate gameEndDate,
+                       Integer winner, Integer homePoints, Integer awayPoints,
+                       Integer startHomePG, Integer startHomeSG, Integer startHomeSF, Integer startHomePF, Integer startHomeC, Integer homeBench1, Integer homeBench2,
+                       Integer startAwayPG, Integer startAwaySG, Integer startAwaySF, Integer startAwayPF, Integer startAwayC, Integer awayBench1, Integer awayBench2) {
+        this.scheduleID = scheduleID;
+        this.leagueID = leagueID;
+        this.clientID = clientID;
+        this.homeTeamID = homeTeamID;
+        this.awayTeamID = awayTeamID;
+        this.gameStartDate = gameStartDate;
+        this.gameEndDate = gameEndDate;
+        this.winner = winner;
+        this.homePoints = homePoints;
+        this.awayPoints = awayPoints;
+        this.startHomePG = startHomePG;
+        this.startHomeSG = startHomeSG;
+        this.startHomeSF = startHomeSF;
+        this.startHomePF = startHomePF;
+        this.startHomeC = startHomeC;
+        this.homeBench1 = homeBench1;
+        this.homeBench2 = homeBench2;
+        this.startAwayPG = startAwayPG;
+        this.startAwaySG = startAwaySG;
+        this.startAwaySF = startAwaySF;
+        this.startAwayPF = startAwayPF;
+        this.startAwayC = startAwayC;
+        this.awayBench1 = awayBench1;
+        this.awayBench2 = awayBench2;
     }
 
     public Integer getScheduleID() {
