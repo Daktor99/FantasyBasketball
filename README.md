@@ -43,3 +43,4 @@
         * mvn install
     * Finally, run the following command to run the FantasyBasketballApplication:
         * mvn spring-boot:run
+    * (The above instructions were inspired by the following source: https://maven.apache.org/guides/getting-started/maven-in-five-minutes.html)
