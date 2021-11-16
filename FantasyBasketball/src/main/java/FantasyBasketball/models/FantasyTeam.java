@@ -77,6 +77,59 @@ public class FantasyTeam {
 
     // class methods
 
+    public FantasyTeam() {
+        this.teamID = null;
+        this.clientID = 1;
+        this.teamName = null;
+        this.ownerID = null;
+        this.leagueID = null;
+        this.startPG = null;
+        this.startSG = null;
+        this.startSF = null;
+        this.startPF = null;
+        this.startC = null;
+        this.bench1 = null;
+        this.bench2 = null;
+        this.teamWins = 0;
+        this.teamLosses = 0;
+        this.pointsScored = 0;
+        this.pointsAgainst = 0;
+    }
+
+    public FantasyTeam(Integer teamID,
+                       Integer clientID,
+                       String teamName,
+                       Integer ownerID,
+                       Integer leagueID,
+                       Integer startPG,
+                       Integer startSG,
+                       Integer startSF,
+                       Integer startPF,
+                       Integer startC,
+                       Integer bench1,
+                       Integer bench2,
+                       Integer teamWins,
+                       Integer teamLosses,
+                       Integer pointsScored,
+                       Integer pointsAgainst) {
+        this.teamID = teamID;
+        this.clientID = clientID;
+        this.teamName = teamName;
+        this.ownerID = ownerID;
+        this.leagueID = leagueID;
+        this.startPG = startPG;
+        this.startSG = startSG;
+        this.startSF = startSF;
+        this.startPF = startPF;
+        this.startC = startC;
+        this.bench1 = bench1;
+        this.bench2 = bench2;
+        this.teamWins = teamWins;
+        this.teamLosses = teamLosses;
+        this.pointsScored = pointsScored;
+        this.pointsAgainst = pointsAgainst;
+    }
+
     public Integer getTeamID() {
         return teamID;
     }

@@ -111,7 +111,7 @@ public class fantasyLeagueService {
             if (checkDates(fantasyLeague.getLeagueStartDate(), fantasyLeague.getLeagueEndDate())) {
 
                 // Player Importation is done when league is posted
-                FantasyLeagueUtility leagueUtility=new FantasyLeagueUtility();
+                FantasyLeagueUtility leagueUtility = new FantasyLeagueUtility();
                 leagueUtility.API_player_importation(playerRepo);
 
                 FantasyLeague result = leagueRepo.save(fantasyLeague);

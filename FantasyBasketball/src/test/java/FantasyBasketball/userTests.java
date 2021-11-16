@@ -90,9 +90,13 @@ public class userTests {
         // save the changes
         Mockito.when(userRepo.save(updatedUser)).thenReturn(updatedUser);
 
-        // assert that user gets correctly updated by checking the userID
-        assertEquals(userService.updateUser(updatedUser).get(0).getUserID(), 2);
-
+        // assert that user gets correctly updated by checking that all data members are equal to the updatedUser
+        assertEquals(userService.updateUser(updatedUser).get(0).getUserID(), updatedUser.getUserID());
+        assertEquals(userService.updateUser(updatedUser).get(0).getClientID(), updatedUser.getClientID());
+        assertEquals(userService.updateUser(updatedUser).get(0).getEmail(), updatedUser.getEmail());
+        assertEquals(userService.updateUser(updatedUser).get(0).getUsername(), updatedUser.getUsername());
+        assertEquals(userService.updateUser(updatedUser).get(0).getFirstName(), updatedUser.getFirstName());
+        assertEquals(userService.updateUser(updatedUser).get(0).getLastName(), updatedUser.getLastName());
     }
 
     //Make sure exception raised when the user does not exist

@@ -7,7 +7,6 @@ import FantasyBasketball.repositories.fantasyStatsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,9 +30,10 @@ public class fantasyStatsService {
     // get operation
     public List<FantasyStats> getStatsByTemplate(
             Integer stats_id,
-            Integer client_id,
             Integer player_id,
             Integer schedule_id,
+            Integer client_id,
+            Integer league_id,
             Integer threeP,
             Integer twoP,
             Integer freeThrows,
@@ -45,9 +45,10 @@ public class fantasyStatsService {
             Integer totPoints) {
         return statsRepo.findByTemplate(
                 stats_id,
-                client_id,
                 player_id,
                 schedule_id,
+                client_id,
+                league_id,
                 threeP,
                 twoP,
                 freeThrows,
@@ -60,8 +61,14 @@ public class fantasyStatsService {
     }
 
     // delete operations
-    public List<FantasyStats> deleteStats(Integer player_id, Integer schedule_id) throws resourceNotFoundException {
-        List<FantasyStats> stats_to_delete = statsRepo.findByPlayerIDAndScheduleID(player_id, schedule_id);
+    public List<FantasyStats> deleteStats(Integer player_id, Integer schedule_id, Integer league_id, Integer client_id) throws resourceNotFoundException, resourceException {
+        if (player_id == null && schedule_id == null && league_id == null){
+            throw new resourceException("Provide at least player_id, schedule_id, or league_id");
+        }
+        List<FantasyStats> stats_to_delete = statsRepo.findByIDs(player_id, schedule_id, league_id, client_id);
+        if (stats_to_delete.size() == 0) {
+            throw new resourceNotFoundException("Fantasy Stats not found in DB, cannot delete");
+        }
 
         for (FantasyStats stat_to_delete:stats_to_delete) {
             deleteStatsByID(stat_to_delete.getStats_id());
@@ -84,6 +91,10 @@ public class fantasyStatsService {
         FantasyStats result = statsRepo.save(stats);
 
         return List.of(result);
+    }
+
+    public List<FantasyStats> postStatSheet(List<FantasyStats> statSheet) {
+        return (List<FantasyStats>) statsRepo.saveAll(statSheet);
     }
 
     // Put Operation

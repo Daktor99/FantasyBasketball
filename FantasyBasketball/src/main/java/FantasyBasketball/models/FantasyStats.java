@@ -31,53 +31,60 @@ public class FantasyStats implements Serializable {
     @JsonProperty("client_id")
     private Integer client_id;
 
+    @Column(name = "league_id")
+    @JsonProperty("league_id")
+    private Integer league_id;
+
     @Column(name = "three_points")
     @JsonProperty("three_points")
-    private int three_points;
+    private Integer three_points;
 
     @Column(name = "two_points")
     @JsonProperty("two_points")
-    private int two_points;
+    private Integer two_points;
 
     @Column(name = "free_throws")
     @JsonProperty("free_throws")
-    private int free_throws;
+    private Integer free_throws;
 
     @Column(name = "rebounds")
     @JsonProperty("rebounds")
-    private int rebounds;
+    private Integer rebounds;
 
     @Column(name = "assists")
     @JsonProperty("assists")
-    private int assists;
+    private Integer assists;
 
     @Column(name = "blocks")
     @JsonProperty("blocks")
-    private int blocks;
+    private Integer blocks;
 
     @Column(name = "steals")
     @JsonProperty("steals")
-    private int steals;
+    private Integer steals;
 
     @Column(name = "turnovers")
     @JsonProperty("turnovers")
-    private int turnovers;
+    private Integer turnovers;
 
     @Column(name = "tot_points")
     @JsonProperty("tot_points")
-    private int tot_points;
+    private Integer tot_points;
 
     // class methods
-    public FantasyStats() {
-        this.stats_id=null;
-        this.client_id=null;
-        this.schedule_id=null;
-        this.player_id=null;
+    public FantasyStats(Integer player_id, Integer schedule_id, Integer client_id, Integer league_id) {
+        this.stats_id = null;
+        this.player_id = player_id;
+        this.schedule_id = schedule_id;
+        this.client_id = client_id;
+        this.league_id = league_id;
     }
 
-    public FantasyStats(Integer player_id,
+    public FantasyStats(Integer stats_id,
+                        Integer player_id,
                         Integer schedule_id,
                         Integer client_id,
+                        Integer league_id,
                         Integer three_points,
                         Integer two_points,
                         Integer free_throws,
@@ -91,6 +98,7 @@ public class FantasyStats implements Serializable {
         this.player_id = player_id;
         this.schedule_id = schedule_id;
         this.client_id = client_id;
+        this.league_id = league_id;
         this.three_points = three_points;
         this.two_points = two_points;
         this.free_throws = free_throws;
@@ -100,7 +108,6 @@ public class FantasyStats implements Serializable {
         this.steals = steals;
         this.turnovers = turnovers;
         this.tot_points = tot_points;
-
     }
 
     public void setStats_id(Integer stats_id) {
@@ -132,6 +139,14 @@ public class FantasyStats implements Serializable {
 
     public void setClient_id(Integer clientID) {
         this.client_id = clientID;
+    }
+
+    public Integer getLeague_id() {
+        return league_id;
+    }
+
+    public void setLeague_id(Integer league_id) {
+        this.league_id = league_id;
     }
 
     public int getThree_points() {
@@ -214,6 +229,7 @@ public class FantasyStats implements Serializable {
                 ",\n\t player_id=" + player_id +
                 ",\n\t schedule_id=" + schedule_id +
                 ",\n\t client_id='" + client_id + '\'' +
+                ",\n\t league_id='" + league_id + '\'' +
                 ",\n\t three_points='" + three_points + '\'' +
                 ",\n\t two_points='" + two_points + '\'' +
                 ",\n\t free_throws='" + free_throws + '\'' +

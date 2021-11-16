@@ -83,11 +83,10 @@ public class fantasyTeamService {
                 throw new resourceException("Team name must be between 1-128 characters.");
             }
         } catch (NullPointerException e) {
-            throw new resourceException("Team formatted incorrectly please provide at least the following:\n" +
-                                        "team_id,\n" +
+            throw new resourceException("Team formatted incorrectly please provide the following:\n" +
+                                        "client_id,\n" +
                                         "team_name,\n" +
                                         "owner_id,\n" +
-                                        "Optional parameters:\n" +
                                         "league_id,\n" +
                                         "start_pg_id,\n" +
                                         "start_sg_id,\n" +
@@ -108,10 +107,10 @@ public class fantasyTeamService {
             if (team.getTeamID() == null) {
                 throw new resourceException("You have to provide teamID. " +
                                             "Team formatted incorrectly please provide at least the following:\n" +
+                                            "client_id,\n" +
                                             "team_id,\n" +
                                             "team_name,\n" +
                                             "owner_id,\n" +
-                                            "Optional parameters:\n" +
                                             "league_id,\n" +
                                             "start_pg_id,\n" +
                                             "start_sg_id,\n" +
@@ -131,10 +130,10 @@ public class fantasyTeamService {
             }
         } catch (NullPointerException e) {
             throw new resourceException("Team formatted incorrectly please provide at least the following:\n" +
+                                        "client_id,\n" +
                                         "team_id,\n" +
                                         "team_name,\n" +
                                         "owner_id,\n" +
-                                        "Optional parameters:\n" +
                                         "league_id,\n" +
                                         "start_pg_id,\n" +
                                         "start_sg_id,\n" +

@@ -52,6 +52,7 @@ public class FantasyLeagueUtility {
             if (!Objects.equals(pos, "") && (players_info.get("height_feet")!= JSONObject.NULL)) {
                 FantasyPlayer player = new FantasyPlayer();
                 // Construct player
+                // TODO: make sure teamID, clientID and leagueID are assigned correctly, using default values for now
                 FantasyPlayer new_player = player.setNewPlayer(0, 1, 1,
                         (String) players_info.get("first_name"),
                         (String) players_info.get("last_name"),
