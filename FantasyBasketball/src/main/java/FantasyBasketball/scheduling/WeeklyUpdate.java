@@ -3,8 +3,10 @@ package FantasyBasketball.scheduling;
 import FantasyBasketball.exceptions.resourceNotFoundException;
 import FantasyBasketball.models.FantasyGame;
 import FantasyBasketball.models.FantasyLeague;
+import FantasyBasketball.models.FantasyStats;
 import FantasyBasketball.models.FantasyTeam;
 import FantasyBasketball.services.fantasyGameService;
+import FantasyBasketball.services.fantasyStatsService;
 import FantasyBasketball.services.fantasyTeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -14,6 +16,15 @@ import java.util.HashMap;
 import java.util.List;
 
 public class WeeklyUpdate {
+
+    @Autowired
+    fantasyTeamService teamService;
+
+    @Autowired
+    fantasyGameService gameService;
+
+    @Autowired
+    fantasyStatsService statService;
 
     public void runWeekly(fantasyTeamService teamService, fantasyGameService gameService) throws resourceNotFoundException {
 
@@ -37,6 +48,7 @@ public class WeeklyUpdate {
         }
 
         LocalDate current_date = LocalDate.now();
+        // TODO: remove current date overwriting below that is being used for testing
         current_date = LocalDate.of(2021, 12, 25);
         List<FantasyGame> gameList = gameService.getGamesForWeek(current_date);
 
@@ -44,8 +56,8 @@ public class WeeklyUpdate {
             Integer home_team_id = game.getHomeTeamID();
             Integer away_team_id = game.getAwayTeamID();
 
-            List<Integer> home_starters=teamMap.get(home_team_id);
-            List<Integer> away_starters=teamMap.get(away_team_id);
+            List<Integer> home_starters = teamMap.get(home_team_id);
+            List<Integer> away_starters = teamMap.get(away_team_id);
 
             // setting home starters
             game.setStartHomePG(home_starters.get(0));
@@ -68,7 +80,8 @@ public class WeeklyUpdate {
             // TODO: check exception being thrown!
             gameService.updateGame(game);
 
-
+            List<FantasyStats> statSheet = gameService.generateStatsSheet(game);
+            statService.postStatSheet(statSheet);
 
         }
     }

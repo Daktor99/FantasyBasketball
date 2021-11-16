@@ -27,28 +27,26 @@ public class Scheduler {
     //@Scheduled(cron = "0 0 */1 * * *")
     @Async
     @Scheduled(cron = "*/5 * * * * *")
-    public void cronJobSch() {
+    public void hourlySchedule() {
 //        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 //        Date now = new Date();
 //        String strDate = sdf.format(now);
 //        System.out.println("Java cron job expression:: " + strDate);
-
-
     }
 
     //    @Scheduled(cron = "0 0 0 * * SUN")
     @Async
     @Scheduled(cron = "*/10 * * * * *")
-    public void ASYNCcronJobSch() {
+    public void weeklySchedule() {
 //        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 //        Date now = new Date();
 //        String strDate = sdf.format(now);
 //        System.out.println("\t\t\tJava cron job expression:: " + strDate);
 //
 //        System.out.println("\t\t\tRun Weekly function being called.");
-//        WeeklyUpdate weekly= new WeeklyUpdate();
+//        WeeklyUpdate weekly = new WeeklyUpdate();
 //        try {
-//            weekly.runWeekly(teamService,gameService);
+//            weekly.runWeekly(teamService, gameService);
 //        } catch (resourceNotFoundException e) {
 //            e.printStackTrace();
 //        }
