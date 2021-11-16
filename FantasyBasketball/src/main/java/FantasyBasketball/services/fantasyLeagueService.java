@@ -184,7 +184,7 @@ public class fantasyLeagueService {
             if (checkIfInvalid(fantasyLeague.getLeagueName())) {
                 throw new resourceException("League name is invalid.");
             } else if (fantasyLeague.getLeagueSize() < 0 || fantasyLeague.getLeagueSize() > max
-            || fantasyLeague.getLeagueSize()%2 == 0) {
+            || fantasyLeague.getLeagueSize()%2 != 0) {
                 throw new resourceException("League size is invalid. (League size must be an even number.)");
             }
         } catch (NullPointerException e) {
