@@ -80,7 +80,7 @@
          * Sample Request: localhost:8080/fantasyTeams?team_id=11
          * Request Parameters:
             * team_id (Type: Integer)
-   * FantasyGame
+   * ___FantasyGames___
 
 2. System Tests Corresponding to API
 
@@ -88,9 +88,9 @@
 
 4. Style Compliant
 
-Our team decided to use SonarLint to be able to view bug smells in addition to IntelliJ's built in style checker. We had also marked Sonarlint to ignore a few bugs that were appearing due to code in our project that was still underdevelopment and were necessary (for example: variables that were required to be snake case instead of camel case to communicate effectively with our Amazon RDS MySQL instance).
+* Our team decided to use SonarLint to be able to view bug smells in addition to IntelliJ's built in style checker. We had also marked Sonarlint to ignore a few bugs that were appearing due to code in our project that was still underdevelopment and were necessary (for example: variables that were required to be snake case instead of camel case to communicate effectively with our Amazon RDS MySQL instance).
 
-![Screen Shot 2021-11-15 at 11 12 37 PM](https://user-images.githubusercontent.com/76623695/141914002-162d9f16-5a04-4bc0-9e6e-889a5acfbf3e.png)
+* ![Screen Shot 2021-11-15 at 11 12 37 PM](https://user-images.githubusercontent.com/76623695/141914002-162d9f16-5a04-4bc0-9e6e-889a5acfbf3e.png)
 
 5. Build, Run, Test Instructions
 
