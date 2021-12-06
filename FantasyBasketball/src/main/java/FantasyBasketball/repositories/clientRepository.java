@@ -36,9 +36,9 @@ public interface clientRepository extends CrudRepository<Client, Integer> {
             "(:company_name is NULL or company_name = :company_name) and\n" +
             "(:client_name is NULL or client_name = :client_name))",
             nativeQuery = true)
-    List<FantasyGame> findByTemplate(@Param("client_id")            Integer client_id,
+    List<Client> findByTemplate(@Param("client_id")            Integer client_id,
                                      @Param("email")                String email,
-                                     @Param("client_id")            Integer company_name,
-                                     @Param("winner_id")            Integer client_name);
+                                     @Param("company_name")         String company_name,
+                                     @Param("client_name")          String client_name);
 
 }
