@@ -3,6 +3,7 @@ package FantasyBasketball.services;
 import FantasyBasketball.models.FantasyPlayer;
 import FantasyBasketball.models.User;
 import FantasyBasketball.repositories.fantasyPlayerRepository;
+import FantasyBasketball.repositories.playerDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import FantasyBasketball.exceptions.resourceNotFoundException;
@@ -14,6 +15,9 @@ public class fantasyPlayerService {
 
     @Autowired
     private fantasyPlayerRepository playerRepo;
+
+    @Autowired
+    private playerDataRepository dataRepo;
 
     // find by ID
     public List<FantasyPlayer> getByID(Integer playerID) throws resourceNotFoundException {
@@ -29,68 +33,124 @@ public class fantasyPlayerService {
     // get operation
     public List<FantasyPlayer> getPlayerByTemplate(Integer player_id,
                                                    Integer client_id,
-                                          Integer team_id,
-                                          String position,
-                                          String first_name,
-                                          String last_name,
-                                          String nba_team,
-                                          Integer league_id,
-                                                   Integer ballapiID) {
+                                                   Integer team_id,
+                                                   String position,
+                                                   String first_name,
+                                                   String last_name,
+                                                   String nba_team,
+                                                   Integer league_id,
+                                                   Integer ball_api_id) {
         return playerRepo.findByTemplate(player_id,
                 client_id,
                 team_id,
-                position,
+                league_id,
+                ball_api_id,
                 first_name,
                 last_name,
                 nba_team,
-                league_id,
-                ballapiID);
+                position);
     }
 
     // post operation
     public List<FantasyPlayer> postFantasyPlayer(FantasyPlayer player) {
-        player.setPlayerID(0);
+        // player.setPlayerID(0);
 
+
+        // TODO: Update this when client functionality is ready
         //This client_id will be updated later
-        player.setClientID(1);
+        //player.setClientID(1);
 
-        FantasyPlayer result = playerRepo.save(player);
-        return List.of(result);
+
+        playerRepo.insertFantasyPlayer(
+                player.getPlayerID(),
+                player.getClientID(),
+                player.getTeamID(),
+                player.getLeagueID(),
+                player.getBallapiID());
+
+        List<FantasyPlayer> result = playerRepo.findByTemplate(player.getPlayerID(),
+                player.getClientID(),
+                player.getTeamID(),
+                player.getLeagueID(),
+                player.getBallapiID(),
+                null,
+                null,
+                null,
+                null);
+
+        return result;
     }
 
     // put operation
     public List<FantasyPlayer> updateFantasyPlayer(FantasyPlayer player) throws resourceNotFoundException {
-        if(playerRepo.existsById(player.getPlayerID())) {
 
+        List<FantasyPlayer> playerCheck = playerRepo.findByTemplate(player.getPlayerID(),
+                player.getClientID(),
+                null,
+                player.getLeagueID(),
+                null,
+                null,
+                null,
+                null,
+                null);
+
+        if(playerCheck.size() == 1) {
+
+            // TODO: update this with the correct client ID
+            // TODO: update error message where teamID doesn't exist
             //This client_id will be updated later
             player.setClientID(1);
 
-            FantasyPlayer result = playerRepo.save(player);
-            return List.of(result);
+            playerRepo.updateFantasyPlayer(player.getPlayerID(),
+                    player.getClientID(),
+                    player.getLeagueID(),
+                    player.getTeamID());
+
+            List<FantasyPlayer> result = playerRepo.findByTemplate(player.getPlayerID(),
+                    player.getClientID(),
+                    player.getTeamID(),
+                    player.getLeagueID(),
+                    null,
+                    null,
+                    null,
+                    null,
+                    null);
+            result.get(0).setTeamID(player.getTeamID());
+            return result;
         } else {
-            throw new resourceNotFoundException("Player not found by ID in DB, cannot update.");
+            throw new resourceNotFoundException("Single player not found by ID in DB, cannot update.");
         }
     }
     // delete operation
-    public void deleteFantasyPlayerById(Integer player_id) throws resourceNotFoundException {
-        if(playerRepo.existsById(player_id)) {
-            playerRepo.deleteById(player_id);
+    public void deleteFantasyPlayer(Integer player_id, Integer client_id, Integer league_id) throws resourceNotFoundException {
+
+        List<FantasyPlayer> playerCheck = playerRepo.findByTemplate(player_id,
+                client_id,
+                null,
+                league_id,
+                null,
+                null,
+                null,
+                null,
+                null);
+
+        if(playerCheck.size() == 1) {
+            playerRepo.deleteFantasyPlayer(player_id,client_id,league_id);
         } else {
-            throw new resourceNotFoundException("Player not found in DB, cannot delete");
+            throw new resourceNotFoundException("Single player not found in DB, cannot delete");
         }
     }
     // Get available players
-    public List<FantasyPlayer> getAvailablePlayers(Integer team_id, Integer league_id, Integer client_id) {
-        return playerRepo.getAvailablePlayers(team_id,
-                league_id,
-                client_id);
+    public List<FantasyPlayer> getAvailablePlayers(Integer league_id, Integer client_id, String first_name,
+                                                   String last_name, String nba_team, String position) {
+
+        // TODO: Enforce that league_id and client_id are present, or else raise exception
+
+        return playerRepo.getAvailablePlayers(league_id, client_id, first_name,last_name,nba_team,position);
     }
 
     public List<FantasyPlayer> draftFantasyPlayer(FantasyPlayer player) throws resourceNotFoundException {
-
-        FantasyPlayer dbPlayer = getByID(player.getPlayerID()).get(0);
-        dbPlayer.setTeamID(player.getTeamID());
-        return updateFantasyPlayer(dbPlayer);
+        return updateFantasyPlayer(player);
     }
 
 }

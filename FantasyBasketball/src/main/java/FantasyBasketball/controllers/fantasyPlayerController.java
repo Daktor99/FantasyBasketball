@@ -80,7 +80,7 @@ public class fantasyPlayerController {
             return new ResponseEntity<>("This action is not allowed, please check values and try again.", HttpStatus.UNPROCESSABLE_ENTITY);
         } catch (Exception e) {
             // all other exceptions
-            log.error("Exception on PUT: ", e);
+            log.error("Exception on POST: ", e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -106,12 +106,14 @@ public class fantasyPlayerController {
     }
 
     @RequestMapping(value = "/fantasyPlayers", method = RequestMethod.DELETE)
-    public ResponseEntity<?> deletePlayer(@RequestParam(value = "player_id") Integer player_id) {
+    public ResponseEntity<?> deletePlayer(@RequestParam(value = "player_id") Integer player_id,
+                                          @RequestParam(value = "client_id") Integer client_id,
+                                          @RequestParam(value = "league_id") Integer league_id) {
 
         try {
             log.info("DELETE: " + request.getRequestURL() + "?" + request.getQueryString());
 
-            fantasyPlayerService.deleteFantasyPlayerById(player_id);
+            fantasyPlayerService.deleteFantasyPlayer(player_id, client_id, league_id);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (resourceNotFoundException e) {
             log.error("Exception on DELETE: ", e);

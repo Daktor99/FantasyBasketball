@@ -6,9 +6,11 @@ import FantasyBasketball.models.FantasyGame;
 import FantasyBasketball.models.FantasyLeague;
 import FantasyBasketball.models.FantasyPlayer;
 import FantasyBasketball.repositories.fantasyLeagueRepository;
+import FantasyBasketball.repositories.playerDataRepository;
 import FantasyBasketball.services.fantasyLeagueService;
 import FantasyBasketball.services.fantasyPlayerService;
 import FantasyBasketball.services.fantasyTeamService;
+import FantasyBasketball.utilities.FantasyLeagueUtility;
 import FantasyBasketball.utilities.robinRoundScheduler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,6 +36,9 @@ public class fantasyLeagueController {
 
     @Autowired
     fantasyPlayerService fantasyPlayerService;
+
+    @Autowired
+    playerDataRepository dataRepo;
 
     private static final Logger log = LoggerFactory.getLogger(fantasyLeagueController.class);
 
@@ -188,6 +193,8 @@ public class fantasyLeagueController {
             log.info("PUT: " + request.getRequestURL());
             log.info(fantasyPlayer.toString());
 
+            // TODO: Filter and check inputs
+
             // Regular put
             List<FantasyPlayer> result = fantasyPlayerService.draftFantasyPlayer(fantasyPlayer);
             return new ResponseEntity<>(result, HttpStatus.OK);
@@ -208,9 +215,12 @@ public class fantasyLeagueController {
     }
 
     @RequestMapping(value = "/fantasyLeague/draft/availablePlayers", method = RequestMethod.GET)
-    public ResponseEntity<?> getAvailablePlayers( @RequestParam(value = "team_id", required = false) Integer team_id,
-                                                  @RequestParam(value = "league_id", required = false) Integer league_id,
-                                                  @RequestParam(value = "client_id", required = false) Integer client_id) {
+    public ResponseEntity<?> getAvailablePlayers(@RequestParam(value = "league_id", required = false) Integer league_id,
+                                                 @RequestParam(value = "client_id", required = false) Integer client_id,
+                                                 @RequestParam(value = "first_name", required = false) String first_name,
+                                                 @RequestParam(value = "last_name", required = false) String last_name,
+                                                 @RequestParam(value = "nba_team", required = false) String nba_team,
+                                                 @RequestParam(value = "position", required = false) String position) {
         try {
 
             // log GET request
@@ -220,10 +230,31 @@ public class fantasyLeagueController {
                 log.info("GET: " + request.getRequestURL());
             }
 
-            List<FantasyPlayer> result = fantasyPlayerService.getAvailablePlayers(team_id,
-                    league_id,
-                    client_id);
+            List<FantasyPlayer> result = fantasyPlayerService.getAvailablePlayers(league_id,
+                    client_id, first_name, last_name, nba_team, position);
+
             return new ResponseEntity<>(result, HttpStatus.OK);
+
+        } catch (Exception e) {
+            log.error("Exception on GET: ", e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @RequestMapping(value = "/fantasyLeague/playerCreation", method = RequestMethod.POST)
+    public ResponseEntity<?> playerCreation() {
+        try {
+
+            // log GET request
+            if (request.getQueryString() != null) {
+                log.info("GET: " + request.getRequestURL() + "?" + request.getQueryString());
+            } else {
+                log.info("GET: " + request.getRequestURL());
+            }
+
+            FantasyLeagueUtility newUtility= new FantasyLeagueUtility();
+            newUtility.API_player_importation(dataRepo);
+            return new ResponseEntity<>(HttpStatus.OK);
 
         } catch (Exception e) {
             log.error("Exception on GET: ", e);

@@ -1,5 +1,6 @@
 package FantasyBasketball.utilities;
 
+import FantasyBasketball.repositories.playerDataRepository;
 import FantasyBasketball.services.fantasyLeagueService;
 import FantasyBasketball.services.fantasyPlayerService;
 import FantasyBasketball.repositories.fantasyPlayerRepository;
@@ -27,18 +28,18 @@ public class FantasyLeagueUtility {
     // Try doing this only once as then copy the data from th first copy
 
     // Function to start API calls to get player information from BallDontLie API
-    public void API_player_importation(fantasyPlayerRepository playerRepo) throws IOException {
+    public void API_player_importation(playerDataRepository dataRepo) throws IOException {
         JSONObject json = readJsonFromUrl("https://www.balldontlie.io/api/v1/players?per_page=100");
         JSONObject API_data = (JSONObject) json.get("meta");
         // Grabbing data page by page
         for (int i = (int) API_data.get("current_page"); i < (int) API_data.get("total_pages"); i++){
             String url = "https://www.balldontlie.io/api/v1/players/?per_page=100&page=" + i;
-            API_each_page_to_player(url, playerRepo);
+            API_each_page_to_player(url, dataRepo);
         }
     }
 
     // Function for each page url call to upload player in database
-    public void API_each_page_to_player(String url,fantasyPlayerRepository playerRepo) throws IOException {
+    public void API_each_page_to_player(String url, playerDataRepository dataRepo) throws IOException {
         JSONObject json = readJsonFromUrl(url);
         JSONArray json_data = (JSONArray) json.get("data");
         List<FantasyPlayer> player_page_list=new ArrayList<>();
@@ -60,12 +61,22 @@ public class FantasyLeagueUtility {
                         (String) players_info.get("position"), 1,
                         (Integer) players_info.get("id"));
 
+                dataRepo.insertDbPlayer(new_player.getPlayerID(),
+                        new_player.getPosition(),
+                        new_player.getFirstName(),
+                        new_player.getLastName(),
+                        new_player.getNbaTeam(),
+                        new_player.getBallapiID(),
+                        0);
+
+
+
                 // Save player in list
-                player_page_list.add(new_player);
+//                player_page_list.add(new_player);
             }
         }
         // Save player in database
-        playerRepo.saveAll(player_page_list);
+//        playerRepo.saveAll(player_page_list);
     }
 
     // Convert API response to a String
