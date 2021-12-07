@@ -71,6 +71,10 @@ public class Client {
     @JsonProperty("google_id")
     private String google_id;
 
+    @Column(name = "google_id")
+    @JsonProperty("google_id")
+    private String google_id;
+
     public Client() {
         this.clientID = null;
         this.email = null;
@@ -232,6 +236,14 @@ public class Client {
 
     public void setMin_league_size(Integer min_league_size) {
         this.min_league_size = min_league_size;
+    }
+
+    public String getGoogle_id() {
+        return google_id;
+    }
+
+    public void setGoogle_id(String google_id) {
+        this.google_id = google_id;
     }
 
     public String getGoogle_id() {

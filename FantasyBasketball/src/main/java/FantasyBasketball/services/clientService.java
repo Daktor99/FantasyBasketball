@@ -25,7 +25,7 @@ public class clientService {
             Client clientResult = result.get();
             return List.of(clientResult);
         } else {
-            throw new resourceNotFoundException("Fantasy Game not found by ID in DB.");
+            throw new resourceNotFoundException("Client not found by ID in DB.");
         }
     }
 

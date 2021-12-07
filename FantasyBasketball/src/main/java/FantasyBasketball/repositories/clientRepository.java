@@ -37,8 +37,8 @@ public interface clientRepository extends CrudRepository<Client, Integer> {
             "(:client_name is NULL or client_name = :client_name))",
             nativeQuery = true)
     List<Client> findByTemplate(@Param("client_id")            Integer client_id,
-                                     @Param("email")                String email,
-                                     @Param("company_name")         String company_name,
-                                     @Param("client_name")          String client_name);
+                                 @Param("email")                String email,
+                                 @Param("company_name")         String company_name,
+                                 @Param("client_name")          String client_name);
 
 }

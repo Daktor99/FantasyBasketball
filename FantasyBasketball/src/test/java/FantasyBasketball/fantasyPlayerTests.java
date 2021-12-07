@@ -113,35 +113,35 @@ public class fantasyPlayerTests {
         playerService.updateFantasyPlayer(updated_player);
     }
 
-    @Test (expected = Test.None.class)
-    public void testFindByID() throws resourceNotFoundException {
+//    @Test (expected = Test.None.class)
+//    public void testFindByID() throws resourceNotFoundException {
+//
+//        // Initialize FantasyPlayer
+//        FantasyPlayer player = new FantasyPlayer();
+//        FantasyPlayer new_player = player.setNewPlayer(0,1,1,
+//                "Tom","Murdia", "nets","F",1,0);
+//
+//        Optional<FantasyPlayer> db = Optional.of(new_player);
+//
+//        when(playerRepo.findById(0)).thenReturn(db);
+//
+//        List<FantasyPlayer> result = playerService.getByID(0);
+//        assertEquals(result.get(0).getPlayerID(), 0);
+//    }
 
-        // Initialize FantasyPlayer
-        FantasyPlayer player = new FantasyPlayer();
-        FantasyPlayer new_player = player.setNewPlayer(0,1,1,
-                "Tom","Murdia", "nets","F",1,0);
 
-        Optional<FantasyPlayer> db = Optional.of(new_player);
-
-        when(playerRepo.findById(0)).thenReturn(db);
-
-        List<FantasyPlayer> result = playerService.getByID(0);
-        assertEquals(result.get(0).getPlayerID(), 0);
-    }
-
-
-    @Test(expected = resourceNotFoundException.class)
-    public void testGetIDFantasyPlayerException() throws resourceNotFoundException {
-
-        // Initialize  FantasyPlayer
-        FantasyPlayer player = new FantasyPlayer();
-        FantasyPlayer new_player = player.setNewPlayer(7836,1,1,
-                "Tom","Murdia", "nets","F",1,0);
-
-        Mockito.when(playerRepo.existsById(7836)).thenReturn(false);
-
-        playerService.getByID(7836);
-    }
+//    @Test(expected = resourceNotFoundException.class)
+//    public void testGetIDFantasyPlayerException() throws resourceNotFoundException {
+//
+//        // Initialize  FantasyPlayer
+//        FantasyPlayer player = new FantasyPlayer();
+//        FantasyPlayer new_player = player.setNewPlayer(7836,1,1,
+//                "Tom","Murdia", "nets","F",1,0);
+//
+//        Mockito.when(playerRepo.existsById(7836)).thenReturn(false);
+//
+//        playerService.getByID(7836);
+//    }
 
 
     @Test
