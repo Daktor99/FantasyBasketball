@@ -27,12 +27,12 @@ public class Client {
     @JsonProperty("client_name")
     private String client_name;
 
-    @Column(name = "3p_weight")
-    @JsonProperty("3p_weight")
+    @Column(name = "three_p_weight")
+    @JsonProperty("three_p_weight")
     private double three_p_weight;
 
-    @Column(name = "2p_weight")
-    @JsonProperty("2p_weight")
+    @Column(name = "two_p_weight")
+    @JsonProperty("two_p_weight")
     private double two_p_weight;
 
     @Column(name = "ft_weight")
@@ -70,6 +70,10 @@ public class Client {
     @Column(name = "google_id")
     @JsonProperty("google_id")
     private String google_id;
+
+    @Column(name = "steal_weight")
+    @JsonProperty("steal_weight")
+    private Integer steal_weight;
 
     public Client() {
         this.clientID = null;

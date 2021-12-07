@@ -36,6 +36,15 @@ public class clientService {
         return clientRepo.findByTemplate(client_id, email, company_name, client_name);
     }
 
+    public List<Client> getClientByGoogleId(String google_id) throws resourceException {
+        List<Client> result = clientRepo.findClientByGoogle_id(google_id);
+        if (result.size() <= 1)
+            return result;
+        else {
+            throw new resourceException("Found two clients with same Google Id");
+        }
+    }
+
     public List<Client> postClient(Client client) {
         client.setClientID(0);
         Client result = clientRepo.save(client);

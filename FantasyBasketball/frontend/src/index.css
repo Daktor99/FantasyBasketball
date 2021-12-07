@@ -1,0 +1,85 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  height: 100%;
+}
+
+html {
+  height: 100%;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.signInButton {
+  float:none;
+  position:static;
+  display:block;
+  margin:auto;
+  width:max-content;
+}
+
+.navbar-logo {
+  width: 200px;
+  height: 70px;
+}
+
+.login-button {
+  display: flex;
+  float: right;
+  justify-content: flex-end;
+  align-content: center;
+  flex-wrap: nowrap;
+}
+
+.home {
+  background-color: #183c5d;
+  height: inherit;
+}
+
+.box {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+}
+
+.box .row {
+
+}
+
+.box .row.header {
+  flex: 0 1 auto;
+  margin-right: 0 !important;
+}
+
+.box .row.content {
+  flex: 1 1 auto;
+  margin-right: 0 !important;
+}
+
+.box .row.footer {
+  flex: 0 1;
+}
+
+.top-text {
+  display: inline-flex;
+}
+
+.client-info {
+  color: #fd904d !important;
+  margin-top: 50px;
+}
+
+.client-info-table {
+  color: #fd904d !important;
+}
+
+#root {
+  height: 100%;
+}

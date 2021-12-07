@@ -1,0 +1,138 @@
+import React, {Component} from "react";
+import {Container, Divider, Header, Icon, Table} from "semantic-ui-react";
+import {withCookies} from "react-cookie";
+import {Redirect} from 'react-router-dom';
+
+
+class Home extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            loggedIn: this.props.cookies.get("loggedIn") || false,
+            givenName:this.props.cookies.get("givenName") || null,
+            familyName:this.props.cookies.get("familyName") || null,
+            googleId:this.props.cookies.get("googleId") || null,
+            email:this.props.cookies.get("email") || null
+        }
+        this.state.loggedIn = this.state.loggedIn === "true";
+    }
+
+    async componentDidMount() {
+        const input = '/getClient?google_id=' + this.state.googleId
+        const response = await fetch(input);
+        const body = await response.json();
+        console.log(body[0])
+        if (body.length > 0){
+            const client = body[0]
+            this.setState({
+                assist_weight: client.assist_weight,
+                block_weight: client.block_weight,
+                ft_weight: client.ft_weight,
+                max_team_size: client.max_team_size,
+                min_league_dur: client.min_league_dur,
+                min_league_size: client.min_league_size,
+                rebound_weight: client.rebound_weight,
+                three_p_weight: client.three_p_weight,
+                turnover_weight: client.turnover_weight,
+                two_p_weight: client.two_p_weight,
+                steal_weight: client.steal_weight
+            })
+        }
+    }
+
+
+    render() {
+        if (this.state.loggedIn) {
+            return (
+                <div className="home">
+                    <Container text style={{marginLeft: 0, marginTop: 5}}>
+                        <Header
+                            as='h2'
+                            content= {'Welcome ' + this.state.givenName}
+                            inverted
+                            style={{
+                                fontSize: '4em',
+                                fontWeight: 'normal',
+                                marginBottom: 0,
+                                color: '#FD904DFF'
+                            }}
+                        />
+                    </Container>
+                    <Container className="client-info">
+                        <Divider horizontal>
+                            <Header as='h4'>
+                                <Icon name='tag' />
+                                Description
+                            </Header>
+                        </Divider>
+
+                        <p>
+                            In this web page you will be able to control all of your fantasy basketball settings
+                        </p>
+
+                        <Divider horizontal>
+                            <Header as='h4' style = {{marginBottom:20}}>
+                                <Icon name='bar chart' />
+                                Weights
+                            </Header>
+                        </Divider>
+
+                        <Table definition className="client-info-table">
+                            <Table.Body>
+                                <Table.Row>
+                                    <Table.Cell width={2}>Three point weight</Table.Cell>
+                                    <Table.Cell>{this.state.three_p_weight}</Table.Cell>
+                                </Table.Row>
+                                <Table.Row>
+                                    <Table.Cell>Two point weight</Table.Cell>
+                                    <Table.Cell>{this.state.two_p_weight}</Table.Cell>
+                                </Table.Row>
+                                <Table.Row>
+                                    <Table.Cell>Free Throw weight</Table.Cell>
+                                    <Table.Cell>{this.state.ft_weight}</Table.Cell>
+                                </Table.Row>
+                                <Table.Row>
+                                    <Table.Cell>Rebound Weight</Table.Cell>
+                                    <Table.Cell>{this.state.rebound_weight}</Table.Cell>
+                                </Table.Row>
+                                <Table.Row>
+                                    <Table.Cell>Assist Weight</Table.Cell>
+                                    <Table.Cell>{this.state.assist_weight}</Table.Cell>
+                                </Table.Row>
+                                <Table.Row>
+                                    <Table.Cell>Block Weight</Table.Cell>
+                                    <Table.Cell>{this.state.block_weight}</Table.Cell>
+                                </Table.Row>
+                                <Table.Row>
+                                    <Table.Cell>Turnover Weight</Table.Cell>
+                                    <Table.Cell>{this.state.turnover_weight}</Table.Cell>
+                                </Table.Row>
+                                <Table.Row>
+                                    <Table.Cell>Steal Weight</Table.Cell>
+                                    <Table.Cell>{this.state.steal_weight}</Table.Cell>
+                                </Table.Row>
+                                <Table.Row>
+                                    <Table.Cell>Min League Duration</Table.Cell>
+                                    <Table.Cell>{this.state.min_league_dur}</Table.Cell>
+                                </Table.Row>
+                                <Table.Row>
+                                    <Table.Cell>Min League Size</Table.Cell>
+                                    <Table.Cell>{this.state.min_league_size}</Table.Cell>
+                                </Table.Row>
+                                <Table.Row>
+                                    <Table.Cell>Max Team Size</Table.Cell>
+                                    <Table.Cell>{this.state.max_team_size}</Table.Cell>
+                                </Table.Row>
+                            </Table.Body>
+                        </Table>
+                    </Container>
+                </div>
+            )
+        }
+        else {
+            return <Redirect to='/'/>
+        }
+    }
+}
+
+export default withCookies(Home);
