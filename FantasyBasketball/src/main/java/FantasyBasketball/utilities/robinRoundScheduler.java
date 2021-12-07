@@ -19,15 +19,13 @@ public class robinRoundScheduler {
 
     private final List<Integer>   teamList;
     private final LocalDate       startDate;
-    private final LocalDate       endDate;
     private final Integer         weeksOfPlay;
 
     // constructor
-    public robinRoundScheduler(List<Integer> teamList, LocalDate startDate, LocalDate endDate) {
+    public robinRoundScheduler(List<Integer> teamList, LocalDate startDate, Integer weeksOfPlay) {
         this.teamList   = new ArrayList<>(teamList);
         this.startDate  = startDate;
-        this.endDate    = endDate;
-        this.weeksOfPlay= Math.toIntExact(ChronoUnit.WEEKS.between(startDate, endDate));
+        this.weeksOfPlay= weeksOfPlay;
     }
     // Getting first half of the team list
     public List<Integer> getFirstHalf(List<Integer> teamList) {

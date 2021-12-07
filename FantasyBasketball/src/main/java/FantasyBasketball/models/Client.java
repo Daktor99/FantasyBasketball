@@ -59,9 +59,17 @@ public class Client {
     @JsonProperty("min_league_dur")
     private Integer min_league_dur;
 
-    @Column(name = "team_size")
-    @JsonProperty("team_size")
-    private Integer team_size;
+    @Column(name = "max_team_size")
+    @JsonProperty("max_team_size")
+    private Integer max_team_size;
+
+    @Column(name = "min_league_size")
+    @JsonProperty("min_league_size")
+    private Integer min_league_size;
+
+    @Column(name = "google_id")
+    @JsonProperty("google_id")
+    private String google_id;
 
     @Column(name = "google_id")
     @JsonProperty("google_id")
@@ -80,7 +88,8 @@ public class Client {
         this.block_weight = 1.0;
         this.turnover_weight = 1.0;
         this.min_league_dur = 1;
-        this.team_size = 8;
+        this.max_team_size = 30;
+        this.min_league_size = 2;
         this.google_id = null;
     }
 
@@ -96,7 +105,8 @@ public class Client {
                   Integer block_weight,
                   Integer turnover_weight,
                   Integer min_league_dur,
-                  Integer team_size,
+                  Integer max_team_size,
+                  Integer min_league_size,
                   String google_id) {
         this.clientID = clientID;
         this.email = email;
@@ -110,7 +120,8 @@ public class Client {
         this.block_weight = block_weight;
         this.turnover_weight = turnover_weight;
         this.min_league_dur = min_league_dur;
-        this.team_size = team_size;
+        this.max_team_size = max_team_size;
+        this.min_league_size = min_league_size;
         this.google_id = google_id;
     }
 
@@ -211,12 +222,28 @@ public class Client {
         this.min_league_dur = min_league_dur;
     }
 
-    public Integer getTeam_size() {
-        return team_size;
+    public Integer getMax_team_size() {
+        return max_team_size;
     }
 
-    public void setTeam_size(Integer team_size) {
-        this.team_size = team_size;
+    public void setMax_team_size(Integer max_team_size) {
+        this.max_team_size = max_team_size;
+    }
+
+    public Integer getMin_league_size() {
+        return min_league_size;
+    }
+
+    public void setMin_league_size(Integer min_league_size) {
+        this.min_league_size = min_league_size;
+    }
+
+    public String getGoogle_id() {
+        return google_id;
+    }
+
+    public void setGoogle_id(String google_id) {
+        this.google_id = google_id;
     }
 
     public String getGoogle_id() {
