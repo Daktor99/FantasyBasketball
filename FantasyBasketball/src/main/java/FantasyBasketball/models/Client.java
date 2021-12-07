@@ -63,6 +63,10 @@ public class Client {
     @JsonProperty("team_size")
     private Integer team_size;
 
+    @Column(name = "google_id")
+    @JsonProperty("google_id")
+    private String google_id;
+
     public Client() {
         this.clientID = null;
         this.email = null;
@@ -76,7 +80,8 @@ public class Client {
         this.block_weight = 1.0;
         this.turnover_weight = 1.0;
         this.min_league_dur = 1;
-        this.team_size = 15;
+        this.team_size = 8;
+        this.google_id = null;
     }
 
     public Client(Integer clientID,
@@ -91,7 +96,8 @@ public class Client {
                   Integer block_weight,
                   Integer turnover_weight,
                   Integer min_league_dur,
-                  Integer team_size) {
+                  Integer team_size,
+                  String google_id) {
         this.clientID = clientID;
         this.email = email;
         this.company_name = company_name;
@@ -105,6 +111,7 @@ public class Client {
         this.turnover_weight = turnover_weight;
         this.min_league_dur = min_league_dur;
         this.team_size = team_size;
+        this.google_id = google_id;
     }
 
 
@@ -210,6 +217,14 @@ public class Client {
 
     public void setTeam_size(Integer team_size) {
         this.team_size = team_size;
+    }
+
+    public String getGoogle_id() {
+        return google_id;
+    }
+
+    public void setGoogle_id(String google_id) {
+        this.google_id = google_id;
     }
 
     @Override
