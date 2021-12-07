@@ -18,6 +18,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 
@@ -31,24 +32,28 @@ public class FantasyStatsUtility {
     // Function to start API calls to get player information from BallDontLie API
     public void API_player_stats_importation(fantasyPlayerRepository playerRepo, fantasyGameRepository gameRepo,
                                              fantasyStatsRepository statsRepo, clientRepository clientRepo,
-                                             Date end_date) throws IOException, ParseException, resourceNotFoundException {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String end_date_str = dateFormat.format(end_date);
-
-        JSONObject json = FantasyLeagueUtility.readJsonFromUrl("https://www.balldontlie.io/api/v1/stats?per_page=100&start_date=" +
-                start_date(end_date) + "&end_date=" + end_date_str);
-        JSONObject API_data = (JSONObject) json.get("meta");
-
+                                             Date end_date) throws IOException, resourceNotFoundException {
+        //SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate end_date1 = convertToLocalDate(end_date);
-
         List<FantasyGame> games_within_dates = gameRepo.findGamesGivenDate(end_date1);
-        List<FantasyPlayer> players_play_this_week = players_from_games(playerRepo, games_within_dates);
-        HashMap<Integer, Client> clientmap = clientHashMap(clientRepo, games_within_dates);
+        if (games_within_dates.size()>0) {
+            String start_date_game=(games_within_dates.get(0).getGameStartDate()).format(formatter);
+            String end_date_game=(games_within_dates.get(0).getGameEndDate()).format(formatter);
 
-        for (int i = (int) API_data.get("current_page"); i < (int) API_data.get("total_pages"); i++) {
-            String url = "https://www.balldontlie.io/api/v1/stats?per_page=100&start_date=" + start_date(end_date)
-                    + "&end_date=" + end_date_str + "&page=" + i;
-            API_player_to_stats(url, statsRepo, players_play_this_week, games_within_dates, clientmap);
+
+            JSONObject json = FantasyLeagueUtility.readJsonFromUrl("https://www.balldontlie.io/api/v1/stats?per_page=100&start_date=" +
+                    start_date_game + "&end_date=" + end_date_game);
+            JSONObject API_data = (JSONObject) json.get("meta");
+
+            List<FantasyPlayer> players_play_this_week = players_from_games(playerRepo, games_within_dates);
+            HashMap<Integer, Client> clientmap = clientHashMap(clientRepo, games_within_dates);
+
+            for (int i = (int) API_data.get("current_page"); i < (int) API_data.get("total_pages"); i++) {
+                String url = "https://www.balldontlie.io/api/v1/stats?per_page=100&start_date=" + start_date_game
+                        + "&end_date=" + end_date_game + "&page=" + i;
+                API_player_to_stats(url, statsRepo, players_play_this_week, games_within_dates, clientmap);
+            }
         }
     }
 
@@ -66,6 +71,7 @@ public class FantasyStatsUtility {
             Integer ball_api_id = (Integer) players_info.get("id");
             Integer cur_player_id = getPlayerId(players_play_this_week, ball_api_id);
             if (cur_player_id != -1) {
+                //System.out.println((String) players_info.get("first_name")+" "+(String) players_info.get("last_name"));
                 FantasyStats stats = new FantasyStats();
                 stats.setPlayer_id(cur_player_id);
                 stats.setThree_points((Integer) players_all_data.get("fg3m"));
@@ -90,7 +96,7 @@ public class FantasyStatsUtility {
                         stats.setClient_id(client_id);
                         stats.setLeague_id(league_id);
                         stats.setSchedule_id(schedule_id);
-                        Integer total_points = totalpoints(clientmap.get(client_id), stats);
+                        Integer total_points = total_points(clientmap.get(client_id), stats);
                         stats.setTot_points(total_points);
                         statsRepo.save(stats);
                     }
@@ -101,14 +107,14 @@ public class FantasyStatsUtility {
     }
 
 
-    public String start_date(Date end_date) throws ParseException {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Calendar c = Calendar.getInstance();
-        c.setTime(end_date);
-        c.add(Calendar.DATE, -1);
-        Date start_date = c.getTime();
-        return dateFormat.format(start_date);
-    }
+//    public String start_date(Date end_date) throws ParseException {
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//        Calendar c = Calendar.getInstance();
+//        c.setTime(end_date);
+//        c.add(Calendar.DATE, -1);
+//        Date start_date = c.getTime();
+//        return dateFormat.format(start_date);
+//    }
 
     public LocalDate convertToLocalDate(Date dateToConvert) {
         return dateToConvert.toInstant()
@@ -120,10 +126,11 @@ public class FantasyStatsUtility {
                                                   List<FantasyGame> games_within_dates) {
         List<FantasyPlayer> players = new ArrayList<>();
         for (FantasyGame each_game : games_within_dates) {
-            Integer pg = each_game.getStartHomePG();
             Integer client_id = each_game.getClientID();
             Integer league_id = each_game.getLeagueID();
+            //Integer schedule_id=each_game.getScheduleID();
             Integer home_id = each_game.getHomeTeamID();
+
             players.add(getPlayer(playerRepo, each_game.getStartHomePG(), client_id, league_id, home_id));
             players.add(getPlayer(playerRepo, each_game.getStartHomeSG(), client_id, league_id, home_id));
             players.add(getPlayer(playerRepo, each_game.getStartHomeSF(), client_id, league_id, home_id));
@@ -135,6 +142,7 @@ public class FantasyStatsUtility {
             Integer away_id = each_game.getAwayTeamID();
             players.add(getPlayer(playerRepo, each_game.getStartAwayPG(), client_id, league_id, away_id));
             players.add(getPlayer(playerRepo, each_game.getStartAwaySG(), client_id, league_id, away_id));
+            System.out.println(each_game.getStartAwaySF());
             players.add(getPlayer(playerRepo, each_game.getStartAwaySF(), client_id, league_id, away_id));
             players.add(getPlayer(playerRepo, each_game.getStartAwayPF(), client_id, league_id, away_id));
             players.add(getPlayer(playerRepo, each_game.getStartAwayC(), client_id, league_id, away_id));
@@ -142,9 +150,11 @@ public class FantasyStatsUtility {
             players.add(getPlayer(playerRepo, each_game.getAwayBench2(), client_id, league_id, away_id));
 
         }
-        HashSet<FantasyPlayer> hSetPlayers = new HashSet(players);
-        ArrayList<FantasyPlayer> playersUnique = new ArrayList<>(hSetPlayers);
-        return playersUnique;
+        //players.removeAll(Collections.singletonList(null));
+        while (players.remove(null)) {
+        }
+        System.out.println(players.size());
+        return players;
 
     }
 
@@ -160,7 +170,7 @@ public class FantasyStatsUtility {
     }
 
     ArrayList<ArrayList<Integer>> all_client_league_schedule_info(Integer player_id, List<FantasyGame> games_within_dates) {
-        ArrayList<ArrayList<Integer>> client_league_sch_info = new ArrayList<ArrayList<Integer>>();
+        ArrayList<ArrayList<Integer>> client_league_sch_info = new ArrayList<>();
         for (FantasyGame each_game : games_within_dates) {
             if (Objects.equals(each_game.getStartHomePG(), player_id) ||
                     Objects.equals(each_game.getStartHomeSG(), player_id) ||
@@ -176,7 +186,7 @@ public class FantasyStatsUtility {
                     Objects.equals(each_game.getStartAwayC(), player_id) ||
                     Objects.equals(each_game.getAwayBench1(), player_id) ||
                     Objects.equals(each_game.getAwayBench2(), player_id)) {
-                ArrayList<Integer> new_list = new ArrayList<Integer>();
+                ArrayList<Integer> new_list = new ArrayList<>();
                 new_list.add(each_game.getClientID());
                 new_list.add(each_game.getLeagueID());
                 new_list.add(each_game.getScheduleID());
@@ -188,10 +198,15 @@ public class FantasyStatsUtility {
 
     FantasyPlayer getPlayer(fantasyPlayerRepository playerRepo, Integer player_id,
                             Integer client_id, Integer league_id, Integer team_id) {
-        FantasyPlayer player = playerRepo.findByTemplate(player_id, client_id, null, league_id,
-                null, null, null, null, null).get(0);
-        return player;
+
+        List<FantasyPlayer> player = playerRepo.findByTemplate(player_id, client_id, team_id, league_id,
+                null, null, null, null, null);
+        if (player.size()>0){
+            return player.get(0);
+        }
+        return null;
     }
+
 
     Integer getStatID(fantasyStatsRepository statsRepo, Integer client_id,
                       Integer league_id, Integer schedule_id,
@@ -206,7 +221,7 @@ public class FantasyStatsUtility {
     }
 
 
-    HashMap<Integer, Client> clientHashMap(clientRepository clientRepo, List<FantasyGame> games_within_dates) throws resourceNotFoundException {
+    HashMap<Integer, Client> clientHashMap(clientRepository clientRepo, List<FantasyGame> games_within_dates) {
         HashMap<Integer, Client> clientMap = new HashMap<>();
         for (FantasyGame each_game : games_within_dates) {
             Integer client_id = each_game.getClientID();
@@ -218,7 +233,7 @@ public class FantasyStatsUtility {
     }
 
     // TODO: Add steals weight to client, and make total points double
-    Integer totalpoints(Client client, FantasyStats stats) {
+    Integer total_points(Client client, FantasyStats stats) {
         Double points = (client.getThree_p_weight() * stats.getThree_points())
                 + (client.getTwo_p_weight() * stats.getTwo_points()) +
                 (client.getFt_weight() * stats.getFree_throws()) +
