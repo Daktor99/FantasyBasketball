@@ -81,47 +81,47 @@ class Home extends Component {
                             <Table.Body>
                                 <Table.Row>
                                     <Table.Cell width={2}>Three point weight</Table.Cell>
-                                    <Table.Cell>{this.state.three_p_weight}</Table.Cell>
+                                    <Table.Cell className="weight_number">{this.state.three_p_weight}</Table.Cell>
                                 </Table.Row>
                                 <Table.Row>
                                     <Table.Cell>Two point weight</Table.Cell>
-                                    <Table.Cell>{this.state.two_p_weight}</Table.Cell>
+                                    <Table.Cell className="weight_number">{this.state.two_p_weight}</Table.Cell>
                                 </Table.Row>
                                 <Table.Row>
                                     <Table.Cell>Free Throw weight</Table.Cell>
-                                    <Table.Cell>{this.state.ft_weight}</Table.Cell>
+                                    <Table.Cell className="weight_number">{this.state.ft_weight}</Table.Cell>
                                 </Table.Row>
                                 <Table.Row>
                                     <Table.Cell>Rebound Weight</Table.Cell>
-                                    <Table.Cell>{this.state.rebound_weight}</Table.Cell>
+                                    <Table.Cell className="weight_number">{this.state.rebound_weight}</Table.Cell>
                                 </Table.Row>
                                 <Table.Row>
                                     <Table.Cell>Assist Weight</Table.Cell>
-                                    <Table.Cell>{this.state.assist_weight}</Table.Cell>
+                                    <Table.Cell className="weight_number">{this.state.assist_weight}</Table.Cell>
                                 </Table.Row>
                                 <Table.Row>
                                     <Table.Cell>Block Weight</Table.Cell>
-                                    <Table.Cell>{this.state.block_weight}</Table.Cell>
+                                    <Table.Cell className="weight_number">{this.state.block_weight}</Table.Cell>
                                 </Table.Row>
                                 <Table.Row>
                                     <Table.Cell>Turnover Weight</Table.Cell>
-                                    <Table.Cell>{this.state.turnover_weight}</Table.Cell>
+                                    <Table.Cell className="weight_number">{this.state.turnover_weight}</Table.Cell>
                                 </Table.Row>
                                 <Table.Row>
                                     <Table.Cell>Steal Weight</Table.Cell>
-                                    <Table.Cell>{this.state.steal_weight}</Table.Cell>
+                                    <Table.Cell className="weight_number">{this.state.steal_weight}</Table.Cell>
                                 </Table.Row>
                                 <Table.Row>
                                     <Table.Cell>Min League Duration</Table.Cell>
-                                    <Table.Cell>{this.state.min_league_dur}</Table.Cell>
+                                    <Table.Cell className="weight_number">{this.state.min_league_dur}</Table.Cell>
                                 </Table.Row>
                                 <Table.Row>
                                     <Table.Cell>Min League Size</Table.Cell>
-                                    <Table.Cell>{this.state.min_league_size}</Table.Cell>
+                                    <Table.Cell className="weight_number">{this.state.min_league_size}</Table.Cell>
                                 </Table.Row>
                                 <Table.Row>
                                     <Table.Cell>Max Team Size</Table.Cell>
-                                    <Table.Cell>{this.state.max_team_size}</Table.Cell>
+                                    <Table.Cell className="weight_number">{this.state.max_team_size}</Table.Cell>
                                 </Table.Row>
                             </Table.Body>
                         </Table>

@@ -80,6 +80,10 @@ code {
   color: #fd904d !important;
 }
 
+.weight_number {
+  text-align-last: center;
+}
+
 #root {
   height: 100%;
 }

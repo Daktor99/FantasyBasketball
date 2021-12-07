@@ -37,8 +37,9 @@ class Welcome extends Component {
                                 content='STIPE'
                                 inverted
                                 style={{
+                                    fontWeight: 'bold',
+                                    fontStyle: 'italic',
                                     fontSize: '4em',
-                                    fontWeight: 'normal',
                                     marginBottom: 0,
                                     marginTop: 200,
                                     color: '#FD904DFF'
