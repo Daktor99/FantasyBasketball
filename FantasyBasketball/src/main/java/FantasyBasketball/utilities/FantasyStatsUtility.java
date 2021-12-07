@@ -26,9 +26,6 @@ import java.util.*;
 
 public class FantasyStatsUtility {
 
-    @Autowired
-    clientRepository clientRepo1;
-
     // Try doing this only once as then copy the data from th first copy
 
     // Function to start API calls to get player information from BallDontLie API
