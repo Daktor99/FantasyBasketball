@@ -61,6 +61,7 @@ public class fantasyLeagueService {
                                                     String league_name,
                                                     Integer admin_id,
                                                     Integer league_size,
+                                                    Boolean draft_finished,
                                                     LocalDate league_start_date,
                                                     LocalDate league_end_date) {
         return leagueRepo.findByTemplate(league_id,
@@ -68,6 +69,7 @@ public class fantasyLeagueService {
                 league_name,
                 admin_id,
                 league_size,
+                draft_finished,
                 league_start_date,
                 league_end_date);
     }
@@ -76,6 +78,16 @@ public class fantasyLeagueService {
     public Boolean checkAdmin(Integer adminID) {
         Optional<User> result = userRepo.findById(adminID);
         if (result.isPresent()) {
+            return Boolean.TRUE;
+        } else {
+            return Boolean.FALSE;
+        }
+    }
+
+    // helper function: check if drafting is finished
+    public Boolean checkDraftFinished(Integer leagueID) {
+        Optional<FantasyLeague> result = leagueRepo.findById(leagueID);
+        if (result.getDraftFinished().equals(Boolean.TRUE)) {
             return Boolean.TRUE;
         } else {
             return Boolean.FALSE;
@@ -130,6 +142,7 @@ public class fantasyLeagueService {
                 referenceLeague.getClientID().equals(compareLeague.getClientID()) &&
                 referenceLeague.getAdminID().equals(compareLeague.getAdminID()) &&
                 referenceLeague.getLeagueSize().equals(compareLeague.getLeagueSize()) &&
+                referenceLeague.getDraftFinished().equals(compareLeague.getDraftFinished()) &&
                 referenceLeague.getLeagueStartDate().equals(compareLeague.getLeagueStartDate()) &&
                 referenceLeague.getLeagueEndDate().equals(compareLeague.getLeagueEndDate())
         ) {

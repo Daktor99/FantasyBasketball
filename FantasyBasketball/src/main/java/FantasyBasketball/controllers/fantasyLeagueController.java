@@ -53,6 +53,7 @@ public class fantasyLeagueController {
                                                   @RequestParam(value = "league_name", required = false) String league_name,
                                                   @RequestParam(value = "admin_id", required = false) Integer admin_id,
                                                   @RequestParam(value = "league_size", required = false) Integer league_size,
+                                                  @RequestParam(value = "draft_finished", required = false) Boolean draft_finished,
                                                   @RequestParam(value = "league_start_date", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate league_start_date,
                                                   @RequestParam(value = "league_end_date", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate league_end_date) {
         try {
@@ -71,6 +72,7 @@ public class fantasyLeagueController {
                     league_name,
                     admin_id,
                     league_size,
+                    draft_finished,
                     league_start_date,
                     league_end_date);
             return new ResponseEntity<>(result, HttpStatus.OK);

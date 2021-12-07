@@ -37,6 +37,7 @@ public interface fantasyLeagueRepository extends CrudRepository<FantasyLeague, I
             "                          (:league_name is NULL or league_name LIKE %:league_name%) and\n" +
             "                          (:admin_id is NULL or admin_id = :admin_id) and\n" +
             "                          (:league_size is NULL or league_size = :league_size) and\n" +
+            "                          (:draft_finished is NULL or draft_finished = :draft_finished) and\n" +
             "                          (:league_start_date is NULL or league_start_date = :league_start_date) and\n" +
             "                          (:league_end_date is NULL or league_end_date = :league_end_date))",
             nativeQuery = true)
@@ -45,6 +46,7 @@ public interface fantasyLeagueRepository extends CrudRepository<FantasyLeague, I
                                        @Param("league_name") String league_name,
                                        @Param("admin_id") Integer admin_id,
                                        @Param("league_size") Integer league_size,
+                                       @Param("draft_finished") Boolean draft_finished,
                                        @Param("league_start_date") LocalDate league_start_date,
                                        @Param("league_end_date") LocalDate league_end_date);
 }
