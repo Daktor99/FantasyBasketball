@@ -48,26 +48,6 @@ public class clientController {
         }
     }
 
-    @RequestMapping(value = "/clientSearch", method = RequestMethod.GET)
-    public ResponseEntity<?> getClient(@RequestParam(value = "client_id", required = false) Integer client_id,
-                                       @RequestParam(value = "email", required = false) String email,
-                                       @RequestParam(value = "company_name", required = false) String company_name,
-                                       @RequestParam(value = "client_name", required = false) String client_name){
-
-        log.info("bebequin");
-        try {
-            log.info("bebeco");
-            List<Client> result = clientService.getClientsByTemplate(client_id,
-                    email,
-                    company_name,
-                    client_name);
-            return new ResponseEntity<>(result, HttpStatus.OK);
-        } catch (Exception e) {
-            log.error("Exception on GET: ", e);
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ResponseEntity<?> postClient(@RequestBody Client newClient) {
 

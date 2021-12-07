@@ -2,7 +2,6 @@ package FantasyBasketball.scheduling;
 
 import FantasyBasketball.exceptions.resourceNotFoundException;
 import FantasyBasketball.models.FantasyGame;
-import FantasyBasketball.models.FantasyLeague;
 import FantasyBasketball.models.FantasyStats;
 import FantasyBasketball.models.FantasyTeam;
 import FantasyBasketball.services.fantasyGameService;
@@ -26,12 +25,12 @@ public class WeeklyUpdate {
     @Autowired
     fantasyStatsService statService;
 
-    public void runWeekly(fantasyTeamService teamService, fantasyGameService gameService) throws resourceNotFoundException {
+    public void runWeekly(fantasyTeamService teamService, fantasyGameService gameService, fantasyStatsService statService) throws resourceNotFoundException {
 
         List<FantasyTeam> teamList = teamService.getTeamsByTemplate(null, null, null, null, null);
-        HashMap<Integer, List<Integer>>  teamMap = new HashMap<>();
+        HashMap<Integer, List<Integer>> teamMap = new HashMap<>();
 
-        for(FantasyTeam team: teamList) {
+        for (FantasyTeam team : teamList) {
             Integer team_id = team.getTeamID();
             List<Integer> starters = new ArrayList<>();
 
@@ -52,7 +51,7 @@ public class WeeklyUpdate {
         current_date = LocalDate.of(2021, 12, 25);
         List<FantasyGame> gameList = gameService.getGamesForWeek(current_date);
 
-        for(FantasyGame game: gameList) {
+        for (FantasyGame game : gameList) {
             Integer home_team_id = game.getHomeTeamID();
             Integer away_team_id = game.getAwayTeamID();
 
