@@ -48,7 +48,7 @@ public class WeeklyUpdate {
 
         LocalDate current_date = LocalDate.now();
         // TODO: remove current date overwriting below that is being used for testing
-        current_date = LocalDate.of(2021, 12, 25);
+        //current_date = LocalDate.of(2021, 12, 25);
         List<FantasyGame> gameList = gameService.getGamesForWeek(current_date);
 
         for (FantasyGame game : gameList) {
