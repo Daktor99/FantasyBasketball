@@ -51,14 +51,14 @@ public class FantasyPlayer {
 
     //default constructor
     public FantasyPlayer() {
-        this.playerID=1;
-        this.teamID=0;
-        this.clientID=1;
+        this.playerID=null;
+        this.teamID=null;
+        this.clientID=null;
+        this.leagueID=null;
         this.firstName=null;
         this.lastName=null;
         this.nbaTeam=null;
         this.position=null;
-        this.leagueID=1;
     }
   
     public Integer getPlayerID() {
