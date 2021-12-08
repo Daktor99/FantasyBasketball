@@ -2,8 +2,10 @@ package FantasyBasketball.services;
 
 import FantasyBasketball.exceptions.resourceException;
 import FantasyBasketball.exceptions.resourceNotFoundException;
+import FantasyBasketball.models.FantasyLeague;
 import FantasyBasketball.models.FantasyTeam;
 import FantasyBasketball.repositories.fantasyTeamRepository;
+import FantasyBasketball.repositories.fantasyLeagueRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +16,13 @@ import java.util.Optional;
 public class fantasyTeamService {
 
     @Autowired
+    fantasyLeagueService FantasyLeague;
+
+    @Autowired
     private fantasyTeamRepository teamRepo;
+
+    @Autowired
+    fantasyLeagueRepository leagueRepo;
 
     // find by ID
     public List<FantasyTeam> getByID(Integer teamID) throws resourceNotFoundException {
@@ -41,8 +49,32 @@ public class fantasyTeamService {
                 league_id);
     }
 
+    // helper function to check if the league is full or not yet to apply constraint to posting new team to a league
+    public Boolean checkLeagueFull(FantasyBasketball.models.FantasyLeague league) {
+        Integer leagueID = league.getLeagueID();
+        Integer leagueClientID = league.getClientID();
+        Integer leagueSize = league.getLeagueSize();
+
+        List<Integer> teamsInLeague = teamRepo.findTeamsInLeague(leagueID, leagueClientID);
+        Integer currentLeagueSize = teamsInLeague.size();
+
+        if (leagueSize > currentLeagueSize) {
+            return Boolean.TRUE;
+        } else {
+            return Boolean.FALSE;
+        }
+    }
+
     // post operation
-    public List<FantasyTeam> postTeam(FantasyTeam team) {
+    public List<FantasyTeam> postTeam(FantasyTeam team) throws resourceException{
+        Integer leagueID = team.getLeagueID();
+        Optional<FantasyBasketball.models.FantasyLeague> fantasyLeagueOptional = leagueRepo.findById(leagueID);
+        FantasyBasketball.models.FantasyLeague league = fantasyLeagueOptional.get();
+
+        if (!checkLeagueFull(league)) {
+            throw new resourceException("Cannot create another team. This league is already full.");
+        };
+
         team.setTeamID(0);
 
         // This client_id will be updated later

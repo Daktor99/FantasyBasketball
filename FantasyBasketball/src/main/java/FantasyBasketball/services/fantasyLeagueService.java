@@ -83,8 +83,9 @@ public class fantasyLeagueService {
 
     // helper function: check if drafting is finished
     public Boolean checkDraftFinished(Integer leagueID) {
-        Optional<FantasyLeague> result = leagueRepo.findById(leagueID);
-        if (result.getDraftFinished().equals(Boolean.TRUE)) {
+        Optional<FantasyLeague> fantasyLeagueOptional = leagueRepo.findById(leagueID);
+        FantasyLeague fantasyLeague = fantasyLeagueOptional.get();
+        if (fantasyLeague.getDraftFinished().equals(Boolean.TRUE)) {
             return Boolean.TRUE;
         } else {
             return Boolean.FALSE;
