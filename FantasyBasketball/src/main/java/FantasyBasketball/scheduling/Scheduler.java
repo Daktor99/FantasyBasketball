@@ -6,6 +6,7 @@ import FantasyBasketball.repositories.fantasyGameRepository;
 import FantasyBasketball.repositories.fantasyPlayerRepository;
 import FantasyBasketball.repositories.fantasyStatsRepository;
 import FantasyBasketball.services.fantasyGameService;
+import FantasyBasketball.services.fantasyStatsService;
 import FantasyBasketball.services.fantasyTeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
@@ -31,6 +32,9 @@ public class Scheduler {
     fantasyGameRepository gameRepo;
 
     @Autowired
+    fantasyStatsService statService;
+
+    @Autowired
     fantasyPlayerRepository playerRepo;
 
     @Autowired
@@ -42,7 +46,7 @@ public class Scheduler {
 
     //@Scheduled(cron = "0 0 */1 * * *")
     @Async
-    @Scheduled(cron = "*/5 * * * * *")
+    @Scheduled(cron = "*/15 * * * * *")
     public void hourlySchedule() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
         Date now = new Date();
@@ -62,21 +66,21 @@ public class Scheduler {
         }
     }
 
-    //    @Scheduled(cron = "0 0 0 * * SUN")
+    @Scheduled(cron = "0 0 0 * * SUN")
     @Async
-    @Scheduled(cron = "*/10 * * * * *")
+    //@Scheduled(cron = "* * * * * *")
     public void weeklySchedule() {
-//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-//        Date now = new Date();
-//        String strDate = sdf.format(now);
-//        System.out.println("\t\t\tJava cron job expression:: " + strDate);
-//
-//        System.out.println("\t\t\tRun Weekly function being called.");
-//        WeeklyUpdate weekly = new WeeklyUpdate();
-//        try {
-//            weekly.runWeekly(teamService, gameService, statService);
-//        } catch (resourceNotFoundException e) {
-//            e.printStackTrace();
-//        }
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+        Date now = new Date();
+        String strDate = sdf.format(now);
+        System.out.println("\t\t\tJava cron job expression:: " + strDate);
+
+        System.out.println("\t\t\tRun Weekly function being called.");
+        WeeklyUpdate weekly = new WeeklyUpdate();
+        try {
+            weekly.runWeekly(teamService, gameService, statService);
+        } catch (resourceNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }
