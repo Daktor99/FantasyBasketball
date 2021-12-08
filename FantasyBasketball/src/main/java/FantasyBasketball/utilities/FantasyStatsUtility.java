@@ -11,11 +11,8 @@ import FantasyBasketball.repositories.fantasyPlayerRepository;
 import FantasyBasketball.repositories.fantasyStatsRepository;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -142,7 +139,6 @@ public class FantasyStatsUtility {
             Integer away_id = each_game.getAwayTeamID();
             players.add(getPlayer(playerRepo, each_game.getStartAwayPG(), client_id, league_id, away_id));
             players.add(getPlayer(playerRepo, each_game.getStartAwaySG(), client_id, league_id, away_id));
-            System.out.println(each_game.getStartAwaySF());
             players.add(getPlayer(playerRepo, each_game.getStartAwaySF(), client_id, league_id, away_id));
             players.add(getPlayer(playerRepo, each_game.getStartAwayPF(), client_id, league_id, away_id));
             players.add(getPlayer(playerRepo, each_game.getStartAwayC(), client_id, league_id, away_id));
@@ -153,7 +149,6 @@ public class FantasyStatsUtility {
         //players.removeAll(Collections.singletonList(null));
         while (players.remove(null)) {
         }
-        System.out.println(players.size());
         return players;
 
     }
@@ -232,15 +227,16 @@ public class FantasyStatsUtility {
         return clientMap;
     }
 
-    // TODO: Add steals weight to client, and make total points double
+    // TODO: Test with changes in playerRepo courtesy of Emmanuel
     Integer total_points(Client client, FantasyStats stats) {
-        Double points = (client.getThree_p_weight() * stats.getThree_points())
+        double points = (client.getThree_p_weight() * stats.getThree_points())
                 + (client.getTwo_p_weight() * stats.getTwo_points()) +
                 (client.getFt_weight() * stats.getFree_throws()) +
                 (client.getRebound_weight() * stats.getRebounds()) +
                 (client.getAssist_weight() * stats.getAssists()) +
                 (client.getBlock_weight() * stats.getBlocks()) +
-                (client.getTurnover_weight() * stats.getTurnovers());
+                (client.getTurnover_weight() * stats.getTurnovers())+
+                (client.getSteal_weight()*stats.getSteals());
         return (int) Math.round(points);
     }
 
