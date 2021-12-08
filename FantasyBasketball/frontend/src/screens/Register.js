@@ -60,7 +60,7 @@ class Register extends Component {
                     "max_team_size": this.state.max_team_size,
                     "min_league_size": this.state.min_league_size,
                     "steal_weight": this.state.steal_weight,
-                    "google_id": "1234"
+                    "google_id": this.state.googleId
                 })
             };
             fetch('/register', requestOptions)
