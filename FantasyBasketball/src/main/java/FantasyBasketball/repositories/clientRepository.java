@@ -41,4 +41,7 @@ public interface clientRepository extends CrudRepository<Client, Integer> {
                                  @Param("company_name")         String company_name,
                                  @Param("client_name")          String client_name);
 
+    @Query(value = "select * from client where (:google_id = google_id)", nativeQuery = true)
+    List<Client> findClientByGoogle_id(@Param("google_id") String google_id);
+
 }

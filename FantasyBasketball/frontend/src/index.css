@@ -1,0 +1,110 @@
+body {
+  margin: 0;
+  font-family: var(--bs-font-sans-serif);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  height: 100%;
+}
+
+html {
+  height: 100%;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+
+.signInButton {
+  float:none;
+  position:static;
+  display:block;
+  margin:auto;
+  width:max-content;
+}
+
+.navbar-logo {
+  width: 200px;
+  height: 70px;
+}
+
+.login-button {
+  display: flex;
+  float: right;
+  justify-content: flex-end;
+  align-content: center;
+  flex-wrap: nowrap;
+}
+
+.home {
+  background-color: #183c5d;
+  height: inherit;
+}
+
+.box {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+}
+
+.register-form {
+  color: #fd904d !important;
+  padding-left: 25% !important;
+  padding-right: 25% !important;
+  padding-top: 10px !important;
+  align-content: center !important;
+  justify-content: center !important;
+  font-size: small !important;
+}
+
+.input-weights {
+  width: 100px !important;
+  text-align-last: center !important;
+  text-align: center !important;
+}
+
+Button {
+  background-color: #fd904d !important;
+  color: white !important;
+}
+
+.box .row {
+  background-color: #183c5d;
+}
+
+.box .row.header {
+  flex: 0 1 auto;
+  margin-right: 0 !important;
+}
+
+.box .row.content {
+  flex: 1 1 auto;
+  margin-right: 0 !important;
+}
+
+.box .row.footer {
+  flex: 0 1;
+}
+
+.top-text {
+  display: inline-flex;
+}
+
+.client-info {
+  color: #fd904d !important;
+  padding-right: 10% !important;
+  padding-left: 10% !important;
+}
+
+.client-info-table {
+  color: #fd904d !important;
+}
+
+.weight_number {
+  text-align-last: right;
+}
+
+#root {
+  height: 100%;
+}
