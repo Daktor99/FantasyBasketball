@@ -14,6 +14,9 @@ class Register extends Component {
             googleId: this.props.cookies.get("googleId") || null,
             email: this.props.cookies.get("email") || null,
             registered: this.props.cookies.get("registered") || null,
+            companyName:'',
+            registeredName:'',
+            registeredEmail:'',
             assist_weight: '',
             block_weight: '',
             ft_weight: '',
@@ -43,9 +46,9 @@ class Register extends Component {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({
-                    "email": "TomIsBebeco@gmail.com",
-                    "company_name": "Tomeroni",
-                    "client_name": "Tomcito",
+                    "email": this.state.registeredEmail,
+                    "company_name": this.state.companyName,
+                    "client_name": this.state.registeredName,
                     "three_p_weight": this.state.three_p_weight,
                     "two_p_weight": this.state.two_p_weight,
                     "ft_weight": this.state.ft_weight,
@@ -91,17 +94,23 @@ class Register extends Component {
                                 id='form-input-control-first-name'
                                 control={Input}
                                 label="Full Name"
+                                name="registeredName"
+                                value={this.state.registeredName}
                                 placeholder={this.state.givenName + " " + this.state.familyName}/>
                             <Form.Field
                                 id='form-input-error-email'
                                 control={Input}
                                 label="Email"
+                                name="registeredEmail"
+                                value={this.state.registeredEmail}
                                 placeholder={this.state.email}/>
                         </Form.Group>
                         <Form.Field
                             id='form-input-control-company'
                             control={Input}
                             label="Company Name"
+                            name="companyName"
+                            value={this.state.companyName}
                             placeholder="Company Name"/>
                         <Form.Group inline>
                             <Form.Field>

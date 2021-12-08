@@ -38,7 +38,7 @@ class AppNavbar extends Component {
                 email:body.email,
             })
         } else {
-            this.logout()
+            await this.logout()
         }
     }
 
