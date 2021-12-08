@@ -68,7 +68,7 @@ public class Scheduler {
 
     @Scheduled(cron = "0 0 0 * * SUN")
     @Async
-    //@Scheduled(cron = "* * * * * *")
+    //@Scheduled(cron = "*/10 * * * * *")
     public void weeklySchedule() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
         Date now = new Date();
