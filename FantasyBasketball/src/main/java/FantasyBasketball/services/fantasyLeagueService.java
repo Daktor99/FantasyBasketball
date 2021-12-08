@@ -2,10 +2,7 @@ package FantasyBasketball.services;
 
 import FantasyBasketball.exceptions.resourceException;
 import FantasyBasketball.exceptions.resourceNotFoundException;
-import FantasyBasketball.models.Client;
-import FantasyBasketball.models.FantasyGame;
-import FantasyBasketball.models.FantasyLeague;
-import FantasyBasketball.models.User;
+import FantasyBasketball.models.*;
 import FantasyBasketball.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +16,9 @@ public class fantasyLeagueService {
 
     @Autowired
     clientService clientService;
+
+    @Autowired
+    fantasyPlayerService fantasyPlayerService;
 
     @Autowired
     userRepository userRepo;
@@ -253,6 +253,64 @@ public class fantasyLeagueService {
             throw new resourceException("Cannot generate schedule, make sure this league has at least "
                     + league_size
                     + " teams registered.");
+        }
+    }
+
+    public void checkDraftInputs(Integer league_id, Integer team_id, Integer client_id) throws resourceException, resourceNotFoundException {
+
+        // Check if league is valid
+        if (league_id == null) {
+            throw new resourceException("league_id required");
+        } else if (!leagueRepo.existsById(league_id)) {
+            throw new resourceNotFoundException("This league does not exist.");
+        }
+
+        // TODO: Change client id here
+        // List of all teams that are in the league
+        List<Integer> team_ids = teamRepo.findTeamsInLeague(league_id, client_id);
+
+        //check if team_id provided is in the list of team_ids that exist in the league
+        boolean teamInLeague = team_ids.contains(team_id);
+
+        // Check if team is valid
+        if (team_id == null) {
+            throw new resourceException("team_id required");
+        } else if (!teamRepo.existsById(team_id)) {
+            throw new resourceNotFoundException("This team does not exist.");
+        } else if (!teamInLeague) {
+            throw new resourceNotFoundException("This team does not exist in this league.");
+        }
+    }
+
+    public void pickPlayer(FantasyPlayer fantasyPlayer) throws resourceException, resourceNotFoundException {
+        // If player_id given, assign that player to the specified team.
+        // Otherwise, assign a random one.
+        if (fantasyPlayer.getPlayerID() == null) {
+
+            FantasyPlayer chosenPlayer = new FantasyPlayer();
+            // Get list of available players
+            Integer league_id = fantasyPlayer.getLeagueID();
+            List<FantasyPlayer> av_players = fantasyPlayerService.getAvailablePlayers(league_id,
+                    1,
+                    null,
+                    null,
+                    null,
+                    null);
+
+            if (av_players.size() == 0) {
+                throw new resourceException("There are no more players to be drafted in this league.");
+            }
+            // Chose random player from list of available players
+            Integer idx = fantasyPlayerService.generateNumber(0, av_players.size());
+            chosenPlayer = av_players.get(idx);
+            fantasyPlayer.setPlayerID(chosenPlayer.getPlayerID());
+
+        } else {
+
+            List<Integer> undraft_players = fantasyPlayerService.getUndraftedPlayers(fantasyPlayer.getLeagueID(), 1);
+            if (!undraft_players.contains(fantasyPlayer.getPlayerID())) {
+                throw new resourceException("Chosen player is not available for drafting.");
+            }
         }
     }
 
