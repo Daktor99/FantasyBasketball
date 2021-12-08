@@ -34,7 +34,7 @@ class Welcome extends Component {
                             />
                             <Header
                                 as='h1'
-                                content='STIPE'
+                                content='STIPÉ'
                                 inverted
                                 style={{
                                     fontWeight: 'bold',
@@ -48,11 +48,12 @@ class Welcome extends Component {
                         </div>
                         <Header
                             as='h2'
-                            content='Connecting Basketball'
+                            content='Connécting Baskétball'
                             inverted
                             style={{
                                 fontSize: '1.7em',
                                 fontWeight: 'normal',
+                                fontStyle: 'italic',
                                 color: '#ffffff'
                             }}
                         />

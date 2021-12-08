@@ -7,12 +7,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {CookiesProvider} from "react-cookie";
 
 ReactDOM.render(
-  <React.StrictMode>
     <CookiesProvider>
-        <App />
-    </CookiesProvider>
-  </React.StrictMode>,
-  document.getElementById('root')
+        <App/>
+    </CookiesProvider>,
+    document.getElementById('root')
 );
 
 // If you want to start measuring performance in your app, pass a function
