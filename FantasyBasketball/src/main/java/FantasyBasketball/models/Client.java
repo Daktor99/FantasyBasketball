@@ -74,7 +74,7 @@ public class Client {
     @Column(name = "steal_weight")
     @JsonProperty("steal_weight")
     private double steal_weight;
-
+  
     public Client() {
         this.clientID = null;
         this.email = null;
