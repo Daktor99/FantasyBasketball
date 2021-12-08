@@ -2,15 +2,11 @@ package FantasyBasketball.services;
 
 import FantasyBasketball.exceptions.resourceException;
 import FantasyBasketball.exceptions.resourceNotFoundException;
+import FantasyBasketball.models.Client;
 import FantasyBasketball.models.FantasyGame;
 import FantasyBasketball.models.FantasyLeague;
 import FantasyBasketball.models.User;
-import FantasyBasketball.repositories.fantasyGameRepository;
-import FantasyBasketball.repositories.fantasyLeagueRepository;
-import FantasyBasketball.repositories.fantasyTeamRepository;
-import FantasyBasketball.repositories.userRepository;
-import FantasyBasketball.repositories.fantasyPlayerRepository;
-import FantasyBasketball.utilities.FantasyLeagueUtility;
+import FantasyBasketball.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,10 +14,11 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.*;
 
-import static java.time.temporal.ChronoUnit.DAYS;
-
 @Service
 public class fantasyLeagueService {
+
+    @Autowired
+    clientService clientService;
 
     @Autowired
     userRepository userRepo;
@@ -63,7 +60,7 @@ public class fantasyLeagueService {
                                                     Integer league_size,
                                                     Boolean draft_finished,
                                                     LocalDate league_start_date,
-                                                    LocalDate league_end_date) {
+                                                    Integer num_weeks) {
         return leagueRepo.findByTemplate(league_id,
                 client_id,
                 league_name,
@@ -71,7 +68,7 @@ public class fantasyLeagueService {
                 league_size,
                 draft_finished,
                 league_start_date,
-                league_end_date);
+                num_weeks);
     }
 
     // helper function: check if admin is valid user
@@ -94,22 +91,13 @@ public class fantasyLeagueService {
         }
     }
 
-    // helper function: check is given start and end dates for league are valid
-    public Boolean checkDates(LocalDate league_start_date, LocalDate league_end_date) throws resourceException {
+    // helper function: check if given start date for league is valid
+    public Boolean checkDate(LocalDate league_start_date) throws resourceException {
         LocalDate today = LocalDate.now();
-        if (league_start_date.compareTo(today) >= 0) {
-            if (league_start_date.compareTo(league_end_date) < 0) {
-                if (DAYS.between(league_start_date, league_end_date) >= 14) {
-                    return Boolean.TRUE;
-                } else {
-                    throw new resourceException("Attempted league duration is less than 2 weeks.");
-                }
-            } else {
-                throw new resourceException("Attempted leagueStartDate is after leagueEndDate.");
-            }
-        } else {
+        if (league_start_date.compareTo(today) < 0) {
             throw new resourceException("Attempted leagueStartDate occurs in the past.");
         }
+        return true;
     }
 
     // post operation
@@ -120,7 +108,7 @@ public class fantasyLeagueService {
         fantasyLeague.setClientID(1);
 
         if (checkAdmin(fantasyLeague.getAdminID())) {
-            if (checkDates(fantasyLeague.getLeagueStartDate(), fantasyLeague.getLeagueEndDate())) {
+            if (checkDate(fantasyLeague.getLeagueStartDate())) {
 
                 // Player Importation is done when league is posted
                 // FantasyLeagueUtility leagueUtility = new FantasyLeagueUtility();
@@ -129,7 +117,7 @@ public class fantasyLeagueService {
                 FantasyLeague result = leagueRepo.save(fantasyLeague);
                 return List.of(result);
             } else {
-                throw new resourceException("LeagueStartDate and/or LeagueEndDate are invalid.");
+                throw new resourceException("LeagueStartDate has to be in the future.");
             }
         } else {
             throw new resourceException("The adminID provided is not a valid userID.");
@@ -144,7 +132,7 @@ public class fantasyLeagueService {
                 referenceLeague.getLeagueSize().equals(compareLeague.getLeagueSize()) &&
                 referenceLeague.getDraftFinished().equals(compareLeague.getDraftFinished()) &&
                 referenceLeague.getLeagueStartDate().equals(compareLeague.getLeagueStartDate()) &&
-                referenceLeague.getLeagueEndDate().equals(compareLeague.getLeagueEndDate())
+                referenceLeague.getNumWeeks().equals(compareLeague.getNumWeeks())
         ) {
             return Boolean.TRUE;
         } else {
@@ -190,24 +178,29 @@ public class fantasyLeagueService {
     }
 
     // check and sanitize inputs
-    public void checkInputs(FantasyLeague fantasyLeague) throws resourceException {
+    public void checkInputs(FantasyLeague fantasyLeague) throws resourceException, resourceNotFoundException {
         // NOTE: max league size is hardcoded to 14 for now
-        Integer max = 14;
+        Client newClient = clientService.getByID(fantasyLeague.getClientID()).get(0);
+        Integer minLeagueSize = newClient.getMin_league_size();
+        Integer minLeagueDur = newClient.getMin_league_dur();
         try {
             if (checkIfInvalid(fantasyLeague.getLeagueName())) {
                 throw new resourceException("League name is invalid.");
-            } else if (fantasyLeague.getLeagueSize() < 0 || fantasyLeague.getLeagueSize() > max
-            || fantasyLeague.getLeagueSize()%2 != 0) {
-                throw new resourceException("League size is invalid. (League size must be an even number.)");
+            } else if (fantasyLeague.getLeagueSize() < minLeagueSize || fantasyLeague.getLeagueSize()%2 != 0) {
+                throw new resourceException("League size is invalid. " +
+                        "(League size must be an even number and greater than " + minLeagueSize + ").");
+            } else if (fantasyLeague.getNumWeeks() < minLeagueDur) {
+                throw new resourceException("Duration for the league's season is too short. " +
+                        "(It has to be equal to or greater than " + minLeagueDur + ").");
             }
         } catch (NullPointerException e) {
             throw new resourceException("checkInputs: League formatted incorrectly please provide the following:\n" +
-                    "league_id, client_id, league_name, admin_id, league_size, league_start_date, league_end_date.");
+                    "league_id, client_id, league_name, admin_id, league_size, league_start_date, num_weeks.");
         }
     }
 
     // check post inputs
-    public void checkPostInputs(FantasyLeague fantasyLeague) throws resourceException {
+    public void checkPostInputs(FantasyLeague fantasyLeague) throws resourceException, resourceNotFoundException {
         if (fantasyLeague.getLeagueID() != null) {
             throw new resourceException("checkPostInputs: Do not provide league_id.");
         }
@@ -215,7 +208,7 @@ public class fantasyLeagueService {
     }
 
     // check put inputs
-    public void checkPutInputs(FantasyLeague fantasyLeague) throws resourceException {
+    public void checkPutInputs(FantasyLeague fantasyLeague) throws resourceException, resourceNotFoundException {
         if (fantasyLeague.getLeagueID() == null) {
             throw new resourceException("checkPutInputs: Please provide league_id.");
         }
@@ -264,6 +257,16 @@ public class fantasyLeagueService {
 
         // save all of the games in gameList into DB and return the list of all saved games
         return (List<FantasyGame>) gameRepo.saveAll(gameList);
+    }
+
+    public void checkValidSize(FantasyLeague league, Integer teamSize) throws resourceException {
+
+        Integer league_size = league.getLeagueSize();
+        if (league_size != teamSize) {
+            throw new resourceException("Cannot generate schedule, make sure this league has at least "
+                    + league_size
+                    + " teams registered.");
+        }
     }
 
 }

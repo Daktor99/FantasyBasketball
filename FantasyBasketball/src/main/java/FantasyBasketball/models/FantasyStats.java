@@ -78,15 +78,15 @@ public class FantasyStats implements Serializable {
         this.schedule_id = null;
         this.client_id = null;
         this.league_id = null;
-        this.three_points = null;
-        this.two_points = null;
-        this.free_throws = null;
-        this.rebounds = null;
-        this.assists = null;
-        this.blocks = null;
-        this.steals = null;
-        this.turnovers = null;
-        this.tot_points = null;
+        this.three_points = 0;
+        this.two_points = 0;
+        this.free_throws = 0;
+        this.rebounds = 0;
+        this.assists = 0;
+        this.blocks = 0;
+        this.steals = 0;
+        this.turnovers = 0;
+        this.tot_points = 0;
     }
 
     public FantasyStats(Integer player_id, Integer schedule_id, Integer client_id, Integer league_id) {
@@ -95,6 +95,15 @@ public class FantasyStats implements Serializable {
         this.schedule_id = schedule_id;
         this.client_id = client_id;
         this.league_id = league_id;
+        this.three_points = 0;
+        this.two_points = 0;
+        this.free_throws = 0;
+        this.rebounds = 0;
+        this.assists = 0;
+        this.blocks = 0;
+        this.steals = 0;
+        this.turnovers = 0;
+        this.tot_points = 0;
     }
 
     // constructor

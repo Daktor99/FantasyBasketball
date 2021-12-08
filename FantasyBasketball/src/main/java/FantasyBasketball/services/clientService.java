@@ -25,7 +25,7 @@ public class clientService {
             Client clientResult = result.get();
             return List.of(clientResult);
         } else {
-            throw new resourceNotFoundException("Fantasy Game not found by ID in DB.");
+            throw new resourceNotFoundException("Client not found by ID in DB.");
         }
     }
 
@@ -34,6 +34,15 @@ public class clientService {
                                          String company_name,
                                          String client_name) {
         return clientRepo.findByTemplate(client_id, email, company_name, client_name);
+    }
+
+    public List<Client> getClientByGoogleId(String google_id) throws resourceException {
+        List<Client> result = clientRepo.findClientByGoogle_id(google_id);
+        if (result.size() <= 1)
+            return result;
+        else {
+            throw new resourceException("Found two clients with same Google Id");
+        }
     }
 
     public List<Client> postClient(Client client) {

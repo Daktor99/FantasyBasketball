@@ -40,9 +40,9 @@ public class FantasyLeague {
     @JsonProperty("league_start_date")
     private LocalDate leagueStartDate;
 
-    @Column(name = "league_end_date")
-    @JsonProperty("league_end_date")
-    private LocalDate leagueEndDate;
+    @Column(name = "num_weeks")
+    @JsonProperty("num_weeks")
+    private Integer numWeeks;
 
 
     // default constructor
@@ -54,7 +54,7 @@ public class FantasyLeague {
         this.leagueSize=null;
         this.draftFinished=null;
         this.leagueStartDate=null;
-        this.leagueEndDate=null;
+        this.numWeeks=null;
     }
 
     // constructor
@@ -65,7 +65,7 @@ public class FantasyLeague {
                          Integer league_size,
                          Boolean draft_finished,
                          LocalDate league_start_date,
-                         LocalDate league_end_date) {
+                         Integer num_weeks) {
         this.leagueID=league_id;
         this.clientID=client_id;
         this.leagueName=league_name;
@@ -73,7 +73,7 @@ public class FantasyLeague {
         this.leagueSize=league_size;
         this.draftFinished=draft_finished;
         this.leagueStartDate=league_start_date;
-        this.leagueEndDate=league_end_date;
+        this.numWeeks=num_weeks;
     }
 
     // class methods
@@ -134,12 +134,12 @@ public class FantasyLeague {
         this.leagueStartDate = leagueStartDate;
     }
 
-    public LocalDate getLeagueEndDate() {
-        return leagueEndDate;
+    public Integer getNumWeeks() {
+        return numWeeks;
     }
 
-    public void setLeagueEndDate(LocalDate leagueEndDate) {
-        this.leagueEndDate = leagueEndDate;
+    public void setNumWeeks(Integer numWeeks) {
+        this.numWeeks = numWeeks;
     }
 
     // TODO: Implement toString() function
