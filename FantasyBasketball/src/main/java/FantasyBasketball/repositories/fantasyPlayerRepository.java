@@ -34,6 +34,13 @@ import java.util.List;
 @Repository
 public interface fantasyPlayerRepository extends CrudRepository<FantasyPlayer, Integer> {
 
+    @Query(value = "select player_id from fantasy_player where " +
+            "((client_id = :client_id) and\n" +
+            "(league_id = :league_id) and\n" +
+            "(team_id is NULL))", nativeQuery = true)
+    List<Integer> getUndraftedPlayers(@Param("client_id") Integer client_id,
+                                      @Param("league_id") Integer league_id);
+
     @Query(value = "select * from (select fantasy_player.player_id as player_id,\n" +
                         "fantasy_player.client_id as client_id,\n" +
                         "fantasy_player.league_id as league_id,\n" +
@@ -101,13 +108,8 @@ public interface fantasyPlayerRepository extends CrudRepository<FantasyPlayer, I
 
     @Transactional
     @Modifying
-    @Query(value = "update fantasy_player set \n" +
-                    "team_id = :team_id \n" +
-                    "where \n" +
-                        "((player_id = :player_id) and\n" +
-                        "(client_id = :client_id) and\n" +
-                        "(league_id = :league_id))",
-                    nativeQuery = true)
+    @Query(value = "update fantasy_player set team_id = :team_id where player_id = :player_id and league_id = :league_id and client_id = :client_id",
+            nativeQuery = true)
     void updateFantasyPlayer(@Param("player_id") Integer player_id,
                              @Param("client_id") Integer client_id,
                              @Param("league_id") Integer league_id,
