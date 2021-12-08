@@ -96,14 +96,16 @@ class Register extends Component {
                                 label="Full Name"
                                 name="registeredName"
                                 value={this.state.registeredName}
-                                placeholder={this.state.givenName + " " + this.state.familyName}/>
+                                placeholder={this.state.givenName + " " + this.state.familyName}
+                                onChange={this.handleChange}/>
                             <Form.Field
                                 id='form-input-error-email'
                                 control={Input}
                                 label="Email"
                                 name="registeredEmail"
                                 value={this.state.registeredEmail}
-                                placeholder={this.state.email}/>
+                                placeholder={this.state.email}
+                                onChange={this.handleChange}/>
                         </Form.Group>
                         <Form.Field
                             id='form-input-control-company'
@@ -111,7 +113,8 @@ class Register extends Component {
                             label="Company Name"
                             name="companyName"
                             value={this.state.companyName}
-                            placeholder="Company Name"/>
+                            placeholder="Company Name"
+                            onChange={this.handleChange}/>
                         <Form.Group inline>
                             <Form.Field>
                                 <label>Two Point Weight</label>
