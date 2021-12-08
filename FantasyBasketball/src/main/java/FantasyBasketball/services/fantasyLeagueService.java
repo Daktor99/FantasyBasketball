@@ -287,7 +287,6 @@ public class fantasyLeagueService {
         // Otherwise, assign a random one.
         if (fantasyPlayer.getPlayerID() == null) {
 
-            FantasyPlayer chosenPlayer = new FantasyPlayer();
             // Get list of available players
             Integer league_id = fantasyPlayer.getLeagueID();
             List<FantasyPlayer> av_players = fantasyPlayerService.getAvailablePlayers(league_id,
@@ -302,7 +301,7 @@ public class fantasyLeagueService {
             }
             // Chose random player from list of available players
             Integer idx = fantasyPlayerService.generateNumber(0, av_players.size());
-            chosenPlayer = av_players.get(idx);
+            FantasyPlayer chosenPlayer = av_players.get(idx);
             fantasyPlayer.setPlayerID(chosenPlayer.getPlayerID());
 
         } else {
