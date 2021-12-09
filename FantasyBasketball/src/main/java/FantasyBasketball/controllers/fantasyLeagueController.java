@@ -5,6 +5,7 @@ import FantasyBasketball.exceptions.resourceNotFoundException;
 import FantasyBasketball.models.FantasyGame;
 import FantasyBasketball.models.FantasyLeague;
 import FantasyBasketball.models.FantasyPlayer;
+import FantasyBasketball.repositories.fantasyPlayerRepository;
 import FantasyBasketball.repositories.playerDataRepository;
 import FantasyBasketball.services.fantasyLeagueService;
 import FantasyBasketball.services.fantasyPlayerService;
@@ -192,6 +193,59 @@ public class fantasyLeagueController {
         }
     }
 
+//    @RequestMapping(value = "/fantasyLeague/draft/draftPlayer", method = RequestMethod.PUT)
+//    public ResponseEntity<?> updateDraftedPlayer(@RequestParam(value = "player_id", required = false) Integer player_id,
+//                                                 @RequestParam(value = "team_id", required = true) Integer team_id,
+//                                                 @RequestParam(value = "league_id", required = false) Integer league_id,
+//                                                 @RequestParam(value = "client_id", required = false) Integer client_id,
+//                                                 @RequestParam(value = "first_name", required = false) String first_name,
+//                                                 @RequestParam(value = "last_name", required = false) String last_name,
+//                                                 @RequestParam(value = "nba_team", required = false) String nba_team,
+//                                                 @RequestParam(value = "position", required = false) String position) {
+//        try {
+//
+//            log.info("Parameters: \n" + "player_id: " + player_id + "\n team_id: " + team_id);
+//            log.info("PUT: " + request.getRequestURL());
+//
+//            // TODO: Filter and check inputs
+//
+//            FantasyPlayer chosenPlayer = new FantasyPlayer();
+//
+//            // If player_id given, draft that player to the specified team.
+//            // Otherwise, assign a random one.
+//            if (player_id == null) {
+//
+//                // Get list of available players
+//                List<FantasyPlayer> av_players = fantasyPlayerService.getAvailablePlayers(league_id, client_id, first_name, last_name, nba_team, position);
+//
+//                // Chose random player from list of available players
+//                Integer idx = fantasyPlayerService.generateNumber(0, av_players.size());
+//                chosenPlayer = av_players.get(idx);
+//
+//            } else {
+//
+//                //get the player by player_id
+//                chosenPlayer = fantasyPlayerService.getByID(player_id).get(0);
+//            }
+//
+//            List<FantasyPlayer> result = fantasyPlayerService.draftFantasyPlayer(chosenPlayer);
+//            return new ResponseEntity<>(result, HttpStatus.OK);
+//
+//        } catch (resourceNotFoundException e) {
+//            // If league not found in the database, throw exception not found
+//            log.error("Exception on PUT: " + e.getMessage());
+//            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+//        } catch (DataIntegrityViolationException e) {
+//            log.error("Exception on PUT: ", e);
+//            return new ResponseEntity<>("This action is not allowed, please check values and try again.",
+//                    HttpStatus.UNPROCESSABLE_ENTITY);
+//        } catch (Exception e) {
+//            // all other exceptions
+//            log.error("Exception on PUT: ", e);
+//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//    }
+
     @RequestMapping(value = "/fantasyLeague/draft/draftPlayer", method = RequestMethod.PUT)
     public ResponseEntity<?> updateDraftedPlayer(@RequestBody FantasyPlayer fantasyPlayer) {
         try {
@@ -201,11 +255,17 @@ public class fantasyLeagueController {
 
             // TODO: Filter and check inputs
 
-            // Regular put
+            // Check that league and team exist and that their ids are provided in the body
+            // TODO: change client_id later
+            fantasyLeagueService.checkDraftInputs(fantasyPlayer.getLeagueID(), fantasyPlayer.getTeamID(), 1);
+
+            // TODO: Update client ID
+            fantasyLeagueService.pickPlayer(fantasyPlayer);
+            fantasyPlayer.setClientID(1);
             List<FantasyPlayer> result = fantasyPlayerService.draftFantasyPlayer(fantasyPlayer);
             return new ResponseEntity<>(result, HttpStatus.OK);
 
-        } catch (resourceNotFoundException e) {
+        } catch (resourceNotFoundException | resourceException e) {
             // If league not found in the database, throw exception not found
             log.error("Exception on PUT: " + e.getMessage());
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);

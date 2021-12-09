@@ -1,14 +1,12 @@
 package FantasyBasketball.services;
 
 import FantasyBasketball.models.FantasyPlayer;
-import FantasyBasketball.models.User;
 import FantasyBasketball.repositories.fantasyPlayerRepository;
 import FantasyBasketball.repositories.playerDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import FantasyBasketball.exceptions.resourceNotFoundException;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class fantasyPlayerService {
@@ -18,17 +16,6 @@ public class fantasyPlayerService {
 
     @Autowired
     private playerDataRepository dataRepo;
-
-    // find by ID
-    public List<FantasyPlayer> getByID(Integer playerID) throws resourceNotFoundException {
-        Optional<FantasyPlayer> result = playerRepo.findById(playerID);
-        if (result.isPresent()) {
-            FantasyPlayer fantasyPlayerResult = result.get();
-            return List.of(fantasyPlayerResult);
-        } else {
-            throw new resourceNotFoundException("Player not found by ID in DB.");
-        }
-    }
 
     // get operation
     public List<FantasyPlayer> getPlayerByTemplate(Integer player_id,
@@ -49,6 +36,11 @@ public class fantasyPlayerService {
                 last_name,
                 nba_team,
                 position);
+    }
+
+    // finding players by team
+    public List<Integer> getPlayerIDsByTeam(Integer teamID) {
+        return playerRepo.getByTeamID(teamID);
     }
 
     // post operation
@@ -142,15 +134,27 @@ public class fantasyPlayerService {
     }
     // Get available players
     public List<FantasyPlayer> getAvailablePlayers(Integer league_id, Integer client_id, String first_name,
-                                                   String last_name, String nba_team, String position) {
+                                                          String last_name, String nba_team, String position) {
 
         // TODO: Enforce that league_id and client_id are present, or else raise exception
 
-        return playerRepo.getAvailablePlayers(league_id, client_id, first_name,last_name,nba_team,position);
+        return playerRepo.getAvailablePlayers(league_id, client_id, first_name, last_name, nba_team, position);
+    }
+
+    public List<Integer> getUndraftedPlayers(Integer league_id, Integer client_id) throws resourceNotFoundException {
+
+        // TODO: Enforce that league_id and client_id are present, or else raise exception
+
+        List<Integer> player_ids = playerRepo.getUndraftedPlayers(league_id, client_id);
+        return player_ids;
     }
 
     public List<FantasyPlayer> draftFantasyPlayer(FantasyPlayer player) throws resourceNotFoundException {
         return updateFantasyPlayer(player);
+    }
+
+    public Integer generateNumber(Integer min, Integer max) {
+        return (int) ((Math.random() * (max - min)) + min);
     }
 
 }
