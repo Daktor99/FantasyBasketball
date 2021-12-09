@@ -2,11 +2,14 @@ package FantasyBasketball;
 
 import FantasyBasketball.exceptions.resourceException;
 import FantasyBasketball.exceptions.resourceNotFoundException;
+import FantasyBasketball.models.FantasyLeague;
 import FantasyBasketball.models.FantasyTeam;
 import FantasyBasketball.models.User;
 import FantasyBasketball.repositories.fantasyTeamRepository;
+import FantasyBasketball.repositories.fantasyTeamRepository;
 import FantasyBasketball.repositories.userRepository;
 import FantasyBasketball.services.fantasyTeamService;
+import FantasyBasketball.services.fantasyLeagueService;
 import FantasyBasketball.services.userService;
 import org.junit.After;
 import org.junit.Before;
@@ -18,17 +21,24 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class fantasyTeamTests {
 
-    @Autowired
+    @MockBean
     private fantasyTeamService teamService;
 
     @MockBean
     private fantasyTeamRepository teamRepo;
+
+    @MockBean
+    private fantasyLeagueService fantasyLeagueService;
 
     @Before
     public void setUp() {
@@ -45,9 +55,53 @@ public class fantasyTeamTests {
         //
     }
 
+    @Test
+    public void checkLeagueFullShouldPass() {
+        LocalDate league_start_date = LocalDate.of(2022, 12, 12);
+        FantasyLeague fantasyLeague = new FantasyLeague(
+                1,
+                1,
+                "fake league name",
+                1,
+                8,
+                Boolean.FALSE,
+                league_start_date,
+                4
+        );
+
+        Integer leagueID = 1;
+        Integer leagueClientID = 1;
+        List<Integer> teamsInLeague = Arrays.asList(1, 2, 3, 4, 5, 6, 7);
+
+        Mockito.when(teamRepo.findTeamsInLeague(leagueID, leagueClientID)).thenReturn(teamsInLeague);
+        assertEquals(Boolean.FALSE, teamService.checkLeagueFull(fantasyLeague));
+    }
+
+    @Test
+    public void checkLeagueFullShouldFail() {
+        LocalDate league_start_date = LocalDate.of(2022, 12, 12);
+        FantasyLeague fantasyLeague = new FantasyLeague(
+                1,
+                1,
+                "fake league name",
+                1,
+                4,
+                Boolean.FALSE,
+                league_start_date,
+                4
+        );
+
+        Integer leagueID = 1;
+        Integer leagueClientID = 1;
+        List<Integer> teamsInLeague = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8);
+
+        Mockito.when(teamRepo.findTeamsInLeague(leagueID, leagueClientID)).thenReturn(teamsInLeague);
+        assertEquals(Boolean.TRUE, teamService.checkLeagueFull(fantasyLeague));
+    }
+
     // Test that the team_id is correctly updated by teamUser method
     @Test
-    public void testPostTeam() {
+    public void testPostTeam() throws resourceException {
 
         // Initialize team before postTeam called
         FantasyTeam beforeTeam = new FantasyTeam(null,
@@ -88,7 +142,7 @@ public class fantasyTeamTests {
         // save the team
         Mockito.when(teamRepo.save(beforeTeam)).thenReturn(afterTeam);
 
-        //assert that the team_id gets correctly updated
+        // assert that the team_id gets correctly updated
         assertEquals(teamService.postTeam(beforeTeam).get(0).getTeamID(), 12);
     }
 

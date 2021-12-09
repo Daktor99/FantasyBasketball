@@ -32,6 +32,10 @@ public class FantasyLeague {
     @JsonProperty("league_size")
     private Integer leagueSize;
 
+    @Column(name = "draft_finished")
+    @JsonProperty("draft_finished")
+    private Boolean draftFinished;
+
     @Column(name = "league_start_date")
     @JsonProperty("league_start_date")
     private LocalDate leagueStartDate;
@@ -48,6 +52,7 @@ public class FantasyLeague {
         this.leagueName=null;
         this.adminID=null;
         this.leagueSize=null;
+        this.draftFinished=null;
         this.leagueStartDate=null;
         this.numWeeks=null;
     }
@@ -58,6 +63,7 @@ public class FantasyLeague {
                          String league_name,
                          Integer admin_id,
                          Integer league_size,
+                         Boolean draft_finished,
                          LocalDate league_start_date,
                          Integer num_weeks) {
         this.leagueID=league_id;
@@ -65,6 +71,7 @@ public class FantasyLeague {
         this.leagueName=league_name;
         this.adminID=admin_id;
         this.leagueSize=league_size;
+        this.draftFinished=draft_finished;
         this.leagueStartDate=league_start_date;
         this.numWeeks=num_weeks;
     }
@@ -109,6 +116,14 @@ public class FantasyLeague {
 
     public void setLeagueSize(Integer leagueSize) {
         this.leagueSize = leagueSize;
+    }
+
+    public Boolean getDraftFinished() {
+        return draftFinished;
+    }
+
+    public void setDraftFinished(Boolean draftFinished) {
+        this.draftFinished = draftFinished;
     }
 
     public LocalDate getLeagueStartDate() {

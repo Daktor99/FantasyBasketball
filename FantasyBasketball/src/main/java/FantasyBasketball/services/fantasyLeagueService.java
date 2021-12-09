@@ -58,6 +58,7 @@ public class fantasyLeagueService {
                                                     String league_name,
                                                     Integer admin_id,
                                                     Integer league_size,
+                                                    Boolean draft_finished,
                                                     LocalDate league_start_date,
                                                     Integer num_weeks) {
         return leagueRepo.findByTemplate(league_id,
@@ -65,6 +66,7 @@ public class fantasyLeagueService {
                 league_name,
                 admin_id,
                 league_size,
+                draft_finished,
                 league_start_date,
                 num_weeks);
     }
@@ -73,6 +75,17 @@ public class fantasyLeagueService {
     public Boolean checkAdmin(Integer adminID) {
         Optional<User> result = userRepo.findById(adminID);
         if (result.isPresent()) {
+            return Boolean.TRUE;
+        } else {
+            return Boolean.FALSE;
+        }
+    }
+
+    // helper function: check if drafting is finished
+    public Boolean checkDraftFinished(Integer leagueID) {
+        Optional<FantasyLeague> fantasyLeagueOptional = leagueRepo.findById(leagueID);
+        FantasyLeague fantasyLeague = fantasyLeagueOptional.get();
+        if (fantasyLeague.getDraftFinished().equals(Boolean.TRUE)) {
             return Boolean.TRUE;
         } else {
             return Boolean.FALSE;
@@ -89,7 +102,7 @@ public class fantasyLeagueService {
     }
 
     // post operation
-    public List<FantasyLeague> postLeagues(FantasyLeague fantasyLeague) throws resourceException, IOException {
+    public List<FantasyLeague> postLeagues(FantasyLeague fantasyLeague) throws resourceException {
         fantasyLeague.setLeagueID(0);
 
         //This client_id will be updated later
@@ -103,6 +116,9 @@ public class fantasyLeagueService {
                 // leagueUtility.API_player_importation(playerRepo);
 
                 FantasyLeague result = leagueRepo.save(fantasyLeague);
+
+                leagueRepo.prepLeaguePlayers(result.getLeagueID(), result.getClientID());
+
                 return List.of(result);
             } else {
                 throw new resourceException("LeagueStartDate has to be in the future.");
@@ -118,6 +134,7 @@ public class fantasyLeagueService {
                 referenceLeague.getClientID().equals(compareLeague.getClientID()) &&
                 referenceLeague.getAdminID().equals(compareLeague.getAdminID()) &&
                 referenceLeague.getLeagueSize().equals(compareLeague.getLeagueSize()) &&
+                referenceLeague.getDraftFinished().equals(compareLeague.getDraftFinished()) &&
                 referenceLeague.getLeagueStartDate().equals(compareLeague.getLeagueStartDate()) &&
                 referenceLeague.getNumWeeks().equals(compareLeague.getNumWeeks())
         ) {

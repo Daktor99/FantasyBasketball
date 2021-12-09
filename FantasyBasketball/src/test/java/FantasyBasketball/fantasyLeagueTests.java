@@ -1,37 +1,37 @@
-package FantasyBasketball;
-
-import FantasyBasketball.exceptions.resourceException;
-import FantasyBasketball.exceptions.resourceNotFoundException;
-import FantasyBasketball.models.User;
-import FantasyBasketball.models.FantasyLeague;
-import FantasyBasketball.repositories.fantasyLeagueRepository;
-import FantasyBasketball.repositories.fantasyTeamRepository;
-import FantasyBasketball.repositories.userRepository;
-import FantasyBasketball.services.fantasyLeagueService;
-import FantasyBasketball.services.userService;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit4.SpringRunner;
-
-import java.io.IOException;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
-import static org.junit.Assert.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-@RunWith(SpringRunner.class)
-@SpringBootTest
-public class fantasyLeagueTests {
-
+//package FantasyBasketball;
+//
+//import FantasyBasketball.exceptions.resourceException;
+//import FantasyBasketball.exceptions.resourceNotFoundException;
+//import FantasyBasketball.models.User;
+//import FantasyBasketball.models.FantasyLeague;
+//import FantasyBasketball.repositories.fantasyLeagueRepository;
+//import FantasyBasketball.repositories.fantasyTeamRepository;
+//import FantasyBasketball.repositories.userRepository;
+//import FantasyBasketball.services.fantasyLeagueService;
+//import FantasyBasketball.services.userService;
+//import org.junit.After;
+//import org.junit.Before;
+//import org.junit.Test;
+//import org.junit.runner.RunWith;
+//import org.mockito.Mockito;
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.boot.test.context.SpringBootTest;
+//import org.springframework.boot.test.mock.mockito.MockBean;
+//import org.springframework.test.context.junit4.SpringRunner;
+//
+//import java.io.IOException;
+//import java.time.LocalDate;
+//import java.util.ArrayList;
+//import java.util.List;
+//import java.util.Optional;
+//
+//import static org.junit.Assert.*;
+//import static org.junit.jupiter.api.Assertions.assertEquals;
+//
+//@RunWith(SpringRunner.class)
+//@SpringBootTest
+//public class fantasyLeagueTests {
+//
 //    @Autowired
 //    fantasyLeagueService fantasyLeagueService;
 //
@@ -59,7 +59,7 @@ public class fantasyLeagueTests {
 //
 //    @Test
 //    public void testGetLeaguesByTemplate() {
-//        //
+//
 //    }
 //
 //    @Test
@@ -97,6 +97,11 @@ public class fantasyLeagueTests {
 //
 //        // assert that the admin_id got properly identified as invalid
 //        assertEquals(fantasyLeagueService.checkAdmin(adminID), Boolean.FALSE);
+//    }
+//
+//    @Test
+//    public void testcheckDraftFinished() throws resourceException {
+//        //TODO:
 //    }
 //
 //    @Test
@@ -349,23 +354,23 @@ public class fantasyLeagueTests {
 //
 //    @Test
 //    public void testGetTeamIDs() throws resourceException {
-////        Integer league_id = 2;
-////        Integer client_id = 1;
-////
-////        List<Integer> teamList = new ArrayList<>();
-////        teamList.add(1);
-////        teamList.add(2);
-////
-////        // mock findById output
-////        Mockito.when(teamRepo.findTeamsInLeague(league_id, client_id)).thenReturn(teamList);
-////
-////        // assert that the admin_id got properly identified as invalid
-////        assertEquals(fantasyLeagueService.getTeamIDs(league_id, client_id), teamList);
+//        Integer league_id = 2;
+//        Integer client_id = 1;
+//
+//        List<Integer> teamList = new ArrayList<>();
+//        teamList.add(1);
+//        teamList.add(2);
+//
+//        // mock findById output
+//        Mockito.when(teamRepo.findTeamsInLeague(league_id, client_id)).thenReturn(teamList);
+//
+//        // assert that the admin_id got properly identified as invalid
+//        assertEquals(fantasyLeagueService.getTeamIDs(league_id, client_id), teamList);
 //    }
 //
 //    @Test
 //    public void testPostGames() {
 //        //
 //    }
-
-}
+//
+//}
