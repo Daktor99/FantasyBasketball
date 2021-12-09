@@ -19,7 +19,7 @@ public class fantasyTeamService {
     fantasyLeagueService FantasyLeague;
 
     @Autowired
-    private fantasyTeamRepository teamRepo;
+    fantasyTeamRepository teamRepo;
 
     @Autowired
     fantasyLeagueRepository leagueRepo;
@@ -59,9 +59,9 @@ public class fantasyTeamService {
         Integer currentLeagueSize = teamsInLeague.size();
 
         if (leagueSize > currentLeagueSize) {
-            return Boolean.TRUE;
-        } else {
             return Boolean.FALSE;
+        } else {
+            return Boolean.TRUE;
         }
     }
 
@@ -71,7 +71,7 @@ public class fantasyTeamService {
         Optional<FantasyBasketball.models.FantasyLeague> fantasyLeagueOptional = leagueRepo.findById(leagueID);
         FantasyBasketball.models.FantasyLeague league = fantasyLeagueOptional.get();
 
-        if (!checkLeagueFull(league)) {
+        if (checkLeagueFull(league)) {
             throw new resourceException("Cannot create another team. This league is already full.");
         };
 
