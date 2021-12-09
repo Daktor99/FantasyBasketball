@@ -83,9 +83,10 @@ public class fantasyTeamService {
         Optional<FantasyBasketball.models.FantasyLeague> fantasyLeagueOptional = leagueRepo.findById(leagueID);
         FantasyBasketball.models.FantasyLeague league = fantasyLeagueOptional.get();
 
-        if (checkLeagueFull(league)) {
-            throw new resourceException("Cannot create another team. This league is already full.");
-        };
+        // TODO: check if checkLeagueFull is all good
+//        if (checkLeagueFull(league)) {
+//            throw new resourceException("Cannot create another team. This league is already full.");
+//        };
 
         team.setTeamID(0);
 
