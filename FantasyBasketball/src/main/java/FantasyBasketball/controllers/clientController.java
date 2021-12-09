@@ -3,7 +3,6 @@ package FantasyBasketball.controllers;
 import FantasyBasketball.exceptions.resourceException;
 import FantasyBasketball.exceptions.resourceNotFoundException;
 import FantasyBasketball.models.Client;
-import FantasyBasketball.models.User;
 import FantasyBasketball.services.clientService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +34,7 @@ public class clientController {
     public clientController(HttpServletRequest request) { this.request = request; }
 
     @RequestMapping(value = "/getClient", method = RequestMethod.GET)
-    public ResponseEntity<?> getClient(@RequestParam (value = "google_id", required = true) String google_id){
+    public ResponseEntity<?> getClient(@RequestParam(value = "google_id") String google_id) {
         log.info("Requesting client info with google_id {}", google_id);
 
         try {
@@ -84,12 +83,16 @@ public class clientController {
             log.info("PUT: " + request.getRequestURL());
             log.info(client.toString());
 
-            Integer client_id = client.getClientID();
-            List<Client> oldClient = clientService.getByID(client_id);
+            List<Client> oldClientList = clientService.getClientByGoogleId(client.getGoogle_id());
 
-            client.setEmail(oldClient.get(0).getEmail());
-            client.setCompany_name(oldClient.get(0).getCompany_name());
-            client.setClient_name(oldClient.get(0).getClient_name());
+            Client oldClient = oldClientList.get(0);
+            Integer client_id = oldClient.getClientID();
+
+            client.setClientID(client_id);
+
+//            client.setEmail(oldClient.get(0).getEmail());
+//            client.setCompany_name(oldClient.get(0).getCompany_name());
+//            client.setClient_name(oldClient.get(0).getClient_name());
 
             // Checks to make sure the input is valid to insert in DB
             clientService.checkPutInputs(client);
@@ -116,7 +119,7 @@ public class clientController {
     }
 
     @RequestMapping(value = "/terminate_account", method = RequestMethod.DELETE)
-    public ResponseEntity<?> deleteClient(@RequestParam(value = "client_id", required = true) Integer client_id) {
+    public ResponseEntity<?> deleteClient(@RequestParam(value = "client_id") Integer client_id) {
         try {
 
             log.info("DELETE: " + request.getRequestURL() + "?" + request.getQueryString());

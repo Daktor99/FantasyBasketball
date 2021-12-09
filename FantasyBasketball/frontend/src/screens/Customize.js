@@ -1,10 +1,12 @@
-import React, {Component} from "react";
 import {withCookies} from "react-cookie";
-import {Dimmer, Form, Header, Input, Loader} from "semantic-ui-react";
 import {Redirect} from "react-router-dom";
+import {Message} from "semantic-ui-react";
 
+const {Component} = require("react");
+const {Dimmer, Loader, Header, Form, Input} = require("semantic-ui-react");
+const React = require("react");
 
-class Register extends Component {
+class Customize extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -14,46 +16,18 @@ class Register extends Component {
             googleId: this.props.cookies.get("googleId") || null,
             email: this.props.cookies.get("email") || null,
             registered: this.props.cookies.get("registered") || null,
-            companyName: null,
-            registeredName: null,
-            registeredEmail: null,
-            assist_weight: null,
-            block_weight: null,
-            ft_weight: null,
-            max_team_size: null,
-            min_league_dur: null,
-            min_league_size: null,
-            rebound_weight: null,
-            three_p_weight: null,
-            turnover_weight: null,
-            two_p_weight: null,
-            steal_weight: null,
-            isLoading: false,
-            companyError: false
+            defaultCompanyName: null,
+            defaultName: null,
+            defaultEmail: null,
+            loading: false
         }
         this.state.loggedIn = this.state.loggedIn === "true";
         this.state.registered = this.state.registered === "true";
-        this.onCreateAccount = this.onCreateAccount.bind(this)
         this.handleChange = this.handleChange.bind(this)
-        this.checkInputs = this.checkInputs.bind(this)
+        this.updateClient = this.updateClient.bind(this)
     }
 
-    checkInputs() {
-        if (this.state.companyName) {
-            this.setState({
-                companyError: false
-            })
-            return true
-        } else {
-            this.setState({
-                companyError: true
-            })
-        }
-    }
-
-    handleChange = (e, {name, value}) => this.setState({[name]: value})
-
-    async checkIfRegistered() {
+    async componentWillMount() {
         const input = '/getClient?google_id=' + this.state.googleId
         const response = await fetch(input);
         const body = await response.json();
@@ -63,6 +37,12 @@ class Register extends Component {
             console.log(body[0])
             cookies.set("registered", true, {path: "/"})
             this.setState({
+                stipe_name: client.client_name,
+                stipe_email: client.email,
+                defaultName: client.name,
+                defaultEmail: client.email,
+                company_name: client.company_name,
+                defaultCompanyName: client.company_name,
                 assist_weight: client.assist_weight,
                 block_weight: client.block_weight,
                 ft_weight: client.ft_weight,
@@ -85,131 +65,124 @@ class Register extends Component {
         }
     }
 
-    async onCreateAccount() {
-        if (this.checkInputs()) {
+    handleChange = (e, {name, value}) => this.setState({[name]: value})
+
+    async updateClient() {
+        this.setState({
+            isLoading: true
+        })
+        await new Promise(r => setTimeout(r, 500));
+
+        const {cookies} = this.props;
+
+        if (!this.state.registered) {
+            console.log("You are not registered!")
+            cookies.set("registered", false, {path: "/"})
             this.setState({
-                isLoading: true
+                requestFailed: false,
+                registered: false,
+                isLoading: false
             })
-            await new Promise(r => setTimeout(r, 500));
-
-            await this.checkIfRegistered()
-            const {cookies} = this.props;
-
-            if (this.state.registered) {
-                console.log("You are already registered!")
-                window.alert("You are already registered!")
-                this.setState({
-                    requestFailed: false,
-                    registered: true,
-                    isLoading: false
+        } else {
+            const requestOptions = {
+                method: 'PUT',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    "email": this.state.stipe_email || this.state.defaultEmail,
+                    "company_name": this.state.company_name || this.state.defaultCompanyName,
+                    "client_name": this.state.stipe_name || this.state.defaultName,
+                    "three_p_weight": this.state.three_p_weight || 1.0,
+                    "two_p_weight": this.state.two_p_weight || 1.0,
+                    "ft_weight": this.state.ft_weight || 1.0,
+                    "rebound_weight": this.state.rebound_weight || 1.0,
+                    "assist_weight": this.state.assist_weight || 1.0,
+                    "block_weight": this.state.block_weight || 1.0,
+                    "turnover_weight": this.state.turnover_weight || 1.0,
+                    "min_league_dur": this.state.min_league_dur || 1,
+                    "max_team_size": this.state.max_team_size || 30,
+                    "min_league_size": this.state.min_league_size || 2,
+                    "steal_weight": this.state.steal_weight || 1.0,
+                    "google_id": this.state.googleId
                 })
-
-            } else {
-                const requestOptions = {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({
-                        "email": this.state.registeredEmail || this.props.cookies.get("email"),
-                        "company_name": this.state.companyName || "",
-                        "client_name": this.state.registeredName || this.props.cookies.get("givenName") + " " + this.props.cookies.get("familyName"),
-                        "three_p_weight": this.state.three_p_weight || 1.0,
-                        "two_p_weight": this.state.two_p_weight || 1.0,
-                        "ft_weight": this.state.ft_weight || 1.0,
-                        "rebound_weight": this.state.rebound_weight || 1.0,
-                        "assist_weight": this.state.assist_weight || 1.0,
-                        "block_weight": this.state.block_weight || 1.0,
-                        "turnover_weight": this.state.turnover_weight || 1.0,
-                        "min_league_dur": this.state.min_league_dur || 1,
-                        "max_team_size": this.state.max_team_size || 30,
-                        "min_league_size": this.state.min_league_size || 2,
-                        "steal_weight": this.state.steal_weight || 1.0,
-                        "google_id": this.state.googleId
+            };
+            fetch('/customize', requestOptions)
+                .then(response => {
+                    return response.json()
+                })
+                .then(data => {
+                    console.log("Successfully Updated Client: ")
+                    window.alert("Successfully updated client")
+                    this.setState({
+                        postId: data.id,
+                        requestFailed: false,
+                        isLoading: false
                     })
-                };
-                fetch('/register', requestOptions)
-                    .then(response => {
-                        return response.json()
+                })
+                .catch(error => {
+                    console.log("Error Updating Client: " + error)
+                    window.alert("Error updating account, check your values and try again")
+                    this.setState({
+                        requestFailed: true,
+                        isLoading: false
                     })
-                    .then(data => {
-                        console.log("Successfully registered Client: ")
-                        cookies.set("registered", true, {path: "/"})
-                        this.setState({
-                            postId: data.id,
-                            requestFailed: false,
-                            registered: true,
-                            isLoading: false
-                        })
-                    })
-                    .catch(error => {
-                        console.log("Error registering Client: " + error)
-                        cookies.set("registered", false, {path: "/"})
-                        window.alert("Error registering account, check your values and try again")
-                        this.setState({
-                            requestFailed: true,
-                            registered: false,
-                            isLoading: false
-                        })
-                    })
-            }
+                })
         }
     }
 
     render() {
         if (this.state.loggedIn) {
-            if (this.state.registered !== true) {
+            if (this.state.registered) {
                 return (
                     <div>
                         <Dimmer active={this.state.isLoading}>
-                            <Loader size='big'>Registering to STIPE</Loader>
+                            <Loader size='big'>Updating your account...</Loader>
                         </Dimmer>
                         <Header
                             as='h2'
-                            content={'Welcome ' + this.state.givenName}
+                            content={'Need a change, ' + this.state.givenName + '?'}
                             inverted
                             className='update-title'
                             style={{
-                                paddingLeft: '3px',
                                 fontSize: '2.5em',
-                                fontWeight: 'normal',
-                                marginBottom: 0,
-                                color: '#FD904DFF'
+                                fontWeight: 'normal'
                             }}
                         />
-                        <p style={{color: 'white', paddingLeft: '10px',}}>
-                            Please register with us to start your fantasy league experience
+                        <p style={{color: 'white', paddingLeft: '10px'}}>
+                            No worries! You can always change your settings here:
                         </p>
-                        <Form inverted className="register-form" onSubmit={this.onCreateAccount}>
+                        <Message
+                            warning
+                            header='Warning!'
+                            list={['Leaving values in blank will reset them to their default settings!']}
+                            className='warning-box'
+                        />
+                        <Form inverted className="register-form" onSubmit={this.updateClient}>
                             <Form.Group widths='equal'>
                                 <Form.Field
                                     id='form-input-control-first-name'
                                     control={Input}
                                     label="Full Name"
-                                    name="registeredName"
-                                    value={this.state.registeredName}
-                                    placeholder={this.state.givenName + " " + this.state.familyName}
+                                    name="stipe_name"
+                                    value={this.state.stipe_name}
+                                    placeholder={this.state.stipe_name}
                                     onChange={this.handleChange}/>
                                 <Form.Field
                                     id='form-input-error-email'
                                     control={Input}
                                     label="Email"
-                                    name="registeredEmail"
-                                    value={this.state.registeredEmail}
-                                    placeholder={this.state.email}
+                                    name="stipe_email"
+                                    value={this.state.stipe_email}
+                                    placeholder={this.state.stipe_email}
                                     onChange={this.handleChange}/>
                             </Form.Group>
                             <Form.Field
                                 id='form-input-control-company'
                                 control={Input}
                                 label="Company Name"
-                                name="companyName"
-                                value={this.state.companyName}
+                                name="company_name"
+                                value={this.state.company_name}
                                 placeholder="Company Name"
                                 onChange={this.handleChange}
-                                error={this.state.companyError ? {
-                                    active: this.state.companyError,
-                                    content: 'Please enter a valid Company Name',
-                                    pointing: 'above',
-                                } : false}
                             />
                             <Form.Group inline>
                                 <Form.Field>
@@ -322,21 +295,18 @@ class Register extends Component {
                                 </Form.Field>
                             </Form.Group>
                             <Form.Button
-                            >Create Account
+                            >Update
                             </Form.Button>
                         </Form>
                     </div>
                 )
             } else {
-                return (
-                    <Redirect to='/home'/>
-                )
+                return <Redirect to='/register'/>
             }
         } else {
             return <Redirect to='/'/>
         }
     }
-
 }
 
-export default withCookies(Register);
+export default withCookies(Customize)

@@ -6,6 +6,7 @@ import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import AppNavbar from "./utils/AppNavbar";
 import Register from "./screens/Register";
 import 'semantic-ui-css/semantic.min.css'
+import Customize from "./screens/Customize";
 
 class App extends Component {
 
@@ -19,7 +20,7 @@ class App extends Component {
                             <Route path='/' exact={true} component={Welcome}/>
                             <Route path='/home' exact={true} component={Home}/>
                             <Route path='/register' exact={true} component={Register}/>
-                            {/*<Route path='/data'*/}
+                            <Route path='/update' exact={true} component={Customize}/>
                         </Switch>
                     </Router>
                 </div>

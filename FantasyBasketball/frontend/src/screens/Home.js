@@ -13,12 +13,13 @@ class Home extends Component {
             familyName: this.props.cookies.get("familyName") || null,
             googleId: this.props.cookies.get("googleId") || null,
             email: this.props.cookies.get("email") || null,
-            registered: true
+            registered: this.props.cookies.get("registered") || null
         }
         this.state.loggedIn = this.state.loggedIn === "true";
+        this.state.registered = this.state.registered === "true";
     }
 
-    async componentDidMount() {
+    async componentWillMount() {
         const input = '/getClient?google_id=' + this.state.googleId
         const response = await fetch(input);
         const body = await response.json();
@@ -47,7 +48,6 @@ class Home extends Component {
                     registered: false
                 }
             )
-            console.log("BING BONG")
         }
     }
 
@@ -59,7 +59,7 @@ class Home extends Component {
                     <div className="home">
                         <Header
                             as='h2'
-                            content={'Welcome ' + this.state.givenName}
+                            content={'Welcome back, ' + this.state.givenName}
                             inverted
                             style={{
                                 fontSize: '4em',
@@ -78,7 +78,7 @@ class Home extends Component {
                                 </Header>
                             </Divider>
 
-                            <p style={{textAlign: 'center'}}>
+                            <p style={{}}>
                                 In this web page you will be able to control all of your fantasy basketball settings
                             </p>
 

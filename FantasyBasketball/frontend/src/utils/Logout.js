@@ -9,8 +9,8 @@ const clientId = "1096047835269-skq8123tknv8u0dcdb48f0qca5t966d3.apps.googleuser
 class Logout extends Component {
 
     onSuccess = (res) => {
+        console.log("User logged out successfully " + res)
         this.props.logout()
-        console.log("User logged out successfully")
     }
 
     render() {

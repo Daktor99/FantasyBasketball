@@ -105,11 +105,11 @@ public class Client {
                   double assist_weight,
                   double block_weight,
                   double steal_weight,
-                  Integer turnover_weight,
+                  double turnover_weight,
                   Integer min_league_dur,
                   Integer max_team_size,
                   Integer min_league_size,
-                  String google_id ) {
+                  String google_id) {
         this.clientID = clientID;
         this.email = email;
         this.company_name = company_name;

@@ -3,7 +3,7 @@ import full_logo from '../resources/images/full_logo.png'
 import {Nav, Navbar, NavDropdown} from "react-bootstrap";
 import Login from "./Login";
 import Logout from "./Logout";
-import { withCookies } from "react-cookie";
+import {withCookies} from "react-cookie";
 
 
 class AppNavbar extends Component {
@@ -24,38 +24,39 @@ class AppNavbar extends Component {
 
     async login (success, body) {
         const { cookies } = this.props;
-        if (success){
-            cookies.set("loggedIn", true, { path: "/" })
-            cookies.set("givenName", body.givenName, { path: "/" })
-            cookies.set("familyName", body.familyName, { path: "/" })
-            cookies.set("googleId", body.googleId, { path: "/" })
-            cookies.set("email", body.email, { path: "/" })
+        if (success) {
             this.setState({
                 loggedIn: true,
                 givenName: body.givenName,
-                familyName:body.familyName,
-                googleId:body.googleId,
-                email:body.email,
+                familyName: body.familyName,
+                googleId: body.googleId,
+                email: body.email,
             })
+            cookies.set("loggedIn", true, {path: "/"})
+            cookies.set("givenName", body.givenName, {path: "/"})
+            cookies.set("familyName", body.familyName, {path: "/"})
+            cookies.set("googleId", body.googleId, {path: "/"})
+            cookies.set("email", body.email, {path: "/"})
         } else {
             await this.logout()
         }
     }
 
     async logout() {
-        const { cookies } = this.props;
-        cookies.set("loggedIn", false, { path: "/" })
-        cookies.set("givenName", null, { path: "/" })
-        cookies.set("familyName", null, { path: "/" })
-        cookies.set("googleId", null, { path: "/" })
-        cookies.set("email", null, { path: "/" })
         this.setState({
             loggedIn: false,
-            givenName:null,
-            familyName:null,
-            googleId:null,
-            email:null,
+            givenName: null,
+            familyName: null,
+            googleId: null,
+            email: null,
         })
+        const {cookies} = this.props;
+        cookies.set("loggedIn", false, {path: "/"})
+        cookies.set("givenName", null, {path: "/"})
+        cookies.set("familyName", null, {path: "/"})
+        cookies.set("googleId", null, {path: "/"})
+        cookies.set("email", null, {path: "/"})
+
         window.location.reload(false);
     }
 
@@ -74,6 +75,7 @@ class AppNavbar extends Component {
                     {this.state.loggedIn ?
                     <Navbar.Collapse id="responsive-navbar-nav">
                         <Nav className="me-auto">
+                            <Nav.Link href="/update">Customize Your Account</Nav.Link>
                             <Nav.Link href="/data">View Your Data</Nav.Link>
                             <Nav.Link href="/pricing">Pricing</Nav.Link>
                             <NavDropdown title="Dropdown" id="collasible-nav-dropdown">

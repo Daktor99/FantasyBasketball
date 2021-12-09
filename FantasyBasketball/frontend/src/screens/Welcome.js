@@ -14,10 +14,6 @@ class Welcome extends Component {
         this.state.loggedIn = this.state.loggedIn === "true";
     }
 
-    async componentDidMount() {
-
-    }
-
     render() {
         if (this.state.loggedIn) {
             return <Redirect to='/home'/>

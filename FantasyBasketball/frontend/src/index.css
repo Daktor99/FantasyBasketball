@@ -91,6 +91,17 @@ Button {
   display: inline-flex;
 }
 
+.warning-box {
+  width: 50% !important;
+  margin-left: 25% !important;
+  background-color: #fd904d !important;
+  color: white !important;
+}
+
+.ui.warning.message .header {
+  color: white !important;
+}
+
 .client-info {
   color: #fd904d !important;
   padding-right: 10% !important;
@@ -99,6 +110,12 @@ Button {
 
 .client-info-table {
   color: #fd904d !important;
+}
+
+.update-title {
+  padding-left: 3px !important;
+  color: #FD904DFF !important;
+  margin: 0 !important;
 }
 
 .weight_number {
