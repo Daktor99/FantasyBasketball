@@ -44,9 +44,9 @@ public class Scheduler {
     clientRepository clientRepo;
 
 
-    //@Scheduled(cron = "0 0 */1 * * *")
+    @Scheduled(cron = "0 0 */1 * * *")
     @Async
-    @Scheduled(cron = "*/15 * * * * *")
+//    @Scheduled(cron = "*/15 * * * * *")
     public void hourlySchedule() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
         Date now = new Date();
@@ -57,11 +57,7 @@ public class Scheduler {
         HourlyUpdate hourly = new HourlyUpdate();
         try {
             hourly.runHourly(playerRepo, gameRepo, statsRepo, clientRepo, now);
-        } catch (resourceNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
+        } catch (resourceNotFoundException | IOException | ParseException e) {
             e.printStackTrace();
         }
     }

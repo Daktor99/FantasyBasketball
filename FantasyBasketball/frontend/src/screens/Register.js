@@ -51,9 +51,7 @@ class Register extends Component {
         }
     }
 
-    handleChange = (e, {name, value}) => this.setState({[name]: value})
-
-    async checkIfRegistered() {
+    async componentDidMount() {
         const input = '/getClient?google_id=' + this.state.googleId
         const response = await fetch(input);
         const body = await response.json();
@@ -76,6 +74,7 @@ class Register extends Component {
                 steal_weight: client.steal_weight,
                 registered: true
             })
+            this.props.history.push('/home');
         } else {
             cookies.set("registered", false, {path: "/"})
             this.setState({
@@ -84,6 +83,12 @@ class Register extends Component {
             )
         }
     }
+
+    handleChange = (e, {name, value}) => this.setState({[name]: value})
+
+    // async checkIfRegistered() {
+    //
+    // }
 
     async onCreateAccount() {
         if (this.checkInputs()) {

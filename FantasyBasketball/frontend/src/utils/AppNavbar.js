@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import full_logo from '../resources/images/full_logo.png'
-import {Nav, Navbar, NavDropdown} from "react-bootstrap";
+import {Nav, Navbar} from "react-bootstrap";
 import Login from "./Login";
 import Logout from "./Logout";
 import {withCookies} from "react-cookie";
@@ -37,6 +37,7 @@ class AppNavbar extends Component {
             cookies.set("familyName", body.familyName, {path: "/"})
             cookies.set("googleId", body.googleId, {path: "/"})
             cookies.set("email", body.email, {path: "/"})
+            window.location.reload()
         } else {
             await this.logout()
         }
@@ -56,8 +57,7 @@ class AppNavbar extends Component {
         cookies.set("familyName", null, {path: "/"})
         cookies.set("googleId", null, {path: "/"})
         cookies.set("email", null, {path: "/"})
-
-        window.location.reload(false);
+        window.location.reload()
     }
 
     render() {
@@ -77,21 +77,12 @@ class AppNavbar extends Component {
                         <Nav className="me-auto">
                             <Nav.Link href="/update">Customize Your Account</Nav.Link>
                             <Nav.Link href="/data">View Your Data</Nav.Link>
-                            <Nav.Link href="/pricing">Pricing</Nav.Link>
-                            <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
-                                <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                                <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-                                <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-                                <NavDropdown.Divider />
-                                <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
-                            </NavDropdown>
                         </Nav>
                         <Nav>
-                            <Nav.Link href="#deets">More deets</Nav.Link>
-                            <Nav.Link eventKey={2} href="#memes">
-                                Dank memes
+                            <Nav.Link eventKey={2} href="/memes">
+                                Basketball memes
                             </Nav.Link>
-                            <Logout logout = {this.logout}/>
+                            <Logout logout={this.logout}/>
                         </Nav>
                     </Navbar.Collapse>
                         : <></> }

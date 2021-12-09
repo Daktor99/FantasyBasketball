@@ -1,6 +1,6 @@
 import {withCookies} from "react-cookie";
 import {Redirect} from "react-router-dom";
-import {Message} from "semantic-ui-react";
+import {Button, Confirm, Message} from "semantic-ui-react";
 
 const {Component} = require("react");
 const {Dimmer, Loader, Header, Form, Input} = require("semantic-ui-react");
@@ -25,6 +25,10 @@ class Customize extends Component {
         this.state.registered = this.state.registered === "true";
         this.handleChange = this.handleChange.bind(this)
         this.updateClient = this.updateClient.bind(this)
+        this.show = this.show.bind(this)
+        this.handleConfirm = this.handleConfirm.bind(this)
+        this.handleCancel = this.handleConfirm.bind(this)
+        this.deleteClient = this.deleteClient.bind(this)
     }
 
     async componentWillMount() {
@@ -115,8 +119,9 @@ class Customize extends Component {
                     this.setState({
                         postId: data.id,
                         requestFailed: false,
-                        isLoading: false
+                        isLoading: false,
                     })
+                    this.props.history.push('/home');
                 })
                 .catch(error => {
                     console.log("Error Updating Client: " + error)
@@ -127,6 +132,49 @@ class Customize extends Component {
                     })
                 })
         }
+    }
+
+    show = () => this.setState({open: true})
+    handleConfirm = () => this.setState({open: false})
+    handleCancel = () => this.setState({open: false})
+
+    async deleteClient() {
+        this.setState({
+            isLoading: true
+        })
+        const input = '/terminate_account?google_id=' + this.state.googleId
+
+        const {cookies} = this.props
+
+        await fetch(input, {method: 'DELETE'})
+            .then(async response => {
+                console.log(response)
+                this.setState({
+                    loggedIn: false,
+                    registered: false,
+                    isLoading: false,
+                    givenName: null,
+                    familyName: null,
+                    googleId: null,
+                    email: null,
+                })
+                cookies.set("loggedIn", false, {path: "/"})
+                cookies.set("givenName", null, {path: "/"})
+                cookies.set("familyName", null, {path: "/"})
+                cookies.set("googleId", null, {path: "/"})
+                cookies.set("email", null, {path: "/"})
+                cookies.set("registered", false, {path: "/"})
+                window.alert("Successfully deleted account, we are sorry to see you go!")
+                window.location.reload()
+                this.props.history.push('/');
+            })
+            .catch(error => {
+                console.log('There was an error deleting the account: ' + error);
+                window.alert("Error deleting account, try again")
+                this.setState({
+                    isLoading: false,
+                })
+            });
     }
 
     render() {
@@ -156,7 +204,7 @@ class Customize extends Component {
                             list={['Leaving values in blank will reset them to their default settings!']}
                             className='warning-box'
                         />
-                        <Form inverted className="register-form" onSubmit={this.updateClient}>
+                        <Form inverted className="register-form">
                             <Form.Group widths='equal'>
                                 <Form.Field
                                     id='form-input-control-first-name'
@@ -294,9 +342,15 @@ class Customize extends Component {
                                            onChange={this.handleChange}/>
                                 </Form.Field>
                             </Form.Group>
-                            <Form.Button
-                            >Update
-                            </Form.Button>
+                            <Button onClick={this.updateClient}>Update</Button>
+                            <Button floated='right' onClick={this.deleteClient}
+                                    className='delete-button'>Delete</Button>
+                            <Confirm
+                                open={this.state.open}
+                                header='This is a custom header'
+                                onCancel={this.handleCancel}
+                                onConfirm={this.handleConfirm}
+                            />
                         </Form>
                     </div>
                 )
