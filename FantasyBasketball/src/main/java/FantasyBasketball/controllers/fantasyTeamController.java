@@ -3,7 +3,6 @@ package FantasyBasketball.controllers;
 import FantasyBasketball.exceptions.resourceException;
 import FantasyBasketball.exceptions.resourceNotFoundException;
 import FantasyBasketball.models.FantasyTeam;
-import FantasyBasketball.models.User;
 import FantasyBasketball.services.fantasyTeamService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,7 +31,9 @@ public class fantasyTeamController {
 
     // default constructor for userController class
     @Autowired
-    public fantasyTeamController(HttpServletRequest request) { this.request = request; }
+    public fantasyTeamController(HttpServletRequest request) {
+        this.request = request;
+    }
 
     @RequestMapping(value = "/fantasyTeams", method = RequestMethod.GET)
     public ResponseEntity<?> getTeamsByTemplate(@RequestParam(value = "team_id", required = false) Integer team_id,
@@ -55,11 +56,20 @@ public class fantasyTeamController {
             return new ResponseEntity<>(result, HttpStatus.OK);
 
         } catch (Exception e) {
-            log.error("Exception on GET: ", e);
+            log.error("Exception on GET: " + e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
+
+    /*
+    Minimum fields required to post (ex):
+        {
+            "team_name": "Marion's Team",
+            "owner_id": 6,
+            "league_id": 1
+        }
+     */
     @RequestMapping(value = "/fantasyTeams", method = RequestMethod.POST)
     public ResponseEntity<?> postTeam(@RequestBody FantasyTeam newTeam) {
 
@@ -68,6 +78,9 @@ public class fantasyTeamController {
             log.info("POST: " + request.getRequestURL());
             log.info(newTeam.toString());
 
+            // TODO: Set this clientID with OAUTH
+            newTeam.setClientID(1);
+
             // Checks to make sure the input is valid to insert in DB
             fantasyTeamService.checkPostInputs(newTeam);
 
@@ -75,16 +88,16 @@ public class fantasyTeamController {
             List<FantasyTeam> result = fantasyTeamService.postTeam(newTeam);
             return new ResponseEntity<>(result, HttpStatus.CREATED);
 
-        } catch(resourceException e) {
+        } catch (resourceException e) {
             // exception thrown if User instance is not formatted correctly
-            log.error("Exception on POST: ", e);
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
+            log.error("Exception on POST: " + e.getMessage());
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         } catch (DataIntegrityViolationException e) {
-            log.error("Exception on POST: ", e);
+            log.error("Exception on POST: " + e.getMessage());
             return new ResponseEntity<>("This action is not allowed, please check values and try again.", HttpStatus.UNPROCESSABLE_ENTITY);
         } catch (Exception e) {
             // all other exceptions
-            log.error("Exception on POST: ", e);
+            log.error("Exception on POST: " + e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -96,25 +109,22 @@ public class fantasyTeamController {
             log.info("PUT: " + request.getRequestURL());
             log.info(team.toString());
 
-            // Checks to make sure the input is valid to insert in DB
-            fantasyTeamService.checkPutInputs(team);
-
             // Regular put
             List<FantasyTeam> result = fantasyTeamService.updateTeam(team);
             return new ResponseEntity<>(result, HttpStatus.OK);
         } catch (resourceException e) {
             // exception thrown if User instance is not formatted correctly
-            log.error("Exception on PUT: ", e);
+            log.error("Exception on PUT: " + e.getMessage());
             return new ResponseEntity<>(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
         } catch (resourceNotFoundException e) {
             // If user not found in the database, throw exception not found
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (DataIntegrityViolationException e) {
-            log.error("Exception on PUT: ", e);
+            log.error("Exception on PUT: " + e.getMessage());
             return new ResponseEntity<>("This action is not allowed, please check values and try again.", HttpStatus.UNPROCESSABLE_ENTITY);
         } catch (Exception e) {
             // all other exceptions
-            log.error("Exception on PUT: ", e);
+            log.error("Exception on PUT: " + e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -128,14 +138,14 @@ public class fantasyTeamController {
             fantasyTeamService.deleteTeamById(team_id);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (resourceNotFoundException e) {
-            log.error("Exception on DELETE: ", e);
+            log.error("Exception on DELETE: " + e.getMessage());
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (DataIntegrityViolationException e) {
-            log.error("Exception on DELETE: ", e);
+            log.error("Exception on DELETE: " + e.getMessage());
             return new ResponseEntity<>("This action is not allowed, please check values and try again.", HttpStatus.UNPROCESSABLE_ENTITY);
         } catch (Exception e) {
             // all other exceptions
-            log.error("Exception on DELETE: ", e);
+            log.error("Exception on DELETE: " + e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

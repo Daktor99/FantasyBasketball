@@ -41,6 +41,19 @@ public interface fantasyPlayerRepository extends CrudRepository<FantasyPlayer, I
     List<Integer> getUndraftedPlayers(@Param("client_id") Integer client_id,
                                       @Param("league_id") Integer league_id);
 
+    @Query(value = "select player_id from (select fantasy_player.player_id as player_id,\n" +
+            "                        fantasy_player.client_id as client_id,\n" +
+            "                        fantasy_player.league_id as league_id,\n" +
+            "                        fantasy_player.team_id as team_id,\n" +
+            "                        player_data.first_name as first_name,\n" +
+            "                        player_data.last_name as last_name,\n" +
+            "                        player_data.position as position,\n" +
+            "                        player_data.nba_team as nba_team,\n" +
+            "                        fantasy_player.ball_api_id as ball_api_id\n" +
+            "                    from fantasy_player, player_data where fantasy_player.player_id = player_data.player_id) as a\n" +
+                        "where team_id = :team_id", nativeQuery = true)
+    List<Integer> getByTeamID(@Param("team_id") Integer team_id);
+
     @Query(value = "select * from (select fantasy_player.player_id as player_id,\n" +
                         "fantasy_player.client_id as client_id,\n" +
                         "fantasy_player.league_id as league_id,\n" +
