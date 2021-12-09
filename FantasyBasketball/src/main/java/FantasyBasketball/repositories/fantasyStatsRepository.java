@@ -69,4 +69,7 @@ public interface fantasyStatsRepository extends CrudRepository<FantasyStats, Int
                                  @Param("league_id") Integer league_id,
                                  @Param("client_id") Integer client_id);
 
+    @Query(value = "select * from fantasy_stats where schedule_id in :game_list", nativeQuery = true)
+    List<FantasyStats> findFantasyStatsByScheduleList(@Param("game_list") String game_list);
+
 }
