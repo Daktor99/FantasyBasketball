@@ -1,10 +1,12 @@
 package FantasyBasketball.repositories;
 
 import FantasyBasketball.models.FantasyLeague;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.Date;
@@ -49,4 +51,13 @@ public interface fantasyLeagueRepository extends CrudRepository<FantasyLeague, I
                                        @Param("draft_finished") Boolean draft_finished,
                                        @Param("league_start_date") LocalDate league_start_date,
                                        @Param("num_weeks") Integer num_weeks);
+
+    @Transactional
+    @Modifying
+    @Query(value = "insert into fantasy_player select player_id, ball_api_id, null as team_id," +
+            " (:league_id) as league_id, (:client_id) as client_id from player_data",
+            nativeQuery = true)
+    void prepLeaguePlayers(@Param ("league_id") Integer league_id,
+                                       @Param("client_id") Integer client_id);
 }
+

@@ -102,7 +102,7 @@ public class fantasyLeagueService {
     }
 
     // post operation
-    public List<FantasyLeague> postLeagues(FantasyLeague fantasyLeague) throws resourceException, IOException {
+    public List<FantasyLeague> postLeagues(FantasyLeague fantasyLeague) throws resourceException {
         fantasyLeague.setLeagueID(0);
 
         //This client_id will be updated later
@@ -116,6 +116,9 @@ public class fantasyLeagueService {
                 // leagueUtility.API_player_importation(playerRepo);
 
                 FantasyLeague result = leagueRepo.save(fantasyLeague);
+
+                leagueRepo.prepLeaguePlayers(result.getLeagueID(), result.getClientID());
+
                 return List.of(result);
             } else {
                 throw new resourceException("LeagueStartDate has to be in the future.");
