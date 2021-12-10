@@ -63,7 +63,7 @@ public class fantasyTeamService {
     }
 
     // helper function to check if the league is full or not yet to apply constraint to posting new team to a league
-    public Boolean checkLeagueFull(FantasyBasketball.models.FantasyLeague league) {
+    public Boolean checkLeagueFull(FantasyLeague league) {
         Integer leagueID = league.getLeagueID();
         Integer leagueClientID = league.getClientID();
         Integer leagueSize = league.getLeagueSize();
@@ -84,10 +84,9 @@ public class fantasyTeamService {
         Optional<FantasyBasketball.models.FantasyLeague> fantasyLeagueOptional = leagueRepo.findById(leagueID);
         FantasyBasketball.models.FantasyLeague league = fantasyLeagueOptional.get();
 
-        // TODO: check if checkLeagueFull is all good
-//        if (checkLeagueFull(league)) {
-//            throw new resourceException("Cannot create another team. This league is already full.");
-//        };
+        if (checkLeagueFull(league)) {
+            throw new resourceException("Cannot create another team. This league is already full.");
+        };
 
         team.setTeamID(0);
 
@@ -108,8 +107,9 @@ public class fantasyTeamService {
         if(teamRepo.existsById(team.getTeamID())) {
 
             // pull team from DB
-            FantasyTeam dbTeam = teamRepo.findByTemplate(team.getTeamID(),
-                    null, null, null, null).get(0);
+            List<FantasyTeam> dbTeams = teamRepo.findByTemplate(team.getTeamID(),
+                    null, null, null, null);
+            FantasyTeam dbTeam = dbTeams.get(0);
 
             FantasyTeam updatedTeam = updateValues(dbTeam, team);
             //This client_id will be updated later
@@ -187,11 +187,11 @@ public class fantasyTeamService {
         }
     }
 
-    private List<Integer> getPlayersOnTeam(Integer teamID) {
+    public List<Integer> getPlayersOnTeam(Integer teamID) {
         return playerService.getPlayerIDsByTeam(teamID);
     }
 
-    private HashMap<Integer, String> getPlayerPositionMap(Integer teamID) {
+    public HashMap<Integer, String> getPlayerPositionMap(Integer teamID) {
 
         HashMap<Integer, String> playerPositionMap = new HashMap<>();
         List<FantasyPlayer> playerList =
@@ -212,7 +212,7 @@ public class fantasyTeamService {
         return playerPositionMap;
     }
 
-    private void checkOwnerAndLeagueNotUpdated(Integer ownerID, Integer leagueID) throws resourceException {
+    public void checkOwnerAndLeagueNotUpdated(Integer ownerID, Integer leagueID) throws resourceException {
         if (ownerID != null) {
             throw new resourceException("Cannot reassign team owner once team is created. Please delete team and create a new one.");
         } else if (leagueID != null) {
@@ -220,7 +220,7 @@ public class fantasyTeamService {
         }
     }
 
-    private void updatePG(FantasyTeam currentTeam,
+    public void updatePG(FantasyTeam currentTeam,
                           HashMap<Integer, String> playerPositionMap,
                           List<Integer> teamPlayerList,
                           Integer playerID) throws resourceException {
@@ -241,10 +241,12 @@ public class fantasyTeamService {
             }
 
             currentTeam.setStartPG(playerID);
+        } else {
+            throw new resourceException("playerID is null.");
         }
     }
 
-    private void updateSG(FantasyTeam currentTeam,
+    public void updateSG(FantasyTeam currentTeam,
                           HashMap<Integer, String> playerPositionMap,
                           List<Integer> teamPlayerList,
                           Integer playerID) throws resourceException {
@@ -268,7 +270,7 @@ public class fantasyTeamService {
         }
     }
 
-    private void updateSF(FantasyTeam currentTeam,
+    public void updateSF(FantasyTeam currentTeam,
                           HashMap<Integer, String> playerPositionMap,
                           List<Integer> teamPlayerList,
                           Integer playerID) throws resourceException {
@@ -291,7 +293,7 @@ public class fantasyTeamService {
         }
     }
 
-    private void updatePF(FantasyTeam currentTeam,
+    public void updatePF(FantasyTeam currentTeam,
                           HashMap<Integer, String> playerPositionMap,
                           List<Integer> teamPlayerList,
                           Integer playerID) throws resourceException {
@@ -315,7 +317,7 @@ public class fantasyTeamService {
         }
     }
 
-    private void updateC(FantasyTeam currentTeam,
+    public void updateC(FantasyTeam currentTeam,
                          HashMap<Integer, String> playerPositionMap,
                          List<Integer> teamPlayerList,
                          Integer playerID) throws resourceException {
@@ -338,7 +340,7 @@ public class fantasyTeamService {
         }
     }
 
-    private void updateBench1(FantasyTeam currentTeam,
+    public void updateBench1(FantasyTeam currentTeam,
                               List<Integer> teamPlayerList,
                               Integer playerID) throws resourceException {
 
@@ -368,7 +370,7 @@ public class fantasyTeamService {
         }
     }
 
-    private boolean checkDuplicatePlayers(List<Integer> playerList) {
+    public boolean checkDuplicatePlayers(List<Integer> playerList) {
 
         HashMap<Integer, Integer> playerMap = new HashMap<>();
         for(Integer id: playerList) {
