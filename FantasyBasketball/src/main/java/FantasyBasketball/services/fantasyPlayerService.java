@@ -95,7 +95,7 @@ public class fantasyPlayerService {
             // TODO: update error message where teamID doesn't exist
             //This client_id will be updated later
             // TODO: update client ID
-            player.setClientID(57);
+            player.setClientID(1);
 
             playerRepo.updateFantasyPlayer(player.getPlayerID(),
                     player.getClientID(),
