@@ -79,6 +79,19 @@ public class fantasyGameService {
         }
     }
 
+    public void checkIfInDB(FantasyGame game) throws resourceException {
+        List <FantasyGame> games = getGamesByTemplate(null,
+                game.getLeagueID(),
+                game.getClientID(),
+                game.getHomeTeamID(),
+                game.getAwayTeamID(),
+                game.getGameStartDate(),
+                game.getGameEndDate(),
+                null);
+        if (games.size() != 0) {
+            throw new resourceException("This game is already in the database. You cannot add the same game.");
+        }
+    }
     // Checking if game's schedule is null before posting
     public void checkPostInputs(FantasyGame game) throws resourceException {
         if (game.getScheduleID() != null) {
@@ -90,6 +103,7 @@ public class fantasyGameService {
         if (game.getAwayTeamID() == null) {
             throw new resourceException("Please provide away_team_id.");
         }
+        checkIfInDB(game);
         checkInputs(game);
     }
     // Checking if game's schedule is null before putting
@@ -125,8 +139,8 @@ public class fantasyGameService {
 
             // Check that end date is on a Saturday.
             DayOfWeek endDay = game.getGameEndDate().getDayOfWeek();
-            if (endDay != DayOfWeek.SATURDAY) {
-                throw new resourceException("The end game date has to occur on a Saturday. " +
+            if (endDay != DayOfWeek.SUNDAY) {
+                throw new resourceException("The end game date has to occur on a Sunday. " +
                         "Provided end date is on a " + endDay);
             }
 
@@ -139,8 +153,8 @@ public class fantasyGameService {
 
             // Check that start and end date are 6 days apart.
             int daysBetween = Period.between(startDate, endDate).getDays();
-            if (daysBetween != 6) {
-                throw new resourceException("There must be 6 days between start and end date." + daysBetween);
+            if (daysBetween != 7) {
+                throw new resourceException("There must be 7 days between start and end date." + daysBetween);
             }
 
         } catch (NullPointerException e) {
