@@ -108,8 +108,10 @@ public class fantasyTeamController {
             Integer client_id = getClientId(request);
 
             // Regular put
+            team.setClientID(client_id);
             List<FantasyTeam> result = fantasyTeamService.updateTeam(team);
             return new ResponseEntity<>(result, HttpStatus.OK);
+
         } catch (resourceException e) {
             // exception thrown if User instance is not formatted correctly
             log.error("Exception on PUT: " + e.getMessage());
@@ -121,7 +123,7 @@ public class fantasyTeamController {
             log.error("Exception on PUT: " + e.getMessage());
             return new ResponseEntity<>("This action is not allowed, please check values and try again.", HttpStatus.UNPROCESSABLE_ENTITY);
         } catch (Exception e) {
-            // all other exceptions
+            // other exceptions
             log.error("Exception on PUT: " + e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

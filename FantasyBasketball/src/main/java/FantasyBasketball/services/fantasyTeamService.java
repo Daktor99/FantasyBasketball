@@ -63,7 +63,7 @@ public class fantasyTeamService {
     }
 
     // helper function to check if the league is full or not yet to apply constraint to posting new team to a league
-    public Boolean checkLeagueFull(FantasyBasketball.models.FantasyLeague league) {
+    public Boolean checkLeagueFull(FantasyLeague league) {
         Integer leagueID = league.getLeagueID();
         Integer leagueClientID = league.getClientID();
         Integer leagueSize = league.getLeagueSize();
@@ -111,7 +111,7 @@ public class fantasyTeamService {
 
             // pull team from DB
             FantasyTeam dbTeam = teamRepo.findByTemplate(team.getTeamID(),
-                    null, null, null, null).get(0);
+                    team.getClientID(), null, null, null).get(0);
 
             FantasyTeam updatedTeam = updateValues(dbTeam, team);
 
@@ -146,6 +146,15 @@ public class fantasyTeamService {
             if (teamName.length() > 128 || teamName.isBlank()) {
                 throw new resourceException("Team name must be between 1-128 characters.");
             }
+
+            if (team.getOwnerID() == null) {
+                throw new resourceException("Please provide owner_id.");
+            }
+
+            if (team.getLeagueID() == null) {
+                throw new resourceException("Please provide league_id corresponding to team.");
+            }
+
         } catch (NullPointerException e) {
             throw new resourceException("Post to team formatted incorrectly please provide the following:\n" +
                                         "team_name,\n" +
