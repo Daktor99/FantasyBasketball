@@ -93,7 +93,7 @@ public class fantasyLeagueService {
     }
 
     // helper function: check if given start date for league is valid
-    public Boolean checkDate(LocalDate league_start_date) throws resourceException {
+    public Boolean checkDates(LocalDate league_start_date) throws resourceException {
         LocalDate today = LocalDate.now();
         if (league_start_date.compareTo(today) < 0) {
             throw new resourceException("Attempted leagueStartDate occurs in the past.");
@@ -109,7 +109,7 @@ public class fantasyLeagueService {
         fantasyLeague.setClientID(1);
 
         if (checkAdmin(fantasyLeague.getAdminID())) {
-            if (checkDate(fantasyLeague.getLeagueStartDate())) {
+            if (checkDates(fantasyLeague.getLeagueStartDate())) {
 
                 // Player Importation is done when league is posted
                 // FantasyLeagueUtility leagueUtility = new FantasyLeagueUtility();
