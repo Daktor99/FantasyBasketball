@@ -1,5 +1,6 @@
 package FantasyBasketball.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
@@ -12,7 +13,7 @@ public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "client_id")
-    @JsonProperty("client_id")
+    @JsonIgnore
     private Integer clientID;
 
     @Column(name = "email")
