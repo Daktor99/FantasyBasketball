@@ -54,4 +54,8 @@ public interface fantasyGameRepository extends CrudRepository<FantasyGame, Integ
     @Query(value = "select * from fantasy_game where :current_date between game_start_date and game_end_date",
                             nativeQuery = true)
     List<FantasyGame> findGamesGivenDate(@Param("current_date") LocalDate current_date);
+
+    @Query(value = "select * from fantasy_game where league_id = :league_id",
+            nativeQuery = true)
+    List<FantasyGame> findGamesByLeagueID(@Param("league_id") Integer league_id);
 }
