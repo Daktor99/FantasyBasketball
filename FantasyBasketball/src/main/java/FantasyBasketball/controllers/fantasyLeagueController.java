@@ -165,7 +165,7 @@ public class fantasyLeagueController {
 
             // get the teams registered with the leagueID
             // TODO: Change client ID
-            Integer client_id = 57;
+            Integer client_id = 1;
             List<Integer> teamIDList = fantasyLeagueService.getTeamIDs(league_id, client_id);
 
             // get the league with league_id
@@ -173,6 +173,9 @@ public class fantasyLeagueController {
 
             // make sure that the number of teams found in db are equal to league_size in league
             fantasyLeagueService.checkValidSize(fantasyLeague, teamIDList.size());
+
+            // Check if the schedule for this league is already generated
+            fantasyLeagueService.checkIfScheduleGenerated(fantasyLeague.getLeagueID());
 
             // get proposed schedule, instantiate scheduler service & create schedule
             robinRoundScheduler scheduler = new robinRoundScheduler(teamIDList, fantasyLeague.getLeagueStartDate(), fantasyLeague.getNumWeeks());
