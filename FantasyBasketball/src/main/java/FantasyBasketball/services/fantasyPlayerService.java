@@ -1,11 +1,14 @@
 package FantasyBasketball.services;
 
 import FantasyBasketball.models.FantasyPlayer;
+import FantasyBasketball.models.FantasyStats;
 import FantasyBasketball.repositories.fantasyPlayerRepository;
 import FantasyBasketball.repositories.playerDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import FantasyBasketball.exceptions.resourceNotFoundException;
+
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -91,7 +94,8 @@ public class fantasyPlayerService {
             // TODO: update this with the correct client ID
             // TODO: update error message where teamID doesn't exist
             //This client_id will be updated later
-            player.setClientID(1);
+            // TODO: update client ID
+            player.setClientID(57);
 
             playerRepo.updateFantasyPlayer(player.getPlayerID(),
                     player.getClientID(),
@@ -145,8 +149,7 @@ public class fantasyPlayerService {
 
         // TODO: Enforce that league_id and client_id are present, or else raise exception
 
-        List<Integer> player_ids = playerRepo.getUndraftedPlayers(league_id, client_id);
-        return player_ids;
+        return playerRepo.getUndraftedPlayers(league_id, client_id);
     }
 
     public List<FantasyPlayer> draftFantasyPlayer(FantasyPlayer player) throws resourceNotFoundException {

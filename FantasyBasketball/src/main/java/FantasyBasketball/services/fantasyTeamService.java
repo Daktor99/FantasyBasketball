@@ -2,6 +2,7 @@ package FantasyBasketball.services;
 
 import FantasyBasketball.exceptions.resourceException;
 import FantasyBasketball.exceptions.resourceNotFoundException;
+import FantasyBasketball.models.FantasyGame;
 import FantasyBasketball.models.FantasyLeague;
 import FantasyBasketball.models.FantasyPlayer;
 import FantasyBasketball.models.FantasyTeam;
@@ -94,6 +95,10 @@ public class fantasyTeamService {
         team.setClientID(1);
         FantasyTeam result = teamRepo.save(team);
         return List.of(result);
+    }
+
+    public List<FantasyTeam> postMultipleTeams(List<FantasyTeam> teams) {
+        return (List<FantasyTeam>) teamRepo.saveAll(teams);
     }
 
     // put operation
@@ -363,6 +368,22 @@ public class fantasyTeamService {
         }
     }
 
+    private boolean checkDuplicatePlayers(List<Integer> playerList) {
+
+        HashMap<Integer, Integer> playerMap = new HashMap<>();
+        for(Integer id: playerList) {
+
+            if (playerMap.containsKey(id)) {
+                return true;
+            } else if (id != null) {
+                playerMap.put(id, 1);
+            }
+
+        }
+
+        return false;
+    }
+
     // takes a FantasyPlayer object and updates its values to match updatedTeam
     //      function will be used to help facilitate PUT operations, updating fields where they are not null
     //      checks:
@@ -413,13 +434,19 @@ public class fantasyTeamService {
 
         // check if there are any duplicate players in the starting lineup
         // create a set to make sure there are no duplicate players
-        Set<Integer> playerSet = new HashSet<>(Arrays.asList(start_pg, start_sg, start_sf, start_pf, start_c, bench_1, bench_2));
-        boolean hasDuplicatePlayers = (playerSet.size() !=  7);
+
+        List<Integer> playerList = Arrays.asList(dbTeam.getStartPG(),
+                dbTeam.getStartSG(),
+                dbTeam.getStartSF(),
+                dbTeam.getStartPF(),
+                dbTeam.getStartC(),
+                dbTeam.getBench1(),
+                dbTeam.getBench2());
+        boolean hasDuplicatePlayers = checkDuplicatePlayers(playerList);
 
         if (hasDuplicatePlayers) {
             throw new resourceException("Making this assignment will create duplicate players in the lineup, check values and try again.");
         }
-
 
         return dbTeam;
     }

@@ -306,8 +306,9 @@ public class fantasyLeagueService {
 
             // Get list of available players
             Integer league_id = fantasyPlayer.getLeagueID();
+            // TODO: change client_id here
             List<FantasyPlayer> av_players = fantasyPlayerService.getAvailablePlayers(league_id,
-                    1,
+                    57,
                     null,
                     null,
                     null,

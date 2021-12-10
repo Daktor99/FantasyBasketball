@@ -164,7 +164,8 @@ public class fantasyLeagueController {
                     + " for fantasyLeague with league_id: " + league_id);
 
             // get the teams registered with the leagueID
-            Integer client_id = 1;
+            // TODO: Change client ID
+            Integer client_id = 57;
             List<Integer> teamIDList = fantasyLeagueService.getTeamIDs(league_id, client_id);
 
             // get the league with league_id
@@ -256,12 +257,13 @@ public class fantasyLeagueController {
             // TODO: Filter and check inputs
 
             // Check that league and team exist and that their ids are provided in the body
-            // TODO: change client_id later
-            fantasyLeagueService.checkDraftInputs(fantasyPlayer.getLeagueID(), fantasyPlayer.getTeamID(), 1);
+            // TODO: (Emanuel) change client_id later
+            fantasyLeagueService.checkDraftInputs(fantasyPlayer.getLeagueID(), fantasyPlayer.getTeamID(), 57);
 
             // TODO: Update client ID
             fantasyLeagueService.pickPlayer(fantasyPlayer);
-            fantasyPlayer.setClientID(1);
+            // TODO: Update client ID
+            fantasyPlayer.setClientID(57);
             List<FantasyPlayer> result = fantasyPlayerService.draftFantasyPlayer(fantasyPlayer);
             return new ResponseEntity<>(result, HttpStatus.OK);
 

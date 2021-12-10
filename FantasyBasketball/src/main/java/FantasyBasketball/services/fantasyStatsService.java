@@ -7,8 +7,10 @@ import FantasyBasketball.repositories.fantasyStatsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class fantasyStatsService {
@@ -111,6 +113,22 @@ public class fantasyStatsService {
         if (stats.getStats_id() != null) {
             throw new resourceException("Do not provide stats_id.");
         }
+    }
+
+    public List<FantasyStats> getStatsBySchedule(Set<Integer> ScheduleList){
+        return statsRepo.findFantasyStatsByScheduleList(ScheduleList);
+    }
+
+    public HashMap<Integer, Integer> generatePlayerStat(Set<Integer> gameList) {
+
+        List<FantasyStats> playerStats = statsRepo.findFantasyStatsByScheduleList(gameList);
+
+        HashMap<Integer, Integer> playerStatsMap = new HashMap<>();
+        for (FantasyStats stat: playerStats) {
+            playerStatsMap.put(stat.getPlayer_id(), stat.getTot_points());
+        }
+        return playerStatsMap;
+
     }
 
 }

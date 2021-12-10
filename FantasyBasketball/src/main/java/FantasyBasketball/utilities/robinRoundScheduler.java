@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Hashtable;
 import java.util.List;
+import static java.time.temporal.TemporalAdjusters.next;
+import static java.time.DayOfWeek.SUNDAY;
 
 public class robinRoundScheduler {
 
@@ -15,7 +17,7 @@ public class robinRoundScheduler {
     // constructor
     public robinRoundScheduler(List<Integer> teamList, LocalDate startDate, Integer weeksOfPlay) {
         this.teamList = new ArrayList<>(teamList);
-        this.startDate = startDate;
+        this.startDate = startDate.with(next(SUNDAY));
         this.weeksOfPlay = weeksOfPlay;
     }
 
