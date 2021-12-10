@@ -91,8 +91,6 @@ public class fantasyTeamService {
 
         team.setTeamID(0);
 
-        // TODO: This client_id will be updated later
-        team.setClientID(1);
         FantasyTeam result = teamRepo.save(team);
         return List.of(result);
     }
@@ -104,6 +102,10 @@ public class fantasyTeamService {
     // put operation
     public List<FantasyTeam> updateTeam(FantasyTeam team) throws resourceNotFoundException, resourceException {
 
+        Integer team_id = team.getTeamID();
+        if (team_id == null) {
+            throw new resourceException("team_id is required.");
+        }
 
         if(teamRepo.existsById(team.getTeamID())) {
 
@@ -112,8 +114,6 @@ public class fantasyTeamService {
                     null, null, null, null).get(0);
 
             FantasyTeam updatedTeam = updateValues(dbTeam, team);
-            //This client_id will be updated later
-            team.setClientID(1);
 
             checkPutInputs(updatedTeam);
 

@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
+import static FantasyBasketball.controllers.controllerUtils.*;
+
 @Controller
 public class fantasyTeamController {
 
@@ -43,15 +45,11 @@ public class fantasyTeamController {
 
         try {
 
-            // log GET request
-            if (request.getQueryString() != null) {
-                log.info("GET: " + request.getRequestURL() + "?" + request.getQueryString());
-            } else {
-                log.info("GET: " + request.getRequestURL());
-            }
+            // log GET request and get client it
+            logGetRequest(request, log);
+            Integer client_id = getClientId(request);
 
-            // This client id will be updated later
-            Integer client_id = 1;
+            // get teams by template
             List<FantasyTeam> result = fantasyTeamService.getTeamsByTemplate(team_id, client_id, team_name, owner_id, league_id);
             return new ResponseEntity<>(result, HttpStatus.OK);
 
@@ -75,13 +73,12 @@ public class fantasyTeamController {
 
         try {
 
-            log.info("POST: " + request.getRequestURL());
-            log.info(newTeam.toString());
-
-            // TODO: Set this clientID with OAUTH
-            newTeam.setClientID(1);
+            // log post request and get client id
+            logPostRequest(request, log, newTeam.toString());
+            Integer client_id = getClientId(request);
 
             // Checks to make sure the input is valid to insert in DB
+            newTeam.setClientID(client_id);
             fantasyTeamService.checkPostInputs(newTeam);
 
             // Regular post
@@ -96,7 +93,7 @@ public class fantasyTeamController {
             log.error("Exception on POST: " + e.getMessage());
             return new ResponseEntity<>("This action is not allowed, please check values and try again.", HttpStatus.UNPROCESSABLE_ENTITY);
         } catch (Exception e) {
-            // all other exceptions
+            // other exceptions
             log.error("Exception on POST: " + e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -106,8 +103,9 @@ public class fantasyTeamController {
     public ResponseEntity<?> updateTeam(@RequestBody FantasyTeam team) {
         try {
 
-            log.info("PUT: " + request.getRequestURL());
-            log.info(team.toString());
+            // log PUT request and get client id
+            logPutRequest(request, log, team.toString());
+            Integer client_id = getClientId(request);
 
             // Regular put
             List<FantasyTeam> result = fantasyTeamService.updateTeam(team);
@@ -130,13 +128,16 @@ public class fantasyTeamController {
     }
 
     @RequestMapping(value = "/fantasyTeams", method = RequestMethod.DELETE)
-    public ResponseEntity<?> deleteTeam(@RequestParam(value = "team_id", required = true) Integer team_id) {
+    public ResponseEntity<?> deleteTeam(@RequestParam(value = "team_id") Integer team_id) {
         try {
 
-            log.info("DELETE: " + request.getRequestURL() + "?" + request.getQueryString());
+            // log delete request
+            logDeleteRequest(request, log);
 
+            // regular delete
             fantasyTeamService.deleteTeamById(team_id);
             return new ResponseEntity<>(HttpStatus.OK);
+
         } catch (resourceNotFoundException e) {
             log.error("Exception on DELETE: " + e.getMessage());
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
