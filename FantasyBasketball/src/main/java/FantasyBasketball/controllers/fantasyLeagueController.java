@@ -95,6 +95,9 @@ public class fantasyLeagueController {
 
             // Regular post
             List<FantasyLeague> result = fantasyLeagueService.postLeagues(newLeague);
+
+            // TODO: populate fantasy_player table with player_data table on creation
+
             return new ResponseEntity<>(result, HttpStatus.CREATED);
 
         } catch(resourceException e) {

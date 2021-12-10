@@ -129,7 +129,8 @@ public class fantasyLeagueService {
     }
 
     // put operation
-    public List<FantasyLeague> updateLeagues(FantasyLeague fantasyLeague) throws resourceNotFoundException, resourceException {
+    public List<FantasyLeague> updateLeagues(FantasyLeague fantasyLeague)
+            throws resourceNotFoundException, resourceException {
 
         // check to see that this league exists
         Optional<FantasyLeague> referenceLeagueOpt = leagueRepo.findById(fantasyLeague.getLeagueID());
@@ -215,7 +216,8 @@ public class fantasyLeagueService {
         return result;
     }
 
-    public List<FantasyGame> postGames(Hashtable<LocalDate, List<List<Integer>>> schedule, Integer league_id, Integer client_id) {
+    public List<FantasyGame> postGames(Hashtable<LocalDate, List<List<Integer>>> schedule,
+                                       Integer league_id, Integer client_id) {
 
         // making list of games to be saved
         List<FantasyGame> gameList = new ArrayList<>();
@@ -234,7 +236,12 @@ public class fantasyLeagueService {
                 LocalDate endDate    = startDate.plusWeeks(1);
 
                 // initialize FantasyGame instance & make sure scheduleID is not null (0 by default)
-                FantasyGame game = new FantasyGame(league_id, client_id, home_team_id, away_team_id, startDate, endDate);
+                FantasyGame game = new FantasyGame(league_id,
+                        client_id,
+                        home_team_id,
+                        away_team_id,
+                        startDate,
+                        endDate);
                 game.setScheduleID(0);
 
                 // add this in list of games to be entered into DB
@@ -257,7 +264,8 @@ public class fantasyLeagueService {
         }
     }
 
-    public void checkDraftInputs(Integer league_id, Integer team_id, Integer client_id) throws resourceException, resourceNotFoundException {
+    public void checkDraftInputs(Integer league_id, Integer team_id, Integer client_id)
+            throws resourceException, resourceNotFoundException {
 
         // Check if league is valid
         if (league_id == null) {
@@ -282,7 +290,8 @@ public class fantasyLeagueService {
         }
     }
 
-    public void pickPlayer(FantasyPlayer fantasyPlayer, Integer client_id) throws resourceException, resourceNotFoundException {
+    public void pickPlayer(FantasyPlayer fantasyPlayer, Integer client_id)
+            throws resourceException, resourceNotFoundException {
         // If player_id given, assign that player to the specified team.
         // Otherwise, assign a random one.
         if (fantasyPlayer.getPlayerID() == null) {
@@ -306,7 +315,8 @@ public class fantasyLeagueService {
 
         } else {
 
-            List<Integer> undraft_players = fantasyPlayerService.getUndraftedPlayers(fantasyPlayer.getLeagueID(), client_id);
+            List<Integer> undraft_players =
+                    fantasyPlayerService.getUndraftedPlayers(fantasyPlayer.getLeagueID(), client_id);
             if (!undraft_players.contains(fantasyPlayer.getPlayerID())) {
                 throw new resourceException("Chosen player is not available for drafting.");
             }
