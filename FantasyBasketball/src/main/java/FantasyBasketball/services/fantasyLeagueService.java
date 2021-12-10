@@ -175,6 +175,7 @@ public class fantasyLeagueService {
     // TODO: Next iteration.
     // TODO: ONLY admin should be allowed to delete
     // TODO: How to know if user is currently admin?
+    // TODO: add a pass test for deleteLeagues? (even tho it returns void?)
 
     // helper function: checking valid string
     public boolean checkIfInvalid(String string) {
@@ -184,7 +185,9 @@ public class fantasyLeagueService {
     // check and sanitize inputs
     public void checkInputs(FantasyLeague fantasyLeague) throws resourceException, resourceNotFoundException {
         // NOTE: max league size is hardcoded to 14 for now
-        Client newClient = clientService.getByID(fantasyLeague.getClientID()).get(0);
+        Integer newClientID = fantasyLeague.getClientID();
+        List<Client> newClientList = clientService.getByID(newClientID);
+        Client newClient = newClientList.get(0);
         Integer minLeagueSize = newClient.getMin_league_size();
         Integer minLeagueDur = newClient.getMin_league_dur();
         try {
@@ -201,6 +204,7 @@ public class fantasyLeagueService {
             throw new resourceException("checkInputs: League formatted incorrectly please provide the following:\n" +
                     "league_id, client_id, league_name, admin_id, league_size, league_start_date, num_weeks.");
         }
+        return;
     }
 
     // check post inputs
@@ -225,10 +229,11 @@ public class fantasyLeagueService {
         List<Integer> result = teamRepo.findTeamsInLeague(league_id, client_id);
 
         // check to make sure teams registered with league is even
-        if (result.size() % 2 != 0) {
+        if (result.size() % 2 == 0) {
+            return result;
+        } else {
             throw new resourceException("Number of teams must be even.");
         }
-        return result;
     }
 
     public List<FantasyGame> postGames(Hashtable<LocalDate, List<List<Integer>>> schedule, Integer league_id, Integer client_id) {
@@ -291,7 +296,7 @@ public class fantasyLeagueService {
 
         // Check if team is valid
         if (team_id == null) {
-            throw new resourceException("team_id required");
+            throw new resourceNotFoundException("team_id required");
         } else if (!teamRepo.existsById(team_id)) {
             throw new resourceNotFoundException("This team does not exist.");
         } else if (!teamInLeague) {
@@ -323,7 +328,8 @@ public class fantasyLeagueService {
             fantasyPlayer.setPlayerID(chosenPlayer.getPlayerID());
 
         } else {
-
+            // TODO THIS DOESN'T MAKE SENSE why .getPlayerID when i know it doesn't exist?
+            // TODO write another test later
             List<Integer> undraft_players = fantasyPlayerService.getUndraftedPlayers(fantasyPlayer.getLeagueID(), 1);
             if (!undraft_players.contains(fantasyPlayer.getPlayerID())) {
                 throw new resourceException("Chosen player is not available for drafting.");
