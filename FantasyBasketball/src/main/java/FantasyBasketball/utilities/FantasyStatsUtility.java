@@ -29,7 +29,7 @@ public class FantasyStatsUtility {
     // Function to start API calls to get player information from BallDontLie API
     public void API_player_stats_importation(fantasyPlayerRepository playerRepo, fantasyGameRepository gameRepo,
                                              fantasyStatsRepository statsRepo, clientRepository clientRepo,
-                                             Date end_date) throws IOException, resourceNotFoundException {
+                                             Date end_date) throws IOException {
         // Format for the Date
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
@@ -233,7 +233,7 @@ public class FantasyStatsUtility {
         List<FantasyStats> stats = statsRepo.findByTemplate(null, player_id, schedule_id, client_id,
                 league_id, null, null, null, null, null, null,
                 null, null, null);
-        if (stats.size() > 1) {
+        if (stats.size() > 0) {
             return stats.get(0).getStats_id();
         }
         return -1;
