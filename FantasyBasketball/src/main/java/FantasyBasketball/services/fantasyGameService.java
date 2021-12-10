@@ -55,6 +55,10 @@ public class fantasyGameService {
         return List.of(result);
     }
 
+    public List<FantasyGame> postMultipleGames(List<FantasyGame> games) {
+        return (List<FantasyGame>) gameRepo.saveAll(games);
+    }
+
     // put operation
     public List<FantasyGame> updateGame(FantasyGame game) throws resourceNotFoundException {
         if(gameRepo.existsById(game.getScheduleID())) {

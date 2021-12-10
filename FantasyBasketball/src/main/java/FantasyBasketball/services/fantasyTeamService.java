@@ -2,6 +2,7 @@ package FantasyBasketball.services;
 
 import FantasyBasketball.exceptions.resourceException;
 import FantasyBasketball.exceptions.resourceNotFoundException;
+import FantasyBasketball.models.FantasyGame;
 import FantasyBasketball.models.FantasyLeague;
 import FantasyBasketball.models.FantasyPlayer;
 import FantasyBasketball.models.FantasyTeam;
@@ -94,6 +95,10 @@ public class fantasyTeamService {
         team.setClientID(1);
         FantasyTeam result = teamRepo.save(team);
         return List.of(result);
+    }
+
+    public List<FantasyTeam> postMultipleTeams(List<FantasyTeam> teams) {
+        return (List<FantasyTeam>) teamRepo.saveAll(teams);
     }
 
     // put operation

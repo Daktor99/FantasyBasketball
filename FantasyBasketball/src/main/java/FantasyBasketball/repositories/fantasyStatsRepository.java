@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Set;
 
 /*
     CrudRepository already has the following functions:
@@ -70,6 +71,6 @@ public interface fantasyStatsRepository extends CrudRepository<FantasyStats, Int
                                  @Param("client_id") Integer client_id);
 
     @Query(value = "select * from fantasy_stats where schedule_id in :game_list", nativeQuery = true)
-    List<FantasyStats> findFantasyStatsByScheduleList(@Param("game_list") String game_list);
+    List<FantasyStats> findFantasyStatsByScheduleList(@Param("game_list") Set<Integer> game_list);
 
 }
