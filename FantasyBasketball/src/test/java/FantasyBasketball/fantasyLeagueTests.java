@@ -2,28 +2,21 @@ package FantasyBasketball;
 
 import FantasyBasketball.exceptions.resourceException;
 import FantasyBasketball.exceptions.resourceNotFoundException;
-import FantasyBasketball.models.Client;
 import FantasyBasketball.models.FantasyGame;
+import FantasyBasketball.models.FantasyLeague;
 import FantasyBasketball.models.FantasyPlayer;
 import FantasyBasketball.models.User;
-import FantasyBasketball.models.FantasyLeague;
-import FantasyBasketball.repositories.fantasyLeagueRepository;
-import FantasyBasketball.repositories.fantasyPlayerRepository;
-
-import FantasyBasketball.repositories.fantasyTeamRepository;
-import FantasyBasketball.repositories.userRepository;
 import FantasyBasketball.repositories.fantasyGameRepository;
-
+import FantasyBasketball.repositories.fantasyLeagueRepository;
+import FantasyBasketball.repositories.userRepository;
+import FantasyBasketball.repositories.fantasyTeamRepository;
 import FantasyBasketball.services.fantasyLeagueService;
 import FantasyBasketball.services.fantasyPlayerService;
-
-import FantasyBasketball.services.userService;
-import FantasyBasketball.services.clientService;
-import org.apache.tomcat.jni.Local;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -34,38 +27,18 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.*;
 
-import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@RunWith(SpringRunner.class)
+@RunWith (SpringRunner.class)
 @SpringBootTest
 public class fantasyLeagueTests {
 
     @Autowired
     fantasyLeagueService fantasyLeagueService;
 
-    @Autowired
-    clientService clientService;
-
+    @MockBean
     @Autowired
     fantasyPlayerService fantasyPlayerService;
-
-
-    @Autowired
-    FantasyPlayer FantasyPlayer;
-
-    @Autowired
-    FantasyBasketball.services.userService userService;
-
-    @Autowired
-    fantasyTeamRepository teamRepo;
-
-    @Autowired
-    fantasyPlayerRepository playerRepo;
-
-
-    @Autowired
-    fantasyGameRepository gameRepo;
 
     @MockBean
     fantasyLeagueRepository leagueRepo;
@@ -73,12 +46,18 @@ public class fantasyLeagueTests {
     @MockBean
     userRepository userRepo;
 
-    @Before
+    @MockBean
+    fantasyTeamRepository teamRepo;
+
+    @MockBean
+    fantasyGameRepository gameRepo;
+
+    @BeforeEach
     public void setUp() {
         //TODO tearDown function
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         //TODO tearDown function
     }
@@ -91,6 +70,8 @@ public class fantasyLeagueTests {
 
     @Test
     public void testGetLeaguesByIDPass() throws resourceNotFoundException {
+        Integer leagueID = 17;
+
         LocalDate fake_league_start_date = LocalDate.of(2021, 12, 31);
         FantasyLeague fakeFantasyLeague = new FantasyLeague(
                 17,
@@ -103,8 +84,6 @@ public class fantasyLeagueTests {
                 8
         );
         Optional<FantasyLeague> fakeFantasyLeagueOptional = Optional.of(fakeFantasyLeague);
-
-        Integer leagueID = 17;
 
         Mockito.when(leagueRepo.findById(leagueID)).thenReturn(fakeFantasyLeagueOptional);
 
@@ -160,8 +139,6 @@ public class fantasyLeagueTests {
                 Boolean.TRUE,
                 league_start_date,
                 num_weeks), List.of(fakeFantasyLeague));
-
-
     }
 
     @Test
@@ -173,7 +150,7 @@ public class fantasyLeagueTests {
         User validUser = new User(21,
                 1,
                 "izzi@gmail.com",
-                "isabella",
+                "izzi",
                 "Isabella",
                 "Cho");
         Optional<User> validUserOpt = Optional.of(validUser);
@@ -828,7 +805,6 @@ public class fantasyLeagueTests {
         // making list of games to be saved
         List<FantasyGame> gameList = Arrays.asList(realgame1, realgame2, realgame3, realgame4);
         Mockito.when(gameRepo.saveAll(gameList)).thenReturn(gameList);
-
         assertEquals(gameList, fantasyLeagueService.postGames(schedule, league_id, client_id));
     }
 
@@ -905,7 +881,7 @@ public class fantasyLeagueTests {
     public void checkPickPlayerPlayers() throws resourceException, resourceNotFoundException {
         FantasyPlayer player = new FantasyPlayer();
         player.setNewPlayer(
-                7,
+                null,
                 1,
                 1,
                 "Alex",
@@ -930,7 +906,7 @@ public class fantasyLeagueTests {
     public void checkPickPlayerContains() throws resourceException, resourceNotFoundException {
         FantasyPlayer player = new FantasyPlayer();
         player.setNewPlayer(
-                null,
+                7,
                 1,
                 1,
                 "Alex",
@@ -940,8 +916,9 @@ public class fantasyLeagueTests {
                 1,
                 1
         );
+        List<Integer> wrongcontains = Arrays.asList(0);
         Mockito.when(fantasyPlayerService.getUndraftedPlayers(1, 1)
-        ).thenReturn(Collections.emptyList());
+        ).thenReturn(wrongcontains);
         fantasyLeagueService.pickPlayer(player);
     }
 

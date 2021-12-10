@@ -204,7 +204,6 @@ public class fantasyLeagueService {
             throw new resourceException("checkInputs: League formatted incorrectly please provide the following:\n" +
                     "league_id, client_id, league_name, admin_id, league_size, league_start_date, num_weeks.");
         }
-        return;
     }
 
     // check post inputs
@@ -229,10 +228,10 @@ public class fantasyLeagueService {
         List<Integer> result = teamRepo.findTeamsInLeague(league_id, client_id);
 
         // check to make sure teams registered with league is even
-        if (result.size() % 2 == 0) {
-            return result;
-        } else {
+        if (result.size() % 2 != 0) {
             throw new resourceException("Number of teams must be even.");
+        } else {
+            return result;
         }
     }
 
@@ -328,8 +327,6 @@ public class fantasyLeagueService {
             fantasyPlayer.setPlayerID(chosenPlayer.getPlayerID());
 
         } else {
-            // TODO THIS DOESN'T MAKE SENSE why .getPlayerID when i know it doesn't exist?
-            // TODO write another test later
             List<Integer> undraft_players = fantasyPlayerService.getUndraftedPlayers(fantasyPlayer.getLeagueID(), 1);
             if (!undraft_players.contains(fantasyPlayer.getPlayerID())) {
                 throw new resourceException("Chosen player is not available for drafting.");
@@ -359,7 +356,7 @@ public class fantasyLeagueService {
 
     public void checkIfScheduleGenerated(Integer league_id) throws resourceException{
         List<FantasyGame> games = gameRepo.findGamesByLeagueID(league_id);
-        if (games.size() != 0) {
+        if (games.size() != 0 || games.isEmpty()) {
             throw new resourceException("Schedule already generated for this league.");
         }
     }
