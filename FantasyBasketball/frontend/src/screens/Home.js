@@ -93,35 +93,43 @@ class Home extends Component {
                                 <Table.Body>
                                     <Table.Row>
                                         <Table.Cell width={2}>Three point weight</Table.Cell>
-                                        <Table.Cell className="weight_number">{this.state.three_p_weight}</Table.Cell>
+                                        <Table.Cell
+                                            className="weight_number">{(Math.round(this.state.three_p_weight * 100) / 100).toFixed(2)}</Table.Cell>
                                     </Table.Row>
                                     <Table.Row>
                                         <Table.Cell>Two point weight</Table.Cell>
-                                        <Table.Cell className="weight_number">{this.state.two_p_weight}</Table.Cell>
+                                        <Table.Cell
+                                            className="weight_number">{(Math.round(this.state.two_p_weight * 100) / 100).toFixed(2)}</Table.Cell>
                                     </Table.Row>
                                     <Table.Row>
                                         <Table.Cell>Free Throw weight</Table.Cell>
-                                        <Table.Cell className="weight_number">{this.state.ft_weight}</Table.Cell>
+                                        <Table.Cell
+                                            className="weight_number">{(Math.round(this.state.ft_weight * 100) / 100).toFixed(2)}</Table.Cell>
                                     </Table.Row>
                                     <Table.Row>
                                         <Table.Cell>Rebound Weight</Table.Cell>
-                                        <Table.Cell className="weight_number">{this.state.rebound_weight}</Table.Cell>
+                                        <Table.Cell
+                                            className="weight_number">{(Math.round(this.state.rebound_weight * 100) / 100).toFixed(2)}</Table.Cell>
                                     </Table.Row>
                                     <Table.Row>
                                         <Table.Cell>Assist Weight</Table.Cell>
-                                        <Table.Cell className="weight_number">{this.state.assist_weight}</Table.Cell>
+                                        <Table.Cell
+                                            className="weight_number">{(Math.round(this.state.assist_weight * 100) / 100).toFixed(2)}</Table.Cell>
                                     </Table.Row>
                                     <Table.Row>
                                         <Table.Cell>Block Weight</Table.Cell>
-                                        <Table.Cell className="weight_number">{this.state.block_weight}</Table.Cell>
+                                        <Table.Cell
+                                            className="weight_number">{(Math.round(this.state.block_weight * 100) / 100).toFixed(2)}</Table.Cell>
                                     </Table.Row>
                                     <Table.Row>
                                         <Table.Cell>Turnover Weight</Table.Cell>
-                                        <Table.Cell className="weight_number">{this.state.turnover_weight}</Table.Cell>
+                                        <Table.Cell
+                                            className="weight_number">{(Math.round(this.state.turnover_weight * 100) / 100).toFixed(2)}</Table.Cell>
                                     </Table.Row>
                                     <Table.Row>
                                         <Table.Cell>Steal Weight</Table.Cell>
-                                        <Table.Cell className="weight_number">{this.state.steal_weight}</Table.Cell>
+                                        <Table.Cell
+                                            className="weight_number">{(Math.round(this.state.steal_weight * 100) / 100).toFixed(2)}</Table.Cell>
                                     </Table.Row>
                                     <Table.Row>
                                         <Table.Cell>Min League Duration</Table.Cell>

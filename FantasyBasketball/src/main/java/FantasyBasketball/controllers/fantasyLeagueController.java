@@ -329,4 +329,18 @@ public class fantasyLeagueController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @RequestMapping(value = "/fantasyLeague/draft/generateOrder", method = RequestMethod.GET)
+    public ResponseEntity<?> randomizeDraftOrder(@RequestParam(value = "league_id", required = false) Integer league_id,
+                                                  @RequestParam(value = "client_id", required = true) Integer client_id) {
+        try {
+            fantasyLeagueService.checkIfValidLeague(league_id);
+            List<Integer> result = fantasyLeagueService.randomOrder(league_id, client_id);
+            return new ResponseEntity<>(result, HttpStatus.OK);
+
+        } catch (Exception e) {
+            log.error("Exception on GET: ", e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

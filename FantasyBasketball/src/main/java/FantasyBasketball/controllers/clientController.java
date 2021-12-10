@@ -119,13 +119,14 @@ public class clientController {
     }
 
     @RequestMapping(value = "/terminate_account", method = RequestMethod.DELETE)
-    public ResponseEntity<?> deleteClient(@RequestParam(value = "client_id") Integer client_id) {
+    public ResponseEntity<?> deleteClient(@RequestParam(value = "google_id") String google_id) {
         try {
 
             log.info("DELETE: " + request.getRequestURL() + "?" + request.getQueryString());
-
+            List<Client> clientList = clientService.getClientByGoogleId(google_id);
+            Integer client_id = clientList.get(0).getClientID();
             clientService.deleteClientById(client_id);
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(clientList, HttpStatus.OK);
 
         } catch (resourceNotFoundException e) {
             log.error("Exception on DELETE: " + e.getMessage());

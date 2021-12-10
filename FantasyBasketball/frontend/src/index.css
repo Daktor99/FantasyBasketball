@@ -56,6 +56,13 @@ code {
   align-content: center !important;
   justify-content: center !important;
   font-size: small !important;
+  margin-bottom: 10px;
+}
+
+.images {
+  text-align: -webkit-center;
+  margin-bottom: 10px;
+  margin-top: 10px;
 }
 
 .input-weights {
@@ -120,6 +127,10 @@ Button {
 
 .weight_number {
   text-align-last: right;
+}
+
+.delete-button {
+
 }
 
 #root {

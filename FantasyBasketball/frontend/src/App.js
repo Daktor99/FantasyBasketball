@@ -7,6 +7,8 @@ import AppNavbar from "./utils/AppNavbar";
 import Register from "./screens/Register";
 import 'semantic-ui-css/semantic.min.css'
 import Customize from "./screens/Customize";
+import Memes from "./screens/Memes";
+import Data from "./screens/Data";
 
 class App extends Component {
 
@@ -21,6 +23,8 @@ class App extends Component {
                             <Route path='/home' exact={true} component={Home}/>
                             <Route path='/register' exact={true} component={Register}/>
                             <Route path='/update' exact={true} component={Customize}/>
+                            <Route path='/memes' exact={true} component={Memes}/>
+                            <Route path='/data' exact={true} component={Data}/>
                         </Switch>
                     </Router>
                 </div>

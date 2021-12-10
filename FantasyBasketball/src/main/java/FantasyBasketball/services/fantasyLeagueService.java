@@ -331,4 +331,23 @@ public class fantasyLeagueService {
         }
     }
 
+    public List<Integer> randomOrder(Integer league_id, Integer client_id) throws resourceNotFoundException {
+        List<Integer> team_ids = teamRepo.findTeamsInLeague(league_id, client_id);
+        Collections.shuffle(team_ids);
+        List<Integer> order = new ArrayList<>();
+        Integer team_size = clientService.getByID(client_id).get(0).getMax_team_size();
+        for (int i = 0; i < team_size; i++) {
+            order.addAll(team_ids);
+        }
+        return order;
+    }
+
+    public void checkIfValidLeague(Integer league_id) throws resourceException, resourceNotFoundException {
+        // Check if league is valid
+        if (league_id == null) {
+            throw new resourceException("league_id required");
+        } else if (!leagueRepo.existsById(league_id)) {
+            throw new resourceNotFoundException("This league does not exist.");
+        }
+    }
 }
