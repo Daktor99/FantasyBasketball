@@ -41,4 +41,18 @@ public class controllerUtils {
         log.info("DELETE: " + request.getRequestURL() + "?" + request.getQueryString());
 
     }
+
+    public static void logGameScheduling(HttpServletRequest request, Logger log, Integer league_id) {
+
+        log.info("GENERATE SCHEDULE: " + request.getRequestURL()
+                + " for fantasyLeague with league_id: " + league_id);
+
+    }
+
+    public static void logPlayerDrafting(HttpServletRequest request, Logger log, String playerString) {
+
+        log.info("PUT: " + request.getRequestURL());
+        log.info(playerString);
+
+    }
 }
