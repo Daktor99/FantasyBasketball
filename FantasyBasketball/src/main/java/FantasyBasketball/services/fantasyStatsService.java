@@ -115,4 +115,20 @@ public class fantasyStatsService {
         }
     }
 
+    public List<FantasyStats> getStatsBySchedule(Set<Integer> ScheduleList){
+        return statsRepo.findFantasyStatsByScheduleList(ScheduleList);
+    }
+
+    public HashMap<Integer, Integer> generatePlayerStat(Set<Integer> gameList) {
+
+        List<FantasyStats> playerStats = statsRepo.findFantasyStatsByScheduleList(gameList);
+
+        HashMap<Integer, Integer> playerStatsMap = new HashMap<>();
+        for (FantasyStats stat: playerStats) {
+            playerStatsMap.put(stat.getPlayer_id(), stat.getTot_points());
+        }
+        return playerStatsMap;
+
+    }
+
 }

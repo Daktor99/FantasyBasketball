@@ -56,38 +56,38 @@ public class WeeklyUpdate {
         List<FantasyGame> gameList = gameService.getGamesForWeek(current_date);
 
         // TODO: put this in its own function
-//        for (FantasyGame game : gameList) {
-//            Integer home_team_id = game.getHomeTeamID();
-//            Integer away_team_id = game.getAwayTeamID();
-//
-//            List<Integer> home_starters = teamStarters.get(home_team_id);
-//            List<Integer> away_starters = teamStarters.get(away_team_id);
-//
-//            // setting home starters
-//            game.setStartHomePG(home_starters.get(0));
-//            game.setStartHomeSG(home_starters.get(1));
-//            game.setStartHomeSF(home_starters.get(2));
-//            game.setStartHomePF(home_starters.get(3));
-//            game.setStartHomeC(home_starters.get(4));
-//            game.setHomeBench1(home_starters.get(5));
-//            game.setHomeBench2(home_starters.get(6));
-//
-//            // setting away starters
-//            game.setStartAwayPG(away_starters.get(0));
-//            game.setStartAwaySG(away_starters.get(1));
-//            game.setStartAwaySF(away_starters.get(2));
-//            game.setStartAwayPF(away_starters.get(3));
-//            game.setStartAwayC(away_starters.get(4));
-//            game.setAwayBench1(away_starters.get(5));
-//            game.setAwayBench2(away_starters.get(6));
-//
-//            // TODO: check exception being thrown!
-//            gameService.updateGame(game);
-//
-//            List<FantasyStats> statSheet = gameService.generateStatsSheet(game);
-//            statService.postStatSheet(statSheet);
-//
-//        }
+        for (FantasyGame game : gameList) {
+            Integer home_team_id = game.getHomeTeamID();
+            Integer away_team_id = game.getAwayTeamID();
+
+            List<Integer> home_starters = teamStarters.get(home_team_id);
+            List<Integer> away_starters = teamStarters.get(away_team_id);
+
+            // setting home starters
+            game.setStartHomePG(home_starters.get(0));
+            game.setStartHomeSG(home_starters.get(1));
+            game.setStartHomeSF(home_starters.get(2));
+            game.setStartHomePF(home_starters.get(3));
+            game.setStartHomeC(home_starters.get(4));
+            game.setHomeBench1(home_starters.get(5));
+            game.setHomeBench2(home_starters.get(6));
+
+            // setting away starters
+            game.setStartAwayPG(away_starters.get(0));
+            game.setStartAwaySG(away_starters.get(1));
+            game.setStartAwaySF(away_starters.get(2));
+            game.setStartAwayPF(away_starters.get(3));
+            game.setStartAwayC(away_starters.get(4));
+            game.setAwayBench1(away_starters.get(5));
+            game.setAwayBench2(away_starters.get(6));
+
+            // TODO: check exception being thrown!
+            gameService.updateGame(game);
+
+            List<FantasyStats> statSheet = gameService.generateStatsSheet(game);
+            statService.postStatSheet(statSheet);
+
+        }
 
         // get games from last week
         List<FantasyGame> lastWeekGamesList = gameService.getGamesForWeek(current_date.minusWeeks(1));
