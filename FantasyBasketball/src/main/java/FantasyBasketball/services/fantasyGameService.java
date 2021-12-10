@@ -83,6 +83,20 @@ public class fantasyGameService {
         if (game.getScheduleID() != null) {
             throw new resourceException("Do not provide schedule_id.");
         }
+
+        if (game.getHomeTeamID() == null) {
+            throw new resourceException("Must provide home_team_id.");
+        } else if (game.getAwayTeamID() == null) {
+            throw new resourceException("Must provide away_team_id.");
+        }
+
+        if (game.getLeagueID() == null) {
+            throw new resourceException("Must provide league_id for game.");
+        }
+
+        if (game.getGameStartDate() == null || game.getGameEndDate() == null) {
+            throw new resourceException("Must provide game_start_date and game_end_date.");
+        }
         checkInputs(game);
     }
     // Checking if game's schedule is null before putting
@@ -93,17 +107,18 @@ public class fantasyGameService {
             checkInputs(game);
 
     }
+
     // Checking if game's start date and end date are correct
     private void checkInputs(FantasyGame game) throws resourceException {
         try {
             LocalDate startDate = game.getGameStartDate();
             LocalDate endDate   = game.getGameEndDate();
-            int daysBetween     = Period.between(startDate, endDate).getDays();
             if (endDate.isBefore(startDate)) {
                 throw new resourceException("Start Date must be before End Date");
             }
         } catch (NullPointerException e) {
-            throw new resourceException("Fantasy game formatted incorrectly, please provide at least the following:\n schedule_id, leagueID, home_team_id, away_team_id, game_start_date, game_end_date.");
+            throw new resourceException("Fantasy game formatted incorrectly, please provide at least the following:\n" +
+                    " schedule_id, leagueID, home_team_id, away_team_id, game_start_date, game_end_date.");
         }
     }
     // Getting the games for the current_date
