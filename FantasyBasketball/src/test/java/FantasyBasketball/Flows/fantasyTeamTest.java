@@ -32,6 +32,9 @@ public class fantasyTeamTest {
     @Autowired
     fantasyPlayerService playerService;
 
+//    @MockBean
+//    fantasyTeamService mockteamService;
+
     @MockBean
     fantasyTeamRepository teamRepo;
 
@@ -374,75 +377,76 @@ public class fantasyTeamTest {
     }
 
     // Test that the team_id is correctly updated by teamUser method
-    @Test
-    public void testUpdateTeam() throws resourceNotFoundException, resourceException {
-
-        //Initialize updated fantasyTeam
-        FantasyTeam dbTeam = new FantasyTeam(12,
-                1,
-                "TEST TEAM",
-                null,
-                null,
-                93,
-                94,
-                95,
-                96,
-                97,
-                98,
-                99,
-                0,
-                0,
-                0,
-                0);
-
-        //Initialize updated fantasyTeam
-        FantasyTeam updatedTeam = new FantasyTeam(12,
-                1,
-                "TEST TEAM",
-                1,
-                1,
-                93,
-                94,
-                95,
-                96,
-                97,
-                98,
-                99,
-                0,
-                0,
-                0,
-                0);
-
-        // fantasyTeam exists
-        Mockito.when(teamRepo.existsById(dbTeam.getTeamID())).thenReturn(Boolean.TRUE);
-
-        ArrayList list = new ArrayList();
-        list.add(dbTeam);
-        Mockito.when(teamRepo.findByTemplate(
-                dbTeam.getTeamID(),
-                dbTeam.getClientID(), null, null, null))
-                .thenReturn(Arrays.asList(dbTeam));
-
-        // save the changes
-        Mockito.when(teamRepo.save(dbTeam)).thenReturn(dbTeam);
-
-        // assert that team gets correctly updated by checking that all data members are equal to the updatedTeam
-        assertEquals(teamService.updateTeam(dbTeam).get(0).getTeamID(), dbTeam.getTeamID());
-//        assertEquals(teamService.updateTeam(updatedTeam).get(0).getClientID(), updatedTeam.getClientID());
-//        assertEquals(teamService.updateTeam(updatedTeam).get(0).getLeagueID(), updatedTeam.getLeagueID());
-//        assertEquals(teamService.updateTeam(updatedTeam).get(0).getOwnerID(), updatedTeam.getOwnerID());
-//        assertEquals(teamService.updateTeam(updatedTeam).get(0).getStartPG(), updatedTeam.getStartPG());
-//        assertEquals(teamService.updateTeam(updatedTeam).get(0).getStartSG(), updatedTeam.getStartSG());
-//        assertEquals(teamService.updateTeam(updatedTeam).get(0).getStartSF(), updatedTeam.getStartSF());
-//        assertEquals(teamService.updateTeam(updatedTeam).get(0).getStartPF(), updatedTeam.getStartPF());
-//        assertEquals(teamService.updateTeam(updatedTeam).get(0).getStartC(), updatedTeam.getStartC());
-//        assertEquals(teamService.updateTeam(updatedTeam).get(0).getBench1(), updatedTeam.getBench1());
-//        assertEquals(teamService.updateTeam(updatedTeam).get(0).getBench2(), updatedTeam.getBench2());
-//        assertEquals(teamService.updateTeam(updatedTeam).get(0).getTeamWins(), updatedTeam.getTeamWins());
-//        assertEquals(teamService.updateTeam(updatedTeam).get(0).getTeamLosses(), updatedTeam.getTeamLosses());
-//        assertEquals(teamService.updateTeam(updatedTeam).get(0).getPointsScored(), updatedTeam.getPointsScored());
-//        assertEquals(teamService.updateTeam(updatedTeam).get(0).getPointsAgainst(), updatedTeam.getPointsAgainst());
-    }
+//    @Test
+//    public void testUpdateTeam() throws resourceNotFoundException, resourceException {
+//
+//        //Initialize updated fantasyTeam
+//        FantasyTeam dbTeam = new FantasyTeam(12,
+//                1,
+//                "TEST TEAM",
+//                null,
+//                null,
+//                93,
+//                94,
+//                95,
+//                96,
+//                97,
+//                98,
+//                99,
+//                0,
+//                0,
+//                0,
+//                0);
+//
+//        //Initialize updated fantasyTeam
+//        FantasyTeam updatedteam = new FantasyTeam(12,
+//                1,
+//                "TEST TEAM",
+//                null,
+//                null,
+//                93,
+//                94,
+//                95,
+//                96,
+//                97,
+//                98,
+//                99,
+//                0,
+//                0,
+//                0,
+//                0);
+//
+//        // fantasyTeam exists
+//        Mockito.when(teamRepo.existsById(updatedteam.getTeamID())).thenReturn(Boolean.TRUE);
+//
+//        Mockito.when(teamRepo.findByTemplate(
+//                updatedteam.getTeamID(),
+//                updatedteam.getClientID(), null, null, null))
+//                .thenReturn(Arrays.asList(dbTeam));
+//
+//        Mockito.when(playerService.getPlayerIDsByTeam(dbTeam.getTeamID()))
+//                .thenReturn(Arrays.asList(93, 94, 95, 96, 97, 98, 99));
+//
+//        // save the changes
+//        Mockito.when(teamRepo.save(updatedteam)).thenReturn(updatedteam);
+//
+//        // assert that team gets correctly updated by checking that all data members are equal to the updatedTeam
+//        assertEquals(teamService.updateTeam(updatedteam).get(0).getTeamID(), updatedteam.getTeamID());
+////        assertEquals(teamService.updateTeam(updatedTeam).get(0).getClientID(), updatedTeam.getClientID());
+////        assertEquals(teamService.updateTeam(updatedTeam).get(0).getLeagueID(), updatedTeam.getLeagueID());
+////        assertEquals(teamService.updateTeam(updatedTeam).get(0).getOwnerID(), updatedTeam.getOwnerID());
+////        assertEquals(teamService.updateTeam(updatedTeam).get(0).getStartPG(), updatedTeam.getStartPG());
+////        assertEquals(teamService.updateTeam(updatedTeam).get(0).getStartSG(), updatedTeam.getStartSG());
+////        assertEquals(teamService.updateTeam(updatedTeam).get(0).getStartSF(), updatedTeam.getStartSF());
+////        assertEquals(teamService.updateTeam(updatedTeam).get(0).getStartPF(), updatedTeam.getStartPF());
+////        assertEquals(teamService.updateTeam(updatedTeam).get(0).getStartC(), updatedTeam.getStartC());
+////        assertEquals(teamService.updateTeam(updatedTeam).get(0).getBench1(), updatedTeam.getBench1());
+////        assertEquals(teamService.updateTeam(updatedTeam).get(0).getBench2(), updatedTeam.getBench2());
+////        assertEquals(teamService.updateTeam(updatedTeam).get(0).getTeamWins(), updatedTeam.getTeamWins());
+////        assertEquals(teamService.updateTeam(updatedTeam).get(0).getTeamLosses(), updatedTeam.getTeamLosses());
+////        assertEquals(teamService.updateTeam(updatedTeam).get(0).getPointsScored(), updatedTeam.getPointsScored());
+////        assertEquals(teamService.updateTeam(updatedTeam).get(0).getPointsAgainst(), updatedTeam.getPointsAgainst());
+//    }
 
     //Make sure exception raised when the fantasyTeam does not exist
     @Test(expected = resourceNotFoundException.class)
@@ -602,48 +606,6 @@ public class fantasyTeamTest {
         teamService.checkPutInputs(testTeam);
     }
 
-//    @Test
-//    public void testGetPlayersOnTeam() {
-//        Integer teamID = 1;
-//        List<Integer> list = Arrays.asList(1, 2, 3, 4);
-//        Mockito.when(playerService.getPlayerIDsByTeam(teamID)).thenReturn(list);
-//        assertEquals(list, teamService.getPlayersOnTeam(teamID));
-//    }
-//
-//    @Test
-//    public void testGetPlayerPositionMap() {
-//        Integer teamID = 1;
-//        FantasyPlayer player = new FantasyPlayer();
-//        player.setNewPlayer(
-//                null,
-//                1,
-//                1,
-//                "Alex",
-//                "Abrines",
-//                "Oklahoma City Thunder",
-//                "G",
-//                1,
-//                1
-//        );
-//        List<FantasyPlayer> playerlist = Arrays.asList(player);
-//        HashMap<Integer, String> playerPositionMap = new HashMap<>();
-//        Mockito.when(playerService.getPlayerByTemplate(
-//                null,
-//                null,
-//                teamID,
-//                null,
-//                null,
-//                null,
-//                null,
-//                null,
-//                null
-//        )).thenReturn(playerlist);
-//        for (FantasyPlayer each: playerlist) {
-//            playerPositionMap.put(each.getPlayerID(), each.getPosition());
-//        }
-//        assertEquals(playerPositionMap, teamService.getPlayerPositionMap(teamID));
-//    }
-
     @Test(expected = resourceException.class)
     public void checkOwnerAndLeagueNotUpdated1() throws resourceException {
         Integer ownerID = null;
@@ -736,5 +698,530 @@ public class fantasyTeamTest {
         Integer playerID = 99;
         teamService.updatePG(currentTeam, playerPositionMap, teamPlayerList, playerID);
     }
+
+    @Test(expected = resourceException.class)
+    public void testUpdateSG1() throws resourceException {
+        FantasyTeam currentTeam =  new FantasyTeam(
+                1,
+                1,
+                "my team",
+                1,
+                1,
+                99,
+                100,
+                101,
+                102,
+                103,
+                104,
+                105,
+                0,
+                0,
+                0,
+                0
+        );
+        HashMap<Integer, String> playerPositionMap =  new HashMap<>();
+        List<Integer> teamPlayerList = Arrays.asList(1, 2, 3, 4, 5);
+        Integer playerID = null;
+        teamService.updateSG(currentTeam, playerPositionMap, teamPlayerList, playerID);
+    }
+
+    @Test(expected = resourceException.class)
+    public void testUpdateSG2() throws resourceException {
+        FantasyTeam currentTeam =  new FantasyTeam(
+                1,
+                1,
+                "my team",
+                1,
+                1,
+                99,
+                100,
+                101,
+                102,
+                103,
+                104,
+                105,
+                0,
+                0,
+                0,
+                0
+        );
+        HashMap<Integer, String> playerPositionMap =  new HashMap<>();
+        List<Integer> teamPlayerList = Arrays.asList(6, 2, 3, 4, 5);
+        Integer playerID = 99;
+        teamService.updateSG(currentTeam, playerPositionMap, teamPlayerList, playerID);
+    }
+
+    @Test(expected = resourceException.class)
+    public void testUpdateSG3() throws resourceException {
+        FantasyTeam currentTeam =  new FantasyTeam(
+                1,
+                1,
+                "my team",
+                1,
+                1,
+                99,
+                100,
+                101,
+                102,
+                103,
+                104,
+                105,
+                0,
+                0,
+                0,
+                0
+        );
+        HashMap<Integer, String> playerPositionMap =  new HashMap<>();
+        playerPositionMap.put(99, "X");
+        List<Integer> teamPlayerList = Arrays.asList(1, 2, 3, 4, 5);
+        Integer playerID = 99;
+        teamService.updateSG(currentTeam, playerPositionMap, teamPlayerList, playerID);
+    }
+
+    @Test(expected = resourceException.class)
+    public void testUpdateSF1() throws resourceException {
+        FantasyTeam currentTeam =  new FantasyTeam(
+                1,
+                1,
+                "my team",
+                1,
+                1,
+                99,
+                100,
+                101,
+                102,
+                103,
+                104,
+                105,
+                0,
+                0,
+                0,
+                0
+        );
+        HashMap<Integer, String> playerPositionMap =  new HashMap<>();
+        List<Integer> teamPlayerList = Arrays.asList(1, 2, 3, 4, 5);
+        Integer playerID = null;
+        teamService.updateSF(currentTeam, playerPositionMap, teamPlayerList, playerID);
+    }
+
+    @Test(expected = resourceException.class)
+    public void testUpdateSF2() throws resourceException {
+        FantasyTeam currentTeam =  new FantasyTeam(
+                1,
+                1,
+                "my team",
+                1,
+                1,
+                99,
+                100,
+                101,
+                102,
+                103,
+                104,
+                105,
+                0,
+                0,
+                0,
+                0
+        );
+        HashMap<Integer, String> playerPositionMap =  new HashMap<>();
+        List<Integer> teamPlayerList = Arrays.asList(6, 2, 3, 4, 5);
+        Integer playerID = 99;
+        teamService.updateSF(currentTeam, playerPositionMap, teamPlayerList, playerID);
+    }
+
+    @Test(expected = resourceException.class)
+    public void testUpdateSF3() throws resourceException {
+        FantasyTeam currentTeam =  new FantasyTeam(
+                1,
+                1,
+                "my team",
+                1,
+                1,
+                99,
+                100,
+                101,
+                102,
+                103,
+                104,
+                105,
+                0,
+                0,
+                0,
+                0
+        );
+        HashMap<Integer, String> playerPositionMap =  new HashMap<>();
+        playerPositionMap.put(99, "X");
+        List<Integer> teamPlayerList = Arrays.asList(1, 2, 3, 4, 5);
+        Integer playerID = 99;
+        teamService.updateSG(currentTeam, playerPositionMap, teamPlayerList, playerID);
+    }
+
+    @Test(expected = resourceException.class)
+    public void testUpdatePF1() throws resourceException {
+        FantasyTeam currentTeam =  new FantasyTeam(
+                1,
+                1,
+                "my team",
+                1,
+                1,
+                99,
+                100,
+                101,
+                102,
+                103,
+                104,
+                105,
+                0,
+                0,
+                0,
+                0
+        );
+        HashMap<Integer, String> playerPositionMap =  new HashMap<>();
+        List<Integer> teamPlayerList = Arrays.asList(1, 2, 3, 4, 5);
+        Integer playerID = null;
+        teamService.updatePF(currentTeam, playerPositionMap, teamPlayerList, playerID);
+    }
+
+    @Test(expected = resourceException.class)
+    public void testUpdatePF2() throws resourceException {
+        FantasyTeam currentTeam =  new FantasyTeam(
+                1,
+                1,
+                "my team",
+                1,
+                1,
+                99,
+                100,
+                101,
+                102,
+                103,
+                104,
+                105,
+                0,
+                0,
+                0,
+                0
+        );
+        HashMap<Integer, String> playerPositionMap =  new HashMap<>();
+        List<Integer> teamPlayerList = Arrays.asList(6, 2, 3, 4, 5);
+        Integer playerID = 99;
+        teamService.updatePF(currentTeam, playerPositionMap, teamPlayerList, playerID);
+    }
+
+    @Test(expected = resourceException.class)
+    public void testUpdatePF3() throws resourceException {
+        FantasyTeam currentTeam =  new FantasyTeam(
+                1,
+                1,
+                "my team",
+                1,
+                1,
+                99,
+                100,
+                101,
+                102,
+                103,
+                104,
+                105,
+                0,
+                0,
+                0,
+                0
+        );
+        HashMap<Integer, String> playerPositionMap =  new HashMap<>();
+        playerPositionMap.put(99, "X");
+        List<Integer> teamPlayerList = Arrays.asList(1, 2, 3, 4, 5);
+        Integer playerID = 99;
+        teamService.updatePF(currentTeam, playerPositionMap, teamPlayerList, playerID);
+    }
+
+    @Test(expected = resourceException.class)
+    public void testUpdateC1() throws resourceException {
+        FantasyTeam currentTeam =  new FantasyTeam(
+                1,
+                1,
+                "my team",
+                1,
+                1,
+                99,
+                100,
+                101,
+                102,
+                103,
+                104,
+                105,
+                0,
+                0,
+                0,
+                0
+        );
+        HashMap<Integer, String> playerPositionMap =  new HashMap<>();
+        List<Integer> teamPlayerList = Arrays.asList(1, 2, 3, 4, 5);
+        Integer playerID = null;
+        teamService.updateC(currentTeam, playerPositionMap, teamPlayerList, playerID);
+    }
+
+    @Test(expected = resourceException.class)
+    public void testUpdateC2() throws resourceException {
+        FantasyTeam currentTeam =  new FantasyTeam(
+                1,
+                1,
+                "my team",
+                1,
+                1,
+                99,
+                100,
+                101,
+                102,
+                103,
+                104,
+                105,
+                0,
+                0,
+                0,
+                0
+        );
+        HashMap<Integer, String> playerPositionMap =  new HashMap<>();
+        List<Integer> teamPlayerList = Arrays.asList(6, 2, 3, 4, 5);
+        Integer playerID = 99;
+        teamService.updateC(currentTeam, playerPositionMap, teamPlayerList, playerID);
+    }
+
+    @Test(expected = resourceException.class)
+    public void testUpdateC3() throws resourceException {
+        FantasyTeam currentTeam =  new FantasyTeam(
+                1,
+                1,
+                "my team",
+                1,
+                1,
+                99,
+                100,
+                101,
+                102,
+                103,
+                104,
+                105,
+                0,
+                0,
+                0,
+                0
+        );
+        HashMap<Integer, String> playerPositionMap =  new HashMap<>();
+        playerPositionMap.put(99, "X");
+        List<Integer> teamPlayerList = Arrays.asList(1, 2, 3, 4, 5);
+        Integer playerID = 99;
+        teamService.updateC(currentTeam, playerPositionMap, teamPlayerList, playerID);
+    }
+
+    @Test(expected = resourceException.class)
+    public void testUpdateBench11() throws resourceException {
+        FantasyTeam currentTeam =  new FantasyTeam(
+                1,
+                1,
+                "my team",
+                1,
+                1,
+                99,
+                100,
+                101,
+                102,
+                103,
+                104,
+                105,
+                0,
+                0,
+                0,
+                0
+        );
+        List<Integer> teamPlayerList = Arrays.asList(1, 2, 3, 4, 5);
+        Integer playerID = null;
+        teamService.updateBench1(currentTeam, teamPlayerList, playerID);
+    }
+
+    @Test(expected = resourceException.class)
+    public void testUpdateBench12() throws resourceException {
+        FantasyTeam currentTeam =  new FantasyTeam(
+                1,
+                1,
+                "my team",
+                1,
+                1,
+                99,
+                100,
+                101,
+                102,
+                103,
+                104,
+                105,
+                0,
+                0,
+                0,
+                0
+        );
+        List<Integer> teamPlayerList = Arrays.asList(6, 2, 3, 4, 5);
+        Integer playerID = 99;
+        teamService.updateBench1(currentTeam, teamPlayerList, playerID);
+    }
+
+    @Test(expected = resourceException.class)
+    public void testUpdateBench13() throws resourceException {
+        FantasyTeam currentTeam =  new FantasyTeam(
+                1,
+                1,
+                "my team",
+                1,
+                1,
+                99,
+                100,
+                101,
+                102,
+                103,
+                104,
+                105,
+                0,
+                0,
+                0,
+                0
+        );
+        List<Integer> teamPlayerList = Arrays.asList(1, 2, 3, 4, 5);
+        Integer playerID = 99;
+        teamService.updateBench1(currentTeam, teamPlayerList, playerID);
+    }
+
+    @Test(expected = resourceException.class)
+    public void testUpdateBench21() throws resourceException {
+        FantasyTeam currentTeam =  new FantasyTeam(
+                1,
+                1,
+                "my team",
+                1,
+                1,
+                99,
+                100,
+                101,
+                102,
+                103,
+                104,
+                105,
+                0,
+                0,
+                0,
+                0
+        );
+        List<Integer> teamPlayerList = Arrays.asList(1, 2, 3, 4, 5);
+        Integer playerID = null;
+        teamService.updateBench2(currentTeam, teamPlayerList, playerID);
+    }
+
+    @Test(expected = resourceException.class)
+    public void testUpdateBench22() throws resourceException {
+        FantasyTeam currentTeam =  new FantasyTeam(
+                1,
+                1,
+                "my team",
+                1,
+                1,
+                99,
+                100,
+                101,
+                102,
+                103,
+                104,
+                105,
+                0,
+                0,
+                0,
+                0
+        );
+        List<Integer> teamPlayerList = Arrays.asList(6, 2, 3, 4, 5);
+        Integer playerID = 99;
+        teamService.updateBench2(currentTeam, teamPlayerList, playerID);
+    }
+
+    @Test(expected = resourceException.class)
+    public void testUpdateBench23() throws resourceException {
+        FantasyTeam currentTeam =  new FantasyTeam(
+                1,
+                1,
+                "my team",
+                1,
+                1,
+                99,
+                100,
+                101,
+                102,
+                103,
+                104,
+                105,
+                0,
+                0,
+                0,
+                0
+        );
+        List<Integer> teamPlayerList = Arrays.asList(1, 2, 3, 4, 5);
+        Integer playerID = 99;
+        teamService.updateBench2(currentTeam, teamPlayerList, playerID);
+    }
+
+    @Test
+    public void checkDuplicatePlayers() {
+        List<Integer> playerList = Arrays.asList(1, 2, 3, 4, 5, 6, 7);
+        assertEquals(Boolean.FALSE, teamService.checkDuplicatePlayers(playerList));
+    }
+
+    @Test
+    public void checkDuplicatePlayersDUPPED() {
+        List<Integer> playerList = Arrays.asList(1, 1, 3, 4, 5, 6, 7);
+        assertEquals(Boolean.TRUE, teamService.checkDuplicatePlayers(playerList));
+    }
+
+//    @Test
+//    public void checkUpdateValues() throws resourceException {
+//        // Initialize team before postTeam called
+//        FantasyTeam dbTeam = new FantasyTeam(
+//                12,
+//                1,
+//                "TEST TEAM",
+//                1,
+//                1,
+//                93,
+//                94,
+//                95,
+//                96,
+//                97,
+//                98,
+//                99,
+//                0,
+//                0,
+//                0,
+//                0
+//        );
+//
+//        // Create newly inserted fantasyTeam
+//        FantasyTeam updatedTeam = new FantasyTeam(
+//                12,
+//                1,
+//                "updated TEAM",
+//                null,
+//                null,
+//                93,
+//                94,
+//                95,
+//                96,
+//                97,
+//                98,
+//                99,
+//                0,
+//                0,
+//                0,
+//                0);
+////        Integer teamID = updatedTeam.getTeamID();
+////        List<Integer> teamPlayerIDs = Arrays.asList(70, 71, 72, 73, 74, 75, 76);
+////        Mockito.when(mockteamService.getPlayersOnTeam(teamID)).thenReturn(teamPlayerIDs);
+//        FantasyTeam whatIWant = teamService.updateValues(dbTeam, updatedTeam);
+//        assertEquals(Collections.EMPTY_LIST, whatIWant);
+//    }
 
 }

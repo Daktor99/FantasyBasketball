@@ -275,6 +275,8 @@ public class fantasyTeamService {
             }
 
             currentTeam.setStartSG(playerID);
+        } else {
+            throw new resourceException("playerID is null.");
         }
     }
 
@@ -298,7 +300,10 @@ public class fantasyTeamService {
             }
 
             currentTeam.setStartSF(playerID);
+        } else {
+            throw new resourceException("playerID is null.");
         }
+
     }
 
     public void updatePF(FantasyTeam currentTeam,
@@ -322,6 +327,8 @@ public class fantasyTeamService {
             }
 
             currentTeam.setStartPF(playerID);
+        } else {
+            throw new resourceException("playerID is null.");
         }
     }
 
@@ -345,6 +352,8 @@ public class fantasyTeamService {
             }
 
             currentTeam.setStartC(playerID);
+        } else {
+            throw new resourceException("playerID is null.");
         }
     }
 
@@ -360,6 +369,8 @@ public class fantasyTeamService {
             }
 
             currentTeam.setBench1(playerID);
+        } else {
+            throw new resourceException("playerID is null.");
         }
     }
 
@@ -375,6 +386,8 @@ public class fantasyTeamService {
             }
 
             currentTeam.setBench2(playerID);
+        } else {
+            throw new resourceException("playerID is null.");
         }
     }
 
