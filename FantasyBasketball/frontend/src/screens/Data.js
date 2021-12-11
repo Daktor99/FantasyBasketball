@@ -21,7 +21,13 @@ class Data extends Component {
 
     async componentWillMount() {
         const input = '/users'
-        await fetch(input, {method: 'GET'})
+        await fetch(input, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'token': this.state.googleId
+            },
+        })
             .then(async response => {
                     const body = await response.json();
                     this.setState({

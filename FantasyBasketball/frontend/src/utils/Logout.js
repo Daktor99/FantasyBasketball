@@ -2,9 +2,7 @@ import React, {Component} from 'react';
 
 import {GoogleLogout} from 'react-google-login';
 import {withCookies} from "react-cookie";
-
-// TODO: CHANGE THIS TO GO TO THE ENVIRONMENT FOLDER INSTEAD
-const clientId = "1096047835269-skq8123tknv8u0dcdb48f0qca5t966d3.apps.googleusercontent.com";
+import {GOOGLE_CLOUD_CLIENT_ID} from "../Constants";
 
 class Logout extends Component {
 
@@ -17,7 +15,7 @@ class Logout extends Component {
         return (
             <div className="login-button">
                 <GoogleLogout
-                    clientId={clientId}
+                    clientId={GOOGLE_CLOUD_CLIENT_ID}
                     buttonText="Logout"
                     onLogoutSuccess={this.onSuccess}
                     cookiePolicy={'single_host_origin'}

@@ -33,7 +33,11 @@ class Customize extends Component {
 
     async componentWillMount() {
         const input = '/getClient?google_id=' + this.state.googleId
-        const response = await fetch(input);
+        const response = await fetch(input, {
+            headers: {
+                'token': this.state.googleId
+            }
+        });
         const body = await response.json();
         const {cookies} = this.props;
         if (body.length > 0) {
@@ -90,7 +94,10 @@ class Customize extends Component {
         } else {
             const requestOptions = {
                 method: 'PUT',
-                headers: {'Content-Type': 'application/json'},
+                headers: {
+                    'Content-Type': 'application/json',
+                    'token': this.state.googleId
+                },
                 body: JSON.stringify({
                     "email": this.state.stipe_email || this.state.defaultEmail,
                     "company_name": this.state.company_name || this.state.defaultCompanyName,
@@ -146,7 +153,13 @@ class Customize extends Component {
 
         const {cookies} = this.props
 
-        await fetch(input, {method: 'DELETE'})
+        await fetch(input, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'token': this.state.googleId
+            },
+        })
             .then(async response => {
                 console.log(response)
                 this.setState({

@@ -53,9 +53,14 @@ class Register extends Component {
 
     async componentDidMount() {
         const input = '/getClient?google_id=' + this.state.googleId
-        const response = await fetch(input);
+        const response = await fetch(input, {
+            headers: {
+                'token': this.state.googleId
+            }
+        });
         const body = await response.json();
         const {cookies} = this.props;
+
         if (body.length > 0) {
             const client = body[0]
             console.log(body[0])
@@ -86,10 +91,6 @@ class Register extends Component {
 
     handleChange = (e, {name, value}) => this.setState({[name]: value})
 
-    // async checkIfRegistered() {
-    //
-    // }
-
     async onCreateAccount() {
         if (this.checkInputs()) {
             this.setState({
@@ -97,7 +98,6 @@ class Register extends Component {
             })
             await new Promise(r => setTimeout(r, 500));
 
-            await this.checkIfRegistered()
             const {cookies} = this.props;
 
             if (this.state.registered) {
