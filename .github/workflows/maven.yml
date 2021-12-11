@@ -22,4 +22,7 @@ jobs:
         java-version: '11'
         distribution: 'adopt'
     - name: Build with Maven
-      run: mvn -B package --file FantasyBasketball/pom.xml 
+      run: mvn -B package --file FantasyBasketball/pom.xml
+    - name: Run test suites
+      run: cd FantasyBasketball && mvn test
+    
