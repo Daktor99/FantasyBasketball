@@ -219,151 +219,6 @@ public class fantasyTeamTest {
         assertEquals(List.of(afterTeam), teamService.postTeam(beforeTeam));
     }
 
-    @Test
-    public void testPostMultipleTeams() throws resourceException {
-        // Initialize team before postTeam called
-        FantasyTeam beforeTeam = new FantasyTeam(
-                1,
-                1,
-                "TEST TEAM",
-                1,
-                1,
-                70,
-                71,
-                72,
-                73,
-                74,
-                75,
-                76,
-                0,
-                0,
-                0,
-                0
-        );
-
-        // Create newly inserted fantasyTeam
-        FantasyTeam afterTeam = new FantasyTeam(
-                12,
-                1,
-                "other TEAM",
-                1,
-                1,
-                70,
-                71,
-                72,
-                73,
-                74,
-                75,
-                76,
-                0,
-                0,
-                0,
-                0);
-
-        List<FantasyTeam> teamslist = Arrays.asList(beforeTeam, afterTeam);
-
-        // save the team
-        Mockito.when(teamRepo.saveAll(teamslist)).thenReturn(teamslist);
-
-        // assert that the team_id gets correctly updated
-        assertEquals(teamslist, teamService.postMultipleTeams(teamslist));
-    }
-
-    // Test that the team_id is correctly updated by teamUser method
-//    @Test
-//    public void testUpdateTeam() throws resourceNotFoundException, resourceException {
-//
-//        //Initialize updated fantasyTeam
-//        FantasyTeam updatedTeam = new FantasyTeam(12,
-//                1,
-//                "TEST TEAM",
-//                null,
-//                null,
-//                null,
-//                null,
-//                null,
-//                null,
-//                null,
-//                null,
-//                null,
-//                0,
-//                0,
-//                0,
-//                0);
-//
-//        // fantasyTeam exists
-//        Mockito.when(teamRepo.existsById(12)).thenReturn(true);
-//
-//        ArrayList list = new ArrayList();
-//        list.add(updatedTeam);
-//        Mockito.when(teamRepo.findByTemplate(
-//                updatedTeam.getTeamID(),
-//                null,
-//                null,
-//                null,
-//                null)).thenReturn(Arrays.asList(updatedTeam));
-//
-//        // save the changes
-//        Mockito.when(teamRepo.save(updatedTeam)).thenReturn(updatedTeam);
-//
-//        // assert that team gets correctly updated by checking that all data members are equal to the updatedTeam
-//        assertEquals(teamService.updateTeam(updatedTeam).get(0).getTeamID(), updatedTeam.getTeamID());
-//        assertEquals(teamService.updateTeam(updatedTeam).get(0).getClientID(), updatedTeam.getClientID());
-//        assertEquals(teamService.updateTeam(updatedTeam).get(0).getLeagueID(), updatedTeam.getLeagueID());
-//        assertEquals(teamService.updateTeam(updatedTeam).get(0).getOwnerID(), updatedTeam.getOwnerID());
-//        assertEquals(teamService.updateTeam(updatedTeam).get(0).getStartPG(), updatedTeam.getStartPG());
-//        assertEquals(teamService.updateTeam(updatedTeam).get(0).getStartSG(), updatedTeam.getStartSG());
-//        assertEquals(teamService.updateTeam(updatedTeam).get(0).getStartSF(), updatedTeam.getStartSF());
-//        assertEquals(teamService.updateTeam(updatedTeam).get(0).getStartPF(), updatedTeam.getStartPF());
-//        assertEquals(teamService.updateTeam(updatedTeam).get(0).getStartC(), updatedTeam.getStartC());
-//        assertEquals(teamService.updateTeam(updatedTeam).get(0).getBench1(), updatedTeam.getBench1());
-//        assertEquals(teamService.updateTeam(updatedTeam).get(0).getBench2(), updatedTeam.getBench2());
-//        assertEquals(teamService.updateTeam(updatedTeam).get(0).getTeamWins(), updatedTeam.getTeamWins());
-//        assertEquals(teamService.updateTeam(updatedTeam).get(0).getTeamLosses(), updatedTeam.getTeamLosses());
-//        assertEquals(teamService.updateTeam(updatedTeam).get(0).getPointsScored(), updatedTeam.getPointsScored());
-//        assertEquals(teamService.updateTeam(updatedTeam).get(0).getPointsAgainst(), updatedTeam.getPointsAgainst());
-//    }
-
-    //Make sure exception raised when the fantasyTeam does not exist
-    @Test(expected = resourceNotFoundException.class)
-    public void testExceptionUpdateTeam() throws resourceNotFoundException, resourceException {
-
-        //Initialize updated fantasyTeam
-        FantasyTeam updatedTeam = new FantasyTeam(12,
-                1,
-                "TEST TEAM",
-                1,
-                2,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                0,
-                0,
-                0,
-                0);
-
-        // teamID does not exist
-        Mockito.when(teamRepo.existsById(12)).thenReturn(false);
-
-        //call updateTeam method
-        teamService.updateTeam(updatedTeam);
-    }
-
-    // Make sure that delete raises exception when fantasyTeam not found
-    @Test(expected = resourceNotFoundException.class)
-    public void testExceptionDeleteTeamById() throws resourceNotFoundException {
-
-        // teamID does not exist
-        Mockito.when(teamRepo.existsById(2)).thenReturn(false);
-
-        //call deleteTeamById method
-        teamService.deleteTeamById(2);
-    }
-
     // Test that exception is raised when team_id provided that is not null
     @Test(expected = resourceException.class)
     public void testCheckPostInputs1() throws resourceException {
@@ -466,6 +321,196 @@ public class fantasyTeamTest {
                 0);
 
         teamService.checkPostInputs(testTeam);
+    }
+
+    @Test
+    public void testPostMultipleTeams() throws resourceException {
+        // Initialize team before postTeam called
+        FantasyTeam beforeTeam = new FantasyTeam(
+                1,
+                1,
+                "TEST TEAM",
+                1,
+                1,
+                70,
+                71,
+                72,
+                73,
+                74,
+                75,
+                76,
+                0,
+                0,
+                0,
+                0
+        );
+
+        // Create newly inserted fantasyTeam
+        FantasyTeam afterTeam = new FantasyTeam(
+                12,
+                1,
+                "other TEAM",
+                1,
+                1,
+                70,
+                71,
+                72,
+                73,
+                74,
+                75,
+                76,
+                0,
+                0,
+                0,
+                0);
+
+        List<FantasyTeam> teamslist = Arrays.asList(beforeTeam, afterTeam);
+
+        // save the team
+        Mockito.when(teamRepo.saveAll(teamslist)).thenReturn(teamslist);
+
+        // assert that the team_id gets correctly updated
+        assertEquals(teamslist, teamService.postMultipleTeams(teamslist));
+    }
+
+    // Test that the team_id is correctly updated by teamUser method
+    @Test
+    public void testUpdateTeam() throws resourceNotFoundException, resourceException {
+
+        //Initialize updated fantasyTeam
+        FantasyTeam dbTeam = new FantasyTeam(12,
+                1,
+                "TEST TEAM",
+                null,
+                null,
+                93,
+                94,
+                95,
+                96,
+                97,
+                98,
+                99,
+                0,
+                0,
+                0,
+                0);
+
+        //Initialize updated fantasyTeam
+        FantasyTeam updatedTeam = new FantasyTeam(12,
+                1,
+                "TEST TEAM",
+                1,
+                1,
+                93,
+                94,
+                95,
+                96,
+                97,
+                98,
+                99,
+                0,
+                0,
+                0,
+                0);
+
+        // fantasyTeam exists
+        Mockito.when(teamRepo.existsById(dbTeam.getTeamID())).thenReturn(Boolean.TRUE);
+
+        ArrayList list = new ArrayList();
+        list.add(dbTeam);
+        Mockito.when(teamRepo.findByTemplate(
+                dbTeam.getTeamID(),
+                dbTeam.getClientID(), null, null, null))
+                .thenReturn(Arrays.asList(dbTeam));
+
+        // save the changes
+        Mockito.when(teamRepo.save(dbTeam)).thenReturn(dbTeam);
+
+        // assert that team gets correctly updated by checking that all data members are equal to the updatedTeam
+        assertEquals(teamService.updateTeam(dbTeam).get(0).getTeamID(), dbTeam.getTeamID());
+//        assertEquals(teamService.updateTeam(updatedTeam).get(0).getClientID(), updatedTeam.getClientID());
+//        assertEquals(teamService.updateTeam(updatedTeam).get(0).getLeagueID(), updatedTeam.getLeagueID());
+//        assertEquals(teamService.updateTeam(updatedTeam).get(0).getOwnerID(), updatedTeam.getOwnerID());
+//        assertEquals(teamService.updateTeam(updatedTeam).get(0).getStartPG(), updatedTeam.getStartPG());
+//        assertEquals(teamService.updateTeam(updatedTeam).get(0).getStartSG(), updatedTeam.getStartSG());
+//        assertEquals(teamService.updateTeam(updatedTeam).get(0).getStartSF(), updatedTeam.getStartSF());
+//        assertEquals(teamService.updateTeam(updatedTeam).get(0).getStartPF(), updatedTeam.getStartPF());
+//        assertEquals(teamService.updateTeam(updatedTeam).get(0).getStartC(), updatedTeam.getStartC());
+//        assertEquals(teamService.updateTeam(updatedTeam).get(0).getBench1(), updatedTeam.getBench1());
+//        assertEquals(teamService.updateTeam(updatedTeam).get(0).getBench2(), updatedTeam.getBench2());
+//        assertEquals(teamService.updateTeam(updatedTeam).get(0).getTeamWins(), updatedTeam.getTeamWins());
+//        assertEquals(teamService.updateTeam(updatedTeam).get(0).getTeamLosses(), updatedTeam.getTeamLosses());
+//        assertEquals(teamService.updateTeam(updatedTeam).get(0).getPointsScored(), updatedTeam.getPointsScored());
+//        assertEquals(teamService.updateTeam(updatedTeam).get(0).getPointsAgainst(), updatedTeam.getPointsAgainst());
+    }
+
+    //Make sure exception raised when the fantasyTeam does not exist
+    @Test(expected = resourceNotFoundException.class)
+    public void testExceptionUpdateTeam() throws resourceNotFoundException, resourceException {
+
+        //Initialize updated fantasyTeam
+        FantasyTeam updatedTeam = new FantasyTeam(12,
+                1,
+                "TEST TEAM",
+                1,
+                2,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                0,
+                0,
+                0,
+                0);
+
+        // teamID does not exist
+        Mockito.when(teamRepo.existsById(12)).thenReturn(false);
+
+        //call updateTeam method
+        teamService.updateTeam(updatedTeam);
+    }
+
+    //Make sure exception raised when the fantasyTeam does not exist
+    @Test(expected = resourceException.class)
+    public void testExceptionUpdateTeamTeamID() throws resourceNotFoundException, resourceException {
+
+        //Initialize updated fantasyTeam
+        FantasyTeam updatedTeam = new FantasyTeam(null,
+                1,
+                "TEST TEAM",
+                1,
+                2,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                0,
+                0,
+                0,
+                0);
+
+        // teamID does not exist
+        Mockito.when(teamRepo.existsById(12)).thenReturn(false);
+
+        //call updateTeam method
+        teamService.updateTeam(updatedTeam);
+    }
+
+    // Make sure that delete raises exception when fantasyTeam not found
+    @Test(expected = resourceNotFoundException.class)
+    public void testExceptionDeleteTeamById() throws resourceNotFoundException {
+
+        // teamID does not exist
+        Mockito.when(teamRepo.existsById(2)).thenReturn(false);
+
+        //call deleteTeamById method
+        teamService.deleteTeamById(2);
     }
 
     // Test that exception is raised when team_id provided is null

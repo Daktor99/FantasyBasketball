@@ -26,16 +26,16 @@ public class fantasyTeamService {
     fantasyLeagueRepository leagueRepo;
 
     @Autowired
-    private fantasyPlayerService playerService;
+    fantasyPlayerService playerService;
 
     // positions for pg & sg
-    private static final List<String> guardPositions = Arrays.asList("G", "G-F", "F-G");
+    static final List<String> guardPositions = Arrays.asList("G", "G-F", "F-G");
 
     // positions for sf & pf
-    private static final List<String> forwardPositions = Arrays.asList("G-F", "F-G", "F", "F-C", "C-F");
+    static final List<String> forwardPositions = Arrays.asList("G-F", "F-G", "F", "F-C", "C-F");
 
     // positions for c
-    private static final List<String> centerPositions = Arrays.asList("F-C", "C-F", "C");
+    static final List<String> centerPositions = Arrays.asList("F-C", "C-F", "C");
 
     // find by ID
     public List<FantasyTeam> getByID(Integer teamID) throws resourceNotFoundException {
@@ -363,7 +363,7 @@ public class fantasyTeamService {
         }
     }
 
-    private void updateBench2(FantasyTeam currentTeam,
+    public void updateBench2(FantasyTeam currentTeam,
                               List<Integer> teamPlayerList,
                               Integer playerID) throws resourceException {
 
