@@ -21,37 +21,9 @@ jobs:
       with:
         java-version: '11'
         distribution: 'adopt'
-        
     - name: Build with Maven
       run: mvn -B package --file FantasyBasketball/pom.xml
-
-    - name: Run fantasyGameTests
-      run: mvn -Dtest=fantasyGameTests test 
-
-    - name: Run fantasyLeagueTests
-      run: cd FantasyBasketball && mvn -Dtest=fantasyLeagueTests test 
-      
-    - name: Run fantasyPlayerTests
-      run: cd FantasyBasketball && mvn -Dtest=fantasyPlayerTests test
-      
-    - name: Run fantasyStatsTests
-      run: cd FantasyBasketball && mvn -Dtest=fantasyStatsTests test
-      
-    - name: Run fantasyTeamTests
-      run: cd FantasyBasketball && mvn -Dtest=fantasyTeamTests test
-      
-    - name: Run userTests
-      run: cd FantasyBasketball && mvn -Dtest=userTests test
-      
-    - name: Run fantasyLeagueUtilityTests
-      run: cd FantasyBasketball && mvn -Dtest=fantasyLeagueUtilityTests test 
-      
-    - name: Run fantasyStatsUtilityTests
-      run: cd FantasyBasketball && mvn -Dtest=fantasyStatsUtilityTests test
-      
-    - name: Run RoundRobinSchedulerTests
-      run: cd FantasyBasketball && mvn -Dtest=RoundRobinSchedulerTests test 
-      
+    - name: Run test suites
+      run: cd FantasyBasketball && mvn test
     - name: Export test results
       run: cp FantasyBasketball/target/surefire-reports/*.txt UnitTesting
-    
