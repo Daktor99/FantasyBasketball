@@ -463,6 +463,13 @@ public class fantasyLeagueTest {
         leagueService.deleteLeagues(league_id);
     }
 
+//    @Test
+//    public void testDeleteLeagues() throws resourceNotFoundException {
+//        Integer league_id = 1;
+//        Mockito.when(leagueRepo.existsById(league_id)).thenReturn(Boolean.TRUE);
+//        assertleagueService.deleteLeagues(league_id);
+//    }
+
     @Test
     public void testCheckIfInvalidFalse() {
         String string = "hello";
@@ -499,111 +506,111 @@ public class fantasyLeagueTest {
         assertEquals(leagueService.checkIfInvalid(string), Boolean.TRUE);
     }
 
-    @Test(expected = resourceException.class)
-    public void testCheckInputsName() throws resourceException, resourceNotFoundException {
-        LocalDate fake_league_start_date = LocalDate.of(2021, 12, 31);
-        FantasyLeague fantasyLeague = new FantasyLeague(
-                17,
-                1,
-                "",
-                4,
-                4,
-                Boolean.TRUE,
-                fake_league_start_date,
-                8
-        );
-
-        leagueService.checkInputs(fantasyLeague);
-    }
-
-    @Test(expected=resourceException.class)
-    public void testCheckInputsNull() throws resourceException, resourceNotFoundException {
-        LocalDate fake_league_start_date = LocalDate.of(2021, 12, 31);
-        FantasyLeague fantasyLeague = new FantasyLeague(
-                17,
-                1,
-                null,
-                4,
-                4,
-                Boolean.TRUE,
-                fake_league_start_date,
-                8
-        );
-        Mockito.when(fantasyLeague.getLeagueName()).thenThrow(NullPointerException.class);
-
-        leagueService.checkInputs(fantasyLeague);
-    }
-
-    @Test(expected = resourceException.class)
-    public void testCheckInputsSizeMin() throws resourceException, resourceNotFoundException {
-        LocalDate fake_league_start_date = LocalDate.of(2021, 12, 31);
-        FantasyLeague badLeague = new FantasyLeague(
-                17,
-                1,
-                "fake reference league",
-                4,
-                0,
-                Boolean.TRUE,
-                fake_league_start_date,
-                8
-        );
-
-        leagueService.checkInputs(badLeague);
-    }
-
-    @Test(expected = resourceException.class)
-    public void testCheckInputsSizeOdd() throws resourceException, resourceNotFoundException {
-        LocalDate fake_league_start_date = LocalDate.of(2021, 12, 31);
-
-        FantasyLeague badLeague = new FantasyLeague(
-                17,
-                1,
-                "fake reference league",
-                4,
-                9,
-                Boolean.TRUE,
-                fake_league_start_date,
-                8
-        );
-
-        leagueService.checkInputs(badLeague);
-    }
-
-    @Test(expected = resourceException.class)
-    public void testCheckInputsWeeks() throws resourceException, resourceNotFoundException {
-        LocalDate fake_league_start_date = LocalDate.of(2021, 12, 31);
-
-        FantasyLeague badLeague = new FantasyLeague(
-                17,
-                1,
-                "fake reference league",
-                4,
-                4,
-                Boolean.TRUE,
-                fake_league_start_date,
-                0
-        );
-
-        leagueService.checkInputs(badLeague);
-    }
-
-    @Test
-    public void testCheckInputsPass() throws resourceException, resourceNotFoundException {
-        LocalDate fake_league_start_date = LocalDate.of(2021, 12, 31);
-
-        FantasyLeague badLeague = new FantasyLeague(
-                17,
-                1,
-                "fake reference league",
-                4,
-                4,
-                Boolean.TRUE,
-                fake_league_start_date,
-                8
-        );
-
-        leagueService.checkInputs(badLeague);
-    }
+//    @Test(expected = resourceException.class)
+//    public void testCheckInputsName() throws resourceException, resourceNotFoundException {
+//        LocalDate fake_league_start_date = LocalDate.of(2021, 12, 31);
+//        FantasyLeague fantasyLeague = new FantasyLeague(
+//                17,
+//                1,
+//                "",
+//                4,
+//                4,
+//                Boolean.TRUE,
+//                fake_league_start_date,
+//                8
+//        );
+//
+//        leagueService.checkInputs(fantasyLeague);
+//    }
+//
+//    @Test(expected=resourceException.class)
+//    public void testCheckInputsNull() throws resourceException, resourceNotFoundException {
+//        LocalDate fake_league_start_date = LocalDate.of(2021, 12, 31);
+//        FantasyLeague fantasyLeague = new FantasyLeague(
+//                17,
+//                1,
+//                null,
+//                4,
+//                4,
+//                Boolean.TRUE,
+//                fake_league_start_date,
+//                8
+//        );
+//        Mockito.when(fantasyLeague.getLeagueName()).thenThrow(NullPointerException.class);
+//
+//        leagueService.checkInputs(fantasyLeague);
+//    }
+//
+//    @Test(expected = resourceException.class)
+//    public void testCheckInputsSizeMin() throws resourceException, resourceNotFoundException {
+//        LocalDate fake_league_start_date = LocalDate.of(2021, 12, 31);
+//        FantasyLeague badLeague = new FantasyLeague(
+//                17,
+//                1,
+//                "fake reference league",
+//                4,
+//                0,
+//                Boolean.TRUE,
+//                fake_league_start_date,
+//                8
+//        );
+//
+//        leagueService.checkInputs(badLeague);
+//    }
+//
+//    @Test(expected = resourceException.class)
+//    public void testCheckInputsSizeOdd() throws resourceException, resourceNotFoundException {
+//        LocalDate fake_league_start_date = LocalDate.of(2021, 12, 31);
+//
+//        FantasyLeague badLeague = new FantasyLeague(
+//                17,
+//                1,
+//                "fake reference league",
+//                4,
+//                9,
+//                Boolean.TRUE,
+//                fake_league_start_date,
+//                8
+//        );
+//
+//        leagueService.checkInputs(badLeague);
+//    }
+//
+//    @Test(expected = resourceException.class)
+//    public void testCheckInputsWeeks() throws resourceException, resourceNotFoundException {
+//        LocalDate fake_league_start_date = LocalDate.of(2021, 12, 31);
+//
+//        FantasyLeague badLeague = new FantasyLeague(
+//                17,
+//                1,
+//                "fake reference league",
+//                4,
+//                4,
+//                Boolean.TRUE,
+//                fake_league_start_date,
+//                0
+//        );
+//
+//        leagueService.checkInputs(badLeague);
+//    }
+//
+//    @Test
+//    public void testCheckInputsPass() throws resourceException, resourceNotFoundException {
+//        LocalDate fake_league_start_date = LocalDate.of(2021, 12, 31);
+//
+//        FantasyLeague badLeague = new FantasyLeague(
+//                17,
+//                1,
+//                "fake reference league",
+//                4,
+//                4,
+//                Boolean.TRUE,
+//                fake_league_start_date,
+//                8
+//        );
+//
+//        leagueService.checkInputs(badLeague);
+//    }
 
     @Test(expected = resourceException.class)
     public void testCheckPostInputs() throws resourceException, resourceNotFoundException {

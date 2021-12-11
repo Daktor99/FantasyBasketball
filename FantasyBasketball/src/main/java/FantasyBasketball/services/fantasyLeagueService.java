@@ -150,7 +150,6 @@ public class fantasyLeagueService {
     public void deleteLeagues(Integer league_id) throws resourceNotFoundException {
         if(leagueRepo.existsById(league_id)) {
             leagueRepo.deleteById(league_id);
-            return;
         } else {
             throw new resourceNotFoundException("League not found in DB, cannot delete");
         }
