@@ -31,5 +31,9 @@ jobs:
       run: cd FantasyBasketball && mvn -Dtest=fantasyStatsTest test
     - name: Run fantasyPlayerTest
       run: cd FantasyBasketball && mvn -Dtest=fantasyPlayerTest test
+    - name: Run fantasyGameTest
+      run: cd FantasyBasketball && mvn -Dtest=fantasyGameTest test
+    - name: Run fantasyLeagueTest
+      run: cd FantasyBasketball && mvn -Dtest=fantasyLeagueTest test
     - name: Export test results
       run: cp FantasyBasketball/target/surefire-reports/*.txt UnitTesting
