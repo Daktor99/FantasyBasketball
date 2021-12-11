@@ -37,7 +37,6 @@ public class fantasyLeagueTests {
     fantasyLeagueService fantasyLeagueService;
 
     @MockBean
-    @Autowired
     fantasyPlayerService fantasyPlayerService;
 
     @MockBean
@@ -51,16 +50,6 @@ public class fantasyLeagueTests {
 
     @MockBean
     fantasyGameRepository gameRepo;
-
-    @BeforeEach
-    public void setUp() {
-        //TODO tearDown function
-    }
-
-    @AfterEach
-    public void tearDown() {
-        //TODO tearDown function
-    }
 
     @Test
     public void testGetClientID() {
@@ -348,15 +337,15 @@ public class fantasyLeagueTests {
                 17,
                 1,
                 "fake new league",
-                4,
-                4,
-                Boolean.TRUE,
-                fake_league_start_date,
-                8
+                null,
+                null,
+                null,
+                null,
+                null
         );
-        Mockito.when(leagueRepo.save(newLeague)).thenReturn(newLeague);
+        Mockito.when(leagueRepo.save(referenceLeague)).thenReturn(newLeague);
 
-        assertEquals(fantasyLeagueService.updateLeagues(newLeague), List.of(newLeague));
+        assertEquals(List.of(newLeague), fantasyLeagueService.updateLeagues(newLeague));
     }
 
     @Test(expected = resourceNotFoundException.class)
@@ -631,123 +620,63 @@ public class fantasyLeagueTests {
         Integer league_id = 1;
         Integer client_id = 1;
 
-        LocalDate game1start = LocalDate.of(2022, 1, 1);
-        LocalDate game1end = LocalDate.of(2022, 1, 7);
-
-        FantasyGame realgame1 = new FantasyGame(
-                1,
-                1,
-                1,
-                1,
-                2,
-                game1start,
-                game1end,
-                1,
-                100,
-                90,
-                400,
-                399,
-                398,
-                397,
-                386,
-                385,
-                384,
-                383,
-                382,
-                381,
-                380,
-                379,
-                378,
-                377
-        );
-        FantasyGame realgame2 = new FantasyGame(
-                2,
-                1,
-                1,
-                3,
-                4,
-                game1start,
-                game1start,
-                3,
-                100,
-                90,
-                377,
-                376,
-                374,
-                373,
-                372,
-                371,
-                370,
-                369,
-                368,
-                367,
-                366,
-                365,
-                364,
-                363
-        );
-
-        LocalDate game2start = LocalDate.of(2022, 1, 8);
-        LocalDate game2end = LocalDate.of(2022, 1, 14);
-
-        FantasyGame realgame3 = new FantasyGame(
-                3,
-                1,
-                1,
-                3,
-                1,
-                game2start,
-                game2end,
-                3,
-                100,
-                90,
-                377,
-                376,
-                374,
-                373,
-                372,
-                371,
-                370,
-                369,
-                368,
-                367,
-                366,
-                365,
-                364,
-                363
-        );
-
-        FantasyGame realgame4 = new FantasyGame(
-                4,
-                1,
-                1,
-                4,
-                2,
-                game2start,
-                game2end,
-                4,
-                100,
-                90,
-                362,
-                361,
-                360,
-                359,
-                358,
-                357,
-                356,
-                355,
-                354,
-                353,
-                352,
-                351,
-                350,
-                349
-        );
-
         // making list of games to be saved
-        List<FantasyGame> gameList = Arrays.asList(realgame1, realgame2, realgame3, realgame4);
+        List<FantasyGame> gameList = new ArrayList<>();
+        Set<LocalDate> startDates = schedule.keySet();
+
+        for(LocalDate startDate: startDates) {
+
+            // loop through each individual matchup
+            for(List<Integer> matchup: schedule.get(startDate)) {
+                // initialize variables for insertion
+                Integer home_team_id = matchup.get(0);
+                Integer away_team_id = matchup.get(1);
+                LocalDate endDate    = startDate.plusWeeks(1);
+
+                // initialize FantasyGame instance & make sure scheduleID is not null (0 by default)
+                FantasyGame game = new FantasyGame(league_id,
+                        client_id,
+                        home_team_id,
+                        away_team_id,
+                        startDate,
+                        endDate);
+                game.setScheduleID(0);
+
+                // add this in list of games to be entered into DB
+                gameList.add(game);
+            } // end matchup looping
+
+        } // end week looping
+
         Mockito.when(gameRepo.saveAll(gameList)).thenReturn(gameList);
-        assertEquals(gameList, fantasyLeagueService.postGames(schedule, league_id, client_id));
+        List<FantasyGame> expected = gameList;
+        List<FantasyGame> returned = fantasyLeagueService.postGames(schedule, league_id, client_id);
+        for (Integer i=0; i<4; i++) {
+            assertEquals(expected.get(i).getScheduleID(), returned.get(i).getScheduleID());
+            assertEquals(expected.get(i).getLeagueID(), returned.get(i).getLeagueID());
+            assertEquals(expected.get(i).getClientID(), returned.get(i).getClientID());
+            assertEquals(expected.get(i).getHomeTeamID(), returned.get(i).getHomeTeamID());
+            assertEquals(expected.get(i).getAwayTeamID(), returned.get(i).getAwayTeamID());
+            assertEquals(expected.get(i).getGameStartDate(), returned.get(i).getGameStartDate());
+            assertEquals(expected.get(i).getGameEndDate(), returned.get(i).getGameEndDate());
+            assertEquals(expected.get(i).getWinner(), returned.get(i).getWinner());
+            assertEquals(expected.get(i).getHomePoints(), returned.get(i).getHomePoints());
+            assertEquals(expected.get(i).getAwayPoints(), returned.get(i).getAwayPoints());
+            assertEquals(expected.get(i).getStartHomePG(), returned.get(i).getStartHomePG());
+            assertEquals(expected.get(i).getStartHomeSG(), returned.get(i).getStartHomeSG());
+            assertEquals(expected.get(i).getStartHomeSF(), returned.get(i).getStartHomeSF());
+            assertEquals(expected.get(i).getStartHomePF(), returned.get(i).getStartHomePF());
+            assertEquals(expected.get(i).getStartHomeC(), returned.get(i).getStartHomeC());
+            assertEquals(expected.get(i).getHomeBench1(), returned.get(i).getHomeBench1());
+            assertEquals(expected.get(i).getHomeBench2(), returned.get(i).getHomeBench2());
+            assertEquals(expected.get(i).getStartAwayPG(), returned.get(i).getStartAwayPG());
+            assertEquals(expected.get(i).getStartAwaySG(), returned.get(i).getStartAwaySG());
+            assertEquals(expected.get(i).getStartAwaySF(), returned.get(i).getStartAwaySF());
+            assertEquals(expected.get(i).getStartAwayPF(), returned.get(i).getStartAwayPF());
+            assertEquals(expected.get(i).getStartAwayC(), returned.get(i).getStartAwayC());
+            assertEquals(expected.get(i).getAwayBench1(), returned.get(i).getAwayBench1());
+            assertEquals(expected.get(i).getAwayBench2(), returned.get(i).getAwayBench2());
+        }
     }
 
     @Test(expected = resourceException.class)
@@ -792,6 +721,7 @@ public class fantasyLeagueTests {
         Mockito.when(leagueRepo.existsById(league_id)).thenReturn(Boolean.TRUE);
         List<Integer> team_ids = Arrays.asList(1, 2, 3, 4, 5, 6);
         Mockito.when(teamRepo.findTeamsInLeague(league_id, client_id)).thenReturn(team_ids);
+//        Mockito.when(teamRepo.existsById(team_id)).thenReturn(Boolean.FALSE);
         fantasyLeagueService.checkDraftInputs(league_id, team_id, client_id);
     }
 

@@ -254,7 +254,8 @@ public class fantasyLeagueService {
         } // end week looping
 
         // save all of the games in gameList into DB and return the list of all saved games
-        return (List<FantasyGame>) gameRepo.saveAll(gameList);
+        gameRepo.saveAll(gameList);
+        return gameList;
     }
 
     public void checkValidSize(FantasyLeague league, Integer teamSize) throws resourceException {
