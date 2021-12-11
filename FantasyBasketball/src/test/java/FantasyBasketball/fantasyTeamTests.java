@@ -627,7 +627,7 @@ public class fantasyTeamTests {
         teamService.checkOwnerAndLeagueNotUpdated(ownerID, leagueID);
     }
 
-    @Test
+    @Test(expected = resourceException.class)
     public void testUpdatePG1() throws resourceException {
         FantasyTeam currentTeam =  new FantasyTeam(
                 1,
@@ -652,4 +652,58 @@ public class fantasyTeamTests {
         Integer playerID = null;
         teamService.updatePG(currentTeam, playerPositionMap, teamPlayerList, playerID);
     }
+
+    @Test(expected = resourceException.class)
+    public void testUpdatePG2() throws resourceException {
+        FantasyTeam currentTeam =  new FantasyTeam(
+                1,
+                1,
+                "my team",
+                1,
+                1,
+                99,
+                100,
+                101,
+                102,
+                103,
+                104,
+                105,
+                0,
+                0,
+                0,
+                0
+        );;
+        HashMap<Integer, String> playerPositionMap =  new HashMap<>();
+        List<Integer> teamPlayerList = Arrays.asList(6, 2, 3, 4, 5);
+        Integer playerID = 99;
+        teamService.updatePG(currentTeam, playerPositionMap, teamPlayerList, playerID);
+    }
+
+    @Test(expected = resourceException.class)
+    public void testUpdatePG3() throws resourceException {
+        FantasyTeam currentTeam =  new FantasyTeam(
+                1,
+                1,
+                "my team",
+                1,
+                1,
+                99,
+                100,
+                101,
+                102,
+                103,
+                104,
+                105,
+                0,
+                0,
+                0,
+                0
+        );;
+        HashMap<Integer, String> playerPositionMap =  new HashMap<>();
+        playerPositionMap.put(99, "X");
+        List<Integer> teamPlayerList = Arrays.asList(1, 2, 3, 4, 5);
+        Integer playerID = 99;
+        teamService.updatePG(currentTeam, playerPositionMap, teamPlayerList, playerID);
+    }
+
 }
