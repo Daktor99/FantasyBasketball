@@ -13,10 +13,7 @@ import FantasyBasketball.repositories.fantasyTeamRepository;
 import FantasyBasketball.services.fantasyLeagueService;
 import FantasyBasketball.services.fantasyPlayerService;
 import org.junit.Test;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -29,7 +26,7 @@ import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@RunWith (SpringRunner.class)
+@RunWith(SpringRunner.class)
 @SpringBootTest
 public class fantasyLeagueTest {
 
@@ -461,23 +458,23 @@ public class fantasyLeagueTest {
         fantasyLeagueService.checkInputs(fantasyLeague);
     }
 
-    @Test(expected=resourceException.class)
-    public void testCheckInputsNull() throws resourceException, resourceNotFoundException {
-        LocalDate fake_league_start_date = LocalDate.of(2021, 12, 31);
-        FantasyLeague fantasyLeague = new FantasyLeague(
-                17,
-                1,
-                null,
-                4,
-                4,
-                Boolean.TRUE,
-                fake_league_start_date,
-                8
-        );
-        Mockito.when(fantasyLeague.getLeagueName()).thenThrow(NullPointerException.class);
-
-        fantasyLeagueService.checkInputs(fantasyLeague);
-    }
+//    @Test(expected=resourceException.class)
+//    public void testCheckInputsNull() throws resourceException, resourceNotFoundException {
+//        LocalDate fake_league_start_date = LocalDate.of(2021, 12, 31);
+//        FantasyLeague fantasyLeague = new FantasyLeague(
+//                17,
+//                1,
+//                null,
+//                4,
+//                4,
+//                Boolean.TRUE,
+//                fake_league_start_date,
+//                8
+//        );
+//        Mockito.when(fantasyLeague.getLeagueName()).thenThrow(NullPointerException.class);
+//
+//        fantasyLeagueService.checkInputs(fantasyLeague);
+//    }
 
     @Test(expected = resourceException.class)
     public void testCheckInputsSizeMin() throws resourceException, resourceNotFoundException {
