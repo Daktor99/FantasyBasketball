@@ -620,7 +620,7 @@ public class fantasyTeamTests {
         teamService.checkOwnerAndLeagueNotUpdated(ownerID, leagueID);
     }
 
-    @Test(expected = resourceException.class)
+    @Test(expected = PresourceException.class)
     public void checkOwnerAndLeagueNotUpdated2() throws resourceException {
         Integer ownerID = 1;
         Integer leagueID = null;
