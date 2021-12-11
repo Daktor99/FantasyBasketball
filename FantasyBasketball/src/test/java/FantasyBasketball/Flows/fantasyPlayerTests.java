@@ -32,16 +32,6 @@ public class fantasyPlayerTests {
     @MockBean
     private fantasyPlayerRepository playerRepo;
 
-    @Before
-    public void setUp() {
-        //setUp function
-    }
-
-    @After
-    public void tearDown() {
-        //tearDown function
-    }
-
     @Test
     public void testFantasyPlayer() {
 
@@ -326,6 +316,5 @@ public class fantasyPlayerTests {
         assertEquals(player_list.get(0).getPlayerID(), 6468);
 
     }
-
 
 }

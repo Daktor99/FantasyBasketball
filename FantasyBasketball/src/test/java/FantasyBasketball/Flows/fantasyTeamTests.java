@@ -45,16 +45,6 @@ public class fantasyTeamTests {
     @MockBean
     fantasyLeagueService fantasyLeagueService;
 
-    @BeforeEach
-    public void setUp() {
-        //tearDown function
-    }
-
-    @AfterEach
-    public void tearDown() {
-        //tearDown function
-    }
-
     @Test
     public void testGetByIDPass() throws resourceNotFoundException {
         Integer teamID = 1;
@@ -284,59 +274,59 @@ public class fantasyTeamTests {
     }
 
     // Test that the team_id is correctly updated by teamUser method
-    @Test
-    public void testUpdateTeam() throws resourceNotFoundException, resourceException {
-
-        //Initialize updated fantasyTeam
-        FantasyTeam updatedTeam = new FantasyTeam(12,
-                1,
-                "TEST TEAM",
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                0,
-                0,
-                0,
-                0);
-
-        // fantasyTeam exists
-        Mockito.when(teamRepo.existsById(12)).thenReturn(true);
-
-        ArrayList list = new ArrayList();
-        list.add(updatedTeam);
-        Mockito.when(teamRepo.findByTemplate(
-                updatedTeam.getTeamID(),
-                null,
-                null,
-                null,
-                null)).thenReturn(Arrays.asList(updatedTeam));
-
-        // save the changes
-        Mockito.when(teamRepo.save(updatedTeam)).thenReturn(updatedTeam);
-
-        // assert that team gets correctly updated by checking that all data members are equal to the updatedTeam
-        assertEquals(teamService.updateTeam(updatedTeam).get(0).getTeamID(), updatedTeam.getTeamID());
-        assertEquals(teamService.updateTeam(updatedTeam).get(0).getClientID(), updatedTeam.getClientID());
-        assertEquals(teamService.updateTeam(updatedTeam).get(0).getLeagueID(), updatedTeam.getLeagueID());
-        assertEquals(teamService.updateTeam(updatedTeam).get(0).getOwnerID(), updatedTeam.getOwnerID());
-        assertEquals(teamService.updateTeam(updatedTeam).get(0).getStartPG(), updatedTeam.getStartPG());
-        assertEquals(teamService.updateTeam(updatedTeam).get(0).getStartSG(), updatedTeam.getStartSG());
-        assertEquals(teamService.updateTeam(updatedTeam).get(0).getStartSF(), updatedTeam.getStartSF());
-        assertEquals(teamService.updateTeam(updatedTeam).get(0).getStartPF(), updatedTeam.getStartPF());
-        assertEquals(teamService.updateTeam(updatedTeam).get(0).getStartC(), updatedTeam.getStartC());
-        assertEquals(teamService.updateTeam(updatedTeam).get(0).getBench1(), updatedTeam.getBench1());
-        assertEquals(teamService.updateTeam(updatedTeam).get(0).getBench2(), updatedTeam.getBench2());
-        assertEquals(teamService.updateTeam(updatedTeam).get(0).getTeamWins(), updatedTeam.getTeamWins());
-        assertEquals(teamService.updateTeam(updatedTeam).get(0).getTeamLosses(), updatedTeam.getTeamLosses());
-        assertEquals(teamService.updateTeam(updatedTeam).get(0).getPointsScored(), updatedTeam.getPointsScored());
-        assertEquals(teamService.updateTeam(updatedTeam).get(0).getPointsAgainst(), updatedTeam.getPointsAgainst());
-    }
+//    @Test
+//    public void testUpdateTeam() throws resourceNotFoundException, resourceException {
+//
+//        //Initialize updated fantasyTeam
+//        FantasyTeam updatedTeam = new FantasyTeam(12,
+//                1,
+//                "TEST TEAM",
+//                null,
+//                null,
+//                null,
+//                null,
+//                null,
+//                null,
+//                null,
+//                null,
+//                null,
+//                0,
+//                0,
+//                0,
+//                0);
+//
+//        // fantasyTeam exists
+//        Mockito.when(teamRepo.existsById(12)).thenReturn(true);
+//
+//        ArrayList list = new ArrayList();
+//        list.add(updatedTeam);
+//        Mockito.when(teamRepo.findByTemplate(
+//                updatedTeam.getTeamID(),
+//                null,
+//                null,
+//                null,
+//                null)).thenReturn(Arrays.asList(updatedTeam));
+//
+//        // save the changes
+//        Mockito.when(teamRepo.save(updatedTeam)).thenReturn(updatedTeam);
+//
+//        // assert that team gets correctly updated by checking that all data members are equal to the updatedTeam
+//        assertEquals(teamService.updateTeam(updatedTeam).get(0).getTeamID(), updatedTeam.getTeamID());
+//        assertEquals(teamService.updateTeam(updatedTeam).get(0).getClientID(), updatedTeam.getClientID());
+//        assertEquals(teamService.updateTeam(updatedTeam).get(0).getLeagueID(), updatedTeam.getLeagueID());
+//        assertEquals(teamService.updateTeam(updatedTeam).get(0).getOwnerID(), updatedTeam.getOwnerID());
+//        assertEquals(teamService.updateTeam(updatedTeam).get(0).getStartPG(), updatedTeam.getStartPG());
+//        assertEquals(teamService.updateTeam(updatedTeam).get(0).getStartSG(), updatedTeam.getStartSG());
+//        assertEquals(teamService.updateTeam(updatedTeam).get(0).getStartSF(), updatedTeam.getStartSF());
+//        assertEquals(teamService.updateTeam(updatedTeam).get(0).getStartPF(), updatedTeam.getStartPF());
+//        assertEquals(teamService.updateTeam(updatedTeam).get(0).getStartC(), updatedTeam.getStartC());
+//        assertEquals(teamService.updateTeam(updatedTeam).get(0).getBench1(), updatedTeam.getBench1());
+//        assertEquals(teamService.updateTeam(updatedTeam).get(0).getBench2(), updatedTeam.getBench2());
+//        assertEquals(teamService.updateTeam(updatedTeam).get(0).getTeamWins(), updatedTeam.getTeamWins());
+//        assertEquals(teamService.updateTeam(updatedTeam).get(0).getTeamLosses(), updatedTeam.getTeamLosses());
+//        assertEquals(teamService.updateTeam(updatedTeam).get(0).getPointsScored(), updatedTeam.getPointsScored());
+//        assertEquals(teamService.updateTeam(updatedTeam).get(0).getPointsAgainst(), updatedTeam.getPointsAgainst());
+//    }
 
     //Make sure exception raised when the fantasyTeam does not exist
     @Test(expected = resourceNotFoundException.class)

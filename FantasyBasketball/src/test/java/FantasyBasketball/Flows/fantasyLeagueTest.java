@@ -31,7 +31,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @RunWith (SpringRunner.class)
 @SpringBootTest
-public class fantasyLeagueTests {
+public class fantasyLeagueTest {
 
     @Autowired
     fantasyLeagueService fantasyLeagueService;
@@ -50,12 +50,6 @@ public class fantasyLeagueTests {
 
     @MockBean
     fantasyGameRepository gameRepo;
-
-    @Test
-    public void testGetClientID() {
-        //TODO are we using this function / implemented? / update / pass & fail!
-        assertEquals(1, 1);
-    }
 
     @Test
     public void testGetLeaguesByIDPass() throws resourceNotFoundException {
@@ -463,6 +457,24 @@ public class fantasyLeagueTests {
                 fake_league_start_date,
                 8
         );
+
+        fantasyLeagueService.checkInputs(fantasyLeague);
+    }
+
+    @Test(expected=resourceException.class)
+    public void testCheckInputsNull() throws resourceException, resourceNotFoundException {
+        LocalDate fake_league_start_date = LocalDate.of(2021, 12, 31);
+        FantasyLeague fantasyLeague = new FantasyLeague(
+                17,
+                1,
+                null,
+                4,
+                4,
+                Boolean.TRUE,
+                fake_league_start_date,
+                8
+        );
+        Mockito.when(fantasyLeague.getLeagueName()).thenThrow(NullPointerException.class);
 
         fantasyLeagueService.checkInputs(fantasyLeague);
     }

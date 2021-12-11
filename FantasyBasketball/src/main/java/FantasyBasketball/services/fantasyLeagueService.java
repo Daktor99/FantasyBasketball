@@ -7,7 +7,6 @@ import FantasyBasketball.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -25,9 +24,6 @@ public class fantasyLeagueService {
 
     @Autowired
     fantasyLeagueRepository leagueRepo;
-
-    @Autowired
-    fantasyPlayerRepository playerRepo;
 
     @Autowired
     fantasyTeamRepository teamRepo;
@@ -154,6 +150,7 @@ public class fantasyLeagueService {
     public void deleteLeagues(Integer league_id) throws resourceNotFoundException {
         if(leagueRepo.existsById(league_id)) {
             leagueRepo.deleteById(league_id);
+            return;
         } else {
             throw new resourceNotFoundException("League not found in DB, cannot delete");
         }
@@ -187,6 +184,7 @@ public class fantasyLeagueService {
             throw new resourceException("League formatted incorrectly please provide the following:\n" +
                     "league_name, admin_id, league_size, league_start_date, num_weeks.");
         }
+        return;
     }
 
     // check post inputs
@@ -195,6 +193,7 @@ public class fantasyLeagueService {
             throw new resourceException("Do not provide league_id.");
         }
         checkInputs(fantasyLeague);
+        return;
     }
 
     // check put inputs
