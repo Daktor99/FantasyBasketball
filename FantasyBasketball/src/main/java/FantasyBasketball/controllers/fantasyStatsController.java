@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
+import static FantasyBasketball.controllers.controllerUtils.*;
+
 @Controller
 public class fantasyStatsController {
 
@@ -48,40 +50,12 @@ public class fantasyStatsController {
             @RequestParam(value = "turnovers", required = false) Integer turnovers,
             @RequestParam(value = "tot_points", required = false) Integer totPoints) {
 
-        // TODO: Implement authentication so client_id gets filled up automatically
-        int client_id = 1;
-
-        // Log request
-        log.info("client with id {} is calling getFantasyStatsByTemplate with " +
-                        "stats_id {}, " +
-                        "player_id {}, " +
-                        "schedule_id {}, " +
-                        "league_id {}, " +
-                        "three_points {}, " +
-                        "two_points {}, " +
-                        "free_throws {}, " +
-                        "rebounds {}, " +
-                        "assists {}, " +
-                        "blocks {}, " +
-                        "steals {}, " +
-                        "turnovers {}, " +
-                        "tot_points {}",
-                client_id,
-                stats_id,
-                player_id,
-                schedule_id,
-                league_id,
-                threeP,
-                twoP,
-                freeThrows,
-                rebounds,
-                assists,
-                blocks,
-                steals,
-                turnovers,
-                totPoints);
-
         try {
+
+            // log get request and get client id
+            logGetRequest(request, log);
+            Integer client_id = getClientId(request);
+
             List<FantasyStats> result =  fantasyStatsService.getStatsByTemplate(
                     stats_id,
                     player_id,
@@ -101,7 +75,7 @@ public class fantasyStatsController {
             log.info("FantasyStats retrieved successfully");
             return new ResponseEntity<>(result, HttpStatus.OK);
         } catch (Exception e) {
-            log.error("Exception on GET: ", e);
+            log.error("Exception on GET: " + e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -109,30 +83,23 @@ public class fantasyStatsController {
     @RequestMapping(value = "/fantasyStats", method = RequestMethod.POST)
     public ResponseEntity<?> createStats(@RequestBody FantasyStats newStats) {
 
-        // TODO: Implement authentication so client_id gets filled up automatically
-        newStats.setClient_id(1);
-
-        log.info("client with id {} is creating FantasyStats with " +
-                        "player_id {}, " +
-                        "schedule_id {}, " +
-                        "league_id {}",
-                newStats.getClient_id(),
-                newStats.getPlayer_id(),
-                newStats.getSchedule_id(),
-                newStats.getLeague_id());
-
-        log.info(newStats.toString());
-
         try {
+
+            // log post request and get client id
+            logPostRequest(request, log, newStats.toString());
+            Integer client_id = getClientId(request);
+            newStats.setClient_id(client_id);
+
+            // post to stats
             fantasyStatsService.checkPostInputs(newStats);
             List<FantasyStats> result = fantasyStatsService.postStats(newStats);
             log.info("Fantasy Stats entry has been created successfully");
             return new ResponseEntity<>(result, HttpStatus.OK);
         } catch (DataIntegrityViolationException e) {
-            log.error("Exception on POST: ", e);
+            log.error("Exception on POST: " + e.getMessage());
             return new ResponseEntity<>("This action is not allowed, please check values and try again.", HttpStatus.UNPROCESSABLE_ENTITY);
         } catch (Exception e) {
-            log.error("Exception on POST: ", e);
+            log.error("Exception on POST: " + e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -140,27 +107,21 @@ public class fantasyStatsController {
     @RequestMapping(value = "/fantasyStats", method = RequestMethod.PUT)
     public ResponseEntity<?> updateStats(@RequestBody FantasyStats stats) {
 
-        // TODO: Implement authentication so client_id gets filled up automatically
-        stats.setClient_id(1);
-
-        log.info("client with id {} is updating FantasyStats with " +
-                        "player_id {}, " +
-                        "schedule_id {}, " +
-                        "league_id {}",
-                stats.getClient_id(),
-                stats.getPlayer_id(),
-                stats.getSchedule_id(),
-                stats.getLeague_id());
-
-        log.info(stats.toString());
 
         try{
-            // TODO: This method will call the information from ball don't lie and update the Fantasy Stats
+
+            // log put request and get client id
+            logPutRequest(request, log, stats.toString());
+            Integer client_id = getClientId(request);
+
+            // set client id and update stat
+            stats.setClient_id(client_id);
             List<FantasyStats> result = fantasyStatsService.updateStats(stats);
             log.info("Fantasy Stats entry has been updated successfully");
             return new ResponseEntity<>(result, HttpStatus.OK);
+
         } catch (Exception e) {
-            log.error("Exception on PUT: ", e);
+            log.error("Exception on PUT: " + e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -171,28 +132,22 @@ public class fantasyStatsController {
                                          @RequestParam(value = "schedule_id", required = false) Integer schedule_id,
                                          @RequestParam(value = "league_id", required = false) Integer league_id) {
 
-        // TODO: Implement authentication so client_id gets filled up automatically by whoever requests it
-        int client_id = 1;
-        log.info("client with id {} is deleting FantasyStats with " +
-                        "player_id {}, " +
-                        "schedule_id {}, " +
-                        "league_id {}",
-                client_id,
-                player_id,
-                schedule_id,
-                league_id);
-
-        if (league_id == null) {
-            log.error("Cannot delete data without a league_id provided.");
-            return new ResponseEntity<>("Cannot delete data without a league_id provided.",
-                    HttpStatus.BAD_REQUEST);
-        } else if (stats_id == null && player_id == null && schedule_id == null) {
-            log.error("Cannot delete data with no player_id, stats_id, schedule_id");
-            return new ResponseEntity<>("Cannot delete data with no player_id, stats_id, schedule_id",
-                    HttpStatus.BAD_REQUEST);
-        }
-
         try {
+
+            // log put request and get client id
+            logDeleteRequest(request, log);
+            Integer client_id = getClientId(request);
+
+            if (league_id == null) {
+                log.error("Cannot delete data without a league_id provided.");
+                return new ResponseEntity<>("Cannot delete data without a league_id provided.",
+                        HttpStatus.BAD_REQUEST);
+            } else if (stats_id == null && player_id == null && schedule_id == null) {
+                log.error("Cannot delete data with no player_id, stats_id, schedule_id");
+                return new ResponseEntity<>("Cannot delete data with no player_id, stats_id, schedule_id",
+                        HttpStatus.BAD_REQUEST);
+            }
+
             if (stats_id !=  null){
                 fantasyStatsService.deleteStatsByID(stats_id);
                 log.info("Fantasy Stats by stats_id deleted successfully");
@@ -204,10 +159,10 @@ public class fantasyStatsController {
                 return new ResponseEntity<>(deleted_stats, HttpStatus.OK);
             }
         } catch (resourceNotFoundException e) {
-            log.error("Exception on DELETE: ", e);
+            log.error("Exception on DELETE: " + e.getMessage());
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception e) {
-            log.error("Exception on DELETE: ", e);
+            log.error("Exception on DELETE: " + e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

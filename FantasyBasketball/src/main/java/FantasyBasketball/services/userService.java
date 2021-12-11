@@ -29,7 +29,6 @@ public class userService {
     }
 
     // get operation
-    // TODO: ADD CLIENT COLUMN AND ensure that ClientID MUST BE GIVEN
     public List<User> getUsersByTemplate(Integer user_id,
                                          Integer client_id,
                                          String email,
@@ -41,10 +40,8 @@ public class userService {
 
     // post operation
     public List<User> postUser(User user) {
-        user.setUserID(0);
 
-        // This client_id will be updated later
-        user.setClientID(1);
+        user.setUserID(0);
         User result = userRepo.save(user);
         return List.of(result);
     }
@@ -52,8 +49,6 @@ public class userService {
     // put operation
     public List<User> updateUser(User user) throws resourceNotFoundException {
         if(userRepo.existsById(user.getUserID())) {
-            // This client_id will be updated later
-            user.setClientID(1);
 
             User result = userRepo.save(user);
             return List.of(result);
@@ -114,8 +109,7 @@ public class userService {
     // checking UserID before Putting
     public void checkPutInputs(User user) throws resourceException {
         if (user.getUserID() == null) {
-            throw new resourceException("User formatted incorrectly please provide the following:\n" +
-                    "user_id, username, email, first_name, last_name");
+            throw new resourceException("Please provide user_id.");
         }
         checkInputs(user);
     }

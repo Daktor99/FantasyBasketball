@@ -1,6 +1,7 @@
 package FantasyBasketball.controllers;
 import FantasyBasketball.exceptions.resourceException;
 import FantasyBasketball.exceptions.resourceNotFoundException;
+import FantasyBasketball.models.Client;
 import FantasyBasketball.models.User;
 import FantasyBasketball.services.userService;
 import org.slf4j.Logger;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+
+import static FantasyBasketball.controllers.controllerUtils.*;
 
 @RestController
 public class userController {
@@ -37,19 +40,16 @@ public class userController {
 
         try {
 
-            // log GET request
-            if (request.getQueryString() != null) {
-                log.info("GET: " + request.getRequestURL() + "?" + request.getQueryString());
-            } else {
-                log.info("GET: " + request.getRequestURL());
-            }
-            // This client_id will be updated later
-            Integer client_id = 1;
+            // log GET request and get client id
+            logGetRequest(request, log);
+            Integer client_id = getClientId(request);
+
+            // get users given client info and requested query parameters
             List<User> result = userService.getUsersByTemplate(user_id, client_id, email, username, first_name, last_name);
             return new ResponseEntity<>(result, HttpStatus.OK);
 
         } catch (Exception e) {
-            log.error("Exception on GET: ", e);
+            log.error("Exception on GET: " + e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -59,8 +59,12 @@ public class userController {
 
         try {
 
-            log.info("POST: " + request.getRequestURL());
-            log.info(newUser.toString());
+            // log post request and get client details
+            logPostRequest(request, log, newUser.toString());
+            Integer client_id = getClientId(request);
+
+            // make sure new user has correct client id
+            newUser.setClientID(client_id);
 
             // Checks to make sure the input is valid to insert in DB
             userService.checkPostInputs(newUser);
@@ -74,10 +78,10 @@ public class userController {
             log.error("Exception on POST: " + e.getMessage());
             return new ResponseEntity<>(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
         } catch (DataIntegrityViolationException e) {
-            log.error("Exception on POST: ", e);
+            log.error("Exception on POST: " + e.getMessage());
             return new ResponseEntity<>("This action is not allowed, please check values and try again.", HttpStatus.UNPROCESSABLE_ENTITY);
         } catch (Exception e) {
-            // all other exceptions
+            // other exceptions
             log.error("Exception on POST: ", e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -87,15 +91,18 @@ public class userController {
     public ResponseEntity<?> updateUser(@RequestBody User user) {
         try {
 
-            log.info("PUT: " + request.getRequestURL());
-            log.info(user.toString());
+            // log put request and get client id
+            logPutRequest(request, log, user.toString());
+            Integer client_id = getClientId(request);
 
-            // Checks to make sure the input is valid to insert in DB
+            // Ensure correct client_id, check to make sure the input is valid to insert in DB
+            user.setClientID(client_id);
             userService.checkPutInputs(user);
 
             // Regular put
             List<User> result = userService.updateUser(user);
             return new ResponseEntity<>(result, HttpStatus.OK);
+
         } catch (resourceException e) {
             // exception thrown if User instance is not formatted correctly
             log.error("Exception on PUT: " + e.getMessage());
@@ -105,21 +112,23 @@ public class userController {
             log.error("Exception on PUT: " + e.getMessage());
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (DataIntegrityViolationException e) {
-            log.error("Exception on PUT: ", e);
+            log.error("Exception on PUT: " + e.getMessage());
             return new ResponseEntity<>("This action is not allowed, please check values and try again.", HttpStatus.UNPROCESSABLE_ENTITY);
         } catch (Exception e) {
-            // all other exceptions
-            log.error("Exception on PUT: ", e);
+            // other exceptions
+            log.error("Exception on PUT: " + e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @RequestMapping(value = "/users", method = RequestMethod.DELETE)
-    public ResponseEntity<?> deleteUser(@RequestParam(value = "user_id", required = true) Integer user_id) {
+    public ResponseEntity<?> deleteUser(@RequestParam(value = "user_id") Integer user_id) {
         try {
 
-            log.info("DELETE: " + request.getRequestURL() + "?" + request.getQueryString());
+            // log delete request
+            logDeleteRequest(request, log);
 
+            // delete from
             userService.deleteUserById(user_id);
             return new ResponseEntity<>(HttpStatus.OK);
 
@@ -127,11 +136,11 @@ public class userController {
             log.error("Exception on DELETE: " + e.getMessage());
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (DataIntegrityViolationException e) {
-            log.error("Exception on DELETE: ", e);
+            log.error("Exception on DELETE: " + e.getMessage());
             return new ResponseEntity<>("This action is not allowed, please check values and try again.", HttpStatus.UNPROCESSABLE_ENTITY);
         } catch (Exception e) {
-            // all other exceptions
-            log.error("Exception on DELETE: ", e);
+            // other exceptions
+            log.error("Exception on DELETE: " + e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

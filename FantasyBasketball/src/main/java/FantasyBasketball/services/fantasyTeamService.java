@@ -63,7 +63,7 @@ public class fantasyTeamService {
     }
 
     // helper function to check if the league is full or not yet to apply constraint to posting new team to a league
-    public Boolean checkLeagueFull(FantasyBasketball.models.FantasyLeague league) {
+    public Boolean checkLeagueFull(FantasyLeague league) {
         Integer leagueID = league.getLeagueID();
         Integer leagueClientID = league.getClientID();
         Integer leagueSize = league.getLeagueSize();
@@ -91,8 +91,6 @@ public class fantasyTeamService {
 
         team.setTeamID(0);
 
-        // TODO: This client_id will be updated later
-        team.setClientID(1);
         FantasyTeam result = teamRepo.save(team);
         return List.of(result);
     }
@@ -104,16 +102,18 @@ public class fantasyTeamService {
     // put operation
     public List<FantasyTeam> updateTeam(FantasyTeam team) throws resourceNotFoundException, resourceException {
 
+        Integer team_id = team.getTeamID();
+        if (team_id == null) {
+            throw new resourceException("team_id is required.");
+        }
 
         if(teamRepo.existsById(team.getTeamID())) {
 
             // pull team from DB
             FantasyTeam dbTeam = teamRepo.findByTemplate(team.getTeamID(),
-                    null, null, null, null).get(0);
+                    team.getClientID(), null, null, null).get(0);
 
             FantasyTeam updatedTeam = updateValues(dbTeam, team);
-            //This client_id will be updated later
-            team.setClientID(1);
 
             checkPutInputs(updatedTeam);
 
@@ -146,6 +146,15 @@ public class fantasyTeamService {
             if (teamName.length() > 128 || teamName.isBlank()) {
                 throw new resourceException("Team name must be between 1-128 characters.");
             }
+
+            if (team.getOwnerID() == null) {
+                throw new resourceException("Please provide owner_id.");
+            }
+
+            if (team.getLeagueID() == null) {
+                throw new resourceException("Please provide league_id corresponding to team.");
+            }
+
         } catch (NullPointerException e) {
             throw new resourceException("Post to team formatted incorrectly please provide the following:\n" +
                                         "team_name,\n" +

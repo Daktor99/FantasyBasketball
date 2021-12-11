@@ -2,10 +2,10 @@ package FantasyBasketball.controllers;
 
 import FantasyBasketball.exceptions.resourceException;
 import FantasyBasketball.exceptions.resourceNotFoundException;
+import FantasyBasketball.models.Client;
 import FantasyBasketball.models.FantasyGame;
 import FantasyBasketball.models.FantasyLeague;
 import FantasyBasketball.models.FantasyPlayer;
-import FantasyBasketball.repositories.fantasyPlayerRepository;
 import FantasyBasketball.repositories.playerDataRepository;
 import FantasyBasketball.services.fantasyLeagueService;
 import FantasyBasketball.services.fantasyPlayerService;
@@ -26,6 +26,8 @@ import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.util.Hashtable;
 import java.util.List;
+
+import static FantasyBasketball.controllers.controllerUtils.*;
 
 @Controller
 public class fantasyLeagueController {
@@ -57,15 +59,10 @@ public class fantasyLeagueController {
                                                   @RequestParam(value = "num_weeks", required = false) Integer num_weeks) {
         try {
 
-            // log GET request
-            if (request.getQueryString() != null) {
-                log.info("GET: " + request.getRequestURL() + "?" + request.getQueryString());
-            } else {
-                log.info("GET: " + request.getRequestURL());
-            }
+            // log GET request and get client id
+            logGetRequest(request, log);
+            Integer client_id = getClientId(request);
 
-            //This client_id will be updated later
-            Integer client_id = 1;
             List<FantasyLeague> result = fantasyLeagueService.getLeaguesByTemplate(league_id,
                     client_id,
                     league_name,
@@ -87,24 +84,29 @@ public class fantasyLeagueController {
 
         try {
 
-            log.info("POST: " + request.getRequestURL());
-            log.info(newLeague.toString());
+            // log post request and get client id
+            logPostRequest(request, log, newLeague.toString());
+            Integer client_id = getClientId(request);
 
-            newLeague.setClientID(1);
-            // Checks to make sure the input is valid to insert in DB
+
+            // set client id and check inputs
+            newLeague.setClientID(client_id);
             fantasyLeagueService.checkPostInputs(newLeague);
 
             // Regular post
             List<FantasyLeague> result = fantasyLeagueService.postLeagues(newLeague);
+
+            // TODO: populate fantasy_player table with player_data table on creation
+
             return new ResponseEntity<>(result, HttpStatus.CREATED);
 
         } catch(resourceException e) {
             // exception thrown if League instance is not formatted correctly
-            log.error("Exception on POST: ", e);
+            log.error("Exception on POST: " + e.getMessage());
             return new ResponseEntity<>(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
         } catch (Exception e) {
-            // all other exceptions
-            log.error("Exception on POST: ", e);
+            // other exceptions
+            log.error("Exception on POST: " + e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -113,38 +115,44 @@ public class fantasyLeagueController {
     public ResponseEntity<?> updateLeagues(@RequestBody FantasyLeague fantasyLeague) {
         try {
 
-            log.info("PUT: " + request.getRequestURL());
-            log.info(fantasyLeague.toString());
+            // log put request and get client id
+            logPutRequest(request, log, fantasyLeague.toString());
+            Integer client_id = getClientId(request);
 
             // Checks to make sure the input is valid to insert in DB
+            fantasyLeague.setClientID(client_id);
             fantasyLeagueService.checkPutInputs(fantasyLeague);
 
             // Regular put
             List<FantasyLeague> result = fantasyLeagueService.updateLeagues(fantasyLeague);
             return new ResponseEntity<>(result, HttpStatus.OK);
+
         } catch (resourceException e) {
             // exception thrown if League instance is not formatted correctly
-            log.error("Exception on PUT: ", e);
+            log.error("Exception on PUT: " + e.getMessage());
             return new ResponseEntity<>(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
         } catch (resourceNotFoundException e) {
             // If league not found in the database, throw exception not found
-            log.error("Exception on PUT: ", e);
+            log.error("Exception on PUT: " + e.getMessage());
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception e) {
-            // all other exceptions
-            log.error("Exception on PUT: ", e);
+            // other exceptions
+            log.error("Exception on PUT: " + e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @RequestMapping(value = "/fantasyLeagues", method = RequestMethod.DELETE)
-    public ResponseEntity<?> deleteLeagues(@RequestParam(value = "league_id", required = true) Integer league_id) {
+    public ResponseEntity<?> deleteLeagues(@RequestParam(value = "league_id") Integer league_id) {
         try {
 
-            log.info("DELETE: " + request.getRequestURL() + "?" + request.getQueryString());
+            // log delete request
+            logDeleteRequest(request, log);
 
+            // deletion
             fantasyLeagueService.deleteLeagues(league_id);
             return new ResponseEntity<>(HttpStatus.OK);
+
         } catch (resourceNotFoundException e) {
             log.error("Exception on DELETE: ", e);
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
@@ -156,19 +164,16 @@ public class fantasyLeagueController {
     }
 
     @RequestMapping(value = "/fantasyLeagues/scheduleGames", method = RequestMethod.POST)
-    public ResponseEntity<?> scheduleGames(@RequestParam(value = "league_id", required = true) Integer league_id) {
+    public ResponseEntity<?> scheduleGames(@RequestParam(value = "league_id") Integer league_id) {
 
         try {
-            // log schedule generation
-            log.info("GENERATE SCHEDULE: " + request.getRequestURL()
-                    + " for fantasyLeague with league_id: " + league_id);
 
-            // get the teams registered with the leagueID
-            // TODO: Change client ID
-            Integer client_id = 1;
+            // log schedule generation and get client id
+            logGameScheduling(request, log, league_id);
+            Integer client_id = getClientId(request);
+
+            // get teams within league and current league
             List<Integer> teamIDList = fantasyLeagueService.getTeamIDs(league_id, client_id);
-
-            // get the league with league_id
             FantasyLeague fantasyLeague = fantasyLeagueService.getLeaguesByID(league_id).get(0);
 
             // make sure that the number of teams found in db are equal to league_size in league
@@ -188,85 +193,33 @@ public class fantasyLeagueController {
             return new ResponseEntity<>(result, HttpStatus.CREATED);
 
         } catch (resourceException e) {
-            log.error("Exception on schedule generation: ", e);
+            log.error("Exception on schedule generation: " + e.getMessage());
             return new ResponseEntity<>(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
         } catch (Exception e) {
             // all other exceptions
-            log.error("Exception on schedule generation: ", e);
+            log.error("Exception on schedule generation: " + e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
-//    @RequestMapping(value = "/fantasyLeague/draft/draftPlayer", method = RequestMethod.PUT)
-//    public ResponseEntity<?> updateDraftedPlayer(@RequestParam(value = "player_id", required = false) Integer player_id,
-//                                                 @RequestParam(value = "team_id", required = true) Integer team_id,
-//                                                 @RequestParam(value = "league_id", required = false) Integer league_id,
-//                                                 @RequestParam(value = "client_id", required = false) Integer client_id,
-//                                                 @RequestParam(value = "first_name", required = false) String first_name,
-//                                                 @RequestParam(value = "last_name", required = false) String last_name,
-//                                                 @RequestParam(value = "nba_team", required = false) String nba_team,
-//                                                 @RequestParam(value = "position", required = false) String position) {
-//        try {
-//
-//            log.info("Parameters: \n" + "player_id: " + player_id + "\n team_id: " + team_id);
-//            log.info("PUT: " + request.getRequestURL());
-//
-//            // TODO: Filter and check inputs
-//
-//            FantasyPlayer chosenPlayer = new FantasyPlayer();
-//
-//            // If player_id given, draft that player to the specified team.
-//            // Otherwise, assign a random one.
-//            if (player_id == null) {
-//
-//                // Get list of available players
-//                List<FantasyPlayer> av_players = fantasyPlayerService.getAvailablePlayers(league_id, client_id, first_name, last_name, nba_team, position);
-//
-//                // Chose random player from list of available players
-//                Integer idx = fantasyPlayerService.generateNumber(0, av_players.size());
-//                chosenPlayer = av_players.get(idx);
-//
-//            } else {
-//
-//                //get the player by player_id
-//                chosenPlayer = fantasyPlayerService.getByID(player_id).get(0);
-//            }
-//
-//            List<FantasyPlayer> result = fantasyPlayerService.draftFantasyPlayer(chosenPlayer);
-//            return new ResponseEntity<>(result, HttpStatus.OK);
-//
-//        } catch (resourceNotFoundException e) {
-//            // If league not found in the database, throw exception not found
-//            log.error("Exception on PUT: " + e.getMessage());
-//            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
-//        } catch (DataIntegrityViolationException e) {
-//            log.error("Exception on PUT: ", e);
-//            return new ResponseEntity<>("This action is not allowed, please check values and try again.",
-//                    HttpStatus.UNPROCESSABLE_ENTITY);
-//        } catch (Exception e) {
-//            // all other exceptions
-//            log.error("Exception on PUT: ", e);
-//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//    }
 
     @RequestMapping(value = "/fantasyLeague/draft/draftPlayer", method = RequestMethod.PUT)
     public ResponseEntity<?> updateDraftedPlayer(@RequestBody FantasyPlayer fantasyPlayer) {
         try {
 
-            log.info("PUT: " + request.getRequestURL());
-            log.info(fantasyPlayer.toString());
+            // log drafting the player and get the client id
+            logPlayerDrafting(request, log, fantasyPlayer.toString());
+            Integer client_id = getClientId(request);
 
             // TODO: Filter and check inputs
 
             // Check that league and team exist and that their ids are provided in the body
-            // TODO: (Emanuel) change client_id later
-            fantasyLeagueService.checkDraftInputs(fantasyPlayer.getLeagueID(), fantasyPlayer.getTeamID(), 57);
+            fantasyLeagueService.checkDraftInputs(fantasyPlayer.getLeagueID(), fantasyPlayer.getTeamID(), client_id);
 
-            // TODO: Update client ID
-            fantasyLeagueService.pickPlayer(fantasyPlayer);
-            // TODO: Update client ID
-            fantasyPlayer.setClientID(57);
+            // set player's client id
+            fantasyPlayer.setClientID(client_id);
+            fantasyLeagueService.pickPlayer(fantasyPlayer, client_id);
+
+            // save the draft pick into db
             List<FantasyPlayer> result = fantasyPlayerService.draftFantasyPlayer(fantasyPlayer);
             return new ResponseEntity<>(result, HttpStatus.OK);
 
@@ -275,32 +228,29 @@ public class fantasyLeagueController {
             log.error("Exception on PUT: " + e.getMessage());
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (DataIntegrityViolationException e) {
-            log.error("Exception on PUT: ", e);
+            log.error("Exception on PUT: " + e.getMessage());
             return new ResponseEntity<>("This action is not allowed, please check values and try again.",
                     HttpStatus.UNPROCESSABLE_ENTITY);
         } catch (Exception e) {
-            // all other exceptions
-            log.error("Exception on PUT: ", e);
+            // other exceptions
+            log.error("Exception on PUT: " + e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @RequestMapping(value = "/fantasyLeague/draft/availablePlayers", method = RequestMethod.GET)
     public ResponseEntity<?> getAvailablePlayers(@RequestParam(value = "league_id", required = false) Integer league_id,
-                                                 @RequestParam(value = "client_id", required = false) Integer client_id,
                                                  @RequestParam(value = "first_name", required = false) String first_name,
                                                  @RequestParam(value = "last_name", required = false) String last_name,
                                                  @RequestParam(value = "nba_team", required = false) String nba_team,
                                                  @RequestParam(value = "position", required = false) String position) {
         try {
 
-            // log GET request
-            if (request.getQueryString() != null) {
-                log.info("GET: " + request.getRequestURL() + "?" + request.getQueryString());
-            } else {
-                log.info("GET: " + request.getRequestURL());
-            }
+            // log GET request and get client id
+            logGetRequest(request, log);
+            Integer client_id = getClientId(request);
 
+            // find available players
             List<FantasyPlayer> result = fantasyPlayerService.getAvailablePlayers(league_id,
                     client_id, first_name, last_name, nba_team, position);
 
@@ -316,12 +266,10 @@ public class fantasyLeagueController {
     public ResponseEntity<?> playerCreation() {
         try {
 
-            // log GET request
-            if (request.getQueryString() != null) {
-                log.info("GET: " + request.getRequestURL() + "?" + request.getQueryString());
-            } else {
-                log.info("GET: " + request.getRequestURL());
-            }
+            // log GET request and get client id
+            logGetRequest(request, log);
+            Integer client_id = getClientId(request);
+
 
             FantasyLeagueUtility newUtility= new FantasyLeagueUtility();
             newUtility.API_player_importation(dataRepo);
@@ -334,15 +282,22 @@ public class fantasyLeagueController {
     }
 
     @RequestMapping(value = "/fantasyLeague/draft/generateOrder", method = RequestMethod.GET)
-    public ResponseEntity<?> randomizeDraftOrder(@RequestParam(value = "league_id", required = false) Integer league_id,
-                                                  @RequestParam(value = "client_id", required = true) Integer client_id) {
+    public ResponseEntity<?> randomizeDraftOrder(@RequestParam(value = "league_id", required = false) Integer league_id) {
         try {
+
+            // log GET request and get client id
+            logGetRequest(request, log);
+            Integer client_id = getClientId(request);
+
+            // check if we are given a valid league id
             fantasyLeagueService.checkIfValidLeague(league_id);
+
+            // generate draft order
             List<Integer> result = fantasyLeagueService.randomOrder(league_id, client_id);
             return new ResponseEntity<>(result, HttpStatus.OK);
 
         } catch (Exception e) {
-            log.error("Exception on GET: ", e);
+            log.error("Exception on GET: " + e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

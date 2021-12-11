@@ -1,6 +1,7 @@
 package FantasyBasketball.models;
 
 import FantasyBasketball.exceptions.resourceException;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
@@ -17,7 +18,7 @@ public class FantasyTeam {
     private Integer teamID;
 
     @Column(name = "client_id")
-    @JsonProperty("client_id")
+    @JsonIgnore
     private Integer clientID;
 
     @Column(name = "team_name")

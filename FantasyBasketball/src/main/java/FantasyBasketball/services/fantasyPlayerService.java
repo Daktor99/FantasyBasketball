@@ -46,13 +46,6 @@ public class fantasyPlayerService {
 
     // post operation
     public List<FantasyPlayer> postFantasyPlayer(FantasyPlayer player) {
-        // player.setPlayerID(0);
-
-
-        // TODO: Update this when client functionality is ready
-        //This client_id will be updated later
-        //player.setClientID(1);
-
 
         playerRepo.insertFantasyPlayer(
                 player.getPlayerID(),
@@ -87,11 +80,7 @@ public class fantasyPlayerService {
 
         if(playerCheck.size() == 1) {
 
-            // TODO: update this with the correct client ID
             // TODO: update error message where teamID doesn't exist
-            //This client_id will be updated later
-            // TODO: update client ID
-            player.setClientID(1);
 
             playerRepo.setPlayerTeam(player.getPlayerID(),
                     player.getClientID(),
@@ -127,7 +116,7 @@ public class fantasyPlayerService {
                 null);
 
         if(playerCheck.size() == 1) {
-            playerRepo.deleteFantasyPlayer(player_id,client_id,league_id);
+            playerRepo.deleteFantasyPlayer(player_id, client_id, league_id);
         } else {
             throw new resourceNotFoundException("Single player not found in DB, cannot delete");
         }
