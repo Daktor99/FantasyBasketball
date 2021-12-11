@@ -4,8 +4,6 @@ import FantasyBasketball.exceptions.resourceNotFoundException;
 import FantasyBasketball.models.FantasyPlayer;
 import FantasyBasketball.repositories.fantasyPlayerRepository;
 import FantasyBasketball.services.fantasyPlayerService;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -24,23 +22,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class fantasyPlayerTests {
+public class fantasyPlayerTest {
 
     @Autowired
     private fantasyPlayerService playerService;
 
     @MockBean
     private fantasyPlayerRepository playerRepo;
-
-    @Before
-    public void setUp() {
-        //setUp function
-    }
-
-    @After
-    public void tearDown() {
-        //tearDown function
-    }
 
     @Test
     public void testFantasyPlayer() {
@@ -326,6 +314,5 @@ public class fantasyPlayerTests {
         assertEquals(player_list.get(0).getPlayerID(), 6468);
 
     }
-
 
 }

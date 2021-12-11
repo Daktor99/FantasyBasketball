@@ -25,7 +25,7 @@ import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class fantasyStatsTests {
+public class fantasyStatsTest {
 
     private final Integer PLAYER_ID_TEST = 1;
     private final Integer SCHEDULE_ID_TEST = 1;

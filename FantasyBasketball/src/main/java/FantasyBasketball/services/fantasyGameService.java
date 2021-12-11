@@ -74,6 +74,7 @@ public class fantasyGameService {
     public void deleteGameById(Integer game_id) throws resourceNotFoundException {
         if(gameRepo.existsById(game_id)) {
             gameRepo.deleteById(game_id);
+            return;
         } else {
             throw new resourceNotFoundException("Fantasy Game not found in DB, cannot delete.");
         }
@@ -91,7 +92,9 @@ public class fantasyGameService {
         if (games.size() != 0) {
             throw new resourceException("This game is already in the database. You cannot add the same game.");
         }
+        return;
     }
+
     // Checking if game's schedule is null before posting
     public void checkPostInputs(FantasyGame game) throws resourceException {
         if (game.getScheduleID() != null) {
@@ -125,7 +128,7 @@ public class fantasyGameService {
     }
 
     // Checking inputs for the game.
-    private void checkInputs(FantasyGame game) throws resourceException {
+    public void checkInputs(FantasyGame game) throws resourceException {
         try {
 
             // Check that league_id is not null.
