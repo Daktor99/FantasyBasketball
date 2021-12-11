@@ -6,15 +6,15 @@ import FantasyBasketball.models.FantasyGame;
 import FantasyBasketball.models.FantasyLeague;
 import FantasyBasketball.models.FantasyPlayer;
 import FantasyBasketball.models.User;
+import FantasyBasketball.models.Client;
 import FantasyBasketball.repositories.fantasyGameRepository;
 import FantasyBasketball.repositories.fantasyLeagueRepository;
 import FantasyBasketball.repositories.userRepository;
 import FantasyBasketball.repositories.fantasyTeamRepository;
 import FantasyBasketball.services.fantasyLeagueService;
+import FantasyBasketball.services.clientService;
 import FantasyBasketball.services.fantasyPlayerService;
 import org.junit.Test;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -34,7 +34,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class fantasyLeagueTest {
 
     @Autowired
-    fantasyLeagueService fantasyLeagueService;
+    fantasyLeagueService leagueService;
+
+    @Autowired
+    clientService clientService;
+
+    @MockBean
+    clientService mockclientService;
 
     @MockBean
     fantasyPlayerService fantasyPlayerService;
@@ -70,7 +76,7 @@ public class fantasyLeagueTest {
 
         Mockito.when(leagueRepo.findById(leagueID)).thenReturn(fakeFantasyLeagueOptional);
 
-        assertEquals(fantasyLeagueService.getLeaguesByID(leagueID), List.of(fakeFantasyLeagueOptional.get()));
+        assertEquals(leagueService.getLeaguesByID(leagueID), List.of(fakeFantasyLeagueOptional.get()));
     }
 
     @Test(expected = resourceNotFoundException.class)
@@ -79,7 +85,7 @@ public class fantasyLeagueTest {
         Mockito.when(leagueRepo.findById(leagueID)).thenReturn(Optional.empty());
 
         // should return exception
-        fantasyLeagueService.getLeaguesByID(leagueID);
+        leagueService.getLeaguesByID(leagueID);
     }
 
     @Test
@@ -114,7 +120,7 @@ public class fantasyLeagueTest {
                 league_start_date,
                 num_weeks)).thenReturn(List.of(fakeFantasyLeague));
 
-        assertEquals(fantasyLeagueService.getLeaguesByTemplate(league_id,
+        assertEquals(leagueService.getLeaguesByTemplate(league_id,
                 client_id,
                 league_name,
                 admin_id,
@@ -142,7 +148,7 @@ public class fantasyLeagueTest {
         Mockito.when(userRepo.findById(adminID)).thenReturn(validUserOpt);
 
         // assert that the admin_id got properly validated
-        assertEquals(fantasyLeagueService.checkAdmin(adminID), Boolean.TRUE);
+        assertEquals(leagueService.checkAdmin(adminID), Boolean.TRUE);
     }
 
     @Test
@@ -157,7 +163,7 @@ public class fantasyLeagueTest {
         Mockito.when(userRepo.findById(adminID)).thenReturn(validUserOpt);
 
         // assert that the admin_id got properly identified as invalid
-        assertEquals(fantasyLeagueService.checkAdmin(adminID), Boolean.FALSE);
+        assertEquals(leagueService.checkAdmin(adminID), Boolean.FALSE);
     }
 
     @Test
@@ -181,7 +187,7 @@ public class fantasyLeagueTest {
 
         Mockito.when(leagueRepo.findById(leagueID)).thenReturn(fakeFantasyLeagueOptional);
 
-        assertEquals(fantasyLeagueService.checkDraftFinished(leagueID), Boolean.TRUE);
+        assertEquals(leagueService.checkDraftFinished(leagueID), Boolean.TRUE);
     }
 
     @Test
@@ -205,7 +211,7 @@ public class fantasyLeagueTest {
 
         Mockito.when(leagueRepo.findById(leagueID)).thenReturn(fakeFantasyLeagueOptional);
 
-        assertEquals(fantasyLeagueService.checkDraftFinished(leagueID), Boolean.FALSE);
+        assertEquals(leagueService.checkDraftFinished(leagueID), Boolean.FALSE);
     }
 
     @Test
@@ -213,7 +219,7 @@ public class fantasyLeagueTest {
         LocalDate fake_league_start_date = LocalDate.of(2021, 12, 31);
 
         // assert that the valid dates were properly validated
-        assertEquals(fantasyLeagueService.checkDates(fake_league_start_date), Boolean.TRUE);
+        assertEquals(leagueService.checkDates(fake_league_start_date), Boolean.TRUE);
     }
 
     @Test(expected = resourceException.class)
@@ -221,7 +227,7 @@ public class fantasyLeagueTest {
         LocalDate league_start_date = LocalDate.of(2000, 12, 28);
 
         // checkDates should return exception
-        fantasyLeagueService.checkDates(league_start_date);
+        leagueService.checkDates(league_start_date);
     }
 
     @Test
@@ -270,7 +276,7 @@ public class fantasyLeagueTest {
 
         // assert that the admin_id got properly validated
         List<FantasyLeague> listOfFakeFantasyLeague = List.of(fakeFantasyLeague);
-        assertEquals(fantasyLeagueService.postLeagues(fakeFantasyLeaguePost).get(0).getLeagueID(), listOfFakeFantasyLeague.get(0).getLeagueID());
+        assertEquals(leagueService.postLeagues(fakeFantasyLeaguePost).get(0).getLeagueID(), listOfFakeFantasyLeague.get(0).getLeagueID());
     }
 
     @Test(expected = resourceException.class)
@@ -289,7 +295,7 @@ public class fantasyLeagueTest {
                 8
         );
 
-        fantasyLeagueService.postLeagues(fakeFantasyLeague);
+        leagueService.postLeagues(fakeFantasyLeague);
     }
 
     @Test(expected = resourceException.class)
@@ -308,7 +314,7 @@ public class fantasyLeagueTest {
                 8
         );
 
-        fantasyLeagueService.postLeagues(fakeFantasyLeague);
+        leagueService.postLeagues(fakeFantasyLeague);
     }
 
     @Test
@@ -339,7 +345,7 @@ public class fantasyLeagueTest {
         );
         Mockito.when(leagueRepo.save(referenceLeague)).thenReturn(newLeague);
 
-        assertEquals(List.of(newLeague), fantasyLeagueService.updateLeagues(newLeague));
+        assertEquals(List.of(newLeague), leagueService.updateLeagues(newLeague));
     }
 
     @Test(expected = resourceNotFoundException.class)
@@ -368,7 +374,7 @@ public class fantasyLeagueTest {
                 8
         );
 
-        fantasyLeagueService.updateLeagues(newLeague);
+        leagueService.updateLeagues(newLeague);
     }
 
     @Test(expected = resourceException.class)
@@ -398,21 +404,21 @@ public class fantasyLeagueTest {
                 8
         );
 
-        fantasyLeagueService.updateLeagues(newLeague);
+        leagueService.updateLeagues(newLeague);
     }
 
     @Test(expected = resourceNotFoundException.class)
     public void testDeleteLeaguesExcept() throws resourceNotFoundException {
         Integer league_id = 1;
         Mockito.when(leagueRepo.existsById(league_id)).thenReturn(Boolean.FALSE);
-        fantasyLeagueService.deleteLeagues(league_id);
+        leagueService.deleteLeagues(league_id);
     }
 
     @Test
     public void testCheckIfInvalidFalse() {
         String string = "hello";
 
-        assertEquals(fantasyLeagueService.checkIfInvalid(string), Boolean.FALSE);
+        assertEquals(leagueService.checkIfInvalid(string), Boolean.FALSE);
     }
 
     @Test
@@ -434,14 +440,14 @@ public class fantasyLeagueTest {
                 "jafdklsahbjlkahdsfjkladsjgkfljdaskljgklasjkfjdklsjaklbjkjd" +
                 "jafdklsahbjlkahdsfjkladsjgkfljdaskljgklasjkfjdklsjaklbjkjd";
 
-        assertEquals(fantasyLeagueService.checkIfInvalid(string), Boolean.TRUE);
+        assertEquals(leagueService.checkIfInvalid(string), Boolean.TRUE);
     }
 
     @Test
     public void testCheckIfInvalidTrueEmpty() {
         String string = "";
 
-        assertEquals(fantasyLeagueService.checkIfInvalid(string), Boolean.TRUE);
+        assertEquals(leagueService.checkIfInvalid(string), Boolean.TRUE);
     }
 
     @Test(expected = resourceException.class)
@@ -458,7 +464,7 @@ public class fantasyLeagueTest {
                 8
         );
 
-        fantasyLeagueService.checkInputs(fantasyLeague);
+        leagueService.checkInputs(fantasyLeague);
     }
 
     @Test(expected=resourceException.class)
@@ -476,7 +482,7 @@ public class fantasyLeagueTest {
         );
         Mockito.when(fantasyLeague.getLeagueName()).thenThrow(NullPointerException.class);
 
-        fantasyLeagueService.checkInputs(fantasyLeague);
+        leagueService.checkInputs(fantasyLeague);
     }
 
     @Test(expected = resourceException.class)
@@ -493,7 +499,7 @@ public class fantasyLeagueTest {
                 8
         );
 
-        fantasyLeagueService.checkInputs(badLeague);
+        leagueService.checkInputs(badLeague);
     }
 
     @Test(expected = resourceException.class)
@@ -511,7 +517,7 @@ public class fantasyLeagueTest {
                 8
         );
 
-        fantasyLeagueService.checkInputs(badLeague);
+        leagueService.checkInputs(badLeague);
     }
 
     @Test(expected = resourceException.class)
@@ -529,7 +535,7 @@ public class fantasyLeagueTest {
                 0
         );
 
-        fantasyLeagueService.checkInputs(badLeague);
+        leagueService.checkInputs(badLeague);
     }
 
     @Test
@@ -547,7 +553,7 @@ public class fantasyLeagueTest {
                 8
         );
 
-        fantasyLeagueService.checkInputs(badLeague);
+        leagueService.checkInputs(badLeague);
     }
 
     @Test(expected = resourceException.class)
@@ -564,7 +570,7 @@ public class fantasyLeagueTest {
                 8
         );
 
-        fantasyLeagueService.checkPostInputs(badLeague);
+        leagueService.checkPostInputs(badLeague);
     }
 
     @Test(expected = resourceException.class)
@@ -581,7 +587,7 @@ public class fantasyLeagueTest {
                 8
         );
 
-        fantasyLeagueService.checkPutInputs(badLeague);
+        leagueService.checkPutInputs(badLeague);
     }
 
     @Test
@@ -595,7 +601,7 @@ public class fantasyLeagueTest {
         Mockito.when(teamRepo.findTeamsInLeague(league_id, client_id)).thenReturn(teamList);
 
         // assert that the admin_id got properly identified as invalid
-        assertEquals(fantasyLeagueService.getTeamIDs(league_id, client_id), teamList);
+        assertEquals(leagueService.getTeamIDs(league_id, client_id), teamList);
     }
 
     @Test(expected = resourceException.class)
@@ -609,7 +615,7 @@ public class fantasyLeagueTest {
         Mockito.when(teamRepo.findTeamsInLeague(league_id, client_id)).thenReturn(teamList);
 
         // should return exception
-        fantasyLeagueService.getTeamIDs(league_id, client_id);
+        leagueService.getTeamIDs(league_id, client_id);
     }
 
     @Test
@@ -662,7 +668,7 @@ public class fantasyLeagueTest {
 
         Mockito.when(gameRepo.saveAll(gameList)).thenReturn(gameList);
         List<FantasyGame> expected = gameList;
-        List<FantasyGame> returned = fantasyLeagueService.postGames(schedule, league_id, client_id);
+        List<FantasyGame> returned = leagueService.postGames(schedule, league_id, client_id);
         for (Integer i=0; i<4; i++) {
             assertEquals(expected.get(i).getScheduleID(), returned.get(i).getScheduleID());
             assertEquals(expected.get(i).getLeagueID(), returned.get(i).getLeagueID());
@@ -705,7 +711,7 @@ public class fantasyLeagueTest {
                 0
         );
         Integer teamSize = 2;
-        fantasyLeagueService.checkValidSize(badLeague, teamSize);
+        leagueService.checkValidSize(badLeague, teamSize);
     }
 
     @Test(expected = resourceException.class)
@@ -713,7 +719,7 @@ public class fantasyLeagueTest {
         Integer league_id = null;
         Integer team_id = 1;
         Integer client_id = 1;
-        fantasyLeagueService.checkDraftInputs(league_id, team_id, client_id);
+        leagueService.checkDraftInputs(league_id, team_id, client_id);
     }
 
     @Test(expected = resourceNotFoundException.class)
@@ -722,7 +728,7 @@ public class fantasyLeagueTest {
         Integer team_id = 1;
         Integer client_id = 1;
         Mockito.when(leagueRepo.existsById(league_id)).thenReturn(Boolean.FALSE);
-        fantasyLeagueService.checkDraftInputs(league_id, team_id, client_id);
+        leagueService.checkDraftInputs(league_id, team_id, client_id);
     }
 
     @Test(expected = resourceNotFoundException.class)
@@ -734,7 +740,7 @@ public class fantasyLeagueTest {
         List<Integer> team_ids = Arrays.asList(1, 2, 3, 4, 5, 6);
         Mockito.when(teamRepo.findTeamsInLeague(league_id, client_id)).thenReturn(team_ids);
 //        Mockito.when(teamRepo.existsById(team_id)).thenReturn(Boolean.FALSE);
-        fantasyLeagueService.checkDraftInputs(league_id, team_id, client_id);
+        leagueService.checkDraftInputs(league_id, team_id, client_id);
     }
 
     @Test(expected = resourceNotFoundException.class)
@@ -746,7 +752,7 @@ public class fantasyLeagueTest {
         List<Integer> team_ids = Arrays.asList(1, 2, 3, 4, 5, 6);
         Mockito.when(teamRepo.findTeamsInLeague(league_id, client_id)).thenReturn(team_ids);
         Mockito.when(teamRepo.existsById(team_id)).thenReturn(Boolean.FALSE);
-        fantasyLeagueService.checkDraftInputs(league_id, team_id, client_id);
+        leagueService.checkDraftInputs(league_id, team_id, client_id);
     }
 
     @Test(expected = resourceNotFoundException.class)
@@ -758,7 +764,7 @@ public class fantasyLeagueTest {
         List<Integer> team_ids = Arrays.asList(7, 2, 3, 4, 5, 6);
         Mockito.when(teamRepo.findTeamsInLeague(league_id, client_id)).thenReturn(team_ids);
         Mockito.when(teamRepo.existsById(team_id)).thenReturn(Boolean.FALSE);
-        fantasyLeagueService.checkDraftInputs(league_id, team_id, client_id);
+        leagueService.checkDraftInputs(league_id, team_id, client_id);
     }
 
     @Test(expected = resourceException.class)
@@ -784,7 +790,7 @@ public class fantasyLeagueTest {
                 null)
         ).thenReturn(Collections.emptyList());
         Integer client_id = 1;
-        fantasyLeagueService.pickPlayer(player, client_id);
+        leagueService.pickPlayer(player, client_id);
     }
 
     @Test(expected = resourceException.class)
@@ -805,26 +811,56 @@ public class fantasyLeagueTest {
         Mockito.when(fantasyPlayerService.getUndraftedPlayers(1, 1)
         ).thenReturn(wrongcontains);
         Integer client_id = 1;
-        fantasyLeagueService.pickPlayer(player, client_id);
+        leagueService.pickPlayer(player, client_id);
     }
 
     @Test
     public void checkRandomOrder() throws resourceNotFoundException {
-        // Cannot test because shuttle returns something different
-        assertEquals(1, 1);
+        Integer league_id = 1;
+        Integer client_id = 1;
+        List<Integer> team_ids = Arrays.asList(2, 4, 6, 8, 10, 12);
+        Mockito.when(teamRepo.findTeamsInLeague(league_id, client_id)).thenReturn(team_ids);
+        Collections.shuffle(team_ids);
+        List<Integer> order = new ArrayList<>();
+        Client myClient = new Client(
+                1,
+                "izzi@gmail.com",
+                "12083941938420183",
+                "company",
+                "client",
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1,
+                30,
+                2
+        );
+        List<Client> clientList = Arrays.asList(myClient);
+        Mockito.when(mockclientService.getByID(client_id)).thenReturn(clientList);
+        Client client = clientList.get(0);
+        Integer team_size = client.getMax_team_size();
+        for (int i = 0; i < team_size; i++) {
+            order.addAll(team_ids);
+        }
+        assertEquals(order.size(), leagueService.randomOrder(league_id, client_id).size());
     }
 
     @Test(expected = resourceException.class)
     public void checkIfValidLeagueLeagueIDExcept() throws resourceNotFoundException, resourceException {
         Integer league_id = null;
-        fantasyLeagueService.checkIfValidLeague(league_id);
+        leagueService.checkIfValidLeague(league_id);
     }
 
     @Test(expected = resourceNotFoundException.class)
     public void checkIfValidLeagueLeagueExistsExcept() throws resourceNotFoundException, resourceException {
         Integer league_id = 1;
         Mockito.when(leagueRepo.existsById(league_id)).thenReturn(Boolean.FALSE);
-        fantasyLeagueService.checkIfValidLeague(league_id);
+        leagueService.checkIfValidLeague(league_id);
     }
 
     @Test(expected = resourceException.class)
@@ -832,7 +868,7 @@ public class fantasyLeagueTest {
         Integer league_id = 1;
         List<FantasyGame> games = Collections.emptyList();
         Mockito.when(gameRepo.findGamesByLeagueID(league_id)).thenReturn(games);
-        fantasyLeagueService.checkIfScheduleGenerated(league_id);
+        leagueService.checkIfScheduleGenerated(league_id);
     }
 
 }

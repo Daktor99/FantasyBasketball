@@ -329,7 +329,9 @@ public class fantasyLeagueService {
         List<Integer> team_ids = teamRepo.findTeamsInLeague(league_id, client_id);
         Collections.shuffle(team_ids);
         List<Integer> order = new ArrayList<>();
-        Integer team_size = clientService.getByID(client_id).get(0).getMax_team_size();
+        List<Client> clientList = clientService.getByID(client_id);
+        Client client = clientList.get(0);
+        Integer team_size = client.getMax_team_size();
         for (int i = 0; i < team_size; i++) {
             order.addAll(team_ids);
         }
