@@ -129,7 +129,6 @@ public class Client {
         this.google_id = google_id;
     }
 
-
     public Integer getClientID() {
         return clientID;
     }

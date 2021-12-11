@@ -15,3 +15,12 @@ index_SORT_BY_LINE_DESC.html
 index_SORT_BY_METHOD.html
 index_SORT_BY_METHOD_DESC.html
 index_SORT_BY_NAME_DESC.html
+FantasyBasketball.controllers
+FantasyBasketball.exceptions/
+FantasyBasketball.interceptors/
+FantasyBasketball.models/
+FantasyBasketball.repositories/
+FantasyBasketball.scheduling/
+FantasyBasketball.utilities/
+FantasyBasketball/.classes/
+

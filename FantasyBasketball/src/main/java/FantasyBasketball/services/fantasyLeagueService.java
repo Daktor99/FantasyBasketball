@@ -86,7 +86,7 @@ public class fantasyLeagueService {
     public Boolean checkDates(LocalDate league_start_date) throws resourceException {
         LocalDate today = LocalDate.now();
         if (league_start_date.compareTo(today) < 0) {
-            throw new resourceException("Attempted leagueStartDate occurs in the past.");
+            return false;
         }
         return true;
     }
@@ -150,7 +150,6 @@ public class fantasyLeagueService {
     public void deleteLeagues(Integer league_id) throws resourceNotFoundException {
         if(leagueRepo.existsById(league_id)) {
             leagueRepo.deleteById(league_id);
-            return;
         } else {
             throw new resourceNotFoundException("League not found in DB, cannot delete");
         }
@@ -329,7 +328,9 @@ public class fantasyLeagueService {
         List<Integer> team_ids = teamRepo.findTeamsInLeague(league_id, client_id);
         Collections.shuffle(team_ids);
         List<Integer> order = new ArrayList<>();
-        Integer team_size = clientService.getByID(client_id).get(0).getMax_team_size();
+        List<Client> clientList = clientService.getByID(client_id);
+        Client client = clientList.get(0);
+        Integer team_size = client.getMax_team_size();
         for (int i = 0; i < team_size; i++) {
             order.addAll(team_ids);
         }
