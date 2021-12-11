@@ -1,4 +1,4 @@
-package FantasyBasketball;
+package FantasyBasketball.Flows;
 
 import FantasyBasketball.exceptions.resourceNotFoundException;
 import FantasyBasketball.models.FantasyPlayer;
@@ -21,7 +21,6 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -116,8 +115,8 @@ public class fantasyPlayerTests {
 
         // Initialize updated FantasyPlayer
         FantasyPlayer player = new FantasyPlayer();
-        FantasyPlayer updated_player = player.setNewPlayer(7836,1,1,
-                "Tom","Murdia", "nets","F",1,0);
+        FantasyPlayer updated_player = player.setNewPlayer(7836, 1, 1,
+                "Tom", "Murdia", "nets", "F", 1, 0);
 
         // FantasyPlayerID does not exist
         Mockito.when(playerRepo.existsById(7836)).thenReturn(false);
@@ -126,17 +125,17 @@ public class fantasyPlayerTests {
         playerService.updateFantasyPlayer(updated_player);
     }
 
-    @Test (expected = Test.None.class)
-    public void testGetPlayerIDsByTeam() throws resourceNotFoundException {
+    @Test()
+    public void testGetPlayerIDsByTeam() {
 
         // Initialize FantasyPlayer
         FantasyPlayer player = new FantasyPlayer();
-        FantasyPlayer new_player = player.setNewPlayer(0,1,1,
-                "Tom","Murdia", "nets","F",1,0);
+        FantasyPlayer new_player = player.setNewPlayer(0, 1, 1,
+                "Tom", "Murdia", "nets", "F", 1, 0);
 
         Optional<FantasyPlayer> db = Optional.of(new_player);
 
-        List<Integer> teamId=new ArrayList<>();
+        List<Integer> teamId = new ArrayList<>();
         teamId.add(0);
 
         Mockito.when(playerRepo.getByTeamID(1)).thenReturn(teamId);
@@ -299,12 +298,12 @@ public class fantasyPlayerTests {
     }
 
     @Test
-    public void testGetPlayerByTemplate() throws resourceNotFoundException {
+    public void testGetPlayerByTemplate() {
 
         // Initialize updated FantasyPlayer
         FantasyPlayer player = new FantasyPlayer();
-        FantasyPlayer updated_player = player.setNewPlayer(6468,1,1,
-                "Tom","Murdia", "nets","F",1,0);
+        FantasyPlayer updated_player = player.setNewPlayer(6468, 1, 1,
+                "Tom", "Murdia", "nets", "F", 1, 0);
 
         List<FantasyPlayer> player_list = new ArrayList<>();
         player_list.add(updated_player);

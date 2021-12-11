@@ -1,14 +1,12 @@
 package FantasyBasketball.repositories;
 
 import FantasyBasketball.models.FantasyPlayer;
-import FantasyBasketball.models.User;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-
 
 import java.util.List;
 
@@ -123,10 +121,10 @@ public interface fantasyPlayerRepository extends CrudRepository<FantasyPlayer, I
     @Modifying
     @Query(value = "update fantasy_player set team_id = :team_id where player_id = :player_id and league_id = :league_id and client_id = :client_id",
             nativeQuery = true)
-    void updateFantasyPlayer(@Param("player_id") Integer player_id,
-                             @Param("client_id") Integer client_id,
-                             @Param("league_id") Integer league_id,
-                             @Param("team_id") Integer team_id);
+    void setPlayerTeam(@Param("player_id") Integer player_id,
+                       @Param("client_id") Integer client_id,
+                       @Param("league_id") Integer league_id,
+                       @Param("team_id") Integer team_id);
 
     @Transactional
     @Modifying

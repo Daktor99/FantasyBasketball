@@ -1,14 +1,12 @@
 package FantasyBasketball.services;
 
+import FantasyBasketball.exceptions.resourceNotFoundException;
 import FantasyBasketball.models.FantasyPlayer;
-import FantasyBasketball.models.FantasyStats;
 import FantasyBasketball.repositories.fantasyPlayerRepository;
 import FantasyBasketball.repositories.playerDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import FantasyBasketball.exceptions.resourceNotFoundException;
 
-import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -63,7 +61,7 @@ public class fantasyPlayerService {
                 player.getLeagueID(),
                 player.getBallapiID());
 
-        List<FantasyPlayer> result = playerRepo.findByTemplate(player.getPlayerID(),
+        return playerRepo.findByTemplate(player.getPlayerID(),
                 player.getClientID(),
                 player.getTeamID(),
                 player.getLeagueID(),
@@ -72,8 +70,6 @@ public class fantasyPlayerService {
                 null,
                 null,
                 null);
-
-        return result;
     }
 
     // put operation
@@ -97,7 +93,7 @@ public class fantasyPlayerService {
             // TODO: update client ID
             player.setClientID(1);
 
-            playerRepo.updateFantasyPlayer(player.getPlayerID(),
+            playerRepo.setPlayerTeam(player.getPlayerID(),
                     player.getClientID(),
                     player.getLeagueID(),
                     player.getTeamID());
