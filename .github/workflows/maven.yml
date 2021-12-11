@@ -25,4 +25,6 @@ jobs:
       run: mvn -B package --file FantasyBasketball/pom.xml
     - name: Run test suites
       run: cd FantasyBasketball && mvn test
+    - name: Export test results
+      run: cp FantasyBasketball/target/surefire-reports/*.txt UnitTesting
     
