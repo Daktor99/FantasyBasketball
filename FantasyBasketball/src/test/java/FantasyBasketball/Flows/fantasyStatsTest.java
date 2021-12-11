@@ -27,18 +27,18 @@ import static org.mockito.Mockito.when;
 @SpringBootTest
 public class fantasyStatsTest {
 
-    private final Integer PLAYER_ID_TEST = 1;
-    private final Integer SCHEDULE_ID_TEST = 1;
-    private final Integer STATS_ID_TEST = 1;
-    private final Integer LEAGUE_ID_TEST = 1;
-    private final Integer CLIENT_ID_TEST = 1;
-    private final Integer TOTAL_POINTS_TEST = 50;
+    Integer PLAYER_ID_TEST = 1;
+    Integer SCHEDULE_ID_TEST = 1;
+    Integer STATS_ID_TEST = 1;
+    Integer LEAGUE_ID_TEST = 1;
+    Integer CLIENT_ID_TEST = 1;
+    Integer TOTAL_POINTS_TEST = 50;
 
     @Autowired
-    private fantasyStatsService fantasyStatsService;
+    fantasyStatsService fantasyStatsService;
 
     @MockBean
-    private fantasyStatsRepository statsRepository;
+    fantasyStatsRepository statsRepository;
 
     @BeforeEach
     public void setUp() {

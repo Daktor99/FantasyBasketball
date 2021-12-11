@@ -222,6 +222,72 @@ public class fantasyTeamTest {
         assertEquals(List.of(afterTeam), teamService.postTeam(beforeTeam));
     }
 
+    @Test
+    public void testPostTeamExceptcheckleaguefull() throws resourceException {
+        // Test that the team_id is correctly updated by teamUser method
+        Integer leagueID = 1;
+        // Initialize team before postTeam called
+        FantasyTeam beforeTeam = new FantasyTeam(
+                1,
+                1,
+                "TEST TEAM",
+                1,
+                1,
+                70,
+                71,
+                72,
+                73,
+                74,
+                75,
+                76,
+                0,
+                0,
+                0,
+                0
+        );
+
+        LocalDate fake_league_start_date = LocalDate.of(2021, 12, 31);
+        // fake fantasyLeague to get back
+        FantasyLeague fakeFantasyLeague = new FantasyLeague(
+                17,
+                1,
+                "fake league",
+                4,
+                4,
+                Boolean.FALSE,
+                fake_league_start_date,
+                8
+        );
+        Optional<FantasyLeague> fantasyLeagueOptional = Optional.of(fakeFantasyLeague);
+        Mockito.when(leagueRepo.findById(leagueID)).thenReturn(fantasyLeagueOptional);
+
+//        Mockito.when(teamService.checkLeagueFull(fakeFantasyLeague)).thenReturn(Boolean.FALSE);
+
+        // Create newly inserted fantasyTeam
+        FantasyTeam afterTeam = new FantasyTeam(12,
+                1,
+                "TEST TEAM",
+                1,
+                1,
+                70,
+                71,
+                72,
+                73,
+                74,
+                75,
+                76,
+                0,
+                0,
+                0,
+                0);
+
+        // save the team
+        Mockito.when(teamRepo.save(beforeTeam)).thenReturn(afterTeam);
+
+        // assert that the team_id gets correctly updated
+        assertEquals(List.of(afterTeam), teamService.postTeam(beforeTeam));
+    }
+
     // Test that exception is raised when team_id provided that is not null
     @Test(expected = resourceException.class)
     public void testCheckPostInputs1() throws resourceException {
@@ -1177,51 +1243,51 @@ public class fantasyTeamTest {
         assertEquals(Boolean.TRUE, teamService.checkDuplicatePlayers(playerList));
     }
 
-//    @Test
-//    public void checkUpdateValues() throws resourceException {
-//        // Initialize team before postTeam called
-//        FantasyTeam dbTeam = new FantasyTeam(
-//                12,
-//                1,
-//                "TEST TEAM",
-//                1,
-//                1,
-//                93,
-//                94,
-//                95,
-//                96,
-//                97,
-//                98,
-//                99,
-//                0,
-//                0,
-//                0,
-//                0
-//        );
-//
-//        // Create newly inserted fantasyTeam
-//        FantasyTeam updatedTeam = new FantasyTeam(
-//                12,
-//                1,
-//                "updated TEAM",
-//                null,
-//                null,
-//                93,
-//                94,
-//                95,
-//                96,
-//                97,
-//                98,
-//                99,
-//                0,
-//                0,
-//                0,
-//                0);
-////        Integer teamID = updatedTeam.getTeamID();
-////        List<Integer> teamPlayerIDs = Arrays.asList(70, 71, 72, 73, 74, 75, 76);
-////        Mockito.when(mockteamService.getPlayersOnTeam(teamID)).thenReturn(teamPlayerIDs);
-//        FantasyTeam whatIWant = teamService.updateValues(dbTeam, updatedTeam);
-//        assertEquals(Collections.EMPTY_LIST, whatIWant);
-//    }
+    @Test
+    public void checkUpdateValues() throws resourceException {
+        // Initialize team before postTeam called
+        FantasyTeam dbTeam = new FantasyTeam(
+                12,
+                1,
+                "TEST TEAM",
+                1,
+                1,
+                93,
+                94,
+                95,
+                96,
+                97,
+                98,
+                99,
+                0,
+                0,
+                0,
+                0
+        );
+
+        // Create newly inserted fantasyTeam
+        FantasyTeam updatedTeam = new FantasyTeam(
+                12,
+                1,
+                "updated TEAM",
+                null,
+                null,
+                93,
+                94,
+                95,
+                96,
+                97,
+                98,
+                99,
+                0,
+                0,
+                0,
+                0);
+//        Integer teamID = updatedTeam.getTeamID();
+//        List<Integer> teamPlayerIDs = Arrays.asList(70, 71, 72, 73, 74, 75, 76);
+//        Mockito.when(mockteamService.getPlayersOnTeam(teamID)).thenReturn(teamPlayerIDs);
+        FantasyTeam whatIWant = teamService.updateValues(dbTeam, updatedTeam);
+        assertEquals(Collections.EMPTY_LIST, whatIWant);
+    }
 
 }

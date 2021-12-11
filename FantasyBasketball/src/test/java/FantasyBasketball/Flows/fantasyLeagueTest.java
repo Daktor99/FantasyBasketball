@@ -278,6 +278,56 @@ public class fantasyLeagueTest {
         assertEquals(leagueService.postLeagues(fakeFantasyLeaguePost).get(0).getLeagueID(), listOfFakeFantasyLeague.get(0).getLeagueID());
     }
 
+    @Test
+    public void testPostLeaguescoverage() throws IOException, resourceException {
+        // fake start and end dates for fake fantasyLeague ctor
+        LocalDate fake_league_start_date = LocalDate.of(2021, 12, 31);
+        LocalDate badstart = LocalDate.of(2000, 12, 31);
+
+        // fake fantasyLeague to post
+        FantasyLeague fakeFantasyLeaguePost = new FantasyLeague();
+        fakeFantasyLeaguePost.setClientID(1);
+        fakeFantasyLeaguePost.setLeagueName("fake league");
+        fakeFantasyLeaguePost.setAdminID(4);
+        fakeFantasyLeaguePost.setDraftFinished(Boolean.TRUE);
+        fakeFantasyLeaguePost.setLeagueSize(4);
+        fakeFantasyLeaguePost.setLeagueStartDate(badstart);
+
+        // fake fantasyLeague to get back
+        FantasyLeague fakeFantasyLeague = new FantasyLeague(
+                17,
+                1,
+                "fake league",
+                4,
+                4,
+                Boolean.TRUE,
+                fake_league_start_date,
+                8
+        );
+
+        // Fake adminID that we're trying to see is valid user
+        Integer adminID = 4;
+
+        // Fake user that we're looking for / found
+        User validUser = new User(4,
+                1,
+                "patip@gmail.com",
+                "pap2154",
+                "Pati",
+                "Przewoznik");
+        Optional<User> validUserOpt = Optional.of(validUser);
+
+        // mock findById output
+        Mockito.when(userRepo.findById(adminID)).thenReturn(validUserOpt);
+
+        // mock findById output
+        Mockito.when(leagueRepo.save(fakeFantasyLeaguePost)).thenReturn(fakeFantasyLeague);
+
+        // assert that the admin_id got properly validated
+        List<FantasyLeague> listOfFakeFantasyLeague = List.of(fakeFantasyLeague);
+        assertEquals(leagueService.postLeagues(fakeFantasyLeaguePost).get(0).getLeagueID(), listOfFakeFantasyLeague.get(0).getLeagueID());
+    }
+
     @Test(expected = resourceException.class)
     public void testPostLeaguesAdminExcept() throws resourceException {
         // fake start and end dates for fake fantasyLeague ctor
