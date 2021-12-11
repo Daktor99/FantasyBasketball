@@ -9,6 +9,7 @@ import FantasyBasketball.repositories.fantasyStatsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
@@ -78,6 +79,19 @@ public class fantasyGameService {
         }
     }
 
+    public void checkIfInDB(FantasyGame game) throws resourceException {
+        List <FantasyGame> games = getGamesByTemplate(null,
+                game.getLeagueID(),
+                game.getClientID(),
+                game.getHomeTeamID(),
+                game.getAwayTeamID(),
+                game.getGameStartDate(),
+                game.getGameEndDate(),
+                null);
+        if (games.size() != 0) {
+            throw new resourceException("This game is already in the database. You cannot add the same game.");
+        }
+    }
     // Checking if game's schedule is null before posting
     public void checkPostInputs(FantasyGame game) throws resourceException {
         if (game.getScheduleID() != null) {
@@ -97,6 +111,8 @@ public class fantasyGameService {
         if (game.getGameStartDate() == null || game.getGameEndDate() == null) {
             throw new resourceException("Must provide game_start_date and game_end_date.");
         }
+      
+        checkIfInDB(game);
         checkInputs(game);
     }
     // Checking if game's schedule is null before putting
@@ -108,20 +124,55 @@ public class fantasyGameService {
 
     }
 
-    // Checking if game's start date and end date are correct
+    // Checking inputs for the game.
     private void checkInputs(FantasyGame game) throws resourceException {
         try {
+
+            // Check that league_id is not null.
+            if (game.getLeagueID() == null) {
+                throw new resourceException("Please provide league_id.");
+            }
+
+            // Check that start day is after today's date.
+            LocalDate today = LocalDate.now();
+            if (game.getGameStartDate().compareTo(today) < 0) {
+                throw new resourceException("Attempted gameStartDate occurs in the past. " +
+                        "Please change it to occur in the future.");
+            }
+
+            // Check that start date is on a Sunday.
+            DayOfWeek startDay = game.getGameStartDate().getDayOfWeek();
+            if (startDay != DayOfWeek.SUNDAY) {
+                throw new resourceException("The start game date has to occur on a Sunday. " +
+                        "Provided start date is on a " + startDay);
+            }
+
+            // Check that end date is on a Saturday.
+            DayOfWeek endDay = game.getGameEndDate().getDayOfWeek();
+            if (endDay != DayOfWeek.SUNDAY) {
+                throw new resourceException("The end game date has to occur on a Sunday. " +
+                        "Provided end date is on a " + endDay);
+            }
+
+            // Check that start date is before end date.
             LocalDate startDate = game.getGameStartDate();
             LocalDate endDate   = game.getGameEndDate();
             if (endDate.isBefore(startDate)) {
                 throw new resourceException("Start Date must be before End Date");
             }
+
+            // Check that start and end date are 6 days apart.
+            int daysBetween = Period.between(startDate, endDate).getDays();
+            if (daysBetween != 7) {
+                throw new resourceException("There must be 7 days between start and end date." + daysBetween);
+            }
+
         } catch (NullPointerException e) {
             throw new resourceException("Fantasy game formatted incorrectly, please provide at least the following:\n" +
                     " schedule_id, leagueID, home_team_id, away_team_id, game_start_date, game_end_date.");
         }
     }
-    // Getting the games for the current_date
+    // Getting the games for the current_date.
     public List<FantasyGame> getGamesForWeek(LocalDate current_date) {
         return gameRepo.findGamesGivenDate(current_date);
     }

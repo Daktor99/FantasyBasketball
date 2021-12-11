@@ -1,4 +1,4 @@
-package FantasyBasketball;
+package FantasyBasketball.Flows;
 
 import FantasyBasketball.exceptions.resourceException;
 import FantasyBasketball.exceptions.resourceNotFoundException;
@@ -50,7 +50,7 @@ public class fantasyStatsTests {
 
     }
 
-    @Test (expected = Test.None.class)
+    @Test()
     public void testFindByID() throws resourceNotFoundException {
         FantasyStats savedStats = new FantasyStats(
                 PLAYER_ID_TEST,
@@ -147,7 +147,7 @@ public class fantasyStatsTests {
         assertEquals(fantasyStatsService.postStats(statsToSave).get(0).getStats_id(), STATS_ID_TEST);
     }
 
-    @Test (expected = Test.None.class)
+    @Test()
     public void testUpdateStats() throws resourceNotFoundException {
         FantasyStats statsToSave = new FantasyStats(PLAYER_ID_TEST,
                 SCHEDULE_ID_TEST,
@@ -210,7 +210,7 @@ public class fantasyStatsTests {
         fantasyStatsService.updateStats(statsToUpdate);
     }
 
-    @Test (expected = Test.None.class)
+    @Test()
     public void testDelete() throws resourceException, resourceNotFoundException {
         FantasyStats savedStats = new FantasyStats(
                 PLAYER_ID_TEST,
@@ -264,7 +264,7 @@ public class fantasyStatsTests {
         fantasyStatsService.deleteStats(null,null,null,null);
     }
 
-    @Test (expected = Test.None.class)
+    @Test()
     public void testDeleteByStatsID() throws resourceNotFoundException {
 
         when(statsRepository.existsById(STATS_ID_TEST)).thenReturn(true);

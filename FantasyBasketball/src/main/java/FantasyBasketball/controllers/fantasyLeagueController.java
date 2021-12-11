@@ -179,6 +179,9 @@ public class fantasyLeagueController {
             // make sure that the number of teams found in db are equal to league_size in league
             fantasyLeagueService.checkValidSize(fantasyLeague, teamIDList.size());
 
+            // Check if the schedule for this league is already generated
+            fantasyLeagueService.checkIfScheduleGenerated(fantasyLeague.getLeagueID());
+
             // get proposed schedule, instantiate scheduler service & create schedule
             robinRoundScheduler scheduler = new robinRoundScheduler(teamIDList, fantasyLeague.getLeagueStartDate(), fantasyLeague.getNumWeeks());
             Hashtable<LocalDate, List<List<Integer>>> schedule = scheduler.createSchedule();

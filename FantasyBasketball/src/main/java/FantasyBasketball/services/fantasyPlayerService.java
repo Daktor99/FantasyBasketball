@@ -1,14 +1,12 @@
 package FantasyBasketball.services;
 
+import FantasyBasketball.exceptions.resourceNotFoundException;
 import FantasyBasketball.models.FantasyPlayer;
-import FantasyBasketball.models.FantasyStats;
 import FantasyBasketball.repositories.fantasyPlayerRepository;
 import FantasyBasketball.repositories.playerDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import FantasyBasketball.exceptions.resourceNotFoundException;
 
-import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -65,7 +63,6 @@ public class fantasyPlayerService {
                 null,
                 null,
                 null);
-
     }
 
     // put operation
@@ -85,7 +82,7 @@ public class fantasyPlayerService {
 
             // TODO: update error message where teamID doesn't exist
 
-            playerRepo.updateFantasyPlayer(player.getPlayerID(),
+            playerRepo.setPlayerTeam(player.getPlayerID(),
                     player.getClientID(),
                     player.getLeagueID(),
                     player.getTeamID());

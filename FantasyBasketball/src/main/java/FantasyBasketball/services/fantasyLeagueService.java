@@ -342,4 +342,11 @@ public class fantasyLeagueService {
             throw new resourceNotFoundException("This league does not exist.");
         }
     }
+
+    public void checkIfScheduleGenerated(Integer league_id) throws resourceException{
+        List<FantasyGame> games = gameRepo.findGamesByLeagueID(league_id);
+        if (games.size() != 0) {
+            throw new resourceException("Schedule already generated for this league.");
+        }
+    }
 }
