@@ -26,7 +26,7 @@ jobs:
       run: mvn -B package --file FantasyBasketball/pom.xml
 
     - name: Run fantasyGameTests
-      run: cd FantasyBasketball && mvn -Dtest=fantasyGameTests test 
+      run: mvn -Dtest=fantasyGameTests test 
 
     - name: Run fantasyLeagueTests
       run: cd FantasyBasketball && mvn -Dtest=fantasyLeagueTests test 
