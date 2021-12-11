@@ -97,12 +97,21 @@ public class fantasyGameService {
         if (game.getScheduleID() != null) {
             throw new resourceException("Do not provide schedule_id.");
         }
+
         if (game.getHomeTeamID() == null) {
-            throw new resourceException("Please provide home_team_id.");
+            throw new resourceException("Must provide home_team_id.");
+        } else if (game.getAwayTeamID() == null) {
+            throw new resourceException("Must provide away_team_id.");
         }
-        if (game.getAwayTeamID() == null) {
-            throw new resourceException("Please provide away_team_id.");
+
+        if (game.getLeagueID() == null) {
+            throw new resourceException("Must provide league_id for game.");
         }
+
+        if (game.getGameStartDate() == null || game.getGameEndDate() == null) {
+            throw new resourceException("Must provide game_start_date and game_end_date.");
+        }
+      
         checkIfInDB(game);
         checkInputs(game);
     }
@@ -114,6 +123,7 @@ public class fantasyGameService {
             checkInputs(game);
 
     }
+
     // Checking inputs for the game.
     private void checkInputs(FantasyGame game) throws resourceException {
         try {
@@ -146,7 +156,7 @@ public class fantasyGameService {
 
             // Check that start date is before end date.
             LocalDate startDate = game.getGameStartDate();
-            LocalDate endDate = game.getGameEndDate();
+            LocalDate endDate   = game.getGameEndDate();
             if (endDate.isBefore(startDate)) {
                 throw new resourceException("Start Date must be before End Date");
             }
@@ -158,7 +168,8 @@ public class fantasyGameService {
             }
 
         } catch (NullPointerException e) {
-            throw new resourceException("Fantasy game formatted incorrectly, please provide at least the following:\n schedule_id, league_id, home_team_id, away_team_id, game_start_date, game_end_date.");
+            throw new resourceException("Fantasy game formatted incorrectly, please provide at least the following:\n" +
+                    " schedule_id, leagueID, home_team_id, away_team_id, game_start_date, game_end_date.");
         }
     }
     // Getting the games for the current_date.

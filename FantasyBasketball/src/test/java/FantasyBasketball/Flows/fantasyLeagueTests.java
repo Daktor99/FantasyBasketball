@@ -1,4 +1,4 @@
-package FantasyBasketball;
+package FantasyBasketball.Flows;
 
 import FantasyBasketball.exceptions.resourceException;
 import FantasyBasketball.exceptions.resourceNotFoundException;
@@ -326,64 +326,6 @@ public class fantasyLeagueTests {
         );
 
         fantasyLeagueService.postLeagues(fakeFantasyLeague);
-    }
-
-    @Test
-    public void testCheckEqualWithoutLeagueNamesTrue() {
-        LocalDate fake_league_start_date = LocalDate.of(2021, 12, 31);
-
-        FantasyLeague referenceLeague = new FantasyLeague(
-                17,
-                1,
-                "fake reference league",
-                4,
-                4,
-                Boolean.TRUE,
-                fake_league_start_date,
-                8
-        );
-        FantasyLeague comparisonLeague = new FantasyLeague(
-                17,
-                1,
-                "fake comp reference league",
-                4,
-                4,
-                Boolean.TRUE,
-                fake_league_start_date,
-                8
-        );
-
-        // assert that the admin_id got properly validated
-        assertEquals(fantasyLeagueService.checkEqualWithoutLeagueName(referenceLeague, comparisonLeague), Boolean.TRUE);
-    }
-
-    @Test
-    public void testCheckEqualWithoutLeagueNamesFalse() {
-        LocalDate fake_league_start_date = LocalDate.of(2021, 12, 31);
-
-        FantasyLeague referenceLeague = new FantasyLeague(
-                17,
-                1,
-                "fake reference league",
-                4,
-                4,
-                Boolean.TRUE,
-                fake_league_start_date,
-                8
-        );
-        FantasyLeague comparisonLeague = new FantasyLeague(
-                17,
-                2,
-                "fake reference league",
-                4,
-                4,
-                Boolean.TRUE,
-                fake_league_start_date,
-                8
-        );
-
-        // assert that the admin_id got properly validated
-        assertEquals(fantasyLeagueService.checkEqualWithoutLeagueName(referenceLeague, comparisonLeague), Boolean.FALSE);
     }
 
     @Test
@@ -899,7 +841,8 @@ public class fantasyLeagueTests {
                 null,
                 null)
         ).thenReturn(Collections.emptyList());
-        fantasyLeagueService.pickPlayer(player);
+        Integer client_id = 1;
+        fantasyLeagueService.pickPlayer(player, client_id);
     }
 
     @Test(expected = resourceException.class)
@@ -919,7 +862,8 @@ public class fantasyLeagueTests {
         List<Integer> wrongcontains = Arrays.asList(0);
         Mockito.when(fantasyPlayerService.getUndraftedPlayers(1, 1)
         ).thenReturn(wrongcontains);
-        fantasyLeagueService.pickPlayer(player);
+        Integer client_id = 1;
+        fantasyLeagueService.pickPlayer(player, client_id);
     }
 
     @Test

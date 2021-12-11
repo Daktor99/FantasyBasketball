@@ -1,4 +1,4 @@
-package FantasyBasketball;
+package FantasyBasketball.Flows;
 
 import FantasyBasketball.exceptions.resourceException;
 import FantasyBasketball.exceptions.resourceNotFoundException;
@@ -620,7 +620,7 @@ public class fantasyTeamTests {
         teamService.checkOwnerAndLeagueNotUpdated(ownerID, leagueID);
     }
 
-    @Test(expected = PresourceException.class)
+    @Test(expected = resourceException.class)
     public void checkOwnerAndLeagueNotUpdated2() throws resourceException {
         Integer ownerID = 1;
         Integer leagueID = null;

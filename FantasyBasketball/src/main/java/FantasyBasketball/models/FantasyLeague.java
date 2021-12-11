@@ -1,5 +1,6 @@
 package FantasyBasketball.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
@@ -17,7 +18,7 @@ public class FantasyLeague {
     private Integer leagueID;
 
     @Column(name = "client_id")
-    @JsonProperty("client_id")
+    @JsonIgnore
     private Integer clientID;
 
     @Column(name = "league_name")
@@ -34,7 +35,7 @@ public class FantasyLeague {
 
     @Column(name = "draft_finished")
     @JsonProperty("draft_finished")
-    private Boolean draftFinished;
+    private Boolean draftFinished = false;
 
     @Column(name = "league_start_date")
     @JsonProperty("league_start_date")

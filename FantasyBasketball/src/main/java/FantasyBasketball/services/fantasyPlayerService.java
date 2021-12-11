@@ -1,14 +1,12 @@
 package FantasyBasketball.services;
 
+import FantasyBasketball.exceptions.resourceNotFoundException;
 import FantasyBasketball.models.FantasyPlayer;
-import FantasyBasketball.models.FantasyStats;
 import FantasyBasketball.repositories.fantasyPlayerRepository;
 import FantasyBasketball.repositories.playerDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import FantasyBasketball.exceptions.resourceNotFoundException;
 
-import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -48,13 +46,6 @@ public class fantasyPlayerService {
 
     // post operation
     public List<FantasyPlayer> postFantasyPlayer(FantasyPlayer player) {
-        // player.setPlayerID(0);
-
-
-        // TODO: Update this when client functionality is ready
-        //This client_id will be updated later
-        //player.setClientID(1);
-
 
         playerRepo.insertFantasyPlayer(
                 player.getPlayerID(),
@@ -63,7 +54,7 @@ public class fantasyPlayerService {
                 player.getLeagueID(),
                 player.getBallapiID());
 
-        List<FantasyPlayer> result = playerRepo.findByTemplate(player.getPlayerID(),
+        return playerRepo.findByTemplate(player.getPlayerID(),
                 player.getClientID(),
                 player.getTeamID(),
                 player.getLeagueID(),
@@ -72,8 +63,6 @@ public class fantasyPlayerService {
                 null,
                 null,
                 null);
-
-        return result;
     }
 
     // put operation
@@ -91,13 +80,9 @@ public class fantasyPlayerService {
 
         if(playerCheck.size() == 1) {
 
-            // TODO: update this with the correct client ID
             // TODO: update error message where teamID doesn't exist
-            //This client_id will be updated later
-            // TODO: update client ID
-            player.setClientID(57);
 
-            playerRepo.updateFantasyPlayer(player.getPlayerID(),
+            playerRepo.setPlayerTeam(player.getPlayerID(),
                     player.getClientID(),
                     player.getLeagueID(),
                     player.getTeamID());
@@ -131,7 +116,7 @@ public class fantasyPlayerService {
                 null);
 
         if(playerCheck.size() == 1) {
-            playerRepo.deleteFantasyPlayer(player_id,client_id,league_id);
+            playerRepo.deleteFantasyPlayer(player_id, client_id, league_id);
         } else {
             throw new resourceNotFoundException("Single player not found in DB, cannot delete");
         }

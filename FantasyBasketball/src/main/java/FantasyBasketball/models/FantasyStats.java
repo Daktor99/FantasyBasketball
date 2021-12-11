@@ -1,5 +1,6 @@
 package FantasyBasketball.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
@@ -17,18 +18,16 @@ public class FantasyStats implements Serializable {
     @JsonProperty("stats_id")
     private Integer stats_id;
 
-//    @Id
     @Column(name = "player_id")
     @JsonProperty("player_id")
     private Integer player_id;
 
-//    @Id
     @Column(name = "schedule_id")
     @JsonProperty("schedule_id")
     private Integer schedule_id;
 
     @Column(name = "client_id")
-    @JsonProperty("client_id")
+    @JsonIgnore
     private Integer client_id;
 
     @Column(name = "league_id")
@@ -89,7 +88,10 @@ public class FantasyStats implements Serializable {
         this.tot_points = 0;
     }
 
-    public FantasyStats(Integer player_id, Integer schedule_id, Integer client_id, Integer league_id) {
+    public FantasyStats(Integer player_id,
+                        Integer schedule_id,
+                        Integer client_id,
+                        Integer league_id) {
         this.stats_id = null;
         this.player_id = player_id;
         this.schedule_id = schedule_id;

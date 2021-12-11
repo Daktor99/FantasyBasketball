@@ -1,5 +1,7 @@
 package FantasyBasketball.models;
 
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
@@ -17,9 +19,9 @@ public class User {
     @Column(name = "user_id")
     private Integer userID;
 
+    @JsonIgnore
     @Column(name = "client_id")
-    @JsonProperty("client_id")
-    private Integer clientID = 1;
+    private Integer clientID;
 
     @Column(name = "username")
     @JsonProperty("username")

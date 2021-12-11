@@ -1,5 +1,6 @@
 package FantasyBasketball.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
@@ -12,7 +13,7 @@ public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "client_id")
-    @JsonProperty("client_id")
+    @JsonIgnore
     private Integer clientID;
 
     @Column(name = "email")
@@ -96,6 +97,7 @@ public class Client {
 
     public Client(Integer clientID,
                   String email,
+                  String google_id,
                   String company_name,
                   String client_name,
                   double three_p_weight,
@@ -108,8 +110,7 @@ public class Client {
                   double turnover_weight,
                   Integer min_league_dur,
                   Integer max_team_size,
-                  Integer min_league_size,
-                  String google_id) {
+                  Integer min_league_size) {
         this.clientID = clientID;
         this.email = email;
         this.company_name = company_name;
