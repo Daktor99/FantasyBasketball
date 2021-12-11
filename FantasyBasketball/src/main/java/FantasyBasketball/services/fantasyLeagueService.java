@@ -86,7 +86,7 @@ public class fantasyLeagueService {
     public Boolean checkDates(LocalDate league_start_date) throws resourceException {
         LocalDate today = LocalDate.now();
         if (league_start_date.compareTo(today) < 0) {
-            throw new resourceException("Attempted leagueStartDate occurs in the past.");
+            return false;
         }
         return true;
     }

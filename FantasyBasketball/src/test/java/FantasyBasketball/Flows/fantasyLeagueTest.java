@@ -221,12 +221,12 @@ public class fantasyLeagueTest {
         assertEquals(leagueService.checkDates(fake_league_start_date), Boolean.TRUE);
     }
 
-    @Test(expected = resourceException.class)
-    public void testCheckDatesExceptionStartInPast() throws resourceException {
+    @Test
+    public void testCheckDatesfalse() throws resourceException {
         LocalDate league_start_date = LocalDate.of(2000, 12, 28);
 
         // checkDates should return exception
-        leagueService.checkDates(league_start_date);
+        assertEquals(leagueService.checkDates(league_start_date), Boolean.FALSE);
     }
 
     @Test
@@ -278,7 +278,7 @@ public class fantasyLeagueTest {
         assertEquals(leagueService.postLeagues(fakeFantasyLeaguePost).get(0).getLeagueID(), listOfFakeFantasyLeague.get(0).getLeagueID());
     }
 
-    @Test
+    @Test(expected = resourceException.class)
     public void testPostLeaguescoverage() throws IOException, resourceException {
         // fake start and end dates for fake fantasyLeague ctor
         LocalDate fake_league_start_date = LocalDate.of(2021, 12, 31);
@@ -325,7 +325,7 @@ public class fantasyLeagueTest {
 
         // assert that the admin_id got properly validated
         List<FantasyLeague> listOfFakeFantasyLeague = List.of(fakeFantasyLeague);
-        assertEquals(leagueService.postLeagues(fakeFantasyLeaguePost).get(0).getLeagueID(), listOfFakeFantasyLeague.get(0).getLeagueID());
+        leagueService.postLeagues(fakeFantasyLeaguePost);
     }
 
     @Test(expected = resourceException.class)
