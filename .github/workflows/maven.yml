@@ -25,5 +25,9 @@ jobs:
       run: mvn -B package --file FantasyBasketball/pom.xml -Dmaven.test.skip=true
     - name: Run userTest
       run: cd FantasyBasketball && mvn -Dtest=userTest test
+    - name: Run fantasyTeamTest
+      run: cd FantasyBasketball && mvn -Dtest=fantasyTeamTest test
+    - name: Run fantasyStatsTest
+      run: cd FantasyBasketball && mvn -Dtest=fantasyStatsTest test
     - name: Export test results
       run: cp FantasyBasketball/target/surefire-reports/*.txt UnitTesting
