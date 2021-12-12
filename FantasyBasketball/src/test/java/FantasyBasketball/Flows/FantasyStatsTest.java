@@ -1,12 +1,10 @@
 package FantasyBasketball.Flows;
 
-import FantasyBasketball.exceptions.resourceException;
-import FantasyBasketball.exceptions.resourceNotFoundException;
-import FantasyBasketball.models.FantasyGame;
-import FantasyBasketball.models.FantasyPlayer;
+import FantasyBasketball.exceptions.ResourceException;
+import FantasyBasketball.exceptions.ResourceNotFoundException;
 import FantasyBasketball.models.FantasyStats;
 import FantasyBasketball.repositories.fantasyStatsRepository;
-import FantasyBasketball.services.fantasyStatsService;
+import FantasyBasketball.services.FantasyStatsService;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,7 +23,7 @@ import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class fantasyStatsTest {
+public class FantasyStatsTest {
 
     private final Integer PLAYER_ID_TEST = 1;
     private final Integer SCHEDULE_ID_TEST = 1;
@@ -35,7 +33,7 @@ public class fantasyStatsTest {
     private final Integer TOTAL_POINTS_TEST = 50;
 
     @Autowired
-    fantasyStatsService fantasyStatsService;
+    FantasyStatsService fantasyStatsService;
 
     @MockBean
     fantasyStatsRepository statsRepository;
@@ -68,16 +66,16 @@ public class fantasyStatsTest {
     );
 
     @Test()
-    public void testGetByID() throws resourceNotFoundException {
+    public void testGetByID() throws ResourceNotFoundException {
         Integer fantasyStatsID = 1;
         Optional<FantasyStats> result = Optional.of(genericStats);
         Mockito.when(statsRepository.findById(fantasyStatsID)).thenReturn(result);
         assertEquals(List.of(result.get()).get(0).getStats_id(), fantasyStatsService.getByID(fantasyStatsID).get(0).getStats_id());
-//        assertEquals(List.of(result.get()), fantasyStatsService.getByID(fantasyStatsID));
+//        assertEquals(List.of(result.get()), FantasyStatsService.getByID(fantasyStatsID));
     }
 
     @Test()
-    public void testFindByID() throws resourceNotFoundException {
+    public void testFindByID() throws ResourceNotFoundException {
         FantasyStats savedStats = new FantasyStats(
                 PLAYER_ID_TEST,
                 SCHEDULE_ID_TEST,
@@ -95,8 +93,8 @@ public class fantasyStatsTest {
         assertEquals(result.get(0).getStats_id(), STATS_ID_TEST);
     }
 
-    @Test (expected = resourceNotFoundException.class)
-    public void testFindByIdWithNonExistent() throws resourceNotFoundException {
+    @Test (expected = ResourceNotFoundException.class)
+    public void testFindByIdWithNonExistent() throws ResourceNotFoundException {
         Optional<FantasyStats> result = Optional.empty() ;
 
         when(statsRepository.findById(
@@ -174,7 +172,7 @@ public class fantasyStatsTest {
     }
 
     @Test()
-    public void testUpdateStats() throws resourceNotFoundException {
+    public void testUpdateStats() throws ResourceNotFoundException {
         FantasyStats statsToSave = new FantasyStats(PLAYER_ID_TEST,
                 SCHEDULE_ID_TEST,
                 LEAGUE_ID_TEST,
@@ -213,8 +211,8 @@ public class fantasyStatsTest {
         assertEquals(fantasyStatsService.updateStats(statsToUpdate).get(0).getTot_points(), TOTAL_POINTS_TEST);
     }
 
-    @Test (expected = resourceNotFoundException.class)
-    public void testUpdateNonExistingStats() throws resourceNotFoundException {
+    @Test (expected = ResourceNotFoundException.class)
+    public void testUpdateNonExistingStats() throws ResourceNotFoundException {
         FantasyStats statsToUpdate = new FantasyStats(STATS_ID_TEST,
                 PLAYER_ID_TEST,
                 SCHEDULE_ID_TEST,
@@ -237,7 +235,7 @@ public class fantasyStatsTest {
     }
 
     @Test()
-    public void testDelete() throws resourceException, resourceNotFoundException {
+    public void testDelete() throws ResourceException, ResourceNotFoundException {
         FantasyStats savedStats = new FantasyStats(
                 PLAYER_ID_TEST,
                 SCHEDULE_ID_TEST,
@@ -259,8 +257,8 @@ public class fantasyStatsTest {
         assertTrue(result.size() > 0);
     }
 
-    @Test (expected = resourceNotFoundException.class)
-    public void testDeleteNonExistingStats() throws resourceException, resourceNotFoundException {
+    @Test (expected = ResourceNotFoundException.class)
+    public void testDeleteNonExistingStats() throws ResourceException, ResourceNotFoundException {
         List<FantasyStats> emptyList = new LinkedList<>();
         when(statsRepository.findByIDs(PLAYER_ID_TEST,SCHEDULE_ID_TEST,LEAGUE_ID_TEST,CLIENT_ID_TEST)).
                 thenReturn(emptyList);
@@ -271,8 +269,8 @@ public class fantasyStatsTest {
         assertEquals(0, result.size());
     }
 
-    @Test (expected = resourceException.class)
-    public void testDeleteWithInsufficientParameters() throws resourceException, resourceNotFoundException {
+    @Test (expected = ResourceException.class)
+    public void testDeleteWithInsufficientParameters() throws ResourceException, ResourceNotFoundException {
         FantasyStats savedStats = new FantasyStats(
                 PLAYER_ID_TEST,
                 SCHEDULE_ID_TEST,
@@ -291,20 +289,20 @@ public class fantasyStatsTest {
     }
 
     @Test()
-    public void testDeleteByStatsID() throws resourceNotFoundException {
+    public void testDeleteByStatsID() throws ResourceNotFoundException {
 
         when(statsRepository.existsById(STATS_ID_TEST)).thenReturn(true);
         fantasyStatsService.deleteStatsByID(STATS_ID_TEST);
     }
 
-    @Test (expected = resourceNotFoundException.class)
-    public void testDeleteByStatsIDWithNonExistingID() throws resourceNotFoundException {
+    @Test (expected = ResourceNotFoundException.class)
+    public void testDeleteByStatsIDWithNonExistingID() throws ResourceNotFoundException {
         when(statsRepository.existsById(STATS_ID_TEST)).thenReturn(false);
         fantasyStatsService.deleteStatsByID(STATS_ID_TEST);
     }
 
-    @Test (expected = resourceException.class)
-    public void testCheckPostInputs() throws resourceException {
+    @Test (expected = ResourceException.class)
+    public void testCheckPostInputs() throws ResourceException {
         FantasyStats stats_to_save = new FantasyStats(
                 PLAYER_ID_TEST,
                 SCHEDULE_ID_TEST,

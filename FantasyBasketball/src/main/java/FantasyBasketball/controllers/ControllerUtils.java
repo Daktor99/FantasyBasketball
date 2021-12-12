@@ -5,7 +5,7 @@ import org.slf4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class controllerUtils {
+public class ControllerUtils {
 
     public static Integer getClientId(HttpServletRequest request) {
         Client client = (Client) request.getSession().getAttribute("client");

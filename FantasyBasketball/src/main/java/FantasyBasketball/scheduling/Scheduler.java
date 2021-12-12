@@ -1,13 +1,13 @@
 package FantasyBasketball.scheduling;
 
-import FantasyBasketball.exceptions.resourceNotFoundException;
+import FantasyBasketball.exceptions.ResourceNotFoundException;
 import FantasyBasketball.repositories.clientRepository;
 import FantasyBasketball.repositories.fantasyGameRepository;
 import FantasyBasketball.repositories.fantasyPlayerRepository;
 import FantasyBasketball.repositories.fantasyStatsRepository;
-import FantasyBasketball.services.fantasyGameService;
-import FantasyBasketball.services.fantasyStatsService;
-import FantasyBasketball.services.fantasyTeamService;
+import FantasyBasketball.services.FantasyGameService;
+import FantasyBasketball.services.FantasyStatsService;
+import FantasyBasketball.services.FantasyTeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -23,16 +23,16 @@ public class Scheduler {
 
 
     @Autowired
-    fantasyTeamService teamService;
+    FantasyTeamService teamService;
 
     @Autowired
-    fantasyGameService gameService;
+    FantasyGameService gameService;
 
     @Autowired
     fantasyGameRepository gameRepo;
 
     @Autowired
-    fantasyStatsService statService;
+    FantasyStatsService statService;
 
     @Autowired
     fantasyPlayerRepository playerRepo;
@@ -57,7 +57,7 @@ public class Scheduler {
         HourlyUpdate hourly = new HourlyUpdate();
         try {
             hourly.runHourly(playerRepo, gameRepo, statsRepo, clientRepo, now);
-        } catch (resourceNotFoundException | IOException | ParseException e) {
+        } catch (ResourceNotFoundException | IOException | ParseException e) {
             e.printStackTrace();
         }
     }
@@ -75,7 +75,7 @@ public class Scheduler {
         WeeklyUpdate weekly = new WeeklyUpdate();
         try {
             weekly.runWeekly(teamService, gameService, statService);
-        } catch (resourceNotFoundException e) {
+        } catch (ResourceNotFoundException e) {
             e.printStackTrace();
         }
     }

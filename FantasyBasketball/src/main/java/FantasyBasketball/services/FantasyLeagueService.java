@@ -1,7 +1,7 @@
 package FantasyBasketball.services;
 
-import FantasyBasketball.exceptions.resourceException;
-import FantasyBasketball.exceptions.resourceNotFoundException;
+import FantasyBasketball.exceptions.ResourceException;
+import FantasyBasketball.exceptions.ResourceNotFoundException;
 import FantasyBasketball.models.*;
 import FantasyBasketball.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,13 +11,13 @@ import java.time.LocalDate;
 import java.util.*;
 
 @Service
-public class fantasyLeagueService {
+public class FantasyLeagueService {
 
     @Autowired
-    clientService clientService;
+    ClientService clientService;
 
     @Autowired
-    fantasyPlayerService fantasyPlayerService;
+    FantasyPlayerService fantasyPlayerService;
 
     @Autowired
     userRepository userRepo;
@@ -32,13 +32,13 @@ public class fantasyLeagueService {
     fantasyGameRepository gameRepo;
 
     // helper function: find by leagueID
-    public List<FantasyLeague> getLeaguesByID(Integer leagueID) throws resourceNotFoundException {
+    public List<FantasyLeague> getLeaguesByID(Integer leagueID) throws ResourceNotFoundException {
         Optional<FantasyLeague> result = leagueRepo.findById(leagueID);
         if (result.isPresent()) {
             FantasyLeague fantasyLeagueResult = result.get();
             return List.of(fantasyLeagueResult);
         } else {
-            throw new resourceNotFoundException("League not found by ID in DB.");
+            throw new ResourceNotFoundException("League not found by ID in DB.");
         }
     }
 
@@ -83,7 +83,7 @@ public class fantasyLeagueService {
     }
 
     // helper function: check if given start date for league is valid
-    public Boolean checkDates(LocalDate league_start_date) throws resourceException {
+    public Boolean checkDates(LocalDate league_start_date) throws ResourceException {
         LocalDate today = LocalDate.now();
         if (league_start_date.compareTo(today) < 0) {
             return false;
@@ -92,7 +92,7 @@ public class fantasyLeagueService {
     }
 
     // post operation
-    public List<FantasyLeague> postLeagues(FantasyLeague fantasyLeague) throws resourceException {
+    public List<FantasyLeague> postLeagues(FantasyLeague fantasyLeague) throws ResourceException {
 
         fantasyLeague.setLeagueID(0);
         fantasyLeague.setDraftFinished(false);
@@ -110,10 +110,10 @@ public class fantasyLeagueService {
 
                 return List.of(result);
             } else {
-                throw new resourceException("LeagueStartDate has to be in the future.");
+                throw new ResourceException("LeagueStartDate has to be in the future.");
             }
         } else {
-            throw new resourceException("The adminID provided is not a valid userID.");
+            throw new ResourceException("The adminID provided is not a valid userID.");
         }
     }
 
@@ -126,7 +126,7 @@ public class fantasyLeagueService {
 
     // put operation
     public List<FantasyLeague> updateLeagues(FantasyLeague fantasyLeague)
-            throws resourceNotFoundException, resourceException {
+            throws ResourceNotFoundException, ResourceException {
 
         // check to see that this league exists
         Optional<FantasyLeague> referenceLeagueOpt = leagueRepo.findById(fantasyLeague.getLeagueID());
@@ -139,19 +139,19 @@ public class fantasyLeagueService {
                 FantasyLeague result = leagueRepo.save(referenceLeague);
                 return List.of(result);
             } else {
-                throw new resourceException("Only name of Fantasy League may be changed after creation.");
+                throw new ResourceException("Only name of Fantasy League may be changed after creation.");
             }
         } else {
-            throw new resourceNotFoundException("League not found by ID in DB, cannot update.");
+            throw new ResourceNotFoundException("League not found by ID in DB, cannot update.");
         }
     }
 
     // delete operation
-    public void deleteLeagues(Integer league_id) throws resourceNotFoundException {
+    public void deleteLeagues(Integer league_id) throws ResourceNotFoundException {
         if(leagueRepo.existsById(league_id)) {
             leagueRepo.deleteById(league_id);
         } else {
-            throw new resourceNotFoundException("League not found in DB, cannot delete");
+            throw new ResourceNotFoundException("League not found in DB, cannot delete");
         }
     }
 
@@ -161,7 +161,7 @@ public class fantasyLeagueService {
     }
 
     // check and sanitize inputs
-    public void checkInputs(FantasyLeague fantasyLeague) throws resourceException, resourceNotFoundException {
+    public void checkInputs(FantasyLeague fantasyLeague) throws ResourceException, ResourceNotFoundException {
         // NOTE: max league size is hardcoded to 14 for now
         Integer newClientID = fantasyLeague.getClientID();
         List<Client> newClientList = clientService.getByID(newClientID);
@@ -170,47 +170,47 @@ public class fantasyLeagueService {
         Integer minLeagueDur = newClient.getMin_league_dur();
         try {
             if (checkIfInvalid(fantasyLeague.getLeagueName())) {
-                throw new resourceException("League name is invalid.");
+                throw new ResourceException("League name is invalid.");
             } else if (fantasyLeague.getLeagueSize() < minLeagueSize ||
                     fantasyLeague.getLeagueSize()%2 != 0) {
-                throw new resourceException("League size is invalid. " +
+                throw new ResourceException("League size is invalid. " +
                         "(League size must be an even number and greater than " + minLeagueSize + ").");
             } else if (fantasyLeague.getNumWeeks() < minLeagueDur) {
-                throw new resourceException("Duration for the league's season is too short. " +
+                throw new ResourceException("Duration for the league's season is too short. " +
                         "(It has to be equal to or greater than " + minLeagueDur + ").");
             }
         } catch (NullPointerException e) {
-            throw new resourceException("League formatted incorrectly please provide the following:\n" +
+            throw new ResourceException("League formatted incorrectly please provide the following:\n" +
                     "league_name, admin_id, league_size, league_start_date, num_weeks.");
         }
         return;
     }
 
     // check post inputs
-    public void checkPostInputs(FantasyLeague fantasyLeague) throws resourceException, resourceNotFoundException {
+    public void checkPostInputs(FantasyLeague fantasyLeague) throws ResourceException, ResourceNotFoundException {
         if (fantasyLeague.getLeagueID() != null) {
-            throw new resourceException("Do not provide league_id.");
+            throw new ResourceException("Do not provide league_id.");
         }
         checkInputs(fantasyLeague);
     }
 
     // check put inputs
-    public void checkPutInputs(FantasyLeague fantasyLeague) throws resourceException, resourceNotFoundException {
+    public void checkPutInputs(FantasyLeague fantasyLeague) throws ResourceException, ResourceNotFoundException {
         if (fantasyLeague.getLeagueID() == null) {
-            throw new resourceException("Please provide league_id.");
+            throw new ResourceException("Please provide league_id.");
         } else if (checkIfInvalid(fantasyLeague.getLeagueName())) {
-            throw new resourceException("League name is invalid.");
+            throw new ResourceException("League name is invalid.");
         }
     }
 
     // generation and saving of games
-    public List<Integer> getTeamIDs(Integer league_id, Integer client_id) throws resourceException {
+    public List<Integer> getTeamIDs(Integer league_id, Integer client_id) throws ResourceException {
 
         List<Integer> result = teamRepo.findTeamsInLeague(league_id, client_id);
 
         // check to make sure teams registered with league is even
         if (result.size() % 2 != 0) {
-            throw new resourceException("Number of teams must be even.");
+            throw new ResourceException("Number of teams must be even.");
         } else {
             return result;
         }
@@ -255,24 +255,24 @@ public class fantasyLeagueService {
         return gameList;
     }
 
-    public void checkValidSize(FantasyLeague league, Integer teamSize) throws resourceException {
+    public void checkValidSize(FantasyLeague league, Integer teamSize) throws ResourceException {
 
         Integer league_size = league.getLeagueSize();
-        if (league_size != teamSize) {
-            throw new resourceException("Cannot generate schedule, make sure this league has at least "
+        if (!Objects.equals(league_size, teamSize)) {
+            throw new ResourceException("Cannot generate schedule, make sure this league has at least "
                     + league_size
                     + " teams registered.");
         }
     }
 
     public void checkDraftInputs(Integer league_id, Integer team_id, Integer client_id)
-            throws resourceException, resourceNotFoundException {
+            throws ResourceException, ResourceNotFoundException {
 
         // Check if league is valid
         if (league_id == null) {
-            throw new resourceException("league_id required");
+            throw new ResourceException("league_id required");
         } else if (!leagueRepo.existsById(league_id)) {
-            throw new resourceNotFoundException("This league does not exist.");
+            throw new ResourceNotFoundException("This league does not exist.");
         }
 
         // List of all teams that are in the league
@@ -283,16 +283,16 @@ public class fantasyLeagueService {
 
         // Check if team is valid
         if (team_id == null) {
-            throw new resourceNotFoundException("team_id required");
+            throw new ResourceNotFoundException("team_id required");
         } else if (!teamRepo.existsById(team_id)) {
-            throw new resourceNotFoundException("This team does not exist.");
+            throw new ResourceNotFoundException("This team does not exist.");
         } else if (!teamInLeague) {
-            throw new resourceNotFoundException("This team does not exist in this league.");
+            throw new ResourceNotFoundException("This team does not exist in this league.");
         }
     }
 
     public void pickPlayer(FantasyPlayer fantasyPlayer, Integer client_id)
-            throws resourceException, resourceNotFoundException {
+            throws ResourceException, ResourceNotFoundException {
         // If player_id given, assign that player to the specified team.
         // Otherwise, assign a random one.
         if (fantasyPlayer.getPlayerID() == null) {
@@ -307,7 +307,7 @@ public class fantasyLeagueService {
                     null);
 
             if (av_players.size() == 0) {
-                throw new resourceException("There are no more players to be drafted in this league.");
+                throw new ResourceException("There are no more players to be drafted in this league.");
             }
             // Chose random player from list of available players
             Integer idx = fantasyPlayerService.generateNumber(0, av_players.size());
@@ -318,12 +318,12 @@ public class fantasyLeagueService {
             List<Integer> undraft_players =
                     fantasyPlayerService.getUndraftedPlayers(fantasyPlayer.getLeagueID(), client_id);
             if (!undraft_players.contains(fantasyPlayer.getPlayerID())) {
-                throw new resourceException("Chosen player is not available for drafting.");
+                throw new ResourceException("Chosen player is not available for drafting.");
             }
         }
     }
 
-    public List<Integer> randomOrder(Integer league_id, Integer client_id) throws resourceNotFoundException {
+    public List<Integer> randomOrder(Integer league_id, Integer client_id) throws ResourceNotFoundException {
         List<Integer> team_ids = teamRepo.findTeamsInLeague(league_id, client_id);
         Collections.shuffle(team_ids);
         List<Integer> order = new ArrayList<>();
@@ -336,19 +336,19 @@ public class fantasyLeagueService {
         return order;
     }
 
-    public void checkIfValidLeague(Integer league_id) throws resourceException, resourceNotFoundException {
+    public void checkIfValidLeague(Integer league_id) throws ResourceException, ResourceNotFoundException {
         // Check if league is valid
         if (league_id == null) {
-            throw new resourceException("league_id required.");
+            throw new ResourceException("league_id required.");
         } else if (!leagueRepo.existsById(league_id)) {
-            throw new resourceNotFoundException("This league does not exist.");
+            throw new ResourceNotFoundException("This league does not exist.");
         }
     }
 
-    public void checkIfScheduleGenerated(Integer league_id) throws resourceException{
+    public void checkIfScheduleGenerated(Integer league_id) throws ResourceException {
         List<FantasyGame> games = gameRepo.findGamesByLeagueID(league_id);
         if (games.size() != 0 || games.isEmpty()) {
-            throw new resourceException("Schedule already generated for this league.");
+            throw new ResourceException("Schedule already generated for this league.");
         }
     }
 }

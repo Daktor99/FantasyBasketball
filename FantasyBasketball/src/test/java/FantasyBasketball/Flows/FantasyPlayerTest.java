@@ -1,10 +1,10 @@
 package FantasyBasketball.Flows;
 
-import FantasyBasketball.exceptions.resourceException;
-import FantasyBasketball.exceptions.resourceNotFoundException;
+import FantasyBasketball.exceptions.ResourceException;
+import FantasyBasketball.exceptions.ResourceNotFoundException;
 import FantasyBasketball.models.FantasyPlayer;
 import FantasyBasketball.repositories.fantasyPlayerRepository;
-import FantasyBasketball.services.fantasyPlayerService;
+import FantasyBasketball.services.FantasyPlayerService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -16,17 +16,16 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class fantasyPlayerTest {
+public class FantasyPlayerTest {
 
     @Autowired
-    private fantasyPlayerService playerService;
+    private FantasyPlayerService playerService;
 
     @MockBean
     private fantasyPlayerRepository playerRepo;
@@ -71,7 +70,7 @@ public class fantasyPlayerTest {
     }
 
     @Test
-    public void testUpdateFantasyPlayer() throws resourceNotFoundException {
+    public void testUpdateFantasyPlayer() throws ResourceNotFoundException {
 
         // Initialize updated FantasyPlayer
         FantasyPlayer player = new FantasyPlayer();
@@ -99,8 +98,8 @@ public class fantasyPlayerTest {
 
     }
 
-    @Test(expected = resourceNotFoundException.class)
-    public void testExceptionUpdateFantasyPlayer() throws resourceNotFoundException {
+    @Test(expected = ResourceNotFoundException.class)
+    public void testExceptionUpdateFantasyPlayer() throws ResourceNotFoundException {
 
         // Initialize updated FantasyPlayer
         FantasyPlayer player = new FantasyPlayer();
@@ -133,7 +132,7 @@ public class fantasyPlayerTest {
 
 
     @Test
-    public void testDeleteFantasyPlayerById() throws resourceNotFoundException {
+    public void testDeleteFantasyPlayerById() throws ResourceNotFoundException {
 
         // Initialize  FantasyPlayer
         FantasyPlayer player = new FantasyPlayer();
@@ -156,8 +155,8 @@ public class fantasyPlayerTest {
     }
 
      //Make sure that delete raises exception when FantasyPlayer not found
-    @Test(expected = resourceNotFoundException.class)
-    public void testExceptionDeleteFantasyPlayerById() throws resourceNotFoundException {
+    @Test(expected = ResourceNotFoundException.class)
+    public void testExceptionDeleteFantasyPlayerById() throws ResourceNotFoundException {
 
         // FantasyPlayerID does not exist
         Mockito.when(playerRepo.existsById(10000)).thenReturn(false);
@@ -210,7 +209,7 @@ public class fantasyPlayerTest {
         assertEquals(playerService.postFantasyPlayer(new_player).get(0).getPlayerID(), 6468);
     }
     @Test
-    public void testGetAvailableFantasyPlayers() throws resourceException {
+    public void testGetAvailableFantasyPlayers() throws ResourceException {
 
         // Initialize FantasyPlayer
         FantasyPlayer player = new FantasyPlayer();
@@ -228,7 +227,7 @@ public class fantasyPlayerTest {
     }
 
     @Test
-    public void testGetUndraftedFantasyPlayers() throws resourceNotFoundException, resourceException {
+    public void testGetUndraftedFantasyPlayers() throws ResourceNotFoundException, ResourceException {
 
         // Initialize FantasyPlayer
         FantasyPlayer player = new FantasyPlayer();
@@ -252,7 +251,7 @@ public class fantasyPlayerTest {
     }
 
     @Test
-    public void testDraftFantasyPlayer() throws resourceNotFoundException {
+    public void testDraftFantasyPlayer() throws ResourceNotFoundException {
 
         // Initialize updated FantasyPlayer
         FantasyPlayer player = new FantasyPlayer();

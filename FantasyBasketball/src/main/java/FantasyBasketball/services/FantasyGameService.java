@@ -1,7 +1,7 @@
 package FantasyBasketball.services;
 
-import FantasyBasketball.exceptions.resourceException;
-import FantasyBasketball.exceptions.resourceNotFoundException;
+import FantasyBasketball.exceptions.ResourceException;
+import FantasyBasketball.exceptions.ResourceNotFoundException;
 import FantasyBasketball.models.FantasyGame;
 import FantasyBasketball.models.FantasyStats;
 import FantasyBasketball.repositories.fantasyGameRepository;
@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class fantasyGameService {
+public class FantasyGameService {
 
     @Autowired
     fantasyGameRepository gameRepo;
@@ -26,13 +26,13 @@ public class fantasyGameService {
     fantasyStatsRepository statsRepo;
 
     // find by ID
-    public List<FantasyGame> getByID(Integer fantasyGameID) throws resourceNotFoundException {
+    public List<FantasyGame> getByID(Integer fantasyGameID) throws ResourceNotFoundException {
         Optional<FantasyGame> result = gameRepo.findById(fantasyGameID);
         if (result.isPresent()) {
             FantasyGame gameResult = result.get();
             return List.of(gameResult);
         } else {
-            throw new resourceNotFoundException("Fantasy Game not found by ID in DB.");
+            throw new ResourceNotFoundException("Fantasy Game not found by ID in DB.");
         }
     }
 
@@ -61,26 +61,26 @@ public class fantasyGameService {
     }
 
     // put operation
-    public List<FantasyGame> updateGame(FantasyGame game) throws resourceNotFoundException {
+    public List<FantasyGame> updateGame(FantasyGame game) throws ResourceNotFoundException {
         if(gameRepo.existsById(game.getScheduleID())) {
             FantasyGame result = gameRepo.save(game);
             return List.of(result);
         } else {
-            throw new resourceNotFoundException("Fantasy Game not found by ID in DB, cannot update.");
+            throw new ResourceNotFoundException("Fantasy Game not found by ID in DB, cannot update.");
         }
     }
 
     // delete operation
-    public void deleteGameById(Integer game_id) throws resourceNotFoundException {
+    public void deleteGameById(Integer game_id) throws ResourceNotFoundException {
         if(gameRepo.existsById(game_id)) {
             gameRepo.deleteById(game_id);
             return;
         } else {
-            throw new resourceNotFoundException("Fantasy Game not found in DB, cannot delete.");
+            throw new ResourceNotFoundException("Fantasy Game not found in DB, cannot delete.");
         }
     }
 
-    public void checkIfInDB(FantasyGame game) throws resourceException {
+    public void checkIfInDB(FantasyGame game) throws ResourceException {
         List <FantasyGame> games = getGamesByTemplate(null,
                 game.getLeagueID(),
                 game.getClientID(),
@@ -90,70 +90,70 @@ public class fantasyGameService {
                 game.getGameEndDate(),
                 null);
         if (games.size() != 0) {
-            throw new resourceException("This game is already in the database. You cannot add the same game.");
+            throw new ResourceException("This game is already in the database. You cannot add the same game.");
         }
         return;
     }
 
     // Checking if game's schedule is null before posting
-    public void checkPostInputs(FantasyGame game) throws resourceException {
+    public void checkPostInputs(FantasyGame game) throws ResourceException {
         if (game.getScheduleID() != null) {
-            throw new resourceException("Do not provide schedule_id.");
+            throw new ResourceException("Do not provide schedule_id.");
         }
 
         if (game.getHomeTeamID() == null) {
-            throw new resourceException("Must provide home_team_id.");
+            throw new ResourceException("Must provide home_team_id.");
         } else if (game.getAwayTeamID() == null) {
-            throw new resourceException("Must provide away_team_id.");
+            throw new ResourceException("Must provide away_team_id.");
         }
 
         if (game.getLeagueID() == null) {
-            throw new resourceException("Must provide league_id for game.");
+            throw new ResourceException("Must provide league_id for game.");
         }
 
         if (game.getGameStartDate() == null || game.getGameEndDate() == null) {
-            throw new resourceException("Must provide game_start_date and game_end_date.");
+            throw new ResourceException("Must provide game_start_date and game_end_date.");
         }
       
         checkIfInDB(game);
         checkInputs(game);
     }
     // Checking if game's schedule is null before putting
-    public void checkPutInputs(FantasyGame game) throws resourceException {
+    public void checkPutInputs(FantasyGame game) throws ResourceException {
             if (game.getScheduleID() == null) {
-                throw new resourceException("Must provide schedule_id to update Game.");
+                throw new ResourceException("Must provide schedule_id to update Game.");
             }
             checkInputs(game);
 
     }
 
     // Checking inputs for the game.
-    public void checkInputs(FantasyGame game) throws resourceException {
+    public void checkInputs(FantasyGame game) throws ResourceException {
         try {
 
             // Check that league_id is not null.
             if (game.getLeagueID() == null) {
-                throw new resourceException("Please provide league_id.");
+                throw new ResourceException("Please provide league_id.");
             }
 
             // Check that start day is after today's date.
             LocalDate today = LocalDate.now();
             if (game.getGameStartDate().compareTo(today) < 0) {
-                throw new resourceException("Attempted gameStartDate occurs in the past. " +
+                throw new ResourceException("Attempted gameStartDate occurs in the past. " +
                         "Please change it to occur in the future.");
             }
 
             // Check that start date is on a Sunday.
             DayOfWeek startDay = game.getGameStartDate().getDayOfWeek();
             if (startDay != DayOfWeek.SUNDAY) {
-                throw new resourceException("The start game date has to occur on a Sunday. " +
+                throw new ResourceException("The start game date has to occur on a Sunday. " +
                         "Provided start date is on a " + startDay);
             }
 
             // Check that end date is on a Saturday.
             DayOfWeek endDay = game.getGameEndDate().getDayOfWeek();
             if (endDay != DayOfWeek.SUNDAY) {
-                throw new resourceException("The end game date has to occur on a Sunday. " +
+                throw new ResourceException("The end game date has to occur on a Sunday. " +
                         "Provided end date is on a " + endDay);
             }
 
@@ -161,17 +161,17 @@ public class fantasyGameService {
             LocalDate startDate = game.getGameStartDate();
             LocalDate endDate   = game.getGameEndDate();
             if (endDate.isBefore(startDate)) {
-                throw new resourceException("Start Date must be before End Date");
+                throw new ResourceException("Start Date must be before End Date");
             }
 
             // Check that start and end date are 6 days apart.
             int daysBetween = Period.between(startDate, endDate).getDays();
             if (daysBetween != 7) {
-                throw new resourceException("There must be 7 days between start and end date." + daysBetween);
+                throw new ResourceException("There must be 7 days between start and end date." + daysBetween);
             }
 
         } catch (NullPointerException e) {
-            throw new resourceException("Fantasy game formatted incorrectly, please provide at least the following:\n" +
+            throw new ResourceException("Fantasy game formatted incorrectly, please provide at least the following:\n" +
                     " schedule_id, leagueID, home_team_id, away_team_id, game_start_date, game_end_date.");
         }
     }

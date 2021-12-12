@@ -1,9 +1,9 @@
 package FantasyBasketball.controllers;
 
-import FantasyBasketball.exceptions.resourceException;
-import FantasyBasketball.exceptions.resourceNotFoundException;
+import FantasyBasketball.exceptions.ResourceException;
+import FantasyBasketball.exceptions.ResourceNotFoundException;
 import FantasyBasketball.models.Client;
-import FantasyBasketball.services.clientService;
+import FantasyBasketball.services.ClientService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,29 +20,29 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
-public class clientController {
+public class ClientController {
 
     @Autowired
-    clientService clientService;
+    ClientService clientService;
 
-    private static final Logger log = LoggerFactory.getLogger(fantasyGameController.class);
+    private static final Logger Log = LoggerFactory.getLogger(FantasyGameController.class);
 
     private final HttpServletRequest request;
 
-    // default constructor for fantasyGameController
+    // default constructor for FantasyGameController
     @Autowired
-    public clientController(HttpServletRequest request) { this.request = request; }
+    public ClientController(HttpServletRequest request) { this.request = request; }
 
     @RequestMapping(value = "/getClient", method = RequestMethod.GET)
     public ResponseEntity<?> getClient(@RequestParam(value = "google_id") String google_id) {
-        log.info("Requesting client info with google_id {}", google_id);
+        Log.info("Requesting client info with google_id {}", google_id);
 
         try {
             List<Client> result = clientService.getClientByGoogleId(google_id);
-            log.info("Client request successful");
+            Log.info("Client request successful");
             return new ResponseEntity<>(result, HttpStatus.OK);
         } catch (Exception e) {
-            log.error("Exception on GET: ", e);
+            Log.error("Exception on GET: ", e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -52,8 +52,8 @@ public class clientController {
 
         try {
 
-            log.info("POST: " + request.getRequestURL());
-            log.info(newClient.toString());
+            Log.info("POST: " + request.getRequestURL());
+            Log.info(newClient.toString());
 
             // Checks to make sure the input is valid to insert in DB
             clientService.checkPostInputs(newClient);
@@ -62,16 +62,16 @@ public class clientController {
             List<Client> result = clientService.postClient(newClient);
             return new ResponseEntity<>(result, HttpStatus.CREATED);
 
-        } catch(resourceException e) {
+        } catch(ResourceException e) {
             // exception thrown if User instance is not formatted correctly
-            log.error("Exception on POST: " + e.getMessage());
+            Log.error("Exception on POST: " + e.getMessage());
             return new ResponseEntity<>(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
         } catch (DataIntegrityViolationException e) {
-            log.error("Exception on POST: ", e);
+            Log.error("Exception on POST: ", e);
             return new ResponseEntity<>("This action is not allowed, please check values and try again.", HttpStatus.UNPROCESSABLE_ENTITY);
         } catch (Exception e) {
             // all other exceptions
-            log.error("Exception on POST: ", e);
+            Log.error("Exception on POST: ", e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -80,8 +80,8 @@ public class clientController {
     public ResponseEntity<?> updateClient(@RequestBody Client client) {
         try {
 
-            log.info("PUT: " + request.getRequestURL());
-            log.info(client.toString());
+            Log.info("PUT: " + request.getRequestURL());
+            Log.info(client.toString());
 
             List<Client> oldClientList = clientService.getClientByGoogleId(client.getGoogle_id());
 
@@ -100,20 +100,20 @@ public class clientController {
             // Regular put
             List<Client> result = clientService.updateClient(client);
             return new ResponseEntity<>(result, HttpStatus.OK);
-        } catch (resourceException e) {
+        } catch (ResourceException e) {
             // exception thrown if User instance is not formatted correctly
-            log.error("Exception on PUT: " + e.getMessage());
+            Log.error("Exception on PUT: " + e.getMessage());
             return new ResponseEntity<>(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
-        } catch (resourceNotFoundException e) {
+        } catch (ResourceNotFoundException e) {
             // If user not found in the database, throw exception not found
-            log.error("Exception on PUT: " + e.getMessage());
+            Log.error("Exception on PUT: " + e.getMessage());
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (DataIntegrityViolationException e) {
-            log.error("Exception on PUT: ", e);
+            Log.error("Exception on PUT: ", e);
             return new ResponseEntity<>("This action is not allowed, please check values and try again.", HttpStatus.UNPROCESSABLE_ENTITY);
         } catch (Exception e) {
             // all other exceptions
-            log.error("Exception on PUT: ", e);
+            Log.error("Exception on PUT: ", e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -122,21 +122,21 @@ public class clientController {
     public ResponseEntity<?> deleteClient(@RequestParam(value = "google_id") String google_id) {
         try {
 
-            log.info("DELETE: " + request.getRequestURL() + "?" + request.getQueryString());
+            Log.info("DELETE: " + request.getRequestURL() + "?" + request.getQueryString());
             List<Client> clientList = clientService.getClientByGoogleId(google_id);
             Integer client_id = clientList.get(0).getClientID();
             clientService.deleteClientById(client_id);
             return new ResponseEntity<>(clientList, HttpStatus.OK);
 
-        } catch (resourceNotFoundException e) {
-            log.error("Exception on DELETE: " + e.getMessage());
+        } catch (ResourceNotFoundException e) {
+            Log.error("Exception on DELETE: " + e.getMessage());
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (DataIntegrityViolationException e) {
-            log.error("Exception on DELETE: ", e);
+            Log.error("Exception on DELETE: ", e);
             return new ResponseEntity<>("This action is not allowed, please check values and try again.", HttpStatus.UNPROCESSABLE_ENTITY);
         } catch (Exception e) {
             // all other exceptions
-            log.error("Exception on DELETE: ", e);
+            Log.error("Exception on DELETE: ", e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

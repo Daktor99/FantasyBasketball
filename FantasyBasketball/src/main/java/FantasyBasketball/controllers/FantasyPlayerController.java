@@ -1,11 +1,8 @@
 package FantasyBasketball.controllers;
 
-import FantasyBasketball.exceptions.resourceException;
-import FantasyBasketball.exceptions.resourceNotFoundException;
 import FantasyBasketball.models.FantasyPlayer;
-import FantasyBasketball.services.fantasyPlayerService;
+import FantasyBasketball.services.FantasyPlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,20 +13,20 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-import static FantasyBasketball.controllers.controllerUtils.*;
+import static FantasyBasketball.controllers.ControllerUtils.*;
 
 @Controller
-public class fantasyPlayerController {
+public class FantasyPlayerController {
 
     @Autowired
-    fantasyPlayerService fantasyPlayerService;
+    FantasyPlayerService fantasyPlayerService;
 
-    private static final Logger log = LoggerFactory.getLogger(fantasyPlayerController.class);
+    private static final Logger log = LoggerFactory.getLogger(FantasyPlayerController.class);
 
     private final HttpServletRequest request;
 
     @Autowired
-    public fantasyPlayerController(HttpServletRequest request) { this.request = request; }
+    public FantasyPlayerController(HttpServletRequest request) { this.request = request; }
 
 
     @RequestMapping(value = "/fantasyPlayers", method = RequestMethod.GET)
@@ -81,7 +78,7 @@ public class fantasyPlayerController {
 //
 //            // Set player client id and do regular post
 //            player.setClientID(client_id);
-//            List<FantasyPlayer> result = fantasyPlayerService.postFantasyPlayer(player);
+//            List<FantasyPlayer> result = FantasyPlayerService.postFantasyPlayer(player);
 //            return new ResponseEntity<>(result, HttpStatus.OK);
 //        } catch (DataIntegrityViolationException e) {
 //            log.error("Exception on POST: ", e);
@@ -105,7 +102,7 @@ public class fantasyPlayerController {
 //
 //            // Regular put
 //            player.setClientID(client_id);
-//            List<FantasyPlayer> result = fantasyPlayerService.updateFantasyPlayer(player);
+//            List<FantasyPlayer> result = FantasyPlayerService.updateFantasyPlayer(player);
 //            return new ResponseEntity<>(result, HttpStatus.OK);
 //        } catch (DataIntegrityViolationException e) {
 //            log.error("Exception on PUT: " + e.getMessage());
@@ -127,9 +124,9 @@ public class fantasyPlayerController {
 //        try {
 //            log.info("DELETE: " + request.getRequestURL() + "?" + request.getQueryString());
 //
-//            fantasyPlayerService.deleteFantasyPlayer(player_id, client_id, league_id);
+//            FantasyPlayerService.deleteFantasyPlayer(player_id, client_id, league_id);
 //            return new ResponseEntity<>(HttpStatus.OK);
-//        } catch (resourceNotFoundException e) {
+//        } catch (ResourceNotFoundException e) {
 //            log.error("Exception on DELETE: ", e);
 //            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
 //        } catch (Exception e) {

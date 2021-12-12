@@ -1,7 +1,7 @@
 package FantasyBasketball.interceptors;
 
 import FantasyBasketball.models.Client;
-import FantasyBasketball.services.clientService;
+import FantasyBasketball.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -15,7 +15,7 @@ import java.util.List;
 public class FantasyBasketballInterceptor implements HandlerInterceptor {
 
     @Autowired
-    clientService clientService;
+    ClientService clientService;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)

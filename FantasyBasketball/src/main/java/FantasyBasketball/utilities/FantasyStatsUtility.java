@@ -1,6 +1,5 @@
 package FantasyBasketball.utilities;
 
-import FantasyBasketball.exceptions.resourceNotFoundException;
 import FantasyBasketball.models.Client;
 import FantasyBasketball.models.FantasyGame;
 import FantasyBasketball.models.FantasyPlayer;

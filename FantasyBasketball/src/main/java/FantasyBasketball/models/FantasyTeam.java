@@ -1,6 +1,5 @@
 package FantasyBasketball.models;
 
-import FantasyBasketball.exceptions.resourceException;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 

@@ -1,9 +1,8 @@
 package FantasyBasketball.controllers;
-import FantasyBasketball.exceptions.resourceException;
-import FantasyBasketball.exceptions.resourceNotFoundException;
-import FantasyBasketball.models.Client;
+import FantasyBasketball.exceptions.ResourceException;
+import FantasyBasketball.exceptions.ResourceNotFoundException;
 import FantasyBasketball.models.User;
-import FantasyBasketball.services.userService;
+import FantasyBasketball.services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,21 +14,21 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-import static FantasyBasketball.controllers.controllerUtils.*;
+import static FantasyBasketball.controllers.ControllerUtils.*;
 
 @RestController
-public class userController {
+public class UserController {
 
     @Autowired
-    userService userService;
+    UserService userService;
 
-    private static final Logger log = LoggerFactory.getLogger(userController.class);
+    private static final Logger log = LoggerFactory.getLogger(UserController.class);
 
-    private final HttpServletRequest request;
+    private final HttpServletRequest Request;
 
-    // default constructor for userController class
+    // default constructor for UserController class
     @Autowired
-    public userController(HttpServletRequest request) { this.request = request; }
+    public UserController(HttpServletRequest request) { this.Request = request; }
 
     @RequestMapping(value = "/users", method = RequestMethod.GET)
     public ResponseEntity<?> getUsersByTemplate(@RequestParam(value = "user_id", required = false) Integer user_id,
@@ -40,9 +39,9 @@ public class userController {
 
         try {
 
-            // log GET request and get client id
-            logGetRequest(request, log);
-            Integer client_id = getClientId(request);
+            // log GET Request and get client id
+            logGetRequest(Request, log);
+            Integer client_id = getClientId(Request);
 
             // get users given client info and requested query parameters
             List<User> result = userService.getUsersByTemplate(user_id, client_id, email, username, first_name, last_name);
@@ -59,9 +58,9 @@ public class userController {
 
         try {
 
-            // log post request and get client details
-            logPostRequest(request, log, newUser.toString());
-            Integer client_id = getClientId(request);
+            // log post Request and get client details
+            logPostRequest(Request, log, newUser.toString());
+            Integer client_id = getClientId(Request);
 
             // make sure new user has correct client id
             newUser.setClientID(client_id);
@@ -73,7 +72,7 @@ public class userController {
             List<User> result = userService.postUser(newUser);
             return new ResponseEntity<>(result, HttpStatus.CREATED);
 
-        } catch(resourceException e) {
+        } catch(ResourceException e) {
             // exception thrown if User instance is not formatted correctly
             log.error("Exception on POST: " + e.getMessage());
             return new ResponseEntity<>(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
@@ -91,9 +90,9 @@ public class userController {
     public ResponseEntity<?> updateUser(@RequestBody User user) {
         try {
 
-            // log put request and get client id
-            logPutRequest(request, log, user.toString());
-            Integer client_id = getClientId(request);
+            // log put Request and get client id
+            logPutRequest(Request, log, user.toString());
+            Integer client_id = getClientId(Request);
 
             // Ensure correct client_id, check to make sure the input is valid to insert in DB
             user.setClientID(client_id);
@@ -103,11 +102,11 @@ public class userController {
             List<User> result = userService.updateUser(user);
             return new ResponseEntity<>(result, HttpStatus.OK);
 
-        } catch (resourceException e) {
+        } catch (ResourceException e) {
             // exception thrown if User instance is not formatted correctly
             log.error("Exception on PUT: " + e.getMessage());
             return new ResponseEntity<>(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
-        } catch (resourceNotFoundException e) {
+        } catch (ResourceNotFoundException e) {
             // If user not found in the database, throw exception not found
             log.error("Exception on PUT: " + e.getMessage());
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
@@ -125,14 +124,14 @@ public class userController {
     public ResponseEntity<?> deleteUser(@RequestParam(value = "user_id") Integer user_id) {
         try {
 
-            // log delete request
-            logDeleteRequest(request, log);
+            // log delete Request
+            logDeleteRequest(Request, log);
 
             // delete from
             userService.deleteUserById(user_id);
             return new ResponseEntity<>(HttpStatus.OK);
 
-        } catch (resourceNotFoundException e) {
+        } catch (ResourceNotFoundException e) {
             log.error("Exception on DELETE: " + e.getMessage());
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (DataIntegrityViolationException e) {

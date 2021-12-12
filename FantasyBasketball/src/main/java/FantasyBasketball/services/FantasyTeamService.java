@@ -1,8 +1,7 @@
 package FantasyBasketball.services;
 
-import FantasyBasketball.exceptions.resourceException;
-import FantasyBasketball.exceptions.resourceNotFoundException;
-import FantasyBasketball.models.FantasyGame;
+import FantasyBasketball.exceptions.ResourceException;
+import FantasyBasketball.exceptions.ResourceNotFoundException;
 import FantasyBasketball.models.FantasyLeague;
 import FantasyBasketball.models.FantasyPlayer;
 import FantasyBasketball.models.FantasyTeam;
@@ -14,10 +13,10 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 @Service
-public class fantasyTeamService {
+public class FantasyTeamService {
 
     @Autowired
-    fantasyLeagueService FantasyLeague;
+    FantasyLeagueService FantasyLeague;
 
     @Autowired
     fantasyTeamRepository teamRepo;
@@ -26,7 +25,7 @@ public class fantasyTeamService {
     fantasyLeagueRepository leagueRepo;
 
     @Autowired
-    fantasyPlayerService playerService;
+    FantasyPlayerService playerService;
 
     // positions for pg & sg
     static final List<String> guardPositions = Arrays.asList("G", "G-F", "F-G");
@@ -38,14 +37,14 @@ public class fantasyTeamService {
     static final List<String> centerPositions = Arrays.asList("F-C", "C-F", "C");
 
     // find by ID
-    public List<FantasyTeam> getByID(Integer teamID) throws resourceNotFoundException {
+    public List<FantasyTeam> getByID(Integer teamID) throws ResourceNotFoundException {
         Optional<FantasyTeam> result = teamRepo.findById(teamID);
         if (result.isPresent()) {
             FantasyTeam teamResult = result.get();
             return List.of(teamResult);
         }
         else {
-            throw new resourceNotFoundException("Team not found by ID in DB, cannot update");
+            throw new ResourceNotFoundException("Team not found by ID in DB, cannot update");
         }
     }
 
@@ -80,13 +79,13 @@ public class fantasyTeamService {
     }
 
     // post operation
-    public List<FantasyTeam> postTeam(FantasyTeam team) throws resourceException{
+    public List<FantasyTeam> postTeam(FantasyTeam team) throws ResourceException {
         Integer leagueID = team.getLeagueID();
         Optional<FantasyBasketball.models.FantasyLeague> fantasyLeagueOptional = leagueRepo.findById(leagueID);
         FantasyBasketball.models.FantasyLeague league = fantasyLeagueOptional.get();
 
         if (checkLeagueFull(league)) {
-            throw new resourceException("Cannot create another team. This league is already full.");
+            throw new ResourceException("Cannot create another team. This league is already full.");
         };
 
         team.setTeamID(0);
@@ -103,11 +102,11 @@ public class fantasyTeamService {
     }
 
     // put operation
-    public List<FantasyTeam> updateTeam(FantasyTeam team) throws resourceNotFoundException, resourceException {
+    public List<FantasyTeam> updateTeam(FantasyTeam team) throws ResourceNotFoundException, ResourceException {
 
         Integer team_id = team.getTeamID();
         if (team_id == null) {
-            throw new resourceException("team_id is required.");
+            throw new ResourceException("team_id is required.");
         }
 
         if(teamRepo.existsById(team.getTeamID())) {
@@ -122,26 +121,26 @@ public class fantasyTeamService {
 
             return List.of(teamRepo.save(updatedTeam));
         } else {
-            throw new resourceNotFoundException("Team not found by ID in DB, cannot update");
+            throw new ResourceNotFoundException("Team not found by ID in DB, cannot update");
         }
     }
 
     // delete operation
-    public void deleteTeamById(Integer team_id) throws resourceNotFoundException {
+    public void deleteTeamById(Integer team_id) throws ResourceNotFoundException {
         Boolean exists = teamRepo.existsById(team_id);
         if(exists) {
             teamRepo.deleteById(team_id);
         } else {
-            throw new resourceNotFoundException("User not found in DB, cannot delete");
+            throw new ResourceNotFoundException("User not found in DB, cannot delete");
         }
     }
 
     // Checking correct teamID and Length before posting
-    public void checkPostInputs(FantasyTeam team) throws resourceException {
+    public void checkPostInputs(FantasyTeam team) throws ResourceException {
         Integer teamID = team.getTeamID();
         // check to make sure teamID has been passed
         if (teamID != null) {
-            throw new resourceException("Do not provide team_id.");
+            throw new ResourceException("Do not provide team_id.");
         }
 
         String teamName = team.getTeamName();
@@ -152,31 +151,31 @@ public class fantasyTeamService {
             length = Boolean.TRUE;
 
         if (length) {
-            throw new resourceException("Team name must be between 1-128 characters.");
+            throw new ResourceException("Team name must be between 1-128 characters.");
         }
         Boolean owner = Boolean.FALSE;
         if (team.getOwnerID() == null)
             owner = Boolean.TRUE;
         if (owner) {
-            throw new resourceException("Please provide owner_id.");
+            throw new ResourceException("Please provide owner_id.");
         }
         Boolean league = Boolean.FALSE;
         if (team.getLeagueID() == null)
             league = Boolean.TRUE;
         if (league) {
-            throw new resourceException("Please provide league_id corresponding to team.");
+            throw new ResourceException("Please provide league_id corresponding to team.");
         }
     }
 
     // Checking correct teamID and Length before putting
-    public void checkPutInputs(FantasyTeam team) throws resourceException {
+    public void checkPutInputs(FantasyTeam team) throws ResourceException {
         // check to make sure user provided a teamID
         if (team.getTeamID() == null) {
-            throw new resourceException("You have to provide teamID.");
+            throw new ResourceException("You have to provide teamID.");
         }
         String teamName = team.getTeamName();
         if (teamName.length() > 128 || teamName.isBlank()) {
-            throw new resourceException("Team name must be between 1-128 characters.");
+            throw new ResourceException("Team name must be between 1-128 characters.");
         }
     }
 
@@ -206,18 +205,18 @@ public class fantasyTeamService {
         return playerPositionMap;
     }
 
-    public void checkOwnerAndLeagueNotUpdated(Integer ownerID, Integer leagueID) throws resourceException {
+    public void checkOwnerAndLeagueNotUpdated(Integer ownerID, Integer leagueID) throws ResourceException {
         if (ownerID != null) {
-            throw new resourceException("Cannot reassign team owner once team is created. Please delete team and create a new one.");
+            throw new ResourceException("Cannot reassign team owner once team is created. Please delete team and create a new one.");
         } else if (leagueID != null) {
-            throw new resourceException("Cannot reassign team league once team is created. Please delete team and create a new one.");
+            throw new ResourceException("Cannot reassign team league once team is created. Please delete team and create a new one.");
         }
     }
 
     public void updatePG(FantasyTeam currentTeam,
                           HashMap<Integer, String> playerPositionMap,
                           List<Integer> teamPlayerList,
-                          Integer playerID) throws resourceException {
+                          Integer playerID) throws ResourceException {
 
         // only if request is trying to change
         if (playerID != null) {
@@ -227,23 +226,23 @@ public class fantasyTeamService {
             boolean correctPosition = guardPositions.contains(position);
 
             if (!playerOnTeam) {
-                throw new resourceException("Point guard provided does not belong to this team, check values and try again.");
+                throw new ResourceException("Point guard provided does not belong to this team, check values and try again.");
             } else if (!correctPosition) {
-                throw new resourceException("This player cannot be assigned point guard because of their position. \n"
+                throw new ResourceException("This player cannot be assigned point guard because of their position. \n"
                         + "Please provide a player with one of the following positions: "
                         + guardPositions);
             }
 
             currentTeam.setStartPG(playerID);
         } else {
-            throw new resourceException("playerID is null.");
+            throw new ResourceException("playerID is null.");
         }
     }
 
     public void updateSG(FantasyTeam currentTeam,
                           HashMap<Integer, String> playerPositionMap,
                           List<Integer> teamPlayerList,
-                          Integer playerID) throws resourceException {
+                          Integer playerID) throws ResourceException {
 
         // only if request is trying to change
         if (playerID != null) {
@@ -253,23 +252,23 @@ public class fantasyTeamService {
             boolean correctPosition = guardPositions.contains(position);
 
             if (!playerOnTeam) {
-                throw new resourceException("Shooting guard provided does not belong to this team, check values and try again.");
+                throw new ResourceException("Shooting guard provided does not belong to this team, check values and try again.");
             } else if (!correctPosition) {
-                throw new resourceException("This player cannot be assigned shooting guard because of their position. \n"
+                throw new ResourceException("This player cannot be assigned shooting guard because of their position. \n"
                         + "Please provide a player with one of the following positions: "
                         + guardPositions);
             }
 
             currentTeam.setStartSG(playerID);
         } else {
-            throw new resourceException("playerID is null.");
+            throw new ResourceException("playerID is null.");
         }
     }
 
     public void updateSF(FantasyTeam currentTeam,
                           HashMap<Integer, String> playerPositionMap,
                           List<Integer> teamPlayerList,
-                          Integer playerID) throws resourceException {
+                          Integer playerID) throws ResourceException {
 
         if (playerID != null) {
 
@@ -278,16 +277,16 @@ public class fantasyTeamService {
             boolean correctPosition = forwardPositions.contains(position);
 
             if (!playerOnTeam) {
-                throw new resourceException("Small forward provided does not belong to this team, check values and try again.");
+                throw new ResourceException("Small forward provided does not belong to this team, check values and try again.");
             } else if (!correctPosition) {
-                throw new resourceException("This player cannot be assigned small forward because of their position. \n"
+                throw new ResourceException("This player cannot be assigned small forward because of their position. \n"
                         + "Please provide a player with one of the following positions: "
                         + forwardPositions);
             }
 
             currentTeam.setStartSF(playerID);
         } else {
-            throw new resourceException("playerID is null.");
+            throw new ResourceException("playerID is null.");
         }
 
     }
@@ -295,7 +294,7 @@ public class fantasyTeamService {
     public void updatePF(FantasyTeam currentTeam,
                           HashMap<Integer, String> playerPositionMap,
                           List<Integer> teamPlayerList,
-                          Integer playerID) throws resourceException {
+                          Integer playerID) throws ResourceException {
 
 
         if (playerID != null) {
@@ -305,23 +304,23 @@ public class fantasyTeamService {
             boolean correctPosition = forwardPositions.contains(position);
 
             if (!playerOnTeam) {
-                throw new resourceException("Power forward provided does not belong to this team, check values and try again.");
+                throw new ResourceException("Power forward provided does not belong to this team, check values and try again.");
             } else if (!correctPosition) {
-                throw new resourceException("This player cannot be assigned power forward because of their position. \n"
+                throw new ResourceException("This player cannot be assigned power forward because of their position. \n"
                         + "Please provide a player with one of the following positions: "
                         + forwardPositions);
             }
 
             currentTeam.setStartPF(playerID);
         } else {
-            throw new resourceException("playerID is null.");
+            throw new ResourceException("playerID is null.");
         }
     }
 
     public void updateC(FantasyTeam currentTeam,
                          HashMap<Integer, String> playerPositionMap,
                          List<Integer> teamPlayerList,
-                         Integer playerID) throws resourceException {
+                         Integer playerID) throws ResourceException {
 
         if (playerID != null) {
 
@@ -330,50 +329,50 @@ public class fantasyTeamService {
             boolean correctPosition = centerPositions.contains(position);
 
             if (!playerOnTeam) {
-                throw new resourceException("Center provided does not belong to this team, check values and try again.");
+                throw new ResourceException("Center provided does not belong to this team, check values and try again.");
             } else if (!correctPosition) {
-                throw new resourceException("This player cannot be assigned center because of their position. \n"
+                throw new ResourceException("This player cannot be assigned center because of their position. \n"
                         + "Please provide a player with one of the following positions: "
                         + centerPositions);
             }
 
             currentTeam.setStartC(playerID);
         } else {
-            throw new resourceException("playerID is null.");
+            throw new ResourceException("playerID is null.");
         }
     }
 
     public void updateBench1(FantasyTeam currentTeam,
                               List<Integer> teamPlayerList,
-                              Integer playerID) throws resourceException {
+                              Integer playerID) throws ResourceException {
 
         if (playerID != null) {
 
             boolean playerOnTeam = teamPlayerList.contains(playerID);
             if (!playerOnTeam) {
-                throw new resourceException("Bench player 1 provided does not belong to this team, check values and try again.");
+                throw new ResourceException("Bench player 1 provided does not belong to this team, check values and try again.");
             }
 
             currentTeam.setBench1(playerID);
         } else {
-            throw new resourceException("playerID is null.");
+            throw new ResourceException("playerID is null.");
         }
     }
 
     public void updateBench2(FantasyTeam currentTeam,
                               List<Integer> teamPlayerList,
-                              Integer playerID) throws resourceException {
+                              Integer playerID) throws ResourceException {
 
         if (playerID != null) {
 
             boolean playerOnTeam = teamPlayerList.contains(playerID);
             if (!playerOnTeam) {
-                throw new resourceException("Bench player 2 provided does not belong to this team, check values and try again.");
+                throw new ResourceException("Bench player 2 provided does not belong to this team, check values and try again.");
             }
 
             currentTeam.setBench2(playerID);
         } else {
-            throw new resourceException("playerID is null.");
+            throw new ResourceException("playerID is null.");
         }
     }
 
@@ -401,7 +400,7 @@ public class fantasyTeamService {
     //          - checks to make sure starter/bench players actually belong to current team
     //          - does not update wins, losses, or points because client should not change this,
     //                  and should be done automatically by backend server
-    public FantasyTeam updateValues(FantasyTeam dbTeam, FantasyTeam updatedTeam) throws resourceException {
+    public FantasyTeam updateValues(FantasyTeam dbTeam, FantasyTeam updatedTeam) throws ResourceException {
 
         // should not be able to change ownerID or leagueID after team has been created
         //      if ownerID exists, raise exception
@@ -440,7 +439,7 @@ public class fantasyTeamService {
                 dbTeam.getBench2());
 
         if (checkDuplicatePlayers(playerList)) {
-            throw new resourceException("Making this assignment will create duplicate players in the lineup, check values and try again.");
+            throw new ResourceException("Making this assignment will create duplicate players in the lineup, check values and try again.");
         }
 
         return dbTeam;

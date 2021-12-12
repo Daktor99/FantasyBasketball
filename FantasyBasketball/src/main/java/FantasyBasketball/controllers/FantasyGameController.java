@@ -1,9 +1,9 @@
 package FantasyBasketball.controllers;
 
-import FantasyBasketball.exceptions.resourceException;
-import FantasyBasketball.exceptions.resourceNotFoundException;
+import FantasyBasketball.exceptions.ResourceException;
+import FantasyBasketball.exceptions.ResourceNotFoundException;
 import FantasyBasketball.models.FantasyGame;
-import FantasyBasketball.services.fantasyGameService;
+import FantasyBasketball.services.FantasyGameService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,21 +21,21 @@ import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.util.List;
 
-import static FantasyBasketball.controllers.controllerUtils.*;
+import static FantasyBasketball.controllers.ControllerUtils.*;
 
 @Controller
-public class fantasyGameController {
+public class FantasyGameController {
 
     @Autowired
-    fantasyGameService gameService;
+    FantasyGameService gameService;
 
-    private static final Logger log = LoggerFactory.getLogger(fantasyGameController.class);
+    private static final Logger Log = LoggerFactory.getLogger(FantasyGameController.class);
 
     private final HttpServletRequest request;
 
-    // default constructor for fantasyGameController
+    // default constructor for FantasyGameController
     @Autowired
-    public fantasyGameController(HttpServletRequest request) { this.request = request; }
+    public FantasyGameController(HttpServletRequest request) { this.request = request; }
 
     @RequestMapping(value = "/fantasyGames", method = RequestMethod.GET)
     public ResponseEntity<?> getGamesByTemplate(
@@ -50,8 +50,8 @@ public class fantasyGameController {
                                 @RequestParam(value = "winner_id", required = false)        Integer winnerId) {
 
         try {
-            // log GET request and get client id
-            logGetRequest(request, log);
+            // Log GET request and get client id
+            logGetRequest(request, Log);
             Integer client_id = getClientId(request);
 
             // get results
@@ -60,7 +60,7 @@ public class fantasyGameController {
             return new ResponseEntity<>(result, HttpStatus.OK);
 
         } catch (Exception e) {
-            log.error("Exception on GET: " + e.getMessage());
+            Log.error("Exception on GET: " + e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -70,8 +70,8 @@ public class fantasyGameController {
 
         try {
 
-            // log post request and get client id
-            logPostRequest(request, log, newGame.toString());
+            // Log post request and get client id
+            logPostRequest(request, Log, newGame.toString());
             Integer client_id = getClientId(request);
 
             // set client to current client id and check for errors in input
@@ -82,14 +82,14 @@ public class fantasyGameController {
             List<FantasyGame> result = gameService.postGame(newGame);
             return new ResponseEntity<>(result, HttpStatus.CREATED);
 
-        } catch (resourceException e) {
-            log.error("Exception on POST: " + e.getMessage());
+        } catch (ResourceException e) {
+            Log.error("Exception on POST: " + e.getMessage());
             return new ResponseEntity<>(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
         } catch (DataIntegrityViolationException e) {
-            log.error("Exception on POST: " + e.getMessage());
+            Log.error("Exception on POST: " + e.getMessage());
             return new ResponseEntity<>("This action is not allowed, please check values and try again.", HttpStatus.UNPROCESSABLE_ENTITY);
         } catch (Exception e) {
-            log.error("Exception on POST: " + e.getMessage());
+            Log.error("Exception on POST: " + e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -99,8 +99,8 @@ public class fantasyGameController {
 
         try {
 
-            // log put request and get client id
-            logPutRequest(request, log, game.toString());
+            // Log put request and get client id
+            logPutRequest(request, Log, game.toString());
             Integer client_id = getClientId(request);
 
             // Set client id and check input to make sure no errors
@@ -111,14 +111,14 @@ public class fantasyGameController {
             List<FantasyGame> result = gameService.updateGame(game);
             return new ResponseEntity<>(result, HttpStatus.OK);
 
-        } catch (resourceException e) {
-            log.info("Exception on PUT:" + e.getMessage());
+        } catch (ResourceException e) {
+            Log.info("Exception on PUT:" + e.getMessage());
             return new ResponseEntity<>(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
         } catch (DataIntegrityViolationException e) {
-            log.error("Exception on PUT: " + e.getMessage());
+            Log.error("Exception on PUT: " + e.getMessage());
             return new ResponseEntity<>("This action is not allowed, please check values and try again.", HttpStatus.UNPROCESSABLE_ENTITY);
         } catch (Exception e) {
-            log.info("Exception on PUT:" + e.getMessage());
+            Log.info("Exception on PUT:" + e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -128,21 +128,21 @@ public class fantasyGameController {
 
         try {
 
-            // log delete request
-            logDeleteRequest(request, log);
+            // Log delete request
+            logDeleteRequest(request, Log);
 
             // regular deletion
             gameService.deleteGameById(schedule_id);
             return new ResponseEntity<>(HttpStatus.OK);
 
-        } catch (resourceNotFoundException e) {
-            log.error("Exception on DELETE: " + e.getMessage());
+        } catch (ResourceNotFoundException e) {
+            Log.error("Exception on DELETE: " + e.getMessage());
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (DataIntegrityViolationException e) {
-            log.error("Exception on DELETE: " + e.getMessage());
+            Log.error("Exception on DELETE: " + e.getMessage());
             return new ResponseEntity<>("This action is not allowed, please check values and try again.", HttpStatus.UNPROCESSABLE_ENTITY);
         } catch (Exception e) {
-            log.error("Exception on DELETE: " + e.getMessage());
+            Log.error("Exception on DELETE: " + e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
