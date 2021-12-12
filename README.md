@@ -253,7 +253,10 @@
    * Please find the results of our coverage testing in the directory called `CoverageTests`. It is provided as an HTML file. All coverage is above 85%.
 
 ## 4. Bug Finder
-   * Our team decided to use SpotBugs to be able to view bug / code smells in addition to IntelliJ's built in style checker. Please see the results of our SpotBugs bug finder report in the directory called `BugCheckReport/`. It is provided as an HTML file. (There are only two bugs, as we cleaned up the rest of the issues. We decided to leave the two bugs in the report for two reasons: 1) The bugs are not that serious, and we preferred our implementation over the preference of SpotBugs, and 2) SpotBugs did not allow us to export our bug finder report when we had 0 bugs.)
+   * Our team decided to use SpotBugs to be able to view bug / code smells in addition to IntelliJ's built in style checker. Please see the results of our SpotBugs bug finder report in the directory called `BugCheckReport/`. It is provided as an HTML file. 
+   * There are only two bugs, as we cleaned up the rest of the issues. We decided to leave the two bugs in the report for two reasons: 
+      * 1) The bugs are not that serious, and we preferred our implementation over the preference of SpotBugs, and 
+      * 2) SpotBugs did not allow us to export our bug finder report when we had 0 bugs.
 
 ## 5. Documented API (Updated)
 
