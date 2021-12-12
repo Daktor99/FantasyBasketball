@@ -1,6 +1,7 @@
 package FantasyBasketball.interceptors;
 
 import FantasyBasketball.models.Client;
+import FantasyBasketball.services.clientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -8,9 +9,6 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import FantasyBasketball.services.clientService;
-
 import java.util.List;
 
 @Component
@@ -31,8 +29,10 @@ public class FantasyBasketballInterceptor implements HandlerInterceptor {
                     + "\n\tToken should be provided as 'token' under headers."
                     + "\n\tIf you don't have an account, you can register on the '/register' route.");
             return false;
+        } else if (registerPage) {
+            return true;
         }
-
+        System.out.println("TOKEN: " + token);
         List<Client> clientCheck = clientService.getClientByGoogleId(token);
         if (clientCheck.size() != 1) {
             response.setStatus(401);

@@ -377,3 +377,4 @@ public class fantasyStatsTest {
         assertEquals(10, result.get(1));
     }
 }
+
