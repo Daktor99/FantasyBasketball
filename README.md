@@ -1,4 +1,5 @@
 # ASWE_TeamProject
+# (Top section is from our first iteration. Please scroll down to see README contents for our second iteration.)
 
 ## 1. Documented API
    * ___Users___
@@ -241,3 +242,16 @@
    * Finally, run the following command to run the FantasyBasketballApplication:
        * `mvn spring-boot:run`
    * (The above instructions were inspired by the following source: https://maven.apache.org/guides/getting-started/maven-in-five-minutes.html)
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+## 1. Client
+
+## 2. Continuous Integration
+
+## 3. Coverage
+
+## 4. Bug Finder
+
+## 5. Documented API (Updated)
+
