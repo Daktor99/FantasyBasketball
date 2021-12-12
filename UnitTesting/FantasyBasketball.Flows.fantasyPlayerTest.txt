@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
-Test set: FantasyBasketball.Flows.fantasyPlayerTest
+Test set: FantasyBasketball.Flows.FantasyPlayerTest
 -------------------------------------------------------------------------------
-Tests run: 13, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 5.746 s - in FantasyBasketball.Flows.fantasyPlayerTest
+Tests run: 13, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.923 s - in FantasyBasketball.Flows.FantasyPlayerTest
