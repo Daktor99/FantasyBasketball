@@ -199,6 +199,39 @@ public class fantasyGameTest {
 
     }
 
+    // testing checkPostInputs with invalid scheduleID
+    @Test(expected = resourceException.class)
+    public void testCheckPostInputshome() throws resourceException {
+
+        LocalDate startDate = LocalDate.of(2022, 12, 10);
+        genericGame = new FantasyGame(1, 1, null, 2, startDate, startDate.plusWeeks(1));
+        genericGame.setScheduleID(1);
+        gameService.checkPostInputs(genericGame);
+
+    }
+
+    // testing checkPostInputs with invalid scheduleID
+    @Test(expected = resourceException.class)
+    public void testCheckPostInputsaway() throws resourceException {
+
+        LocalDate startDate = LocalDate.of(2022, 12, 10);
+        genericGame = new FantasyGame(1, 1, 1, null, startDate, startDate.plusWeeks(1));
+        genericGame.setScheduleID(1);
+        gameService.checkPostInputs(genericGame);
+
+    }
+
+    // testing checkPostInputs with invalid scheduleID
+    @Test(expected = resourceException.class)
+    public void testCheckPostInputsleaguemissing() throws resourceException {
+
+        LocalDate startDate = LocalDate.of(2022, 12, 10);
+        genericGame = new FantasyGame(null, 1, 1, 1, startDate, startDate.plusWeeks(1));
+        genericGame.setScheduleID(1);
+        gameService.checkPostInputs(genericGame);
+
+    }
+
     // testing checkPostInputs with startDate after endDate
     @Test(expected = resourceException.class)
     public void testCheckPostInputsStartDateAfterEndDate () throws resourceException {
@@ -284,14 +317,17 @@ public class fantasyGameTest {
 
     @Test(expected = resourceException.class)
     public void testCheckInputsStartDate() throws resourceException {
+        LocalDate bad = LocalDate.of(2000, 1, 8);
+        LocalDate good = LocalDate.of(2000, 2, 9);
+
         FantasyGame badGame = new FantasyGame(
                 1,
                 1,
                 1,
                 1,
                 2,
-                null,
-                genericdate2,
+                bad,
+                good,
                 null,
                 0,
                 0,
@@ -313,36 +349,140 @@ public class fantasyGameTest {
         gameService.checkInputs(badGame);
     }
 
-//    @Test(expected = resourceException.class)
-//    public void testCheckInputsDayOfWeek() throws resourceException {
-//        FantasyGame badGame = new FantasyGame(
-//                1,
-//                1,
-//                1,
-//                1,
-//                2,
-//                null,
-//                genericdate2,
-//                null,
-//                0,
-//                0,
-//                null,
-//                null,
-//                null,
-//                null,
-//                null,
-//                null,
-//                null,
-//                null,
-//                null,
-//                null,
-//                null,
-//                null,
-//                null,
-//                null
-//        );
-//        gameService.checkInputs(badGame);
-//    }
+    @Test(expected = resourceException.class)
+    public void testCheckInputsDayOfWeek() throws resourceException {
+        LocalDate bad = LocalDate.of(2022, 2, 9);
+
+        FantasyGame badGame = new FantasyGame(
+                1,
+                1,
+                1,
+                1,
+                2,
+                genericdate1,
+                bad,
+                null,
+                0,
+                0,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+        );
+        gameService.checkInputs(badGame);
+    }
+
+    @Test(expected = resourceException.class)
+    public void testCheckInputsend() throws resourceException {
+        LocalDate bad = LocalDate.of(2022, 1, 2);
+        LocalDate ba2d = LocalDate.of(2022, 1, 10);
+
+        FantasyGame badGame = new FantasyGame(
+                1,
+                1,
+                1,
+                1,
+                2,
+                null,
+                bad,
+                null,
+                0,
+                0,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+        );
+        gameService.checkInputs(badGame);
+    }
+
+    @Test(expected = resourceException.class)
+    public void testCheckInputsmessup() throws resourceException {
+        LocalDate bad = LocalDate.of(2022, 1, 9);
+        LocalDate badafter = LocalDate.of(2022, 1, 2);
+
+        FantasyGame badGame = new FantasyGame(
+                1,
+                1,
+                1,
+                1,
+                2,
+                bad,
+                badafter,
+                null,
+                0,
+                0,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+        );
+        gameService.checkInputs(badGame);
+    }
+
+    @Test(expected = resourceException.class)
+    public void testCheckInputssixdays() throws resourceException {
+        LocalDate bad = LocalDate.of(2022, 1, 2);
+        LocalDate badafter = LocalDate.of(2022, 1, 16);
+
+        FantasyGame badGame = new FantasyGame(
+                1,
+                1,
+                1,
+                1,
+                2,
+                bad,
+                badafter,
+                null,
+                0,
+                0,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+        );
+        gameService.checkInputs(badGame);
+    }
 
     // testing normal put operation
     @Test

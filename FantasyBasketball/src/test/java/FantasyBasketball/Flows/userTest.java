@@ -2,6 +2,7 @@ package FantasyBasketball.Flows;
 
 import FantasyBasketball.exceptions.resourceException;
 import FantasyBasketball.exceptions.resourceNotFoundException;
+import FantasyBasketball.models.Client;
 import FantasyBasketball.models.User;
 import FantasyBasketball.repositories.userRepository;
 import FantasyBasketball.services.userService;
@@ -14,6 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.List;
+import java.util.Optional;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -28,21 +32,6 @@ public class userTest {
 
     @MockBean
     private userRepository userRepo;
-
-    @Before
-    public void setUp() {
-        //tearDown function
-    }
-
-    @After
-    public void tearDown() {
-        //tearDown function
-    }
-
-    @Test
-    public void testGetUsersByTemplate() {
-        //
-    }
 
     // Test that the id is correctly updated by postUser method
     @Test
@@ -133,10 +122,10 @@ public class userTest {
 
         // Initialize a string containing > 128 chars
         String test = "abcdefghijklmnopqrstuvwxyz" +
-                      "abcdefghijklmnopqrstuvwxyz" +
-                      "abcdefghijklmnopqrstuvwxyz" +
-                      "abcdefghijklmnopqrstuvwxyz" +
-                      "abcdefghijklmnopqrstuvwxyz";
+                "abcdefghijklmnopqrstuvwxyz" +
+                "abcdefghijklmnopqrstuvwxyz" +
+                "abcdefghijklmnopqrstuvwxyz" +
+                "abcdefghijklmnopqrstuvwxyz";
 
         // assert that checkIfInvalid returns true
         assertTrue(userService.checkIfInvalid(test));
@@ -179,7 +168,10 @@ public class userTest {
         // Initialize test user with invalid email
         User testUser = new User(2,
                 1,
-                null,
+                "emanueldemanueldemanueldemanueldemanueldemanueldemanueld" +
+                        "emanueldemanueldemanueldemanueldemanueldemanueldemanueld" +
+                        "emanueldemanueldemanueldemanueldemanueldemanueld" +
+                        "emanueldemanueldemanueldemanueldemanueldemanueld@gmail.com",
                 "edaka",
                 "Emanuelito",
                 "Daktor");
@@ -292,9 +284,24 @@ public class userTest {
         userService.checkPostInputs(testUser);
     }
 
+    // Test that exception is raised when user_id provided that is not null
+    @Test
+    public void testCheckPostInputs2() throws resourceException {
+
+        // Initialize test user with user_id that is not null
+        User testUser = new User(null,
+                1,
+                "emanueld@gmail.com",
+                "edaka",
+                "Emanuel",
+                "Daka");
+
+        userService.checkPostInputs(testUser);
+    }
+
     // Test that exception is raised when user_id not provided
-    @Test(expected = resourceException.class)
-    public void testCheckPutInputs() throws resourceException {
+    @Test (expected = resourceException.class)
+    public void testCheckPutInputs2() throws resourceException {
         // Initialize test user with user_id that is null
         User testUser = new User(null,
                 1,
@@ -304,6 +311,74 @@ public class userTest {
                 "Daka");
 
         userService.checkPutInputs(testUser);
+    }
+
+    // Test that exception is raised when user_id not provided
+    @Test
+    public void testCheckPutInputs() throws resourceException {
+        // Initialize test user with user_id that is null
+        User testUser = new User(1,
+                1,
+                "emanueld@gmail.com",
+                "edaka",
+                "Emanuel",
+                "Daka");
+
+        userService.checkPutInputs(testUser);
+    }
+
+    @Test
+    public void testCheckGetByIdExists() throws resourceNotFoundException {
+
+        Integer user_id = 1;
+        User newUser = new User(1,
+                1,
+                "emanueldaka@gmail.com",
+                "edaka",
+                "Emanuel",
+                "Daka");
+        Optional<User> optUser = Optional.of(newUser);
+        Mockito.when(userRepo.findById(user_id)).thenReturn(optUser);
+
+        User result = userService.getByID(user_id).get(0);
+
+        assertEquals(user_id, result.getClientID());
+    }
+
+    @Test(expected = resourceNotFoundException.class)
+    public void testCheckGetByIdNotExists() throws resourceNotFoundException {
+
+        Integer client_id = 1;
+        Optional<User> optUser = Optional.empty();
+        Mockito.when(userRepo.findById(client_id)).thenReturn(optUser);
+
+        List<User> result = userService.getByID(client_id);
+    }
+
+    @Test
+    public void testGetUsersByTemplate() {
+
+        User newUser = new User(1,
+                1,
+                "emanueldaka@gmail.com",
+                "edaka",
+                "Emanuel",
+                "Daka");
+
+        Mockito.when(userRepo.findByTemplate(null,
+                null,
+                "emanueldaka@gmail.com",
+                null,
+                null,
+                null)).thenReturn(List.of(newUser));
+        User result = userService.getUsersByTemplate(null,
+                null,
+                "emanueldaka@gmail.com",
+                null,
+                null,
+                null).get(0);
+        assertEquals(result.getUserID(), result.getUserID());
+
     }
 
 }
