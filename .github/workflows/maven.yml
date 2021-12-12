@@ -36,3 +36,8 @@ jobs:
       run: cd FantasyBasketball && mvn -Dtest=fantasyLeagueTest test
     - name: Export test results
       run: cp FantasyBasketball/target/surefire-reports/*.txt UnitTesting
+    - uses: EndBug/add-and-commit@v7
+      with:
+        add: UnitTesting/.
+        default_actor: github_actions
+        

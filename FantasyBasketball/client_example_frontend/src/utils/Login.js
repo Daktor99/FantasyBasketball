@@ -3,7 +3,6 @@ import React, {Component} from 'react';
 import {GoogleLogin} from 'react-google-login';
 import {GOOGLE_CLOUD_CLIENT_ID} from "../Constants";
 
-
 class Login extends Component {
 
     onSuccess = (res) => {

@@ -21,7 +21,13 @@ class Home extends Component {
 
     async componentWillMount() {
         const input = '/getClient?google_id=' + this.state.googleId
-        const response = await fetch(input);
+        const response = await fetch(input, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'token': this.state.googleId
+            },
+        });
         const body = await response.json();
         const {cookies} = this.props;
         if (body.length > 0) {
