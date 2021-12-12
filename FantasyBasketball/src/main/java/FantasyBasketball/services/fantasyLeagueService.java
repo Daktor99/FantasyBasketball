@@ -192,7 +192,6 @@ public class fantasyLeagueService {
             throw new resourceException("Do not provide league_id.");
         }
         checkInputs(fantasyLeague);
-        return;
     }
 
     // check put inputs
