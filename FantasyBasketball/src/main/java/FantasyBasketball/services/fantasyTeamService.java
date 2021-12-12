@@ -55,11 +55,12 @@ public class fantasyTeamService {
                                                 String team_name,
                                                 Integer owner_id,
                                                 Integer league_id) {
-        return teamRepo.findByTemplate(team_id,
+        List<FantasyTeam> teamsList =  teamRepo.findByTemplate(team_id,
                 client_id,
                 team_name,
                 owner_id,
                 league_id);
+        return teamsList;
     }
 
     // helper function to check if the league is full or not yet to apply constraint to posting new team to a league
@@ -91,11 +92,14 @@ public class fantasyTeamService {
         team.setTeamID(0);
 
         FantasyTeam result = teamRepo.save(team);
-        return List.of(result);
+        List<FantasyTeam> resultList = Arrays.asList(result);
+        return resultList;
     }
 
     public List<FantasyTeam> postMultipleTeams(List<FantasyTeam> teams) {
-        return (List<FantasyTeam>) teamRepo.saveAll(teams);
+        Iterable<FantasyTeam> teamsIter = teamRepo.saveAll(teams);
+        List<FantasyTeam> teamsList = (List<FantasyTeam>) teamsIter;
+        return teamsList;
     }
 
     // put operation
@@ -109,15 +113,14 @@ public class fantasyTeamService {
         if(teamRepo.existsById(team.getTeamID())) {
 
             // pull team from DB
-            FantasyTeam dbTeam = teamRepo.findByTemplate(team.getTeamID(),
-                    team.getClientID(), null, null, null).get(0);
+            List<FantasyTeam> dblist = teamRepo.findByTemplate(team.getTeamID(), team.getClientID(),
+                    null, null, null);
 
-            FantasyTeam updatedTeam = updateValues(dbTeam, team);
+            FantasyTeam updatedTeam = updateValues(dblist.get(0), team);
 
             checkPutInputs(updatedTeam);
 
-            FantasyTeam result = teamRepo.save(updatedTeam);
-            return List.of(result);
+            return List.of(teamRepo.save(updatedTeam));
         } else {
             throw new resourceNotFoundException("Team not found by ID in DB, cannot update");
         }
@@ -125,7 +128,8 @@ public class fantasyTeamService {
 
     // delete operation
     public void deleteTeamById(Integer team_id) throws resourceNotFoundException {
-        if(teamRepo.existsById(team_id)) {
+        Boolean exists = teamRepo.existsById(team_id);
+        if(exists) {
             teamRepo.deleteById(team_id);
         } else {
             throw new resourceNotFoundException("User not found in DB, cannot delete");
@@ -134,68 +138,50 @@ public class fantasyTeamService {
 
     // Checking correct teamID and Length before posting
     public void checkPostInputs(FantasyTeam team) throws resourceException {
-        try {
+        Integer teamID = team.getTeamID();
+        // check to make sure teamID has been passed
+        if (teamID != null) {
+            throw new resourceException("Do not provide team_id.");
+        }
 
-            // check to make sure teamID has been passed
-            if (team.getTeamID() != null) {
-                throw new resourceException("Do not provide team_id.");
-            }
+        String teamName = team.getTeamName();
+        Boolean length = Boolean.FALSE;
+        if (teamName.length() > 128)
+            length = Boolean.TRUE;
+        if (teamName.isBlank())
+            length = Boolean.TRUE;
 
-            String teamName = team.getTeamName();
-            if (teamName.length() > 128 || teamName.isBlank()) {
-                throw new resourceException("Team name must be between 1-128 characters.");
-            }
-
-            if (team.getOwnerID() == null) {
-                throw new resourceException("Please provide owner_id.");
-            }
-
-            if (team.getLeagueID() == null) {
-                throw new resourceException("Please provide league_id corresponding to team.");
-            }
-
-        } catch (NullPointerException e) {
-            throw new resourceException("Post to team formatted incorrectly please provide the following:\n" +
-                                        "team_name,\n" +
-                                        "owner_id,\n" +
-                                        "league_id,\n");
+        if (length) {
+            throw new resourceException("Team name must be between 1-128 characters.");
+        }
+        Boolean owner = Boolean.FALSE;
+        if (team.getOwnerID() == null)
+            owner = Boolean.TRUE;
+        if (owner) {
+            throw new resourceException("Please provide owner_id.");
+        }
+        Boolean league = Boolean.FALSE;
+        if (team.getLeagueID() == null)
+            league = Boolean.TRUE;
+        if (league) {
+            throw new resourceException("Please provide league_id corresponding to team.");
         }
     }
 
     // Checking correct teamID and Length before putting
     public void checkPutInputs(FantasyTeam team) throws resourceException {
-        try {
-
-            // check to make sure user provided a teamID
-            if (team.getTeamID() == null) {
-                throw new resourceException("You have to provide teamID.");
-            }
-            String teamName = team.getTeamName();
-            if (teamName.length() > 128 || teamName.isBlank()) {
-                throw new resourceException("Team name must be between 1-128 characters.");
-            }
-        } catch (NullPointerException e) {
-            throw new resourceException("Team formatted incorrectly please provide at least the following:\n" +
-                                        "client_id,\n" +
-                                        "team_id,\n" +
-                                        "team_name,\n" +
-                                        "owner_id,\n" +
-                                        "league_id,\n" +
-                                        "start_pg_id,\n" +
-                                        "start_sg_id,\n" +
-                                        "start_sf_id,\n" +
-                                        "start_pf_id,\n" +
-                                        "start_c_id,\n" +
-                                        "bench_1_id,\n" +
-                                        "bench_2_id,\n" +
-                                        "team_wins,\n" +
-                                        "team_losses,\n" +
-                                        "points_scored,\n" +
-                                        "points_against");
+        // check to make sure user provided a teamID
+        if (team.getTeamID() == null) {
+            throw new resourceException("You have to provide teamID.");
+        }
+        String teamName = team.getTeamName();
+        if (teamName.length() > 128 || teamName.isBlank()) {
+            throw new resourceException("Team name must be between 1-128 characters.");
         }
     }
 
     public List<Integer> getPlayersOnTeam(Integer teamID) {
+
         return playerService.getPlayerIDsByTeam(teamID);
     }
 
@@ -419,41 +405,28 @@ public class fantasyTeamService {
 
         // should not be able to change ownerID or leagueID after team has been created
         //      if ownerID exists, raise exception
-        Integer ownerID = updatedTeam.getOwnerID();
-        Integer leagueID = updatedTeam.getLeagueID();
-        checkOwnerAndLeagueNotUpdated(ownerID, leagueID);
+        checkOwnerAndLeagueNotUpdated(updatedTeam.getOwnerID(), updatedTeam.getLeagueID());
 
         // find all players that are drafted to this team
-        Integer teamID = updatedTeam.getTeamID();
-        List<Integer> teamPlayerIDs = getPlayersOnTeam(teamID);
-        HashMap<Integer, String> playerPositionMap = getPlayerPositionMap(teamID);
+        List<Integer> teamPlayerIDs = getPlayersOnTeam(updatedTeam.getTeamID());
+        HashMap<Integer, String> playerPositionMap = getPlayerPositionMap(updatedTeam.getTeamID());
 
         // should not update teamID, skip it
 
         // if team name is not null, update it
-        String teamName = updatedTeam.getTeamName();
-        if (teamName != null) {
-            dbTeam.setTeamName(teamName);
+        if (updatedTeam.getTeamName() != null) {
+            dbTeam.setTeamName(updatedTeam.getTeamName());
         }
-
-        // get values for players passed in
-        Integer start_pg = updatedTeam.getStartPG();
-        Integer start_sg = updatedTeam.getStartSG();
-        Integer start_sf = updatedTeam.getStartSF();
-        Integer start_pf = updatedTeam.getStartPF();
-        Integer start_c = updatedTeam.getStartC();
-        Integer bench_1 = updatedTeam.getBench1();
-        Integer bench_2 = updatedTeam.getBench2();
 
         // for each player, only assign to current team
         //          if position is correct and player is on correct team
-        updatePG(dbTeam, playerPositionMap, teamPlayerIDs, start_pg);
-        updateSG(dbTeam, playerPositionMap, teamPlayerIDs, start_sg);
-        updateSF(dbTeam, playerPositionMap, teamPlayerIDs, start_sf);
-        updatePF(dbTeam, playerPositionMap, teamPlayerIDs, start_pf);
-        updateC(dbTeam, playerPositionMap, teamPlayerIDs, start_c);
-        updateBench1(dbTeam, teamPlayerIDs, bench_1);
-        updateBench2(dbTeam, teamPlayerIDs, bench_2);
+        updatePG(dbTeam, playerPositionMap, teamPlayerIDs, updatedTeam.getStartPG());
+        updateSG(dbTeam, playerPositionMap, teamPlayerIDs, updatedTeam.getStartSG());
+        updateSF(dbTeam, playerPositionMap, teamPlayerIDs, updatedTeam.getStartSF());
+        updatePF(dbTeam, playerPositionMap, teamPlayerIDs, updatedTeam.getStartPF());
+        updateC(dbTeam, playerPositionMap, teamPlayerIDs, updatedTeam.getStartC());
+        updateBench1(dbTeam, teamPlayerIDs, updatedTeam.getBench1());
+        updateBench2(dbTeam, teamPlayerIDs, updatedTeam.getBench2());
 
         // check if there are any duplicate players in the starting lineup
         // create a set to make sure there are no duplicate players
@@ -465,9 +438,8 @@ public class fantasyTeamService {
                 dbTeam.getStartC(),
                 dbTeam.getBench1(),
                 dbTeam.getBench2());
-        boolean hasDuplicatePlayers = checkDuplicatePlayers(playerList);
 
-        if (hasDuplicatePlayers) {
+        if (checkDuplicatePlayers(playerList)) {
             throw new resourceException("Making this assignment will create duplicate players in the lineup, check values and try again.");
         }
 
