@@ -1,5 +1,5 @@
 # ASWE_TeamProject
-# (Top section is from our first iteration. Please scroll down to see README contents for our second iteration.)
+*(Top section is from our first iteration. Please scroll down to see README contents for our second iteration.)*
 
 ## 1. Documented API
    * ___Users___
