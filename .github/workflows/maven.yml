@@ -22,18 +22,18 @@ jobs:
         java-version: '11'
     - name: Build with Maven
       run: mvn -B package --file FantasyBasketball/pom.xml -Dmaven.test.skip=true
-    - name: Run userTest
-      run: cd FantasyBasketball && mvn -Dtest=userTest test
-    - name: Run fantasyTeamTest
-      run: cd FantasyBasketball && mvn -Dtest=fantasyTeamTest test
-    - name: Run fantasyStatsTest
-      run: cd FantasyBasketball && mvn -Dtest=fantasyStatsTest test
-    - name: Run fantasyPlayerTest
-      run: cd FantasyBasketball && mvn -Dtest=fantasyPlayerTest test
-    - name: Run fantasyGameTest
-      run: cd FantasyBasketball && mvn -Dtest=fantasyGameTest test
-    - name: Run fantasyLeagueTest
-      run: cd FantasyBasketball && mvn -Dtest=fantasyLeagueTest test
+    - name: Run UserTest
+      run: cd FantasyBasketball && mvn -Dtest=UserTest test
+    - name: Run FantasyTeamTest
+      run: cd FantasyBasketball && mvn -Dtest=FantasyTeamTest test
+    - name: Run FantasyStatsTest
+      run: cd FantasyBasketball && mvn -Dtest=FantasyStatsTest test
+    - name: Run FantasyPlayerTest
+      run: cd FantasyBasketball && mvn -Dtest=FantasyPlayerTest test
+    - name: Run FantasyGameTest
+      run: cd FantasyBasketball && mvn -Dtest=FantasyGameTest test
+    - name: Run FantasyLeagueTest
+      run: cd FantasyBasketball && mvn -Dtest=FantasyLeagueTest test
     - name: Export test results
       run: cp FantasyBasketball/target/surefire-reports/*.txt UnitTesting
     - uses: EndBug/add-and-commit@v7
