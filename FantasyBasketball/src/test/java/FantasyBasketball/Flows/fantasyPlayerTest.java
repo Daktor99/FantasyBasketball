@@ -90,7 +90,7 @@ public class FantasyPlayerTest {
         Mockito.when(playerRepo.findByTemplate(6468,1,1,
                 1,null,null,null,null,null)).thenReturn(player_list);
 
-        List<FantasyPlayer> player_list1=playerService.updateFantasyPlayer(updated_player);
+        playerService.updateFantasyPlayer(updated_player);
         //Mockito.when(playerRepo.setPlayerTeam(6468,1,1,1))
 
         // assert that FantasyPlayer gets correctly updated by checking the FantasyPlayerID
@@ -117,10 +117,6 @@ public class FantasyPlayerTest {
     public void testGetPlayerIDsByTeam() {
 
         // Initialize FantasyPlayer
-        FantasyPlayer player = new FantasyPlayer();
-        FantasyPlayer new_player = player.setNewPlayer(0, 1, 1,
-                "Tom", "Murdia", "nets", "F", 1, 0);
-
 
         List<Integer> teamId = new ArrayList<>();
         teamId.add(0);
@@ -229,11 +225,6 @@ public class FantasyPlayerTest {
     @Test
     public void testGetUndraftedFantasyPlayers() throws ResourceNotFoundException, ResourceException {
 
-        // Initialize FantasyPlayer
-        FantasyPlayer player = new FantasyPlayer();
-        FantasyPlayer new_player = player.setNewPlayer(0, 1, 1,
-                "Tom", "Murdia", "nets", "F", 1, 0);
-
         List<Integer> db = new LinkedList<>();
         db.add(0);
         Mockito.when(playerRepo.getUndraftedPlayers(1,1)).thenReturn(db);
@@ -300,7 +291,7 @@ public class FantasyPlayerTest {
         Mockito.when(playerRepo.findByTemplate(6468,1,1,
                 1,null,null,null,null,null)).thenReturn(player_list);
 
-        List<FantasyPlayer> player_list1=playerService.getPlayerByTemplate(6468,1,1,
+        playerService.getPlayerByTemplate(6468,1,1,
                 null,null,null,null,1,0);
         //Mockito.when(playerRepo.setPlayerTeam(6468,1,1,1))
 
