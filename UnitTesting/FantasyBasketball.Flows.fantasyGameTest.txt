@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: FantasyBasketball.Flows.FantasyGameTest
--------------------------------------------------------------------------------
-Tests run: 32, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 5.027 s - in FantasyBasketball.Flows.FantasyGameTest
