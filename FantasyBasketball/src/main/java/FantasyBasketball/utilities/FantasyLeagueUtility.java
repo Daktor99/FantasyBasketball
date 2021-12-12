@@ -55,7 +55,6 @@ public class FantasyLeagueUtility {
     public void API_each_page_to_player(String url, playerDataRepository dataRepo) throws IOException {
         JSONObject json = readJsonFromUrl(url);
         JSONArray json_data = (JSONArray) json.get("data");
-        List<FantasyPlayer> player_page_list = new ArrayList<>();
         // For each player in the page
         for (int i = 0; i < json_data.length(); i++) {
             JSONObject players_info = (JSONObject) json_data.get(i);

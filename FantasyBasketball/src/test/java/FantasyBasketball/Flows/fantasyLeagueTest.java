@@ -95,7 +95,6 @@ public class fantasyLeagueTest {
         String league_name = "fake league";
         Integer admin_id = 4;
         Integer league_size = 4;
-        Boolean draft_finished = Boolean.TRUE;
         LocalDate league_start_date = fake_league_start_date;
         Integer num_weeks = 8;
         // fake fantasyLeague to get back
@@ -324,7 +323,6 @@ public class fantasyLeagueTest {
         Mockito.when(leagueRepo.save(fakeFantasyLeaguePost)).thenReturn(fakeFantasyLeague);
 
         // assert that the admin_id got properly validated
-        List<FantasyLeague> listOfFakeFantasyLeague = List.of(fakeFantasyLeague);
         leagueService.postLeagues(fakeFantasyLeaguePost);
     }
 

@@ -79,12 +79,10 @@ public class clientTest {
 
     @Test(expected = resourceNotFoundException.class)
     public void testCheckGetByIdNotExists() throws resourceNotFoundException {
-
         Integer client_id = 1;
         Optional<Client> optClient = Optional.empty();
         Mockito.when(clientRepo.findById(client_id)).thenReturn(optClient);
-
-        List<Client> result = clientService.getByID(client_id);
+        clientService.getByID(client_id);
     }
 
     @Test
@@ -178,7 +176,6 @@ public class clientTest {
                 4);
 
         Mockito.when(clientRepo.save(client1)).thenReturn(client2);
-        Client result = clientService.postClient(client1).get(0);
 
         Assertions.assertNotEquals(client1.getClientID(), client2.getClientID());
         assertEquals(client1.getGoogle_id(), client2.getGoogle_id());
@@ -343,7 +340,6 @@ public class clientTest {
 
     @Test(expected = resourceNotFoundException.class)
     public void testUpdateClientNotFound() throws resourceNotFoundException {
-
         Client client = new Client(13,
                 "emanueldaka@gmail.com",
                 "12345678",
@@ -353,11 +349,8 @@ public class clientTest {
                 4,
                 4,
                 4);
-
         Mockito.when(clientRepo.existsById(13)).thenReturn(Boolean.FALSE);
-
-        Client result = clientService.updateClient(client).get(0);
-
+        clientService.updateClient(client);
     }
 
     @Test

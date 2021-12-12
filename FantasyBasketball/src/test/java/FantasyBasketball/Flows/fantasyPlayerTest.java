@@ -126,11 +126,7 @@ public class fantasyPlayerTest {
     public void testGetPlayerIDsByTeam() {
 
         // Initialize FantasyPlayer
-        FantasyPlayer player = new FantasyPlayer();
-        FantasyPlayer new_player = player.setNewPlayer(0, 1, 1,
-                "Tom", "Murdia", "nets", "F", 1, 0);
-
-        List<Integer> teamId = new ArrayList<>();
+        List teamId = new ArrayList<>();
         teamId.add(0);
 
         Mockito.when(playerRepo.getByTeamID(1)).thenReturn(teamId);
@@ -184,12 +180,7 @@ public class fantasyPlayerTest {
         Integer player_id = 1;
         Integer client_id = 1;
         Integer team_id = 1;
-        String position  = "C";
-        String first_name = "Izzi";
-        String last_name = "Cho";
-        String nba_team = "Nets";
         Integer league_id = 1;
-        Integer ball_api_id = 69;
 
         // Initialize FantasyPlayer before postFantasyPlayer called
         FantasyPlayer player = new FantasyPlayer();
@@ -217,7 +208,6 @@ public class fantasyPlayerTest {
                 null,
                 null)).thenReturn(fantasyPlayerList);
 
-        Integer teamID = 1;
         FantasyTeam fantasyTeam = new FantasyTeam(
                 1,
                 1,
@@ -260,13 +250,7 @@ public class fantasyPlayerTest {
     public void testUpdateFantasyPlayerExceptTeam() throws resourceNotFoundException {
         Integer player_id = 1;
         Integer client_id = 1;
-        Integer team_id = 1;
-        String position  = "C";
-        String first_name = "Izzi";
-        String last_name = "Cho";
-        String nba_team = "Nets";
         Integer league_id = 1;
-        Integer ball_api_id = 69;
 
         // Initialize FantasyPlayer before postFantasyPlayer called
         FantasyPlayer player = new FantasyPlayer();
@@ -303,13 +287,7 @@ public class fantasyPlayerTest {
     public void testUpdateFantasyPlayerExceptSize() throws resourceNotFoundException {
         Integer player_id = 1;
         Integer client_id = 1;
-        Integer team_id = 1;
-        String position  = "C";
-        String first_name = "Izzi";
-        String last_name = "Cho";
-        String nba_team = "Nets";
         Integer league_id = 1;
-        Integer ball_api_id = 69;
 
         // Initialize FantasyPlayer before postFantasyPlayer called
         FantasyPlayer player = new FantasyPlayer();
@@ -324,7 +302,6 @@ public class fantasyPlayerTest {
                 1,
                 69
         );
-        List<FantasyPlayer> fantasyPlayerList = Arrays.asList(my_player);
 
         Mockito.when(playerRepo.findByTemplate(
                 player_id,
@@ -343,28 +320,7 @@ public class fantasyPlayerTest {
     public void testDeleteFantasyPlayerExcept() throws resourceNotFoundException {
         Integer player_id = 1;
         Integer client_id = 1;
-        Integer team_id = 1;
-        String position  = "C";
-        String first_name = "Izzi";
-        String last_name = "Cho";
-        String nba_team = "Nets";
         Integer league_id = 1;
-        Integer ball_api_id = 69;
-
-        // Initialize FantasyPlayer before postFantasyPlayer called
-        FantasyPlayer player = new FantasyPlayer();
-        FantasyPlayer my_player = player.setNewPlayer(
-                1,
-                1,
-                1,
-                "Izzi",
-                "Cho",
-                "Nets",
-                "C",
-                1,
-                69
-        );
-        List<FantasyPlayer> fantasyPlayerList = Arrays.asList(my_player);
 
         Mockito.when(playerRepo.findByTemplate(
                 player_id,
@@ -397,15 +353,12 @@ public class fantasyPlayerTest {
 
         List<FantasyPlayer> fantasyPlayerList = Arrays.asList(my_player);
 
-        Integer player_id = 1;
         Integer client_id = 1;
-        Integer team_id = 1;
         String position  = "C";
         String first_name = "Izzi";
         String last_name = "Cho";
         String nba_team = "Nets";
         Integer league_id = 1;
-        Integer ball_api_id = 69;
         Mockito.when(playerRepo.getAvailablePlayers(
                 league_id,
                 client_id,
@@ -426,15 +379,12 @@ public class fantasyPlayerTest {
 
     @Test (expected = resourceException.class)
     public void testGetAvailableFantasyPlayersExceptLeague() throws resourceException {
-        Integer player_id = 1;
         Integer client_id = 1;
-        Integer team_id = 1;
         String position  = "C";
         String first_name = "Izzi";
         String last_name = "Cho";
         String nba_team = "Nets";
         Integer league_id = null;
-        Integer ball_api_id = 69;
         playerService.getAvailablePlayers(
                 league_id,
                 client_id,
@@ -447,15 +397,12 @@ public class fantasyPlayerTest {
 
     @Test (expected = resourceException.class)
     public void testGetAvailableFantasyPlayersExceptClient() throws resourceException {
-        Integer player_id = 1;
         Integer client_id = null;
-        Integer team_id = 1;
         String position  = "C";
         String first_name = "Izzi";
         String last_name = "Cho";
         String nba_team = "Nets";
         Integer league_id = 1;
-        Integer ball_api_id = 69;
         playerService.getAvailablePlayers(
                 league_id,
                 client_id,
@@ -468,32 +415,10 @@ public class fantasyPlayerTest {
 
     @Test
     public void testGetUndraftedFantasyPlayers() throws resourceNotFoundException, resourceException {
-
-        // Initialize FantasyPlayer before postFantasyPlayer called
-        FantasyPlayer player = new FantasyPlayer();
-        FantasyPlayer my_player = player.setNewPlayer(
-                1,
-                1,
-                1,
-                "Izzi",
-                "Cho",
-                "Nets",
-                "C",
-                1,
-                69
-        );
-
         List<Integer> fantasyPlayerList = Arrays.asList(1, 2, 3, 4, 5, 6, 7);
 
-        Integer player_id = 1;
         Integer client_id = 1;
-        Integer team_id = 1;
-        String position  = "C";
-        String first_name = "Izzi";
-        String last_name = "Cho";
-        String nba_team = "Nets";
         Integer league_id = 1;
-        Integer ball_api_id = 69;
         Mockito.when(playerRepo.getUndraftedPlayers(
                 league_id,
                 client_id)).thenReturn(fantasyPlayerList);
@@ -506,15 +431,8 @@ public class fantasyPlayerTest {
 
     @Test (expected = resourceException.class)
     public void testGetUndraftedFantasyPlayersExceptLeague() throws resourceException {
-        Integer player_id = 1;
         Integer client_id = 1;
-        Integer team_id = 1;
-        String position  = "C";
-        String first_name = "Izzi";
-        String last_name = "Cho";
-        String nba_team = "Nets";
         Integer league_id = null;
-        Integer ball_api_id = 69;
         playerService.getUndraftedPlayers(
                 league_id,
                 client_id
@@ -523,15 +441,8 @@ public class fantasyPlayerTest {
 
     @Test (expected = resourceException.class)
     public void testGetUndraftedFantasyPlayersExceptClient() throws resourceException {
-        Integer player_id = 1;
         Integer client_id = null;
-        Integer team_id = 1;
-        String position  = "C";
-        String first_name = "Izzi";
-        String last_name = "Cho";
-        String nba_team = "Nets";
         Integer league_id = 1;
-        Integer ball_api_id = 69;
         playerService.getUndraftedPlayers(
                 league_id,
                 client_id

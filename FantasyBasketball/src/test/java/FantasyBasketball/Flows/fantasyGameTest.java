@@ -118,7 +118,6 @@ public class fantasyGameTest {
         genericGame = new FantasyGame(1, 1, 1, 2, startDate, startDate.plusWeeks(1));
         genericGame.setScheduleID(1);
 
-        List<FantasyGame> test = List.of(genericGame);
         // testing when result is one element
         when(gameRepo.findByTemplate(1, null, null, null, null, null, null, null)).thenReturn(List.of(genericGame));
         List<FantasyGame> result = gameService.getGamesByTemplate(1, null, null, null, null, null, null, null);
@@ -257,7 +256,6 @@ public class fantasyGameTest {
     @Test(expected = resourceException.class)
     public void testCheckPostInputsDatesNull() throws resourceException {
 
-        LocalDate startDate = LocalDate.of(2022, 12, 10);
         genericGame = new FantasyGame(1, 1, 1, 2, null, null);
         genericGame.setScheduleID(null);
         gameService.checkPostInputs(genericGame);
@@ -385,7 +383,6 @@ public class fantasyGameTest {
     @Test(expected = resourceException.class)
     public void testCheckInputsend() throws resourceException {
         LocalDate bad = LocalDate.of(2022, 1, 2);
-        LocalDate ba2d = LocalDate.of(2022, 1, 10);
 
         FantasyGame badGame = new FantasyGame(
                 1,

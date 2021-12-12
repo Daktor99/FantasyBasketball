@@ -351,8 +351,6 @@ public class userTest {
         Integer client_id = 1;
         Optional<User> optUser = Optional.empty();
         Mockito.when(userRepo.findById(client_id)).thenReturn(optUser);
-
-        List<User> result = userService.getByID(client_id);
     }
 
     @Test

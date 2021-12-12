@@ -258,7 +258,7 @@ public class fantasyLeagueService {
     public void checkValidSize(FantasyLeague league, Integer teamSize) throws resourceException {
 
         Integer league_size = league.getLeagueSize();
-        if (league_size != teamSize) {
+        if (league_size.equals(teamSize)) {
             throw new resourceException("Cannot generate schedule, make sure this league has at least "
                     + league_size
                     + " teams registered.");
