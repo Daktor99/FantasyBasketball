@@ -44,7 +44,7 @@ public class Scheduler {
     clientRepository clientRepo;
 
 
-//    @Scheduled(cron = "*/15 * * * * *")
+    //@Scheduled(cron = "*/15 * * * * *")
     @Async
     @Scheduled(cron = "0 0 */1 * * *")
     public void hourlySchedule() {

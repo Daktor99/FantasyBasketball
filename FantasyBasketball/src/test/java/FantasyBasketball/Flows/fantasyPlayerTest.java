@@ -1,5 +1,6 @@
 package FantasyBasketball.Flows;
 
+import FantasyBasketball.exceptions.resourceException;
 import FantasyBasketball.exceptions.resourceNotFoundException;
 import FantasyBasketball.models.FantasyPlayer;
 import FantasyBasketball.repositories.fantasyPlayerRepository;
@@ -209,7 +210,7 @@ public class fantasyPlayerTest {
         assertEquals(playerService.postFantasyPlayer(new_player).get(0).getPlayerID(), 6468);
     }
     @Test
-    public void testGetAvailableFantasyPlayers() {
+    public void testGetAvailableFantasyPlayers() throws resourceException {
 
         // Initialize FantasyPlayer
         FantasyPlayer player = new FantasyPlayer();
@@ -227,7 +228,7 @@ public class fantasyPlayerTest {
     }
 
     @Test
-    public void testGetUndraftedFantasyPlayers() throws resourceNotFoundException {
+    public void testGetUndraftedFantasyPlayers() throws resourceNotFoundException, resourceException {
 
         // Initialize FantasyPlayer
         FantasyPlayer player = new FantasyPlayer();

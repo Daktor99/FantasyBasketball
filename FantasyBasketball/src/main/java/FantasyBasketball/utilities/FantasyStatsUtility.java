@@ -122,6 +122,7 @@ public class FantasyStatsUtility {
                         stats.setTot_points(total_points);
                         
                         // Updating the stats
+                        // System.out.println((String) players_info.get("first_name")+" "+(String) players_info.get("last_name"));
                         statsRepo.save(stats);
                     }
                     //statsRepo.save(stats);
