@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: FantasyBasketball.Flows.userTest
 -------------------------------------------------------------------------------
-Tests run: 16, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 5.696 s - in FantasyBasketball.Flows.userTest
+Tests run: 20, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 5.793 s - in FantasyBasketball.Flows.userTest
