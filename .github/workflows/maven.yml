@@ -20,6 +20,24 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: '11'
-        distribution: 'adopt'
     - name: Build with Maven
-      run: mvn -B package --file FantasyBasketball/pom.xml 
+      run: mvn -B package --file FantasyBasketball/pom.xml -Dmaven.test.skip=true
+    - name: Run userTest
+      run: cd FantasyBasketball && mvn -Dtest=userTest test
+    - name: Run fantasyTeamTest
+      run: cd FantasyBasketball && mvn -Dtest=fantasyTeamTest test
+    - name: Run fantasyStatsTest
+      run: cd FantasyBasketball && mvn -Dtest=fantasyStatsTest test
+    - name: Run fantasyPlayerTest
+      run: cd FantasyBasketball && mvn -Dtest=fantasyPlayerTest test
+    - name: Run fantasyGameTest
+      run: cd FantasyBasketball && mvn -Dtest=fantasyGameTest test
+    - name: Run fantasyLeagueTest
+      run: cd FantasyBasketball && mvn -Dtest=fantasyLeagueTest test
+    - name: Export test results
+      run: cp FantasyBasketball/target/surefire-reports/*.txt UnitTesting
+    - uses: EndBug/add-and-commit@v7
+      with:
+        add: UnitTesting/.
+        default_actor: github_actions
+        

@@ -143,6 +143,4 @@ public class FantasyLeague {
         this.numWeeks = numWeeks;
     }
 
-    // TODO: Implement toString() function
-
 }

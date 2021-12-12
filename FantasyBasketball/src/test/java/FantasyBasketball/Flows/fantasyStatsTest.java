@@ -2,6 +2,8 @@ package FantasyBasketball.Flows;
 
 import FantasyBasketball.exceptions.resourceException;
 import FantasyBasketball.exceptions.resourceNotFoundException;
+import FantasyBasketball.models.FantasyGame;
+import FantasyBasketball.models.FantasyPlayer;
 import FantasyBasketball.models.FantasyStats;
 import FantasyBasketball.repositories.fantasyStatsRepository;
 import FantasyBasketball.services.fantasyStatsService;
@@ -15,9 +17,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -25,20 +25,20 @@ import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class fantasyStatsTests {
+public class fantasyStatsTest {
 
-    private final Integer PLAYER_ID_TEST = 1;
-    private final Integer SCHEDULE_ID_TEST = 1;
-    private final Integer STATS_ID_TEST = 1;
-    private final Integer LEAGUE_ID_TEST = 1;
-    private final Integer CLIENT_ID_TEST = 1;
-    private final Integer TOTAL_POINTS_TEST = 50;
+    Integer PLAYER_ID_TEST = 1;
+    Integer SCHEDULE_ID_TEST = 1;
+    Integer STATS_ID_TEST = 1;
+    Integer LEAGUE_ID_TEST = 1;
+    Integer CLIENT_ID_TEST = 1;
+    Integer TOTAL_POINTS_TEST = 50;
 
     @Autowired
-    private fantasyStatsService fantasyStatsService;
+    fantasyStatsService fantasyStatsService;
 
     @MockBean
-    private fantasyStatsRepository statsRepository;
+    fantasyStatsRepository statsRepository;
 
     @BeforeEach
     public void setUp() {
@@ -48,6 +48,32 @@ public class fantasyStatsTests {
     @After
     public void tearDown() {
 
+    }
+
+    FantasyStats genericStats = new FantasyStats(
+            1,
+            1,
+            1,
+            1,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            1
+    );
+
+    @Test()
+    public void testGetByID() throws resourceNotFoundException {
+        Integer fantasyStatsID = 1;
+        Optional<FantasyStats> result = Optional.of(genericStats);
+        Mockito.when(statsRepository.findById(fantasyStatsID)).thenReturn(result);
+        assertEquals(List.of(result.get()).get(0).getStats_id(), fantasyStatsService.getByID(fantasyStatsID).get(0).getStats_id());
+//        assertEquals(List.of(result.get()), fantasyStatsService.getByID(fantasyStatsID));
     }
 
     @Test()
@@ -287,5 +313,67 @@ public class fantasyStatsTests {
         );
         stats_to_save.setStats_id(STATS_ID_TEST);
         fantasyStatsService.checkPostInputs(stats_to_save);
+    }
+
+    @Test
+    public void testGetStatsBySchedule(){
+        Set<Integer> scheduleList = new HashSet<Integer>();
+        scheduleList.add(1);
+        scheduleList.add(2);
+
+        FantasyStats savedStats = new FantasyStats(
+                PLAYER_ID_TEST,
+                SCHEDULE_ID_TEST,
+                LEAGUE_ID_TEST,
+                CLIENT_ID_TEST
+        );
+        List<FantasyStats> savedStatsList = new LinkedList<>();
+        savedStatsList.add(savedStats);
+        Mockito.when(statsRepository.findFantasyStatsByScheduleList(scheduleList)).thenReturn(savedStatsList);
+        assertEquals(savedStatsList, fantasyStatsService.getStatsBySchedule(scheduleList));
+    }
+
+    @Test
+    public void testPostStatSheet(){
+        FantasyStats savedStats = new FantasyStats(
+                PLAYER_ID_TEST,
+                SCHEDULE_ID_TEST,
+                LEAGUE_ID_TEST,
+                CLIENT_ID_TEST
+        );
+        List<FantasyStats> statSheet = List.of(savedStats);
+
+        Mockito.when(statsRepository.saveAll(statSheet)).thenReturn(statSheet);
+        assertEquals(statSheet.get(0).getPlayer_id(), fantasyStatsService.postStatSheet(statSheet).get(0).getPlayer_id());
+    }
+
+    @Test
+    public void testGeneratePlayerStat(){
+        Set<Integer> gameList = new HashSet<Integer>();
+        gameList.add(1);
+        gameList.add(2);
+
+        FantasyStats savedStats = new FantasyStats(
+                1,
+                PLAYER_ID_TEST,
+                SCHEDULE_ID_TEST,
+                CLIENT_ID_TEST,
+                LEAGUE_ID_TEST,
+                2,
+                2,
+                2,
+                2,
+                2,
+                2,
+                2,
+                2,
+                10
+        );
+        List<FantasyStats> playerStats = new LinkedList<>();
+        playerStats.add(savedStats);
+
+        Mockito.when(statsRepository.findFantasyStatsByScheduleList(gameList)).thenReturn(playerStats);
+        HashMap<Integer, Integer> result = fantasyStatsService.generatePlayerStat(gameList);
+        assertEquals(10, result.get(1));
     }
 }
