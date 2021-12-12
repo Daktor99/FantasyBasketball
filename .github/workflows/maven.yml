@@ -35,7 +35,7 @@ jobs:
     - name: Run FantasyLeagueTest
       run: cd FantasyBasketball && mvn -Dtest=FantasyLeagueTest test
     - name: Export test results
-      run: cp FantasyBasketball/target/surefire-reports/*.txt UnitTesting
+      run: cp FantasyBasketball/target/surefire-reports/*.txt UnitTests
     - uses: EndBug/add-and-commit@v7
       with:
         add: UnitTesting/.

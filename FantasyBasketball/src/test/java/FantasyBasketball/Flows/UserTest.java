@@ -345,11 +345,10 @@ public class UserTest {
     @Test(expected = ResourceNotFoundException.class)
     public void testCheckGetByIdNotExists() throws ResourceNotFoundException {
 
-        Integer client_id = 1;
+        Integer user_id = 1;
         Optional<User> optUser = Optional.empty();
-        Mockito.when(userRepo.findById(client_id)).thenReturn(optUser);
-
-        List<User> result = userService.getByID(client_id);
+        Mockito.when(userRepo.findById(user_id)).thenReturn(optUser);
+        userService.getByID(user_id);
     }
 
     @Test

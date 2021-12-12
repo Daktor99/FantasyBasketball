@@ -170,7 +170,7 @@ public class FantasyGameService {
                 throw new ResourceException("There must be 7 days between start and end date." + daysBetween);
             }
 
-        } catch (NullPointerException e) {
+        } catch (NullPointerException | ResourceException e) {
             throw new ResourceException("Fantasy game formatted incorrectly, please provide at least the following:\n" +
                     " schedule_id, leagueID, home_team_id, away_team_id, game_start_date, game_end_date.");
         }
