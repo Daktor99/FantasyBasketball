@@ -262,7 +262,7 @@ public class FantasyPlayerTest {
         Mockito.when(playerRepo.findByTemplate(6468,1,1,
                 1,null,null,null,null,null)).thenReturn(player_list);
 
-        List<FantasyPlayer> player_list1=playerService.draftFantasyPlayer(updated_player);
+        playerService.draftFantasyPlayer(updated_player);
         //Mockito.when(playerRepo.setPlayerTeam(6468,1,1,1))
 
         // assert that FantasyPlayer gets correctly updated by checking the FantasyPlayerID
