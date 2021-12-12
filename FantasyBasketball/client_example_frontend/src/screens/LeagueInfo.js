@@ -1,5 +1,5 @@
 import {withCookies} from "react-cookie";
-import {Button, Dimmer, Icon, Loader, Table} from "semantic-ui-react";
+import {Button, Dimmer, Header, Icon, Loader, Table} from "semantic-ui-react";
 import TeamTable from "../tables/TeamTable";
 import {CLIENT_GOOGLE_ID} from "../Constants";
 import {Redirect} from "react-router-dom";
@@ -18,6 +18,7 @@ class LeagueInfo extends Component {
             user_id: this.props.cookies.get("user_id") || null,
             league_id: this.props.cookies.get("league_id") || null,
             teams: [],
+            league: '',
             isLoading: false
         }
         this.state.loggedIn = this.state.loggedIn === "true";
@@ -31,7 +32,29 @@ class LeagueInfo extends Component {
                 this.setState({
                     isLoading: true
                 })
-                const input = '/fantasyTeams?league_id=' + this.state.league_id
+
+                let input = '/fantasyLeagues?league_id=' + this.state.league_id
+
+                await fetch(input, {
+                    headers: {
+                        Accept: 'application/json',
+                        'token': CLIENT_GOOGLE_ID
+                    }
+                })
+                    .then(resp => resp.json())
+                    .then(data => {
+                        this.setState({
+                            league: data[0]
+                        })
+                        console.log("Success fetching League data for league_id " + this.state.league_id)
+                    })
+                    .catch(error => {
+                        console.log("Error fetching League data for league_id " + this.state.league_id + ": " + error)
+                        window.alert("Error fetching League data, reload page")
+                        this.props.history.push('/home')
+                    })
+
+                input = '/fantasyTeams?league_id=' + this.state.league_id
 
                 await fetch(input, {
                     headers: {
@@ -50,6 +73,7 @@ class LeagueInfo extends Component {
                     .catch(error => {
                         console.log("Error fetching teams data for league_id " + this.state.league_id + ": " + error)
                         window.alert("Error fetching teams data, reload page")
+                        this.props.history.push('/home')
                     })
                 this.setState({
                     isLoading: false
@@ -82,6 +106,11 @@ class LeagueInfo extends Component {
                         <Dimmer active={this.state.isLoading}>
                             <Loader size='big'/>
                         </Dimmer>
+                        <Header as='h1' content={this.state.league.league_name}/>
+                        <Header as='h4' content={'League Size: ' + this.state.league.league_size}/>
+                        <Header as='h4'
+                                content={'Draft Finished: ' + (this.state.league.draft_finished ? 'Yes' : 'No')}/>
+                        <Header as='h4' content={'Number of Weeks: ' + this.state.league.num_weeks}/>
                         <Table celled>
                             <Table.Header>
                                 <Table.Row>
@@ -104,7 +133,6 @@ class LeagueInfo extends Component {
 
                             <Table.Footer fullWidth>
                                 <Table.Row>
-                                    <Table.HeaderCell/>
                                     <Table.HeaderCell colSpan='6'>
                                         {this.state.teams.some(team => team.owner_id === parseInt(this.state.user_id)) ?
                                             <Button

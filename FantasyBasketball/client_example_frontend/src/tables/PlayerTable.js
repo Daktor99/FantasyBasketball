@@ -1,8 +1,14 @@
 import {Component} from "react";
-import {Table} from "semantic-ui-react";
+import {Button, Icon, Table, TableBody} from "semantic-ui-react";
+import PlayerTableRow from "./PlayerTableRow";
+import {MAX_TEAM_SIZE} from "../Constants";
 
 class PlayerTable extends Component {
+
+
     render() {
+        const {players} = this.props
+        const {team_id} = this.props
         return (
             <div>
                 <Table celled>
@@ -22,15 +28,26 @@ class PlayerTable extends Component {
                         </Table.Row>
                     </Table.Header>
 
-                    <Table.Body>
-
-                    </Table.Body>
+                    <TableBody>
+                        {players.map(player =>
+                            <PlayerTableRow player={player} team_id={team_id} removePlayer={this.props.removePlayer}/>
+                        )}
+                    </TableBody>
 
                     <Table.Footer fullWidth>
                         <Table.Row>
-                            <Table.HeaderCell/>
-                            <Table.HeaderCell colSpan='11'>
-
+                            <Table.HeaderCell colSpan='12'>
+                                <Button
+                                    disabled={players.length > MAX_TEAM_SIZE}
+                                    floated='right'
+                                    icon
+                                    labelPosition='left'
+                                    primary
+                                    size='small'
+                                >
+                                    <Icon
+                                        name='user'/> {players.length > MAX_TEAM_SIZE ? 'Your team is full' : 'Add a Player'}
+                                </Button>
                             </Table.HeaderCell>
                         </Table.Row>
                     </Table.Footer>
@@ -40,3 +57,5 @@ class PlayerTable extends Component {
         );
     }
 }
+
+export default PlayerTable

@@ -2,7 +2,7 @@ import {Component} from "react";
 import {withCookies} from "react-cookie";
 import {Redirect} from "react-router-dom";
 import {CLIENT_GOOGLE_ID} from "../Constants";
-import {Button, Dimmer, Header, Icon, Loader, Table} from "semantic-ui-react";
+import {Dimmer, Header, Loader, Table} from "semantic-ui-react";
 import GameTable from "../tables/GameTable";
 import TeamTable from "../tables/TeamTable";
 
@@ -66,7 +66,7 @@ class Home extends Component {
                         username: this.state.email
                     })
                 };
-                fetch('/users', requestOptions)
+                await fetch('/users', requestOptions)
                     .then(response => {
                         return response.json()
                     })
@@ -88,9 +88,6 @@ class Home extends Component {
                 cookies.set('user_id', this.state.user_id)
                 console.log("Successfully fetched User")
             }
-            this.setState({
-                isLoading: false
-            })
 
 
             const input1 = '/fantasyGames?user_id=' + this.state.user_id
@@ -148,6 +145,9 @@ class Home extends Component {
             } else {
                 console.log("No games found")
             }
+            this.setState({
+                isLoading: false
+            })
 
         }
 

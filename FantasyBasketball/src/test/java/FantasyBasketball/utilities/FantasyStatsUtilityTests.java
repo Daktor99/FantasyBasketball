@@ -30,19 +30,12 @@ import static org.mockito.ArgumentMatchers.any;
 public class FantasyStatsUtilityTests {
     private final Integer CLIENT_ID_TEST = 1;
     private final Integer LEAGUE_ID_TEST = 1;
-    private final Integer USER_HOME_ID_TEST = 1;
-    private final Integer USER_AWAY_ID_TEST = 2;
     private final Integer PLAYER_HOME_ID_TEST = 1;
-    private final Integer PLAYER_HOME_BALLAPI_ID_TEST = 192;
     private final Integer PLAYER_AWAY_ID_TEST = 2;
-    private final Integer PLAYER_AWAY_BALLAPI_ID_TEST = 360;
     private final Integer TEAM_HOME_ID_TEST = 1;
     private final Integer TEAM_AWAY_ID_TEST = 2;
     private final Integer SCHEDULE_ID_TEST = 1;
     private final Integer STATS_HOME_ID_TEST = 1;
-    private final Integer STATS_AWAY_ID_TEST = 2;
-    private final Integer STATS_TEST_VALUE = -1;
-    private final Integer STATS_UPDATED_VALUES = 1;
     private final FantasyStatsUtility fantasyStatsUtility = new FantasyStatsUtility();
     @MockBean
     private fantasyPlayerRepository fantasyPlayerRepo;
@@ -55,12 +48,7 @@ public class FantasyStatsUtilityTests {
     private Date START_DATE;
     private LocalDate LOCAL_DATE;
     private Client CLIENT_TEST;
-    private User USER_HOME_TEST;
-    private User USER_AWAY_TEST;
-    private FantasyLeague LEAGUE_TEST;
     private FantasyGame GAME_TEST;
-    private FantasyTeam TEAM_HOME_TEST;
-    private FantasyTeam TEAM_AWAY_TEST;
     private FantasyPlayer PLAYER_HOME_TEST;
     private FantasyPlayer PLAYER_AWAY_TEST;
     private FantasyStats STATS_HOME_PLAYER_TEST;
@@ -75,15 +63,17 @@ public class FantasyStatsUtilityTests {
         CLIENT_TEST = new Client();
         CLIENT_TEST.setClientID(CLIENT_ID_TEST);
 
-        USER_HOME_TEST = new User();
+        User USER_HOME_TEST = new User();
+        Integer USER_HOME_ID_TEST = 1;
         USER_HOME_TEST.setUserID(USER_HOME_ID_TEST);
         USER_HOME_TEST.setClientID(CLIENT_ID_TEST);
 
-        USER_AWAY_TEST = new User();
+        User USER_AWAY_TEST = new User();
+        Integer USER_AWAY_ID_TEST = 2;
         USER_AWAY_TEST.setUserID(USER_AWAY_ID_TEST);
         USER_AWAY_TEST.setClientID(CLIENT_ID_TEST);
 
-        LEAGUE_TEST = new FantasyLeague();
+        FantasyLeague LEAGUE_TEST = new FantasyLeague();
         LEAGUE_TEST.setClientID(CLIENT_ID_TEST);
         LEAGUE_TEST.setLeagueID(LEAGUE_ID_TEST);
 
@@ -93,6 +83,7 @@ public class FantasyStatsUtilityTests {
         PLAYER_HOME_TEST.setTeamID(TEAM_HOME_ID_TEST);
         PLAYER_HOME_TEST.setLeagueID(LEAGUE_ID_TEST);
         PLAYER_HOME_TEST.setClientID(CLIENT_ID_TEST);
+        Integer PLAYER_HOME_BALLAPI_ID_TEST = 192;
         PLAYER_HOME_TEST.setBallapiID(PLAYER_HOME_BALLAPI_ID_TEST);
 
         PLAYER_AWAY_TEST = new FantasyPlayer();
@@ -100,15 +91,16 @@ public class FantasyStatsUtilityTests {
         PLAYER_AWAY_TEST.setTeamID(TEAM_AWAY_ID_TEST);
         PLAYER_AWAY_TEST.setLeagueID(LEAGUE_ID_TEST);
         PLAYER_AWAY_TEST.setClientID(CLIENT_ID_TEST);
+        Integer PLAYER_AWAY_BALLAPI_ID_TEST = 360;
         PLAYER_AWAY_TEST.setBallapiID(PLAYER_AWAY_BALLAPI_ID_TEST);
 
-        TEAM_HOME_TEST = new FantasyTeam();
+        FantasyTeam TEAM_HOME_TEST = new FantasyTeam();
         TEAM_HOME_TEST.setClientID(CLIENT_ID_TEST);
         TEAM_HOME_TEST.setLeagueID(LEAGUE_ID_TEST);
         TEAM_HOME_TEST.setTeamID(TEAM_HOME_ID_TEST);
         TEAM_HOME_TEST.setOwnerID(USER_HOME_ID_TEST);
 
-        TEAM_AWAY_TEST = new FantasyTeam();
+        FantasyTeam TEAM_AWAY_TEST = new FantasyTeam();
         TEAM_AWAY_TEST.setClientID(CLIENT_ID_TEST);
         TEAM_AWAY_TEST.setLeagueID(LEAGUE_ID_TEST);
         TEAM_AWAY_TEST.setTeamID(TEAM_AWAY_ID_TEST);
@@ -126,6 +118,7 @@ public class FantasyStatsUtilityTests {
         GAME_TEST.setGameEndDate(LOCAL_DATE.with(next(SUNDAY)));
 
 
+        Integer STATS_TEST_VALUE = -1;
         STATS_HOME_PLAYER_TEST = new FantasyStats(
                 STATS_HOME_ID_TEST,
                 PLAYER_HOME_ID_TEST,
@@ -143,6 +136,7 @@ public class FantasyStatsUtilityTests {
                 STATS_TEST_VALUE
         );
 
+        Integer STATS_AWAY_ID_TEST = 2;
         STATS_AWAY_PLAYER_TEST = new FantasyStats(
                 STATS_AWAY_ID_TEST,
                 PLAYER_AWAY_ID_TEST,
@@ -239,6 +233,7 @@ public class FantasyStatsUtilityTests {
                 null)).thenReturn(listOfPlayerAwayStats);
 
         // Calls API gets updated stats
+        Integer STATS_UPDATED_VALUES = 1;
         FantasyStats STATS_UPDATED_PLAYER = new FantasyStats(
                 STATS_HOME_ID_TEST,
                 PLAYER_HOME_ID_TEST,

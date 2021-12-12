@@ -1,5 +1,5 @@
 import {Component} from "react";
-import {Button, Table} from "semantic-ui-react";
+import {Table} from "semantic-ui-react";
 
 class TeamTable extends Component {
 
@@ -13,7 +13,9 @@ class TeamTable extends Component {
                 <Table.Cell>{team.team_losses}</Table.Cell>
                 <Table.Cell>{team.points_scored}</Table.Cell>
                 <Table.Cell>{team.points_against}</Table.Cell>
-                <Table.Cell><Button onClick={() => this.props.redirect(team.team_id)}>More Info</Button></Table.Cell>
+                <Table.Cell selectable positive>
+                    <a href='#' onClick={() => this.props.redirect(team.team_id)}>More Info</a>
+                </Table.Cell>
             </Table.Row>
         )
     }
