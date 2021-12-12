@@ -1,7 +1,7 @@
 package FantasyBasketball.services;
 
-import FantasyBasketball.exceptions.resourceException;
-import FantasyBasketball.exceptions.resourceNotFoundException;
+import FantasyBasketball.exceptions.ResourceException;
+import FantasyBasketball.exceptions.ResourceNotFoundException;
 import FantasyBasketball.models.FantasyPlayer;
 import FantasyBasketball.models.FantasyTeam;
 import FantasyBasketball.repositories.fantasyPlayerRepository;
@@ -12,13 +12,13 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class fantasyPlayerService {
+public class FantasyPlayerService {
 
     @Autowired
     fantasyPlayerRepository playerRepo;
 
     @Autowired
-    fantasyTeamService teamService;
+    FantasyTeamService teamService;
 
     @Autowired
     playerDataRepository dataRepo;
@@ -72,7 +72,7 @@ public class fantasyPlayerService {
     }
 
     // put operation
-    public List<FantasyPlayer> updateFantasyPlayer(FantasyPlayer player) throws resourceNotFoundException {
+    public List<FantasyPlayer> updateFantasyPlayer(FantasyPlayer player) throws ResourceNotFoundException {
 
         List<FantasyPlayer> playerCheck = playerRepo.findByTemplate(
                 player.getPlayerID(),
@@ -107,16 +107,16 @@ public class fantasyPlayerService {
                 return result;
 
             } else {
-                throw new resourceNotFoundException("Team not found by ID in DB, cannot update");
+                throw new ResourceNotFoundException("Team not found by ID in DB, cannot update");
             }
 
         } else {
-            throw new resourceNotFoundException("Single player not found by ID in DB, cannot update.");
+            throw new ResourceNotFoundException("Single player not found by ID in DB, cannot update.");
         }
     }
 
     // delete operation
-    public void deleteFantasyPlayer(Integer player_id, Integer client_id, Integer league_id) throws resourceNotFoundException {
+    public void deleteFantasyPlayer(Integer player_id, Integer client_id, Integer league_id) throws ResourceNotFoundException {
 
         List<FantasyPlayer> playerCheck = playerRepo.findByTemplate(player_id,
                 client_id,
@@ -131,37 +131,37 @@ public class fantasyPlayerService {
         if(playerCheck.size() == 1) {
             playerRepo.deleteFantasyPlayer(player_id, client_id, league_id);
         } else {
-            throw new resourceNotFoundException("Single player not found in DB, cannot delete");
+            throw new ResourceNotFoundException("Single player not found in DB, cannot delete");
         }
     }
     // Get available players
     public List<FantasyPlayer> getAvailablePlayers(Integer league_id, Integer client_id, String first_name,
-                                                          String last_name, String nba_team, String position) throws resourceException {
+                                                          String last_name, String nba_team, String position) throws ResourceException {
 
         if (league_id == null) {
-            throw new resourceException("LeagueID not provided.");
+            throw new ResourceException("LeagueID not provided.");
         }
 
         else if (client_id == null) {
-            throw new resourceException("clientID not provided.");
+            throw new ResourceException("clientID not provided.");
         }
 
         return playerRepo.getAvailablePlayers(league_id, client_id, first_name, last_name, nba_team, position);
     }
 
-    public List<Integer> getUndraftedPlayers(Integer league_id, Integer client_id) throws resourceException {
+    public List<Integer> getUndraftedPlayers(Integer league_id, Integer client_id) throws ResourceException {
 
         if (league_id == null) {
-            throw new resourceException("LeagueID not provided.");
+            throw new ResourceException("LeagueID not provided.");
         }
 
         else if (client_id == null) {
-            throw new resourceException("clientID not provided.");
+            throw new ResourceException("clientID not provided.");
         }
         return playerRepo.getUndraftedPlayers(league_id, client_id);
     }
 
-    public List<FantasyPlayer> draftFantasyPlayer(FantasyPlayer player) throws resourceNotFoundException {
+    public List<FantasyPlayer> draftFantasyPlayer(FantasyPlayer player) throws ResourceNotFoundException {
         return updateFantasyPlayer(player);
     }
 

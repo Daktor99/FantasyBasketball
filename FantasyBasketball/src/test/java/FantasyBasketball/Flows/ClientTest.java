@@ -1,16 +1,12 @@
 package FantasyBasketball.Flows;
 
-import FantasyBasketball.exceptions.resourceException;
-import FantasyBasketball.exceptions.resourceNotFoundException;
-import FantasyBasketball.models.FantasyGame;
-import FantasyBasketball.models.FantasyLeague;
-import FantasyBasketball.models.FantasyPlayer;
-import FantasyBasketball.models.User;
+import FantasyBasketball.exceptions.ResourceException;
+import FantasyBasketball.exceptions.ResourceNotFoundException;
 import FantasyBasketball.models.Client;
 import FantasyBasketball.repositories.*;
-import FantasyBasketball.services.fantasyLeagueService;
-import FantasyBasketball.services.clientService;
-import FantasyBasketball.services.fantasyPlayerService;
+import FantasyBasketball.services.FantasyLeagueService;
+import FantasyBasketball.services.ClientService;
+import FantasyBasketball.services.FantasyPlayerService;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.runner.RunWith;
@@ -20,8 +16,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.io.IOException;
-import java.time.LocalDate;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -30,16 +24,16 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class clientTest {
+public class ClientTest {
 
     @Autowired
-    fantasyLeagueService leagueService;
+    FantasyLeagueService leagueService;
 
     @Autowired
-    clientService clientService;
+    ClientService clientService;
 
     @MockBean
-    fantasyPlayerService fantasyPlayerService;
+    FantasyPlayerService fantasyPlayerService;
 
     @MockBean
     fantasyLeagueRepository leagueRepo;
@@ -57,7 +51,7 @@ public class clientTest {
     fantasyGameRepository gameRepo;
 
     @Test
-    public void testCheckGetByIdExists() throws resourceNotFoundException {
+    public void testCheckGetByIdExists() throws ResourceNotFoundException {
 
         Integer client_id = 1;
         Client newClient = new Client(1,
@@ -77,8 +71,9 @@ public class clientTest {
         assertEquals(client_id, result.getClientID());
     }
 
-    @Test(expected = resourceNotFoundException.class)
-    public void testCheckGetByIdNotExists() throws resourceNotFoundException {
+    @Test(expected = ResourceNotFoundException.class)
+    public void testCheckGetByIdNotExists() throws ResourceNotFoundException {
+
         Integer client_id = 1;
         Optional<Client> optClient = Optional.empty();
         Mockito.when(clientRepo.findById(client_id)).thenReturn(optClient);
@@ -109,7 +104,7 @@ public class clientTest {
     }
 
     @Test
-    public void testGetClientByGoogleIdExist() throws resourceException {
+    public void testGetClientByGoogleIdExist() throws ResourceException {
         Client client = new Client(1,
                 "emanueldaka@gmail.com",
                 "12345678",
@@ -127,8 +122,8 @@ public class clientTest {
         assertEquals(client.getClientID(), result.getClientID());
     }
 
-    @Test(expected = resourceException.class)
-    public void testGetClientByGoogleIdNotExists() throws resourceException {
+    @Test(expected = ResourceException.class)
+    public void testGetClientByGoogleIdNotExists() throws ResourceException {
         Client client1 = new Client(1,
                 "emanueldaka@gmail.com",
                 "12345678",
@@ -199,7 +194,7 @@ public class clientTest {
     }
 
     @Test
-    public void testCheckInputs() throws resourceException {
+    public void testCheckInputs() throws ResourceException {
 
         Client client = new Client(null,
                 "emanueldaka@gmail.com",
@@ -215,8 +210,8 @@ public class clientTest {
 
     }
 
-    @Test(expected = resourceException.class)
-    public void testCheckInputsInvalidEmail() throws resourceException {
+    @Test(expected = ResourceException.class)
+    public void testCheckInputsInvalidEmail() throws ResourceException {
 
         Client client = new Client(null,
                 "7",
@@ -232,8 +227,8 @@ public class clientTest {
 
     }
 
-    @Test(expected = resourceException.class)
-    public void testCheckInputsInvalidEmailLength() throws resourceException {
+    @Test(expected = ResourceException.class)
+    public void testCheckInputsInvalidEmailLength() throws ResourceException {
 
         Client client = new Client(null,
                 "emanueldakaemanueldakaemanueldakaemanueldakaemanueldakaemanueldakaemanueldakaemanueldaka" +
@@ -250,8 +245,8 @@ public class clientTest {
 
     }
 
-    @Test(expected = resourceException.class)
-    public void testCheckInputsInvalidCompanyNameLength() throws resourceException {
+    @Test(expected = ResourceException.class)
+    public void testCheckInputsInvalidCompanyNameLength() throws ResourceException {
 
         Client client = new Client(null,
                 "emanueldaka@gmail.com",
@@ -267,8 +262,8 @@ public class clientTest {
 
     }
 
-    @Test(expected = resourceException.class)
-    public void testCheckInputsInvalidClientLength() throws resourceException {
+    @Test(expected = ResourceException.class)
+    public void testCheckInputsInvalidClientLength() throws ResourceException {
 
         Client client = new Client(null,
                 "emanueldaka@gmail.com",
@@ -285,7 +280,7 @@ public class clientTest {
     }
 
     @Test
-    public void testCheckPostInputsValid() throws resourceException {
+    public void testCheckPostInputsValid() throws ResourceException {
 
         Client client = new Client(null,
                 "emanueldaka@gmail.com",
@@ -300,8 +295,8 @@ public class clientTest {
         clientService.checkPostInputs(client);
     }
 
-    @Test(expected = resourceException.class)
-    public void testCheckPostInputsInvalid() throws resourceException {
+    @Test(expected = ResourceException.class)
+    public void testCheckPostInputsInvalid() throws ResourceException {
 
         Client client = new Client(13,
                 "emanueldaka@gmail.com",
@@ -317,7 +312,7 @@ public class clientTest {
     }
 
     @Test
-    public void testUpdateClient() throws resourceNotFoundException {
+    public void testUpdateClient() throws ResourceNotFoundException {
 
         Client client = new Client(13,
                 "emanueldaka@gmail.com",
@@ -338,8 +333,8 @@ public class clientTest {
 
     }
 
-    @Test(expected = resourceNotFoundException.class)
-    public void testUpdateClientNotFound() throws resourceNotFoundException {
+    @Test(expected = ResourceNotFoundException.class)
+    public void testUpdateClientNotFound() throws ResourceNotFoundException {
         Client client = new Client(13,
                 "emanueldaka@gmail.com",
                 "12345678",
@@ -354,7 +349,7 @@ public class clientTest {
     }
 
     @Test
-    public void testCheckPutInputs() throws resourceException {
+    public void testCheckPutInputs() throws ResourceException {
 
         Client client = new Client(13,
                 "emanueldaka@gmail.com",
@@ -370,8 +365,8 @@ public class clientTest {
 
     }
 
-    @Test(expected = resourceException.class)
-    public void testCheckPutInputsInvalid() throws resourceException {
+    @Test(expected = ResourceException.class)
+    public void testCheckPutInputsInvalid() throws ResourceException {
 
         Client client = new Client(null,
                 "emanueldaka@gmail.com",
@@ -388,7 +383,7 @@ public class clientTest {
     }
 
     @Test
-    public void testDeleteClientById() throws resourceNotFoundException {
+    public void testDeleteClientById() throws ResourceNotFoundException {
 
         Integer client_id = 10;
 
@@ -397,8 +392,8 @@ public class clientTest {
 
     }
 
-    @Test(expected = resourceNotFoundException.class)
-    public void testDeleteClientByIdNotFound() throws resourceNotFoundException {
+    @Test(expected = ResourceNotFoundException.class)
+    public void testDeleteClientByIdNotFound() throws ResourceNotFoundException {
 
         Integer client_id = 10;
 

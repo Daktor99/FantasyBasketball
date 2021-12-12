@@ -1,11 +1,11 @@
 package FantasyBasketball.Flows;
 
-import FantasyBasketball.exceptions.resourceException;
-import FantasyBasketball.exceptions.resourceNotFoundException;
+import FantasyBasketball.exceptions.ResourceException;
+import FantasyBasketball.exceptions.ResourceNotFoundException;
 import FantasyBasketball.models.FantasyGame;
 import FantasyBasketball.models.FantasyStats;
 import FantasyBasketball.repositories.fantasyGameRepository;
-import FantasyBasketball.services.fantasyGameService;
+import FantasyBasketball.services.FantasyGameService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,10 +25,10 @@ import static org.mockito.Mockito.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class fantasyGameTest {
+public class FantasyGameTest {
 
     @Autowired
-    fantasyGameService gameService;
+    FantasyGameService gameService;
 
     @MockBean
     fantasyGameRepository gameRepo;
@@ -64,7 +64,7 @@ public class fantasyGameTest {
     );
 
     @Test
-    public void testGetByID() throws resourceNotFoundException {
+    public void testGetByID() throws ResourceNotFoundException {
         Integer fantasyGameID = 1;
         Optional<FantasyGame> result = Optional.of(genericGame);
         Mockito.when(gameRepo.findById(fantasyGameID)).thenReturn(result);
@@ -73,7 +73,7 @@ public class fantasyGameTest {
 
     // testing getting games when ID does exist
     @Test
-    public void testGetByIDExisting() throws resourceNotFoundException {
+    public void testGetByIDExisting() throws ResourceNotFoundException {
 
         LocalDate startDate = LocalDate.of(2022, 12, 10);
         genericGame = new FantasyGame(1, 1, 1, 2, startDate, startDate.plusWeeks(1));
@@ -87,8 +87,8 @@ public class fantasyGameTest {
 
     }
 
-    @Test(expected = resourceNotFoundException.class)
-    public void testGetByIDExcept() throws resourceNotFoundException {
+    @Test(expected = ResourceNotFoundException.class)
+    public void testGetByIDExcept() throws ResourceNotFoundException {
         Integer fantasyGameID = 1;
         Optional<FantasyGame> result = Optional.empty();
         Mockito.when(gameRepo.findById(fantasyGameID)).thenReturn(result);
@@ -96,8 +96,8 @@ public class fantasyGameTest {
     }
 
     // testing getting games by ID when doesn't exist
-    @Test(expected = resourceNotFoundException.class)
-    public void testGetByIDNotExisting() throws resourceNotFoundException {
+    @Test(expected = ResourceNotFoundException.class)
+    public void testGetByIDNotExisting() throws ResourceNotFoundException {
 
         LocalDate startDate = LocalDate.of(2022, 12, 10);
         genericGame = new FantasyGame(1, 1, 1, 2, startDate, startDate.plusWeeks(1));
@@ -153,28 +153,28 @@ public class fantasyGameTest {
 
     }
 
-    @Test(expected = resourceNotFoundException.class)
-    public void testUpdateGameExcept() throws resourceNotFoundException {
+    @Test(expected = ResourceNotFoundException.class)
+    public void testUpdateGameExcept() throws ResourceNotFoundException {
         Mockito.when(gameRepo.existsById(genericGame.getScheduleID())).thenReturn(Boolean.FALSE);
         gameService.updateGame(genericGame);
     }
 
     @Test
-    public void testUpdateGame() throws resourceNotFoundException {
+    public void testUpdateGame() throws ResourceNotFoundException {
         Mockito.when(gameRepo.existsById(genericGame.getScheduleID())).thenReturn(Boolean.TRUE);
         Mockito.when(gameRepo.save(genericGame)).thenReturn(genericGame);
         assertEquals(List.of(genericGame), gameService.updateGame((genericGame)));
     }
 
-    @Test(expected = resourceNotFoundException.class)
-    public void testDeleteGameByIdExcept() throws resourceNotFoundException {
+    @Test(expected = ResourceNotFoundException.class)
+    public void testDeleteGameByIdExcept() throws ResourceNotFoundException {
         Integer game_id = 1;
         Mockito.when(gameRepo.existsById(game_id)).thenReturn(Boolean.FALSE);
         gameService.updateGame(genericGame);
     }
 
-    @Test(expected = resourceException.class)
-    public void testCheckIfInDBExcept() throws resourceException {
+    @Test(expected = ResourceException.class)
+    public void testCheckIfInDBExcept() throws ResourceException {
         Mockito.when(gameService.getGamesByTemplate(
                 null,
                 genericGame.getLeagueID(),
@@ -188,8 +188,8 @@ public class fantasyGameTest {
     }
 
     // testing checkPostInputs with invalid scheduleID
-    @Test(expected = resourceException.class)
-    public void testCheckPostInputsNonNullScheduleID() throws resourceException {
+    @Test(expected = ResourceException.class)
+    public void testCheckPostInputsNonNullScheduleID() throws ResourceException {
 
         LocalDate startDate = LocalDate.of(2022, 12, 10);
         genericGame = new FantasyGame(1, 1, 1, 2, startDate, startDate.plusWeeks(1));
@@ -199,8 +199,8 @@ public class fantasyGameTest {
     }
 
     // testing checkPostInputs with invalid scheduleID
-    @Test(expected = resourceException.class)
-    public void testCheckPostInputshome() throws resourceException {
+    @Test(expected = ResourceException.class)
+    public void testCheckPostInputshome() throws ResourceException {
 
         LocalDate startDate = LocalDate.of(2022, 12, 10);
         genericGame = new FantasyGame(1, 1, null, 2, startDate, startDate.plusWeeks(1));
@@ -210,8 +210,8 @@ public class fantasyGameTest {
     }
 
     // testing checkPostInputs with invalid scheduleID
-    @Test(expected = resourceException.class)
-    public void testCheckPostInputsaway() throws resourceException {
+    @Test(expected = ResourceException.class)
+    public void testCheckPostInputsaway() throws ResourceException {
 
         LocalDate startDate = LocalDate.of(2022, 12, 10);
         genericGame = new FantasyGame(1, 1, 1, null, startDate, startDate.plusWeeks(1));
@@ -221,8 +221,8 @@ public class fantasyGameTest {
     }
 
     // testing checkPostInputs with invalid scheduleID
-    @Test(expected = resourceException.class)
-    public void testCheckPostInputsleaguemissing() throws resourceException {
+    @Test(expected = ResourceException.class)
+    public void testCheckPostInputsleaguemissing() throws ResourceException {
 
         LocalDate startDate = LocalDate.of(2022, 12, 10);
         genericGame = new FantasyGame(null, 1, 1, 1, startDate, startDate.plusWeeks(1));
@@ -232,8 +232,8 @@ public class fantasyGameTest {
     }
 
     // testing checkPostInputs with startDate after endDate
-    @Test(expected = resourceException.class)
-    public void testCheckPostInputsStartDateAfterEndDate () throws resourceException {
+    @Test(expected = ResourceException.class)
+    public void testCheckPostInputsStartDateAfterEndDate () throws ResourceException {
 
         LocalDate startDate = LocalDate.of(2022, 12, 10);
         genericGame = new FantasyGame(1, 1, 1, 2, startDate, startDate.minusWeeks(1));
@@ -242,8 +242,8 @@ public class fantasyGameTest {
     }
 
     // testing checkPostInputs with less than 14 days between start and end date
-    @Test(expected = resourceException.class)
-    public void testCheckPostInputsDateTimeBetween() throws resourceException {
+    @Test(expected = ResourceException.class)
+    public void testCheckPostInputsDateTimeBetween() throws ResourceException {
 
         LocalDate startDate = LocalDate.of(2022, 12, 10);
         genericGame = new FantasyGame(1, 1, 1, 2, startDate, startDate.plusWeeks(1));
@@ -253,8 +253,8 @@ public class fantasyGameTest {
     }
 
     // testing with dates not initialized
-    @Test(expected = resourceException.class)
-    public void testCheckPostInputsDatesNull() throws resourceException {
+    @Test(expected = ResourceException.class)
+    public void testCheckPostInputsDatesNull() throws ResourceException {
 
         genericGame = new FantasyGame(1, 1, 1, 2, null, null);
         genericGame.setScheduleID(null);
@@ -263,8 +263,8 @@ public class fantasyGameTest {
     }
 
     // testing checkPostInputs with invalid scheduleID
-    @Test(expected = resourceException.class)
-    public void testCheckPutInputsNonNullScheduleID() throws resourceException {
+    @Test(expected = ResourceException.class)
+    public void testCheckPutInputsNonNullScheduleID() throws ResourceException {
 
         LocalDate startDate = LocalDate.of(2022, 12, 10);
         genericGame = new FantasyGame(1, 1, 1, 2, startDate, startDate.plusWeeks(1));
@@ -274,16 +274,16 @@ public class fantasyGameTest {
     }
 
     // testing checkPostInputs with invalid scheduleID
-    @Test(expected = resourceException.class)
-    public void testCheckPutInputsNullScheduleID() throws resourceException {
+    @Test(expected = ResourceException.class)
+    public void testCheckPutInputsNullScheduleID() throws ResourceException {
         LocalDate startDate = LocalDate.of(2022, 12, 10);
         genericGame = new FantasyGame(1, 1, 1, 2, startDate, startDate.plusWeeks(1));
         genericGame.setScheduleID(null);
         gameService.checkPutInputs(genericGame);
     }
 
-    @Test(expected = resourceException.class)
-    public void testCheckInputsLeagueIDExcept() throws resourceException {
+    @Test(expected = ResourceException.class)
+    public void testCheckInputsLeagueIDExcept() throws ResourceException {
         FantasyGame badGame = new FantasyGame(
                 1,
                 null,
@@ -313,8 +313,8 @@ public class fantasyGameTest {
         gameService.checkInputs(badGame);
     }
 
-    @Test(expected = resourceException.class)
-    public void testCheckInputsStartDate() throws resourceException {
+    @Test(expected = ResourceException.class)
+    public void testCheckInputsStartDate() throws ResourceException {
         LocalDate bad = LocalDate.of(2000, 1, 8);
         LocalDate good = LocalDate.of(2000, 2, 9);
 
@@ -347,8 +347,8 @@ public class fantasyGameTest {
         gameService.checkInputs(badGame);
     }
 
-    @Test(expected = resourceException.class)
-    public void testCheckInputsDayOfWeek() throws resourceException {
+    @Test(expected = ResourceException.class)
+    public void testCheckInputsDayOfWeek() throws ResourceException {
         LocalDate bad = LocalDate.of(2022, 2, 9);
 
         FantasyGame badGame = new FantasyGame(
@@ -380,8 +380,8 @@ public class fantasyGameTest {
         gameService.checkInputs(badGame);
     }
 
-    @Test(expected = resourceException.class)
-    public void testCheckInputsend() throws resourceException {
+    @Test(expected = ResourceException.class)
+    public void testCheckInputsend() throws ResourceException {
         LocalDate bad = LocalDate.of(2022, 1, 2);
 
         FantasyGame badGame = new FantasyGame(
@@ -413,8 +413,8 @@ public class fantasyGameTest {
         gameService.checkInputs(badGame);
     }
 
-    @Test(expected = resourceException.class)
-    public void testCheckInputsmessup() throws resourceException {
+    @Test(expected = ResourceException.class)
+    public void testCheckInputsmessup() throws ResourceException {
         LocalDate bad = LocalDate.of(2022, 1, 9);
         LocalDate badafter = LocalDate.of(2022, 1, 2);
 
@@ -447,8 +447,8 @@ public class fantasyGameTest {
         gameService.checkInputs(badGame);
     }
 
-    @Test(expected = resourceException.class)
-    public void testCheckInputssixdays() throws resourceException {
+    @Test(expected = ResourceException.class)
+    public void testCheckInputssixdays() throws ResourceException {
         LocalDate bad = LocalDate.of(2022, 1, 2);
         LocalDate badafter = LocalDate.of(2022, 1, 16);
 
@@ -483,7 +483,7 @@ public class fantasyGameTest {
 
     // testing normal put operation
     @Test
-    public void testPutGame() throws resourceNotFoundException {
+    public void testPutGame() throws ResourceNotFoundException {
 
         LocalDate startDate = LocalDate.of(2022, 12, 10);
         genericGame = new FantasyGame(1, 1, 1, 2, startDate, startDate.plusWeeks(1));
@@ -499,8 +499,8 @@ public class fantasyGameTest {
     }
 
     // testing put operation where resource does not exist
-    @Test(expected = resourceNotFoundException.class)
-    public void testPutGameNotFoundException() throws resourceNotFoundException {
+    @Test(expected = ResourceNotFoundException.class)
+    public void testPutGameNotFoundException() throws ResourceNotFoundException {
 
         LocalDate startDate = LocalDate.of(2022, 12, 10);
         genericGame = new FantasyGame(1, 1, 1, 2, startDate, startDate.plusWeeks(1));
@@ -515,7 +515,7 @@ public class fantasyGameTest {
 
     // testing regular deletion
     @Test
-    public void testDeleteGameByID() throws resourceNotFoundException {
+    public void testDeleteGameByID() throws ResourceNotFoundException {
 
         when(gameRepo.existsById(1)).thenReturn(true);
         gameService.deleteGameById(1);
@@ -523,8 +523,8 @@ public class fantasyGameTest {
     }
 
     // testing deletion where ID does not exist
-    @Test(expected = resourceNotFoundException.class)
-    public void testDeleteGameByIDNotFoundException() throws resourceNotFoundException {
+    @Test(expected = ResourceNotFoundException.class)
+    public void testDeleteGameByIDNotFoundException() throws ResourceNotFoundException {
 
         when(gameRepo.existsById(1)).thenReturn(false);
         gameService.deleteGameById(1);

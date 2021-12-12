@@ -1,13 +1,10 @@
 package FantasyBasketball.Flows;
 
-import FantasyBasketball.exceptions.resourceException;
-import FantasyBasketball.exceptions.resourceNotFoundException;
-import FantasyBasketball.models.Client;
+import FantasyBasketball.exceptions.ResourceException;
+import FantasyBasketball.exceptions.ResourceNotFoundException;
 import FantasyBasketball.models.User;
 import FantasyBasketball.repositories.userRepository;
-import FantasyBasketball.services.userService;
-import org.junit.After;
-import org.junit.Before;
+import FantasyBasketball.services.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -25,10 +22,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class userTest {
+public class UserTest {
 
     @Autowired
-    private userService userService;
+    private UserService userService;
 
     @MockBean
     private userRepository userRepo;
@@ -62,7 +59,7 @@ public class userTest {
 
     //Test that user gets correctly updated
     @Test
-    public void testUpdateUser() throws resourceNotFoundException {
+    public void testUpdateUser() throws ResourceNotFoundException {
 
         // Initialize updated user
         User updatedUser = new User(2,
@@ -88,8 +85,8 @@ public class userTest {
     }
 
     //Make sure exception raised when the user does not exist
-    @Test(expected = resourceNotFoundException.class)
-    public void testExceptionUpdateUser() throws resourceNotFoundException {
+    @Test(expected = ResourceNotFoundException.class)
+    public void testExceptionUpdateUser() throws ResourceNotFoundException {
 
         // Initialize updated user
         User updatedUser = new User(10,
@@ -107,8 +104,8 @@ public class userTest {
     }
 
     // Make sure that delete raises exception when user not found
-    @Test(expected = resourceNotFoundException.class)
-    public void testExceptionDeleteUserById() throws resourceNotFoundException {
+    @Test(expected = ResourceNotFoundException.class)
+    public void testExceptionDeleteUserById() throws ResourceNotFoundException {
 
         // userID does not exist
         Mockito.when(userRepo.existsById(2)).thenReturn(false);
@@ -147,8 +144,8 @@ public class userTest {
     }
 
     // Test that exception is raised when email is invalid
-    @Test(expected = resourceException.class)
-    public void testCheckInputsEmail1() throws resourceException {
+    @Test(expected = ResourceException.class)
+    public void testCheckInputsEmail1() throws ResourceException {
 
         // Initialize test user with invalid email
         User testUser = new User(2,
@@ -162,8 +159,8 @@ public class userTest {
     }
 
     // Test that exception is raised when email is null
-    @Test(expected = resourceException.class)
-    public void testCheckInputsEmail2() throws resourceException {
+    @Test(expected = ResourceException.class)
+    public void testCheckInputsEmail2() throws ResourceException {
 
         // Initialize test user with invalid email
         User testUser = new User(2,
@@ -180,8 +177,8 @@ public class userTest {
     }
 
     // Test that exception is raised when username is invalid
-    @Test(expected = resourceException.class)
-    public void testCheckInputsUsername1() throws resourceException {
+    @Test(expected = ResourceException.class)
+    public void testCheckInputsUsername1() throws ResourceException {
 
         // Initialize test user with invalid username
         User testUser = new User(2,
@@ -195,8 +192,8 @@ public class userTest {
     }
 
     // Test that exception is raised when username is null
-    @Test(expected = resourceException.class)
-    public void testCheckInputsUsername2() throws resourceException {
+    @Test(expected = ResourceException.class)
+    public void testCheckInputsUsername2() throws ResourceException {
 
         // Initialize test user with invalid username
         User testUser = new User(2,
@@ -210,8 +207,8 @@ public class userTest {
     }
 
     // Test that exception is raised when first_name is invalid
-    @Test(expected = resourceException.class)
-    public void testCheckInputsFirstName1() throws resourceException {
+    @Test(expected = ResourceException.class)
+    public void testCheckInputsFirstName1() throws ResourceException {
 
         // Initialize test user with invalid first name
         User testUser = new User(2,
@@ -225,8 +222,8 @@ public class userTest {
     }
 
     // Test that exception is raised when first_name is null
-    @Test(expected = resourceException.class)
-    public void testCheckInputsFirstName2() throws resourceException {
+    @Test(expected = ResourceException.class)
+    public void testCheckInputsFirstName2() throws ResourceException {
 
         // Initialize test user with invalid first name
         User testUser = new User(2,
@@ -240,8 +237,8 @@ public class userTest {
     }
 
     // Test that exception is raised when first_name is invalid
-    @Test(expected = resourceException.class)
-    public void testCheckInputsLastName1() throws resourceException {
+    @Test(expected = ResourceException.class)
+    public void testCheckInputsLastName1() throws ResourceException {
 
         // Initialize test user with invalid last name
         User testUser = new User(2,
@@ -255,8 +252,8 @@ public class userTest {
     }
 
     // Test that exception is raised when first_name is null
-    @Test(expected = resourceException.class)
-    public void testCheckInputsLastName2() throws resourceException {
+    @Test(expected = ResourceException.class)
+    public void testCheckInputsLastName2() throws ResourceException {
 
         // Initialize test user with invalid last name
         User testUser = new User(2,
@@ -270,8 +267,8 @@ public class userTest {
     }
 
     // Test that exception is raised when user_id provided that is not null
-    @Test(expected = resourceException.class)
-    public void testCheckPostInputs() throws resourceException {
+    @Test(expected = ResourceException.class)
+    public void testCheckPostInputs() throws ResourceException {
 
         // Initialize test user with user_id that is not null
         User testUser = new User(2,
@@ -286,7 +283,7 @@ public class userTest {
 
     // Test that exception is raised when user_id provided that is not null
     @Test
-    public void testCheckPostInputs2() throws resourceException {
+    public void testCheckPostInputs2() throws ResourceException {
 
         // Initialize test user with user_id that is not null
         User testUser = new User(null,
@@ -300,8 +297,8 @@ public class userTest {
     }
 
     // Test that exception is raised when user_id not provided
-    @Test (expected = resourceException.class)
-    public void testCheckPutInputs2() throws resourceException {
+    @Test (expected = ResourceException.class)
+    public void testCheckPutInputs2() throws ResourceException {
         // Initialize test user with user_id that is null
         User testUser = new User(null,
                 1,
@@ -315,7 +312,7 @@ public class userTest {
 
     // Test that exception is raised when user_id not provided
     @Test
-    public void testCheckPutInputs() throws resourceException {
+    public void testCheckPutInputs() throws ResourceException {
         // Initialize test user with user_id that is null
         User testUser = new User(1,
                 1,
@@ -328,7 +325,7 @@ public class userTest {
     }
 
     @Test
-    public void testCheckGetByIdExists() throws resourceNotFoundException {
+    public void testCheckGetByIdExists() throws ResourceNotFoundException {
 
         Integer user_id = 1;
         User newUser = new User(1,
@@ -345,8 +342,8 @@ public class userTest {
         assertEquals(user_id, result.getClientID());
     }
 
-    @Test(expected = resourceNotFoundException.class)
-    public void testCheckGetByIdNotExists() throws resourceNotFoundException {
+    @Test(expected = ResourceNotFoundException.class)
+    public void testCheckGetByIdNotExists() throws ResourceNotFoundException {
 
         Integer client_id = 1;
         Optional<User> optUser = Optional.empty();

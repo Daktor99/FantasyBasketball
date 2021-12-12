@@ -25,8 +25,6 @@ public class FantasyLeagueUtilityTests {
     @MockBean
     private playerDataRepository dataRepo;
 
-    private FantasyPlayer PLAYER_HOME_TEST;
-
     @Before
     public void setUp() {
         PLAYER_AWAY_TEST = new FantasyPlayer();

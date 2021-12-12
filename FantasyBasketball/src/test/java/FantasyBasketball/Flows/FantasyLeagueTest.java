@@ -1,7 +1,7 @@
 package FantasyBasketball.Flows;
 
-import FantasyBasketball.exceptions.resourceException;
-import FantasyBasketball.exceptions.resourceNotFoundException;
+import FantasyBasketball.exceptions.ResourceException;
+import FantasyBasketball.exceptions.ResourceNotFoundException;
 import FantasyBasketball.models.FantasyGame;
 import FantasyBasketball.models.FantasyLeague;
 import FantasyBasketball.models.FantasyPlayer;
@@ -11,9 +11,9 @@ import FantasyBasketball.repositories.fantasyGameRepository;
 import FantasyBasketball.repositories.fantasyLeagueRepository;
 import FantasyBasketball.repositories.userRepository;
 import FantasyBasketball.repositories.fantasyTeamRepository;
-import FantasyBasketball.services.fantasyLeagueService;
-import FantasyBasketball.services.clientService;
-import FantasyBasketball.services.fantasyPlayerService;
+import FantasyBasketball.services.FantasyLeagueService;
+import FantasyBasketball.services.ClientService;
+import FantasyBasketball.services.FantasyPlayerService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -30,19 +30,19 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class fantasyLeagueTest {
+public class FantasyLeagueTest {
 
     @Autowired
-    fantasyLeagueService leagueService;
+    FantasyLeagueService leagueService;
 
     @Autowired
-    clientService clientService;
+    ClientService clientService;
 
     @MockBean
-    clientService mockclientService;
+    ClientService mockclientService;
 
     @MockBean
-    fantasyPlayerService fantasyPlayerService;
+    FantasyPlayerService fantasyPlayerService;
 
     @MockBean
     fantasyLeagueRepository leagueRepo;
@@ -57,7 +57,7 @@ public class fantasyLeagueTest {
     fantasyGameRepository gameRepo;
 
     @Test
-    public void testGetLeaguesByIDPass() throws resourceNotFoundException {
+    public void testGetLeaguesByIDPass() throws ResourceNotFoundException {
         Integer leagueID = 17;
 
         LocalDate fake_league_start_date = LocalDate.of(2021, 12, 31);
@@ -78,8 +78,8 @@ public class fantasyLeagueTest {
         assertEquals(leagueService.getLeaguesByID(leagueID), List.of(fakeFantasyLeagueOptional.get()));
     }
 
-    @Test(expected = resourceNotFoundException.class)
-    public void testGetLeaguesByIDExcept() throws resourceNotFoundException {
+    @Test(expected = ResourceNotFoundException.class)
+    public void testGetLeaguesByIDExcept() throws ResourceNotFoundException {
         Integer leagueID = 17;
         Mockito.when(leagueRepo.findById(leagueID)).thenReturn(Optional.empty());
 
@@ -165,7 +165,7 @@ public class fantasyLeagueTest {
     }
 
     @Test
-    public void testcheckDraftFinishedTrue() throws resourceException {
+    public void testcheckDraftFinishedTrue() throws ResourceException {
         LocalDate fake_league_start_date = LocalDate.of(2021, 12, 31);
 
         Integer leagueID = 17;
@@ -189,7 +189,7 @@ public class fantasyLeagueTest {
     }
 
     @Test
-    public void testcheckDraftFinishedFalse() throws resourceException {
+    public void testcheckDraftFinishedFalse() throws ResourceException {
         LocalDate fake_league_start_date = LocalDate.of(2021, 12, 31);
 
         Integer leagueID = 17;
@@ -213,7 +213,7 @@ public class fantasyLeagueTest {
     }
 
     @Test
-    public void testCheckDatesTrue() throws resourceException {
+    public void testCheckDatesTrue() throws ResourceException {
         LocalDate fake_league_start_date = LocalDate.of(2021, 12, 31);
 
         // assert that the valid dates were properly validated
@@ -221,7 +221,7 @@ public class fantasyLeagueTest {
     }
 
     @Test
-    public void testCheckDatesfalse() throws resourceException {
+    public void testCheckDatesfalse() throws ResourceException {
         LocalDate league_start_date = LocalDate.of(2000, 12, 28);
 
         // checkDates should return exception
@@ -229,7 +229,7 @@ public class fantasyLeagueTest {
     }
 
     @Test
-    public void testPostLeagues() throws IOException, resourceException {
+    public void testPostLeagues() throws IOException, ResourceException {
         // fake start and end dates for fake fantasyLeague ctor
         LocalDate fake_league_start_date = LocalDate.of(2021, 12, 31);
 
@@ -277,8 +277,8 @@ public class fantasyLeagueTest {
         assertEquals(leagueService.postLeagues(fakeFantasyLeaguePost).get(0).getLeagueID(), listOfFakeFantasyLeague.get(0).getLeagueID());
     }
 
-    @Test(expected = resourceException.class)
-    public void testPostLeaguescoverage() throws IOException, resourceException {
+    @Test(expected = ResourceException.class)
+    public void testPostLeaguescoverage() throws IOException, ResourceException {
         // fake start and end dates for fake fantasyLeague ctor
         LocalDate fake_league_start_date = LocalDate.of(2021, 12, 31);
         LocalDate badstart = LocalDate.of(2000, 12, 31);
@@ -326,8 +326,8 @@ public class fantasyLeagueTest {
         leagueService.postLeagues(fakeFantasyLeaguePost);
     }
 
-    @Test(expected = resourceException.class)
-    public void testPostLeaguesAdminExcept() throws resourceException {
+    @Test(expected = ResourceException.class)
+    public void testPostLeaguesAdminExcept() throws ResourceException {
         // fake start and end dates for fake fantasyLeague ctor
         LocalDate fake_league_start_date = LocalDate.of(2021, 12, 31);
         // fake fantasyLeague to get back
@@ -345,8 +345,8 @@ public class fantasyLeagueTest {
         leagueService.postLeagues(fakeFantasyLeague);
     }
 
-    @Test(expected = resourceException.class)
-    public void testPostLeaguesDatesExcept() throws resourceException {
+    @Test(expected = ResourceException.class)
+    public void testPostLeaguesDatesExcept() throws ResourceException {
         // fake start and end dates for fake fantasyLeague ctor
         LocalDate fake_league_start_date = LocalDate.of(2000, 12, 28);
         // fake fantasyLeague to get back
@@ -365,7 +365,7 @@ public class fantasyLeagueTest {
     }
 
     @Test
-    public void testUpdateLeaguesPass() throws resourceNotFoundException, resourceException {
+    public void testUpdateLeaguesPass() throws ResourceNotFoundException, ResourceException {
         LocalDate fake_league_start_date = LocalDate.of(2021, 12, 31);
         FantasyLeague referenceLeague = new FantasyLeague(
                 17,
@@ -395,8 +395,8 @@ public class fantasyLeagueTest {
         assertEquals(List.of(newLeague), leagueService.updateLeagues(newLeague));
     }
 
-    @Test(expected = resourceNotFoundException.class)
-    public void testUpdateLeaguesPresentExcept() throws resourceNotFoundException, resourceException {
+    @Test(expected = ResourceNotFoundException.class)
+    public void testUpdateLeaguesPresentExcept() throws ResourceNotFoundException, ResourceException {
         LocalDate fake_league_start_date = LocalDate.of(2021, 12, 31);
         FantasyLeague referenceLeague = new FantasyLeague(
                 17,
@@ -424,8 +424,8 @@ public class fantasyLeagueTest {
         leagueService.updateLeagues(newLeague);
     }
 
-    @Test(expected = resourceException.class)
-    public void testUpdateLeaguesEqualExcept() throws resourceNotFoundException, resourceException {
+    @Test(expected = ResourceException.class)
+    public void testUpdateLeaguesEqualExcept() throws ResourceNotFoundException, ResourceException {
         LocalDate fake_league_start_date = LocalDate.of(2021, 12, 31);
         FantasyLeague referenceLeague = new FantasyLeague(
                 17,
@@ -454,15 +454,15 @@ public class fantasyLeagueTest {
         leagueService.updateLeagues(newLeague);
     }
 
-    @Test(expected = resourceNotFoundException.class)
-    public void testDeleteLeaguesExcept() throws resourceNotFoundException {
+    @Test(expected = ResourceNotFoundException.class)
+    public void testDeleteLeaguesExcept() throws ResourceNotFoundException {
         Integer league_id = 1;
         Mockito.when(leagueRepo.existsById(league_id)).thenReturn(Boolean.FALSE);
         leagueService.deleteLeagues(league_id);
     }
 
     @Test
-    public void testDeleteLeagues() throws resourceNotFoundException {
+    public void testDeleteLeagues() throws ResourceNotFoundException {
         Integer league_id = 1;
         Mockito.when(leagueRepo.existsById(league_id)).thenReturn(Boolean.TRUE);
         leagueService.deleteLeagues(league_id);
@@ -505,8 +505,8 @@ public class fantasyLeagueTest {
         assertEquals(leagueService.checkIfInvalid(string), Boolean.TRUE);
     }
 
-    @Test(expected = resourceException.class)
-    public void testCheckInputsNull() throws resourceException, resourceNotFoundException {
+    @Test(expected = ResourceException.class)
+    public void testCheckInputsNull() throws ResourceException, ResourceNotFoundException {
         LocalDate fake_league_start_date = LocalDate.of(2021, 12, 31);
         FantasyLeague fantasyLeague = new FantasyLeague(
                 17,
@@ -540,8 +540,8 @@ public class fantasyLeagueTest {
         leagueService.checkInputs(fantasyLeague);
     }
 
-    @Test(expected = resourceException.class)
-    public void testCheckInputsName() throws resourceException, resourceNotFoundException {
+    @Test(expected = ResourceException.class)
+    public void testCheckInputsName() throws ResourceException, ResourceNotFoundException {
         LocalDate fake_league_start_date = LocalDate.of(2021, 12, 31);
         FantasyLeague fantasyLeague = new FantasyLeague(
                 17,
@@ -578,8 +578,8 @@ public class fantasyLeagueTest {
     }
 
 
-    @Test(expected = resourceException.class)
-    public void testCheckInputsSizeMin() throws resourceException, resourceNotFoundException {
+    @Test(expected = ResourceException.class)
+    public void testCheckInputsSizeMin() throws ResourceException, ResourceNotFoundException {
         LocalDate fake_league_start_date = LocalDate.of(2021, 12, 31);
         FantasyLeague badLeague = new FantasyLeague(
                 17,
@@ -614,8 +614,8 @@ public class fantasyLeagueTest {
         leagueService.checkInputs(badLeague);
     }
 
-    @Test(expected = resourceException.class)
-    public void testCheckInputsSizeOdd() throws resourceException, resourceNotFoundException {
+    @Test(expected = ResourceException.class)
+    public void testCheckInputsSizeOdd() throws ResourceException, ResourceNotFoundException {
         LocalDate fake_league_start_date = LocalDate.of(2021, 12, 31);
 
         FantasyLeague badLeague = new FantasyLeague(
@@ -651,8 +651,8 @@ public class fantasyLeagueTest {
         leagueService.checkInputs(badLeague);
     }
 
-    @Test(expected = resourceException.class)
-    public void testCheckInputsWeeks() throws resourceException, resourceNotFoundException {
+    @Test(expected = ResourceException.class)
+    public void testCheckInputsWeeks() throws ResourceException, ResourceNotFoundException {
         LocalDate fake_league_start_date = LocalDate.of(2021, 12, 31);
 
         FantasyLeague badLeague = new FantasyLeague(
@@ -689,7 +689,7 @@ public class fantasyLeagueTest {
     }
 
     @Test
-    public void testCheckInputsPass() throws resourceException, resourceNotFoundException {
+    public void testCheckInputsPass() throws ResourceException, ResourceNotFoundException {
         LocalDate fake_league_start_date = LocalDate.of(2021, 12, 31);
 
         FantasyLeague badLeague = new FantasyLeague(
@@ -725,8 +725,8 @@ public class fantasyLeagueTest {
         leagueService.checkInputs(badLeague);
     }
 
-    @Test(expected = resourceException.class)
-    public void testCheckPostInputs() throws resourceException, resourceNotFoundException {
+    @Test(expected = ResourceException.class)
+    public void testCheckPostInputs() throws ResourceException, ResourceNotFoundException {
         LocalDate fake_league_start_date = LocalDate.of(2021, 12, 31);
         FantasyLeague badLeague = new FantasyLeague(
                 17,
@@ -742,8 +742,8 @@ public class fantasyLeagueTest {
         leagueService.checkPostInputs(badLeague);
     }
 
-    @Test(expected = resourceException.class)
-    public void testCheckPutInputs() throws resourceException, resourceNotFoundException {
+    @Test(expected = ResourceException.class)
+    public void testCheckPutInputs() throws ResourceException, ResourceNotFoundException {
         LocalDate fake_league_start_date = LocalDate.of(2021, 12, 31);
         FantasyLeague badLeague = new FantasyLeague(
                 null,
@@ -760,7 +760,7 @@ public class fantasyLeagueTest {
     }
 
     @Test
-    public void testGetTeamIDsPass() throws resourceException {
+    public void testGetTeamIDsPass() throws ResourceException {
         Integer league_id = 2;
         Integer client_id = 1;
 
@@ -773,8 +773,8 @@ public class fantasyLeagueTest {
         assertEquals(leagueService.getTeamIDs(league_id, client_id), teamList);
     }
 
-    @Test(expected = resourceException.class)
-    public void testGetTeamIDsExcept() throws resourceException {
+    @Test(expected = ResourceException.class)
+    public void testGetTeamIDsExcept() throws ResourceException {
         Integer league_id = 2;
         Integer client_id = 1;
 
@@ -866,8 +866,8 @@ public class fantasyLeagueTest {
         }
     }
 
-    @Test(expected = resourceException.class)
-    public void checkValidSize() throws resourceException {
+    @Test(expected = ResourceException.class)
+    public void checkValidSize() throws ResourceException {
         LocalDate fake_league_start_date = LocalDate.of(2021, 12, 31);
         FantasyLeague badLeague = new FantasyLeague(
                 17,
@@ -883,16 +883,16 @@ public class fantasyLeagueTest {
         leagueService.checkValidSize(badLeague, teamSize);
     }
 
-    @Test(expected = resourceException.class)
-    public void checkDraftInputsLeagueExcept() throws resourceException, resourceNotFoundException {
+    @Test(expected = ResourceException.class)
+    public void checkDraftInputsLeagueExcept() throws ResourceException, ResourceNotFoundException {
         Integer league_id = null;
         Integer team_id = 1;
         Integer client_id = 1;
         leagueService.checkDraftInputs(league_id, team_id, client_id);
     }
 
-    @Test(expected = resourceNotFoundException.class)
-    public void checkDraftInputsExistsExcept() throws resourceException, resourceNotFoundException {
+    @Test(expected = ResourceNotFoundException.class)
+    public void checkDraftInputsExistsExcept() throws ResourceException, ResourceNotFoundException {
         Integer league_id = 0;
         Integer team_id = 1;
         Integer client_id = 1;
@@ -900,8 +900,8 @@ public class fantasyLeagueTest {
         leagueService.checkDraftInputs(league_id, team_id, client_id);
     }
 
-    @Test(expected = resourceNotFoundException.class)
-    public void checkDraftInputsTeamIDExcept() throws resourceException, resourceNotFoundException {
+    @Test(expected = ResourceNotFoundException.class)
+    public void checkDraftInputsTeamIDExcept() throws ResourceException, ResourceNotFoundException {
         Integer league_id = 1;
         Integer team_id = null;
         Integer client_id = 1;
@@ -912,8 +912,8 @@ public class fantasyLeagueTest {
         leagueService.checkDraftInputs(league_id, team_id, client_id);
     }
 
-    @Test(expected = resourceNotFoundException.class)
-    public void checkDraftInputsTeamExistsExcept() throws resourceException, resourceNotFoundException {
+    @Test(expected = ResourceNotFoundException.class)
+    public void checkDraftInputsTeamExistsExcept() throws ResourceException, ResourceNotFoundException {
         Integer league_id = 1;
         Integer team_id = 1;
         Integer client_id = 1;
@@ -924,8 +924,8 @@ public class fantasyLeagueTest {
         leagueService.checkDraftInputs(league_id, team_id, client_id);
     }
 
-    @Test(expected = resourceNotFoundException.class)
-    public void checkDraftInputsTeamInLeagueExcept() throws resourceException, resourceNotFoundException {
+    @Test(expected = ResourceNotFoundException.class)
+    public void checkDraftInputsTeamInLeagueExcept() throws ResourceException, ResourceNotFoundException {
         Integer league_id = 1;
         Integer team_id = 1;
         Integer client_id = 1;
@@ -936,8 +936,8 @@ public class fantasyLeagueTest {
         leagueService.checkDraftInputs(league_id, team_id, client_id);
     }
 
-    @Test(expected = resourceException.class)
-    public void checkPickPlayerPlayers() throws resourceException, resourceNotFoundException {
+    @Test(expected = ResourceException.class)
+    public void checkPickPlayerPlayers() throws ResourceException, ResourceNotFoundException {
         FantasyPlayer player = new FantasyPlayer();
         player.setNewPlayer(
                 null,
@@ -962,8 +962,8 @@ public class fantasyLeagueTest {
         leagueService.pickPlayer(player, client_id);
     }
 
-    @Test(expected = resourceException.class)
-    public void checkPickPlayerContains() throws resourceException, resourceNotFoundException {
+    @Test(expected = ResourceException.class)
+    public void checkPickPlayerContains() throws ResourceException, ResourceNotFoundException {
         FantasyPlayer player = new FantasyPlayer();
         player.setNewPlayer(
                 7,
@@ -984,7 +984,7 @@ public class fantasyLeagueTest {
     }
 
     @Test
-    public void checkRandomOrder() throws resourceNotFoundException {
+    public void checkRandomOrder() throws ResourceNotFoundException {
         Integer league_id = 1;
         Integer client_id = 1;
         List<Integer> team_ids = Arrays.asList(2, 4, 6, 8, 10, 12);
@@ -1019,21 +1019,21 @@ public class fantasyLeagueTest {
         assertEquals(order.size(), leagueService.randomOrder(league_id, client_id).size());
     }
 
-    @Test(expected = resourceException.class)
-    public void checkIfValidLeagueLeagueIDExcept() throws resourceNotFoundException, resourceException {
+    @Test(expected = ResourceException.class)
+    public void checkIfValidLeagueLeagueIDExcept() throws ResourceNotFoundException, ResourceException {
         Integer league_id = null;
         leagueService.checkIfValidLeague(league_id);
     }
 
-    @Test(expected = resourceNotFoundException.class)
-    public void checkIfValidLeagueLeagueExistsExcept() throws resourceNotFoundException, resourceException {
+    @Test(expected = ResourceNotFoundException.class)
+    public void checkIfValidLeagueLeagueExistsExcept() throws ResourceNotFoundException, ResourceException {
         Integer league_id = 1;
         Mockito.when(leagueRepo.existsById(league_id)).thenReturn(Boolean.FALSE);
         leagueService.checkIfValidLeague(league_id);
     }
 
-    @Test(expected = resourceException.class)
-    public void checkIfScheduleGenerated() throws resourceException {
+    @Test(expected = ResourceException.class)
+    public void checkIfScheduleGenerated() throws ResourceException {
         Integer league_id = 1;
         List<FantasyGame> games = Collections.emptyList();
         Mockito.when(gameRepo.findGamesByLeagueID(league_id)).thenReturn(games);

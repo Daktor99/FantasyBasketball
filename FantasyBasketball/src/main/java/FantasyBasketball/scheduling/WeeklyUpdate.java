@@ -1,12 +1,12 @@
 package FantasyBasketball.scheduling;
 
-import FantasyBasketball.exceptions.resourceNotFoundException;
+import FantasyBasketball.exceptions.ResourceNotFoundException;
 import FantasyBasketball.models.FantasyGame;
 import FantasyBasketball.models.FantasyStats;
 import FantasyBasketball.models.FantasyTeam;
-import FantasyBasketball.services.fantasyGameService;
-import FantasyBasketball.services.fantasyStatsService;
-import FantasyBasketball.services.fantasyTeamService;
+import FantasyBasketball.services.FantasyGameService;
+import FantasyBasketball.services.FantasyStatsService;
+import FantasyBasketball.services.FantasyTeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -21,15 +21,15 @@ import java.util.Set;
 public class WeeklyUpdate {
 
     @Autowired
-    fantasyTeamService teamService;
+    FantasyTeamService teamService;
 
     @Autowired
-    fantasyGameService gameService;
+    FantasyGameService gameService;
 
     @Autowired
-    fantasyStatsService statService;
+    FantasyStatsService statService;
 
-    public void runWeekly(fantasyTeamService teamService, fantasyGameService gameService, fantasyStatsService statService) throws resourceNotFoundException {
+    public void runWeekly(FantasyTeamService teamService, FantasyGameService gameService, FantasyStatsService statService) throws ResourceNotFoundException {
 
         // get a list of all teams and create a hashmap to store starters
         List<FantasyTeam> teamList = teamService.getTeamsByTemplate(null, null, null, null, null);
@@ -122,8 +122,8 @@ public class WeeklyUpdate {
     public void updateGamesAndTeams(List<FantasyGame> lastWeekGamesList,
                                     HashMap<Integer, Integer> lastWeekStats,
                                     HashMap<Integer, FantasyTeam> teamMap,
-                                    fantasyGameService gameService,
-                                    fantasyTeamService teamService) {
+                                    FantasyGameService gameService,
+                                    FantasyTeamService teamService) {
 
         List<FantasyGame> gamesToUpdate = new ArrayList<>();
         List<FantasyTeam> teamsToUpdate = new ArrayList<>();

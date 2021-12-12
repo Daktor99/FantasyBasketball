@@ -1,6 +1,6 @@
 package FantasyBasketball.scheduling;
 
-import FantasyBasketball.exceptions.resourceNotFoundException;
+import FantasyBasketball.exceptions.ResourceNotFoundException;
 import FantasyBasketball.repositories.clientRepository;
 import FantasyBasketball.repositories.fantasyGameRepository;
 import FantasyBasketball.repositories.fantasyPlayerRepository;
@@ -15,7 +15,7 @@ public class HourlyUpdate {
 
     public void runHourly(fantasyPlayerRepository playerRepo, fantasyGameRepository gameRepo,
                           fantasyStatsRepository statsRepo, clientRepository clientRepo, Date end_date)
-            throws resourceNotFoundException, IOException, ParseException {
+            throws ResourceNotFoundException, IOException, ParseException {
         FantasyStatsUtility statsUtility = new FantasyStatsUtility();
         statsUtility.API_player_stats_importation(playerRepo, gameRepo, statsRepo, clientRepo, end_date);
     }

@@ -8,14 +8,14 @@ import java.util.List;
 import static java.time.temporal.TemporalAdjusters.next;
 import static java.time.DayOfWeek.SUNDAY;
 
-public class robinRoundScheduler {
+public class RobinRoundScheduler {
 
     private final List<Integer> teamList;
     private final LocalDate startDate;
     private final Integer weeksOfPlay;
 
     // constructor
-    public robinRoundScheduler(List<Integer> teamList, LocalDate startDate, Integer weeksOfPlay) {
+    public RobinRoundScheduler(List<Integer> teamList, LocalDate startDate, Integer weeksOfPlay) {
         this.teamList = new ArrayList<>(teamList);
         this.startDate = startDate.with(next(SUNDAY));
         this.weeksOfPlay = weeksOfPlay;

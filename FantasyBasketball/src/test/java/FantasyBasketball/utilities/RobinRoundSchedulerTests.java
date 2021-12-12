@@ -18,7 +18,7 @@ public class RobinRoundSchedulerTests {
 
     private final List<Integer> teamList = List.of(1, 2, 3, 4);
     private final LocalDate cur_date = LocalDate.now();
-    private final robinRoundScheduler robinRoundScheduler = new robinRoundScheduler(teamList, cur_date, 2);
+    private final RobinRoundScheduler robinRoundScheduler = new RobinRoundScheduler(teamList, cur_date, 2);
 
     @Before
     public void setUp() {

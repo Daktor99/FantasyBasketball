@@ -1,25 +1,21 @@
 package FantasyBasketball.Flows;
 
-import FantasyBasketball.exceptions.resourceException;
-import FantasyBasketball.exceptions.resourceNotFoundException;
+import FantasyBasketball.exceptions.ResourceException;
+import FantasyBasketball.exceptions.ResourceNotFoundException;
 import FantasyBasketball.models.FantasyLeague;
 import FantasyBasketball.models.FantasyPlayer;
 import FantasyBasketball.models.FantasyTeam;
 import FantasyBasketball.repositories.fantasyTeamRepository;
 import FantasyBasketball.repositories.fantasyLeagueRepository;
-import FantasyBasketball.services.fantasyTeamService;
-import FantasyBasketball.services.fantasyPlayerService;
-import FantasyBasketball.services.fantasyLeagueService;
+import FantasyBasketball.services.FantasyTeamService;
+import FantasyBasketball.services.FantasyPlayerService;
+import FantasyBasketball.services.FantasyLeagueService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDate;
@@ -27,29 +23,29 @@ import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-//@Import (fantasyTeamTest.Config.class)
+//@Import (FantasyTeamTest.Config.class)
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class fantasyTeamTest {
+public class FantasyTeamTest {
 
     @Autowired
-    fantasyTeamService teamService;
+    FantasyTeamService teamService;
 
 //    @TestConfiguration
 //    static
 //    class Config {
 //        @Bean
-//        fantasyTeamService mockTeamService() {
-//            return Mockito.mock(fantasyTeamService.class);
+//        FantasyTeamService mockTeamService() {
+//            return Mockito.mock(FantasyTeamService.class);
 //        }
 //    }
 
     @MockBean
-    fantasyPlayerService playerService;
+    FantasyPlayerService playerService;
 
 //    @MockBean
-//    fantasyTeamService mockteamService;
+//    FantasyTeamService mockteamService;
 
     @MockBean
     fantasyTeamRepository teamRepo;
@@ -58,10 +54,10 @@ public class fantasyTeamTest {
     fantasyLeagueRepository leagueRepo;
 
     @MockBean
-    fantasyLeagueService fantasyLeagueService;
+    FantasyLeagueService fantasyLeagueService;
 
     @Test
-    public void testGetByIDPass() throws resourceNotFoundException {
+    public void testGetByIDPass() throws ResourceNotFoundException {
         Integer teamID = 1;
         FantasyTeam fantasyTeam = new FantasyTeam(
                 1,
@@ -86,8 +82,8 @@ public class fantasyTeamTest {
         assertEquals(List.of(fantasyTeamOptional.get()), teamService.getByID(teamID));
     }
 
-    @Test(expected = resourceNotFoundException.class)
-    public void testGetByIDExcept() throws resourceNotFoundException {
+    @Test(expected = ResourceNotFoundException.class)
+    public void testGetByIDExcept() throws ResourceNotFoundException {
         Integer teamID = 1;
         Mockito.when(teamRepo.findById(teamID)).thenReturn(Optional.empty());
         teamService.getByID(teamID);
@@ -173,7 +169,7 @@ public class fantasyTeamTest {
     }
 
     @Test
-    public void testPostTeam() throws resourceException {
+    public void testPostTeam() throws ResourceException {
         // Test that the team_id is correctly updated by teamUser method
         Integer leagueID = 1;
         // Initialize team before postTeam called
@@ -238,8 +234,8 @@ public class fantasyTeamTest {
         assertEquals(List.of(afterTeam), teamService.postTeam(beforeTeam));
     }
 
-    @Test(expected = resourceException.class)
-    public void testPostTeamExceptcheckleaguefull() throws resourceException {
+    @Test(expected = ResourceException.class)
+    public void testPostTeamExceptcheckleaguefull() throws ResourceException {
         // Test that the team_id is correctly updated by teamUser method
         Integer leagueID = 1;
         // Initialize team before postTeam called
@@ -306,8 +302,8 @@ public class fantasyTeamTest {
     }
 
     // Test that exception is raised when team_id provided that is not null
-    @Test(expected = resourceException.class)
-    public void testCheckPostInputs1() throws resourceException {
+    @Test(expected = ResourceException.class)
+    public void testCheckPostInputs1() throws ResourceException {
 
         // Initialize test team with team_id that is not null
         FantasyTeam testTeam = new FantasyTeam(2,
@@ -332,7 +328,7 @@ public class fantasyTeamTest {
 
     // Test that exception is raised when team_id provided that is not null
     @Test
-    public void testCheckPostInputswholethingworkperfect() throws resourceException {
+    public void testCheckPostInputswholethingworkperfect() throws ResourceException {
 
         // Initialize test team with team_id that is not null
         FantasyTeam testTeam = new FantasyTeam(null,
@@ -356,8 +352,8 @@ public class fantasyTeamTest {
     }
 
     // Test that exception is raised when team name provided is longer than 128 characters
-    @Test(expected = resourceException.class)
-    public void testCheckPostInputs2() throws resourceException {
+    @Test(expected = ResourceException.class)
+    public void testCheckPostInputs2() throws ResourceException {
 
         // Initialize test team with team_id that is not null
         FantasyTeam testTeam = new FantasyTeam(null,
@@ -385,8 +381,8 @@ public class fantasyTeamTest {
     }
 
     // Test that exception is raised when team name provided is blank
-    @Test(expected = resourceException.class)
-    public void testCheckPostInputs3() throws resourceException {
+    @Test(expected = ResourceException.class)
+    public void testCheckPostInputs3() throws ResourceException {
 
         // Initialize test team with team_id that is not null
         FantasyTeam testTeam = new FantasyTeam(null,
@@ -410,8 +406,8 @@ public class fantasyTeamTest {
     }
 
     // Test that exception is raised when one of the data members that should not be null, is null
-    @Test(expected = resourceException.class)
-    public void testCheckPostInputs4() throws resourceException {
+    @Test(expected = ResourceException.class)
+    public void testCheckPostInputs4() throws ResourceException {
 
         // Initialize test team with league_id that is null
         FantasyTeam testTeam = new FantasyTeam(null,
@@ -435,8 +431,8 @@ public class fantasyTeamTest {
     }
 
     // Test that exception is raised when one of the data members that should not be null, is null
-    @Test(expected = resourceException.class)
-    public void testCheckPostInputs6() throws resourceException {
+    @Test(expected = ResourceException.class)
+    public void testCheckPostInputs6() throws ResourceException {
 
         // Initialize test team with league_id that is null
         FantasyTeam testTeam = new FantasyTeam(null,
@@ -460,7 +456,7 @@ public class fantasyTeamTest {
     }
 
     @Test
-    public void testPostMultipleTeams() throws resourceException {
+    public void testPostMultipleTeams() throws ResourceException {
         // Initialize team before postTeam called
         FantasyTeam beforeTeam = new FantasyTeam(
                 1,
@@ -511,7 +507,7 @@ public class fantasyTeamTest {
 
     // Test that the team_id is correctly updated by teamUser method
 //    @Test
-//    public void testUpdateTeam() throws resourceNotFoundException, resourceException {
+//    public void testUpdateTeam() throws ResourceNotFoundException, ResourceException {
 //
 //        //Initialize updated fantasyTeam
 //        FantasyTeam team = new FantasyTeam(12,
@@ -583,8 +579,8 @@ public class fantasyTeamTest {
 //    }
 
     //Make sure exception raised when the fantasyTeam does not exist
-    @Test(expected = resourceNotFoundException.class)
-    public void testExceptionUpdateTeam() throws resourceNotFoundException, resourceException {
+    @Test(expected = ResourceNotFoundException.class)
+    public void testExceptionUpdateTeam() throws ResourceNotFoundException, ResourceException {
 
         //Initialize updated fantasyTeam
         FantasyTeam updatedTeam = new FantasyTeam(12,
@@ -612,8 +608,8 @@ public class fantasyTeamTest {
     }
 
     //Make sure exception raised when the fantasyTeam does not exist
-    @Test(expected = resourceException.class)
-    public void testExceptionUpdateTeamTeamID() throws resourceNotFoundException, resourceException {
+    @Test(expected = ResourceException.class)
+    public void testExceptionUpdateTeamTeamID() throws ResourceNotFoundException, ResourceException {
 
         //Initialize updated fantasyTeam
         FantasyTeam updatedTeam = new FantasyTeam(null,
@@ -641,8 +637,8 @@ public class fantasyTeamTest {
     }
 
     // Make sure that delete raises exception when fantasyTeam not found
-    @Test(expected = resourceNotFoundException.class)
-    public void testExceptionDeleteTeamById() throws resourceNotFoundException {
+    @Test(expected = ResourceNotFoundException.class)
+    public void testExceptionDeleteTeamById() throws ResourceNotFoundException {
 
         // teamID does not exist
         Mockito.when(teamRepo.existsById(2)).thenReturn(false);
@@ -653,7 +649,7 @@ public class fantasyTeamTest {
 
     // Make sure that delete raises exception when fantasyTeam not found
     @Test
-    public void testDeleteTeamById() throws resourceNotFoundException {
+    public void testDeleteTeamById() throws ResourceNotFoundException {
 
         // teamID does not exist
         Mockito.when(teamRepo.existsById(2)).thenReturn(true);
@@ -665,7 +661,7 @@ public class fantasyTeamTest {
 
     // Test that exception is raised when team_id provided is null
     @Test
-    public void testCheckPutInputs0perfect() throws resourceException {
+    public void testCheckPutInputs0perfect() throws ResourceException {
 
         // Initialize test team with team_id that is not null
         FantasyTeam testTeam = new FantasyTeam(1,
@@ -689,8 +685,8 @@ public class fantasyTeamTest {
     }
 
     // Test that exception is raised when team_id provided is null
-    @Test(expected = resourceException.class)
-    public void testCheckPutInputs1() throws resourceException {
+    @Test(expected = ResourceException.class)
+    public void testCheckPutInputs1() throws ResourceException {
 
         // Initialize test team with team_id that is not null
         FantasyTeam testTeam = new FantasyTeam(null,
@@ -714,8 +710,8 @@ public class fantasyTeamTest {
     }
 
     // Test that exception is raised when team name provided is longer than 128 characters
-    @Test(expected = resourceException.class)
-    public void testCheckPutInputs2() throws resourceException {
+    @Test(expected = ResourceException.class)
+    public void testCheckPutInputs2() throws ResourceException {
 
         // Initialize test team with team_id that is not null
         FantasyTeam testTeam = new FantasyTeam(2,
@@ -743,8 +739,8 @@ public class fantasyTeamTest {
     }
 
     // Test that exception is raised when team name provided is blank
-    @Test(expected = resourceException.class)
-    public void testCheckPutInputs3() throws resourceException {
+    @Test(expected = ResourceException.class)
+    public void testCheckPutInputs3() throws ResourceException {
 
         // Initialize test team with team_id that is not null
         FantasyTeam testTeam = new FantasyTeam(2,
@@ -768,8 +764,8 @@ public class fantasyTeamTest {
     }
 
     // Test that exception is raised when one of the data members that should not be null, is null
-    @Test(expected = resourceException.class)
-    public void testCheckPutInputs4() throws resourceException {
+    @Test(expected = ResourceException.class)
+    public void testCheckPutInputs4() throws ResourceException {
 
         // Initialize test team with null values
         FantasyTeam testTeam = new FantasyTeam();
@@ -830,28 +826,28 @@ public class fantasyTeamTest {
     }
 
     @Test
-    public void checkOwnerAndLeagueNotUpdated0() throws resourceException {
+    public void checkOwnerAndLeagueNotUpdated0() throws ResourceException {
         Integer ownerID = null;
         Integer leagueID = null;
         teamService.checkOwnerAndLeagueNotUpdated(ownerID, leagueID);
     }
 
-    @Test(expected = resourceException.class)
-    public void checkOwnerAndLeagueNotUpdated1() throws resourceException {
+    @Test(expected = ResourceException.class)
+    public void checkOwnerAndLeagueNotUpdated1() throws ResourceException {
         Integer ownerID = null;
         Integer leagueID = 1;
         teamService.checkOwnerAndLeagueNotUpdated(ownerID, leagueID);
     }
 
-    @Test(expected = resourceException.class)
-    public void checkOwnerAndLeagueNotUpdated2() throws resourceException {
+    @Test(expected = ResourceException.class)
+    public void checkOwnerAndLeagueNotUpdated2() throws ResourceException {
         Integer ownerID = 1;
         Integer leagueID = null;
         teamService.checkOwnerAndLeagueNotUpdated(ownerID, leagueID);
     }
 
     @Test
-    public void testUpdatePG0() throws resourceException {
+    public void testUpdatePG0() throws ResourceException {
         FantasyTeam currentTeam =  new FantasyTeam(
                 1,
                 1,
@@ -877,8 +873,8 @@ public class fantasyTeamTest {
         teamService.updatePG(currentTeam, playerPositionMap, teamPlayerList, playerID);
     }
 
-    @Test(expected = resourceException.class)
-    public void testUpdatePG1() throws resourceException {
+    @Test(expected = ResourceException.class)
+    public void testUpdatePG1() throws ResourceException {
         FantasyTeam currentTeam =  new FantasyTeam(
                 1,
                 1,
@@ -903,8 +899,8 @@ public class fantasyTeamTest {
         teamService.updatePG(currentTeam, playerPositionMap, teamPlayerList, playerID);
     }
 
-    @Test(expected = resourceException.class)
-    public void testUpdatePG2() throws resourceException {
+    @Test(expected = ResourceException.class)
+    public void testUpdatePG2() throws ResourceException {
         FantasyTeam currentTeam =  new FantasyTeam(
                 1,
                 1,
@@ -929,8 +925,8 @@ public class fantasyTeamTest {
         teamService.updatePG(currentTeam, playerPositionMap, teamPlayerList, playerID);
     }
 
-    @Test(expected = resourceException.class)
-    public void testUpdatePG3() throws resourceException {
+    @Test(expected = ResourceException.class)
+    public void testUpdatePG3() throws ResourceException {
         FantasyTeam currentTeam =  new FantasyTeam(
                 1,
                 1,
@@ -957,7 +953,7 @@ public class fantasyTeamTest {
     }
 
     @Test
-    public void testUpdateSG0() throws resourceException {
+    public void testUpdateSG0() throws ResourceException {
         FantasyTeam currentTeam =  new FantasyTeam(
                 1,
                 1,
@@ -983,8 +979,8 @@ public class fantasyTeamTest {
         teamService.updateSG(currentTeam, playerPositionMap, teamPlayerList, playerID);
     }
 
-    @Test(expected = resourceException.class)
-    public void testUpdateSG1() throws resourceException {
+    @Test(expected = ResourceException.class)
+    public void testUpdateSG1() throws ResourceException {
         FantasyTeam currentTeam =  new FantasyTeam(
                 1,
                 1,
@@ -1009,8 +1005,8 @@ public class fantasyTeamTest {
         teamService.updateSG(currentTeam, playerPositionMap, teamPlayerList, playerID);
     }
 
-    @Test(expected = resourceException.class)
-    public void testUpdateSG2() throws resourceException {
+    @Test(expected = ResourceException.class)
+    public void testUpdateSG2() throws ResourceException {
         FantasyTeam currentTeam =  new FantasyTeam(
                 1,
                 1,
@@ -1035,8 +1031,8 @@ public class fantasyTeamTest {
         teamService.updateSG(currentTeam, playerPositionMap, teamPlayerList, playerID);
     }
 
-    @Test(expected = resourceException.class)
-    public void testUpdateSG3() throws resourceException {
+    @Test(expected = ResourceException.class)
+    public void testUpdateSG3() throws ResourceException {
         FantasyTeam currentTeam =  new FantasyTeam(
                 1,
                 1,
@@ -1063,7 +1059,7 @@ public class fantasyTeamTest {
     }
 
     @Test
-    public void testUpdateSF0() throws resourceException {
+    public void testUpdateSF0() throws ResourceException {
         FantasyTeam currentTeam =  new FantasyTeam(
                 1,
                 1,
@@ -1089,8 +1085,8 @@ public class fantasyTeamTest {
         teamService.updateSF(currentTeam, playerPositionMap, teamPlayerList, playerID);
     }
 
-    @Test(expected = resourceException.class)
-    public void testUpdateSF1() throws resourceException {
+    @Test(expected = ResourceException.class)
+    public void testUpdateSF1() throws ResourceException {
         FantasyTeam currentTeam =  new FantasyTeam(
                 1,
                 1,
@@ -1115,8 +1111,8 @@ public class fantasyTeamTest {
         teamService.updateSF(currentTeam, playerPositionMap, teamPlayerList, playerID);
     }
 
-    @Test(expected = resourceException.class)
-    public void testUpdateSF2() throws resourceException {
+    @Test(expected = ResourceException.class)
+    public void testUpdateSF2() throws ResourceException {
         FantasyTeam currentTeam =  new FantasyTeam(
                 1,
                 1,
@@ -1141,8 +1137,8 @@ public class fantasyTeamTest {
         teamService.updateSF(currentTeam, playerPositionMap, teamPlayerList, playerID);
     }
 
-    @Test(expected = resourceException.class)
-    public void testUpdateSF3() throws resourceException {
+    @Test(expected = ResourceException.class)
+    public void testUpdateSF3() throws ResourceException {
         FantasyTeam currentTeam =  new FantasyTeam(
                 1,
                 1,
@@ -1169,7 +1165,7 @@ public class fantasyTeamTest {
     }
 
     @Test
-    public void testUpdatePF0() throws resourceException {
+    public void testUpdatePF0() throws ResourceException {
         FantasyTeam currentTeam =  new FantasyTeam(
                 1,
                 1,
@@ -1195,8 +1191,8 @@ public class fantasyTeamTest {
         teamService.updatePF(currentTeam, playerPositionMap, teamPlayerList, playerID);
     }
 
-    @Test(expected = resourceException.class)
-    public void testUpdatePF1() throws resourceException {
+    @Test(expected = ResourceException.class)
+    public void testUpdatePF1() throws ResourceException {
         FantasyTeam currentTeam =  new FantasyTeam(
                 1,
                 1,
@@ -1221,8 +1217,8 @@ public class fantasyTeamTest {
         teamService.updatePF(currentTeam, playerPositionMap, teamPlayerList, playerID);
     }
 
-    @Test(expected = resourceException.class)
-    public void testUpdatePF2() throws resourceException {
+    @Test(expected = ResourceException.class)
+    public void testUpdatePF2() throws ResourceException {
         FantasyTeam currentTeam =  new FantasyTeam(
                 1,
                 1,
@@ -1247,8 +1243,8 @@ public class fantasyTeamTest {
         teamService.updatePF(currentTeam, playerPositionMap, teamPlayerList, playerID);
     }
 
-    @Test(expected = resourceException.class)
-    public void testUpdatePF3() throws resourceException {
+    @Test(expected = ResourceException.class)
+    public void testUpdatePF3() throws ResourceException {
         FantasyTeam currentTeam =  new FantasyTeam(
                 1,
                 1,
@@ -1275,7 +1271,7 @@ public class fantasyTeamTest {
     }
 
     @Test
-    public void testUpdateC0() throws resourceException {
+    public void testUpdateC0() throws ResourceException {
         FantasyTeam currentTeam =  new FantasyTeam(
                 1,
                 1,
@@ -1301,8 +1297,8 @@ public class fantasyTeamTest {
         teamService.updateC(currentTeam, playerPositionMap, teamPlayerList, playerID);
     }
 
-    @Test(expected = resourceException.class)
-    public void testUpdateC1() throws resourceException {
+    @Test(expected = ResourceException.class)
+    public void testUpdateC1() throws ResourceException {
         FantasyTeam currentTeam =  new FantasyTeam(
                 1,
                 1,
@@ -1327,8 +1323,8 @@ public class fantasyTeamTest {
         teamService.updateC(currentTeam, playerPositionMap, teamPlayerList, playerID);
     }
 
-    @Test(expected = resourceException.class)
-    public void testUpdateC2() throws resourceException {
+    @Test(expected = ResourceException.class)
+    public void testUpdateC2() throws ResourceException {
         FantasyTeam currentTeam =  new FantasyTeam(
                 1,
                 1,
@@ -1353,8 +1349,8 @@ public class fantasyTeamTest {
         teamService.updateC(currentTeam, playerPositionMap, teamPlayerList, playerID);
     }
 
-    @Test(expected = resourceException.class)
-    public void testUpdateC3() throws resourceException {
+    @Test(expected = ResourceException.class)
+    public void testUpdateC3() throws ResourceException {
         FantasyTeam currentTeam =  new FantasyTeam(
                 1,
                 1,
@@ -1381,7 +1377,7 @@ public class fantasyTeamTest {
     }
 
     @Test
-    public void testUpdateBench10() throws resourceException {
+    public void testUpdateBench10() throws ResourceException {
         FantasyTeam currentTeam =  new FantasyTeam(
                 1,
                 1,
@@ -1405,8 +1401,8 @@ public class fantasyTeamTest {
         teamService.updateBench1(currentTeam, teamPlayerList, playerID);
     }
 
-    @Test(expected = resourceException.class)
-    public void testUpdateBench11() throws resourceException {
+    @Test(expected = ResourceException.class)
+    public void testUpdateBench11() throws ResourceException {
         FantasyTeam currentTeam =  new FantasyTeam(
                 1,
                 1,
@@ -1430,8 +1426,8 @@ public class fantasyTeamTest {
         teamService.updateBench1(currentTeam, teamPlayerList, playerID);
     }
 
-    @Test(expected = resourceException.class)
-    public void testUpdateBench12() throws resourceException {
+    @Test(expected = ResourceException.class)
+    public void testUpdateBench12() throws ResourceException {
         FantasyTeam currentTeam =  new FantasyTeam(
                 1,
                 1,
@@ -1455,8 +1451,8 @@ public class fantasyTeamTest {
         teamService.updateBench1(currentTeam, teamPlayerList, playerID);
     }
 
-    @Test(expected = resourceException.class)
-    public void testUpdateBench13() throws resourceException {
+    @Test(expected = ResourceException.class)
+    public void testUpdateBench13() throws ResourceException {
         FantasyTeam currentTeam =  new FantasyTeam(
                 1,
                 1,
@@ -1481,7 +1477,7 @@ public class fantasyTeamTest {
     }
 
     @Test
-    public void testUpdateBench20() throws resourceException {
+    public void testUpdateBench20() throws ResourceException {
         FantasyTeam currentTeam =  new FantasyTeam(
                 1,
                 1,
@@ -1505,8 +1501,8 @@ public class fantasyTeamTest {
         teamService.updateBench2(currentTeam, teamPlayerList, playerID);
     }
 
-    @Test(expected = resourceException.class)
-    public void testUpdateBench21() throws resourceException {
+    @Test(expected = ResourceException.class)
+    public void testUpdateBench21() throws ResourceException {
         FantasyTeam currentTeam =  new FantasyTeam(
                 1,
                 1,
@@ -1530,8 +1526,8 @@ public class fantasyTeamTest {
         teamService.updateBench2(currentTeam, teamPlayerList, playerID);
     }
 
-    @Test(expected = resourceException.class)
-    public void testUpdateBench22() throws resourceException {
+    @Test(expected = ResourceException.class)
+    public void testUpdateBench22() throws ResourceException {
         FantasyTeam currentTeam =  new FantasyTeam(
                 1,
                 1,
@@ -1555,8 +1551,8 @@ public class fantasyTeamTest {
         teamService.updateBench2(currentTeam, teamPlayerList, playerID);
     }
 
-    @Test(expected = resourceException.class)
-    public void testUpdateBench23() throws resourceException {
+    @Test(expected = ResourceException.class)
+    public void testUpdateBench23() throws ResourceException {
         FantasyTeam currentTeam =  new FantasyTeam(
                 1,
                 1,
@@ -1593,7 +1589,7 @@ public class fantasyTeamTest {
     }
 
 //    @Test
-//    public void checkUpdateValues() throws resourceException {
+//    public void checkUpdateValues() throws ResourceException {
 //        // Initialize team before postTeam called
 //        FantasyTeam dbTeam = new FantasyTeam(
 //                12,

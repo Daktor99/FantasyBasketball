@@ -1,4 +1,8 @@
 -------------------------------------------------------------------------------
-Test set: FantasyBasketball.Flows.fantasyTeamTest
+Test set: FantasyBasketball.Flows.FantasyTeamTest
 -------------------------------------------------------------------------------
+<<<<<<< HEAD
 Tests run: 58, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 5.144 s - in FantasyBasketball.Flows.fantasyTeamTest
+=======
+Tests run: 58, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 5.33 s - in FantasyBasketball.Flows.FantasyTeamTest
+>>>>>>> origin/main
