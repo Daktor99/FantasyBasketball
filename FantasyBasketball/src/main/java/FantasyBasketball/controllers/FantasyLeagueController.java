@@ -295,6 +295,10 @@ public class FantasyLeagueController {
             List<Integer> result = fantasyLeagueService.randomOrder(league_id, client_id);
             return new ResponseEntity<>(result, HttpStatus.OK);
 
+        } catch (ResourceNotFoundException e) {
+            // If league not found in the database, throw exception not found
+            log.error("Exception on PUT: " + e.getMessage());
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             log.error("Exception on GET: " + e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
