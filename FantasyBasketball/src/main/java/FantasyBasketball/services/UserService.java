@@ -118,7 +118,7 @@ public class UserService {
         checkInputs(user);
     }
 
-    public void checkInputsPost(User user) throws ResourceException {
+    public void checkInputsPut(User user) throws ResourceException {
         if (user.getEmail() != null){
             throw new ResourceException("You cannot change the email. Do not provide it.");
         } else if (checkIfInvalid(user.getUsername())) {
@@ -135,6 +135,6 @@ public class UserService {
         if (user.getUserID() == null) {
             throw new ResourceException("Please provide user_id.");
         }
-        checkInputsPost(user);
+        checkInputsPut(user);
     }
 }
