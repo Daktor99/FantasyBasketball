@@ -1034,8 +1034,39 @@ public class FantasyLeagueTest {
 
     @Test(expected = ResourceException.class)
     public void checkIfScheduleGenerated() throws ResourceException {
-        Integer league_id = 1;
-        List<FantasyGame> games = Collections.emptyList();
+        Integer league_id = 12345;
+
+        LocalDate genericdate1 = LocalDate.of(2022, 1, 1);
+        LocalDate genericdate2 = LocalDate.of(2022, 1, 8);
+
+        FantasyGame genericGame = new FantasyGame(
+                1,
+                1,
+                1,
+                1,
+                2,
+                genericdate1,
+                genericdate2,
+                null,
+                0,
+                0,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+        );
+
+        List<FantasyGame> games = List.of(genericGame);
         Mockito.when(gameRepo.findGamesByLeagueID(league_id)).thenReturn(games);
         leagueService.checkIfScheduleGenerated(league_id);
     }
