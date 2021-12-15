@@ -49,7 +49,8 @@ public class UserService {
     // put operation
     public List<User> updateUser(User user) throws ResourceNotFoundException {
         if(userRepo.existsById(user.getUserID())) {
-
+            User newuser = getByID(user.getUserID()).get(0);
+            user.setEmail(newuser.getEmail());
             User result = userRepo.save(user);
             return List.of(result);
         } else {
@@ -94,6 +95,7 @@ public class UserService {
             } else if (checkIfInvalid(user.getLastName())) {
                 throw new ResourceException("Last name must be between 1-128 characters.");
             }
+
         } catch (NullPointerException e) {
             throw new ResourceException("User formatted incorrectly please provide the following:\n" +
                     "username, email, first_name, last_name");
@@ -104,13 +106,35 @@ public class UserService {
         if (user.getUserID() != null) {
             throw new ResourceException("Do not provide user_id.");
         }
+        List<User> emails = userRepo.findByTemplate(null,
+                user.getClientID(),
+                user.getEmail(),
+                null,
+                null,
+                null);
+        if (emails.size() != 0) {
+            throw new ResourceException("This email is already registered. You need to use another email.");
+        }
         checkInputs(user);
     }
+
+    public void checkInputsPut(User user) throws ResourceException {
+        if (user.getEmail() != null){
+            throw new ResourceException("You cannot change the email. Do not provide it.");
+        } else if (checkIfInvalid(user.getUsername())) {
+            throw new ResourceException("Username must be between 1-128 characters.");
+        } else if (checkIfInvalid(user.getFirstName())) {
+            throw new ResourceException("First name must be between 1-128 characters.");
+        } else if (checkIfInvalid(user.getLastName())) {
+            throw new ResourceException("Last name must be between 1-128 characters.");
+        }
+    }
+
     // checking UserID before Putting
     public void checkPutInputs(User user) throws ResourceException {
         if (user.getUserID() == null) {
             throw new ResourceException("Please provide user_id.");
         }
-        checkInputs(user);
+        checkInputsPut(user);
     }
 }

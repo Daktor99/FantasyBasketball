@@ -1,0 +1,129 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > playerDataRepository</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">FantasyBasketball.repositories</a>
+</div>
+
+<h1>Coverage Summary for Class: playerDataRepository (FantasyBasketball.repositories)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+</tr>
+<tr>
+  <td class="name">playerDataRepository</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package FantasyBasketball.repositories;
+<i class="no-highlight">2</i>&nbsp;
+<i class="no-highlight">3</i>&nbsp;import FantasyBasketball.models.FantasyPlayer;
+<i class="no-highlight">4</i>&nbsp;import org.springframework.data.jpa.repository.Modifying;
+<i class="no-highlight">5</i>&nbsp;import org.springframework.data.jpa.repository.Query;
+<i class="no-highlight">6</i>&nbsp;import org.springframework.data.repository.CrudRepository;
+<i class="no-highlight">7</i>&nbsp;import org.springframework.data.repository.query.Param;
+<i class="no-highlight">8</i>&nbsp;import org.springframework.stereotype.Repository;
+<i class="no-highlight">9</i>&nbsp;import org.springframework.transaction.annotation.Transactional;
+<i class="no-highlight">10</i>&nbsp;
+<i class="no-highlight">11</i>&nbsp;import java.util.List;
+<i class="no-highlight">12</i>&nbsp;
+<i class="no-highlight">13</i>&nbsp;/*
+<i class="no-highlight">14</i>&nbsp;    CrudRepository already has the following functions:
+<i class="no-highlight">15</i>&nbsp;        (in the form): function_name(parameter:parameter_type):return_type
+<i class="no-highlight">16</i>&nbsp;        save(entity:S):S
+<i class="no-highlight">17</i>&nbsp;        saveAll(entities:Iterable&lt;S&gt;):Iterable&lt;S&gt;
+<i class="no-highlight">18</i>&nbsp;        findById(id:ID):Optional&lt;T&gt;
+<i class="no-highlight">19</i>&nbsp;        existsById(id:ID):boolean
+<i class="no-highlight">20</i>&nbsp;        findAll():Iterable&lt;T&gt;
+<i class="no-highlight">21</i>&nbsp;        findAllById(ids:Iterable&lt;ID&gt;)Iterable&lt;T&gt;
+<i class="no-highlight">22</i>&nbsp;        count():long
+<i class="no-highlight">23</i>&nbsp;        deleteById(idLID):void
+<i class="no-highlight">24</i>&nbsp;        delete(entity:T):void
+<i class="no-highlight">25</i>&nbsp;        deleteAllById(ids:Iterable&lt;? extends ID&gt;):void
+<i class="no-highlight">26</i>&nbsp;        deleteAll(entities:Iterable&lt;? extends T&gt;):void
+<i class="no-highlight">27</i>&nbsp;        deleteAll():void
+<i class="no-highlight">28</i>&nbsp;
+<i class="no-highlight">29</i>&nbsp;    All functions below extend the CrudRepository
+<i class="no-highlight">30</i>&nbsp; */
+<i class="no-highlight">31</i>&nbsp;
+<i class="no-highlight">32</i>&nbsp;@Repository
+<i class="no-highlight">33</i>&nbsp;public interface playerDataRepository extends CrudRepository&lt;FantasyPlayer, Integer&gt; {
+<i class="no-highlight">34</i>&nbsp;
+<i class="no-highlight">35</i>&nbsp;    @Query(value = &quot;select * from fantasy_player where ((:player_id is NULL or player_id = :player_id) and\n&quot; +
+<i class="no-highlight">36</i>&nbsp;            &quot;                          (:position is NULL or position LIKE %:position%) and\n&quot; +
+<i class="no-highlight">37</i>&nbsp;            &quot;                          (:first_name is NULL or first_name LIKE %:first_name%) and\n&quot; +
+<i class="no-highlight">38</i>&nbsp;            &quot;                          (:last_name is NULL or last_name LIKE %:last_name%) and\n&quot; +
+<i class="no-highlight">39</i>&nbsp;            &quot;                          (:nba_team is NULL or nba_team LIKE %:nba_team% ) and\n&quot; +
+<i class="no-highlight">40</i>&nbsp;            &quot;                          (:ball_api_id is NULL or ball_api_id=:ball_api_id))&quot;, nativeQuery = true)
+<i class="no-highlight">41</i>&nbsp;    List&lt;FantasyPlayer&gt; findByTemplate(@Param(&quot;player_id&quot;) Integer player_id,
+<i class="no-highlight">42</i>&nbsp;                                       @Param(&quot;position&quot;) String position,
+<i class="no-highlight">43</i>&nbsp;                                       @Param(&quot;first_name&quot;) String first_name,
+<i class="no-highlight">44</i>&nbsp;                                       @Param(&quot;last_name&quot;) String last_name,
+<i class="no-highlight">45</i>&nbsp;                                       @Param(&quot;nba_team&quot;) String nba_team,
+<i class="no-highlight">46</i>&nbsp;                                       @Param(&quot;ball_api_id&quot;) Integer ball_api_id);
+<i class="no-highlight">47</i>&nbsp;
+<i class="no-highlight">48</i>&nbsp;    @Transactional
+<i class="no-highlight">49</i>&nbsp;    @Modifying
+<i class="no-highlight">50</i>&nbsp;    @Query(value = &quot;insert into player_data values(:player_id, :first_name, :last_name, :position, :nba_team, :ball_api_id, :total_points)&quot;,
+<i class="no-highlight">51</i>&nbsp;            nativeQuery = true)
+<i class="no-highlight">52</i>&nbsp;    void insertDbPlayer(@Param(&quot;player_id&quot;) Integer player_id,
+<i class="no-highlight">53</i>&nbsp;                             @Param(&quot;position&quot;) String position,
+<i class="no-highlight">54</i>&nbsp;                             @Param(&quot;first_name&quot;) String first_name,
+<i class="no-highlight">55</i>&nbsp;                             @Param(&quot;last_name&quot;) String last_name,
+<i class="no-highlight">56</i>&nbsp;                             @Param(&quot;nba_team&quot;) String nba_team,
+<i class="no-highlight">57</i>&nbsp;                             @Param(&quot;ball_api_id&quot;) Integer ball_api_id,
+<i class="no-highlight">58</i>&nbsp;                             @Param(&quot;total_points&quot;) Integer total_points);
+<i class="no-highlight">59</i>&nbsp;
+<i class="no-highlight">60</i>&nbsp;}
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-12-11 15:53</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,530 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > FantasyGame</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">FantasyBasketball.models</a>
+</div>
+
+<h1>Coverage Summary for Class: FantasyGame (FantasyBasketball.models)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">FantasyGame</td>
+<td class="coverageStat">
+  <span class="percent">
+    1.9%
+  </span>
+  <span class="absValue">
+    (1/52)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    26.1%
+  </span>
+  <span class="absValue">
+    (29/111)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">FantasyGame$HibernateProxy$FeqOyoah</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    1.9%
+  </span>
+  <span class="absValue">
+    (1/52)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    26.1%
+  </span>
+  <span class="absValue">
+    (29/111)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package FantasyBasketball.models;
+<i class="no-highlight">2</i>&nbsp;
+<i class="no-highlight">3</i>&nbsp;import com.fasterxml.jackson.annotation.JsonIgnore;
+<i class="no-highlight">4</i>&nbsp;import com.fasterxml.jackson.annotation.JsonProperty;
+<i class="no-highlight">5</i>&nbsp;
+<i class="no-highlight">6</i>&nbsp;import javax.persistence.*;
+<i class="no-highlight">7</i>&nbsp;import java.time.LocalDate;
+<i class="no-highlight">8</i>&nbsp;
+<i class="no-highlight">9</i>&nbsp;@Entity
+<i class="no-highlight">10</i>&nbsp;@Table(name = &quot;fantasy_game&quot;)
+<i class="no-highlight">11</i>&nbsp;public class FantasyGame {
+<i class="no-highlight">12</i>&nbsp;
+<i class="no-highlight">13</i>&nbsp;    // data members
+<i class="no-highlight">14</i>&nbsp;    @Id
+<i class="no-highlight">15</i>&nbsp;    @GeneratedValue(strategy = GenerationType.IDENTITY)
+<i class="no-highlight">16</i>&nbsp;    @Column(name = &quot;schedule_id&quot;)
+<i class="no-highlight">17</i>&nbsp;    @JsonProperty(&quot;schedule_id&quot;)
+<i class="no-highlight">18</i>&nbsp;    private Integer scheduleID;
+<i class="no-highlight">19</i>&nbsp;
+<i class="no-highlight">20</i>&nbsp;    @Column(name = &quot;league_id&quot;)
+<i class="no-highlight">21</i>&nbsp;    @JsonProperty(&quot;league_id&quot;)
+<i class="no-highlight">22</i>&nbsp;    private Integer leagueID;
+<i class="no-highlight">23</i>&nbsp;
+<i class="no-highlight">24</i>&nbsp;    @Column(name = &quot;client_id&quot;)
+<i class="no-highlight">25</i>&nbsp;    @JsonIgnore
+<i class="no-highlight">26</i>&nbsp;    private Integer clientID;
+<i class="no-highlight">27</i>&nbsp;
+<i class="no-highlight">28</i>&nbsp;    @Column(name = &quot;home_team_id&quot;)
+<i class="no-highlight">29</i>&nbsp;    @JsonProperty(&quot;home_team_id&quot;)
+<i class="no-highlight">30</i>&nbsp;    private Integer homeTeamID;
+<i class="no-highlight">31</i>&nbsp;
+<i class="no-highlight">32</i>&nbsp;    @Column(name = &quot;away_team_id&quot;)
+<i class="no-highlight">33</i>&nbsp;    @JsonProperty(&quot;away_team_id&quot;)
+<i class="no-highlight">34</i>&nbsp;    private Integer awayTeamID;
+<i class="no-highlight">35</i>&nbsp;
+<i class="no-highlight">36</i>&nbsp;    @Column(name = &quot;game_start_date&quot;)
+<i class="no-highlight">37</i>&nbsp;    @JsonProperty(&quot;game_start_date&quot;)
+<i class="no-highlight">38</i>&nbsp;    private LocalDate gameStartDate;
+<i class="no-highlight">39</i>&nbsp;
+<i class="no-highlight">40</i>&nbsp;    @Column(name = &quot;game_end_date&quot;)
+<i class="no-highlight">41</i>&nbsp;    @JsonProperty(&quot;game_end_date&quot;)
+<i class="no-highlight">42</i>&nbsp;    private LocalDate gameEndDate;
+<i class="no-highlight">43</i>&nbsp;
+<i class="no-highlight">44</i>&nbsp;    @Column(name = &quot;winner_id&quot;)
+<i class="no-highlight">45</i>&nbsp;    @JsonProperty(&quot;winner_id&quot;)
+<i class="no-highlight">46</i>&nbsp;    private Integer winner;
+<i class="no-highlight">47</i>&nbsp;
+<b class="fc"><i class="no-highlight">48</i>&nbsp;    @Column(name = &quot;home_points&quot;)</b>
+<i class="no-highlight">49</i>&nbsp;    @JsonProperty(&quot;home_points&quot;)
+<b class="fc"><i class="no-highlight">50</i>&nbsp;    private Integer homePoints = 0;</b>
+<i class="no-highlight">51</i>&nbsp;
+<b class="fc"><i class="no-highlight">52</i>&nbsp;    @Column(name = &quot;away_points&quot;)</b>
+<i class="no-highlight">53</i>&nbsp;    @JsonProperty(&quot;away_points&quot;)
+<b class="fc"><i class="no-highlight">54</i>&nbsp;    private Integer awayPoints = 0;</b>
+<i class="no-highlight">55</i>&nbsp;
+<i class="no-highlight">56</i>&nbsp;    @Column(name = &quot;home_start_pg_id&quot;)
+<i class="no-highlight">57</i>&nbsp;    @JsonProperty(&quot;home_start_pg_id&quot;)
+<i class="no-highlight">58</i>&nbsp;    private Integer startHomePG;
+<i class="no-highlight">59</i>&nbsp;
+<i class="no-highlight">60</i>&nbsp;    @Column(name = &quot;home_start_sg_id&quot;)
+<i class="no-highlight">61</i>&nbsp;    @JsonProperty(&quot;home_start_sg_id&quot;)
+<i class="no-highlight">62</i>&nbsp;    private Integer startHomeSG;
+<i class="no-highlight">63</i>&nbsp;
+<i class="no-highlight">64</i>&nbsp;    @Column(name = &quot;home_start_sf_id&quot;)
+<i class="no-highlight">65</i>&nbsp;    @JsonProperty(&quot;home_start_sf_id&quot;)
+<i class="no-highlight">66</i>&nbsp;    private Integer startHomeSF;
+<i class="no-highlight">67</i>&nbsp;
+<i class="no-highlight">68</i>&nbsp;    @Column(name = &quot;home_start_pf_id&quot;)
+<i class="no-highlight">69</i>&nbsp;    @JsonProperty(&quot;home_start_pf_id&quot;)
+<i class="no-highlight">70</i>&nbsp;    private Integer startHomePF;
+<i class="no-highlight">71</i>&nbsp;
+<i class="no-highlight">72</i>&nbsp;    @Column(name = &quot;home_start_c_id&quot;)
+<i class="no-highlight">73</i>&nbsp;    @JsonProperty(&quot;home_start_c_id&quot;)
+<i class="no-highlight">74</i>&nbsp;    private Integer startHomeC;
+<i class="no-highlight">75</i>&nbsp;
+<i class="no-highlight">76</i>&nbsp;    @Column(name = &quot;home_bench_1_id&quot;)
+<i class="no-highlight">77</i>&nbsp;    @JsonProperty(&quot;home_bench_1_id&quot;)
+<i class="no-highlight">78</i>&nbsp;    private Integer homeBench1;
+<i class="no-highlight">79</i>&nbsp;
+<i class="no-highlight">80</i>&nbsp;    @Column(name = &quot;home_bench_2_id&quot;)
+<i class="no-highlight">81</i>&nbsp;    @JsonProperty(&quot;home_bench_2_id&quot;)
+<i class="no-highlight">82</i>&nbsp;    private Integer homeBench2;
+<i class="no-highlight">83</i>&nbsp;
+<i class="no-highlight">84</i>&nbsp;    @Column(name = &quot;away_start_pg_id&quot;)
+<i class="no-highlight">85</i>&nbsp;    @JsonProperty(&quot;away_start_pg_id&quot;)
+<i class="no-highlight">86</i>&nbsp;    private Integer startAwayPG;
+<i class="no-highlight">87</i>&nbsp;
+<i class="no-highlight">88</i>&nbsp;    @Column(name = &quot;away_start_sg_id&quot;)
+<i class="no-highlight">89</i>&nbsp;    @JsonProperty(&quot;away_start_sg_id&quot;)
+<i class="no-highlight">90</i>&nbsp;    private Integer startAwaySG;
+<i class="no-highlight">91</i>&nbsp;
+<i class="no-highlight">92</i>&nbsp;    @Column(name = &quot;away_start_sf_id&quot;)
+<i class="no-highlight">93</i>&nbsp;    @JsonProperty(&quot;away_start_sf_id&quot;)
+<i class="no-highlight">94</i>&nbsp;    private Integer startAwaySF;
+<i class="no-highlight">95</i>&nbsp;
+<i class="no-highlight">96</i>&nbsp;    @Column(name = &quot;away_start_pf_id&quot;)
+<i class="no-highlight">97</i>&nbsp;    @JsonProperty(&quot;away_start_pf_id&quot;)
+<i class="no-highlight">98</i>&nbsp;    private Integer startAwayPF;
+<i class="no-highlight">99</i>&nbsp;
+<i class="no-highlight">100</i>&nbsp;    @Column(name = &quot;away_start_c_id&quot;)
+<i class="no-highlight">101</i>&nbsp;    @JsonProperty(&quot;away_start_c_id&quot;)
+<i class="no-highlight">102</i>&nbsp;    private Integer startAwayC;
+<i class="no-highlight">103</i>&nbsp;
+<i class="no-highlight">104</i>&nbsp;    @Column(name = &quot;away_bench_1_id&quot;)
+<i class="no-highlight">105</i>&nbsp;    @JsonProperty(&quot;away_bench_1_id&quot;)
+<i class="no-highlight">106</i>&nbsp;    private Integer awayBench1;
+<i class="no-highlight">107</i>&nbsp;
+<i class="no-highlight">108</i>&nbsp;    @Column(name = &quot;away_bench_2_id&quot;)
+<i class="no-highlight">109</i>&nbsp;    @JsonProperty(&quot;away_bench_2_id&quot;)
+<i class="no-highlight">110</i>&nbsp;    private Integer awayBench2;
+<i class="no-highlight">111</i>&nbsp;
+<i class="no-highlight">112</i>&nbsp;
+<i class="no-highlight">113</i>&nbsp;    // class methods
+<i class="no-highlight">114</i>&nbsp;
+<i class="no-highlight">115</i>&nbsp;    // default constructor
+<b class="fc"><i class="no-highlight">116</i>&nbsp;    public FantasyGame() {</b>
+<b class="fc"><i class="no-highlight">117</i>&nbsp;        this.scheduleID = null;</b>
+<b class="fc"><i class="no-highlight">118</i>&nbsp;        this.leagueID = null;</b>
+<b class="fc"><i class="no-highlight">119</i>&nbsp;        this.clientID = null;</b>
+<b class="fc"><i class="no-highlight">120</i>&nbsp;        this.homeTeamID = null;</b>
+<b class="fc"><i class="no-highlight">121</i>&nbsp;        this.awayTeamID = null;</b>
+<b class="fc"><i class="no-highlight">122</i>&nbsp;        this.gameStartDate = null;</b>
+<b class="fc"><i class="no-highlight">123</i>&nbsp;        this.gameEndDate = null;</b>
+<b class="fc"><i class="no-highlight">124</i>&nbsp;        this.winner = null;</b>
+<b class="fc"><i class="no-highlight">125</i>&nbsp;        this.homePoints = 0;</b>
+<b class="fc"><i class="no-highlight">126</i>&nbsp;        this.awayPoints = 0;</b>
+<b class="fc"><i class="no-highlight">127</i>&nbsp;        this.startHomePG = null;</b>
+<b class="fc"><i class="no-highlight">128</i>&nbsp;        this.startHomeSG = null;</b>
+<b class="fc"><i class="no-highlight">129</i>&nbsp;        this.startHomeSF = null;</b>
+<b class="fc"><i class="no-highlight">130</i>&nbsp;        this.startHomePF = null;</b>
+<b class="fc"><i class="no-highlight">131</i>&nbsp;        this.startHomeC = null;</b>
+<b class="fc"><i class="no-highlight">132</i>&nbsp;        this.homeBench1 = null;</b>
+<b class="fc"><i class="no-highlight">133</i>&nbsp;        this.homeBench2 = null;</b>
+<b class="fc"><i class="no-highlight">134</i>&nbsp;        this.startAwayPG = null;</b>
+<b class="fc"><i class="no-highlight">135</i>&nbsp;        this.startAwaySG = null;</b>
+<b class="fc"><i class="no-highlight">136</i>&nbsp;        this.startAwaySF = null;</b>
+<b class="fc"><i class="no-highlight">137</i>&nbsp;        this.startAwayPF = null;</b>
+<b class="fc"><i class="no-highlight">138</i>&nbsp;        this.startAwayC = null;</b>
+<b class="fc"><i class="no-highlight">139</i>&nbsp;        this.awayBench1 = null;</b>
+<b class="fc"><i class="no-highlight">140</i>&nbsp;        this.awayBench2 = null;</b>
+<i class="no-highlight">141</i>&nbsp;
+<i class="no-highlight">142</i>&nbsp;    }
+<i class="no-highlight">143</i>&nbsp;
+<i class="no-highlight">144</i>&nbsp;    // constructor
+<b class="nc"><i class="no-highlight">145</i>&nbsp;    public FantasyGame(Integer leagueID, Integer clientID, Integer homeTeamID, Integer awayTeamID, LocalDate gameStartDate, LocalDate gameEndDate) {</b>
+<b class="nc"><i class="no-highlight">146</i>&nbsp;        this.scheduleID = 1;</b>
+<b class="nc"><i class="no-highlight">147</i>&nbsp;        this.leagueID = leagueID;</b>
+<b class="nc"><i class="no-highlight">148</i>&nbsp;        this.clientID = clientID;</b>
+<b class="nc"><i class="no-highlight">149</i>&nbsp;        this.homeTeamID = homeTeamID;</b>
+<b class="nc"><i class="no-highlight">150</i>&nbsp;        this.awayTeamID = awayTeamID;</b>
+<b class="nc"><i class="no-highlight">151</i>&nbsp;        this.gameStartDate = gameStartDate;</b>
+<b class="nc"><i class="no-highlight">152</i>&nbsp;        this.gameEndDate = gameEndDate;</b>
+<i class="no-highlight">153</i>&nbsp;    }
+<i class="no-highlight">154</i>&nbsp;
+<i class="no-highlight">155</i>&nbsp;    // constructor with all parameters
+<i class="no-highlight">156</i>&nbsp;    public FantasyGame(Integer scheduleID, Integer leagueID, Integer clientID,
+<i class="no-highlight">157</i>&nbsp;                       Integer homeTeamID, Integer awayTeamID,
+<i class="no-highlight">158</i>&nbsp;                       LocalDate gameStartDate, LocalDate gameEndDate,
+<i class="no-highlight">159</i>&nbsp;                       Integer winner, Integer homePoints, Integer awayPoints,
+<i class="no-highlight">160</i>&nbsp;                       Integer startHomePG, Integer startHomeSG, Integer startHomeSF, Integer startHomePF,
+<i class="no-highlight">161</i>&nbsp;                       Integer startHomeC, Integer homeBench1, Integer homeBench2,
+<i class="no-highlight">162</i>&nbsp;                       Integer startAwayPG, Integer startAwaySG, Integer startAwaySF, Integer startAwayPF,
+<b class="nc"><i class="no-highlight">163</i>&nbsp;                       Integer startAwayC, Integer awayBench1, Integer awayBench2) {</b>
+<b class="nc"><i class="no-highlight">164</i>&nbsp;        this.scheduleID = scheduleID;</b>
+<b class="nc"><i class="no-highlight">165</i>&nbsp;        this.leagueID = leagueID;</b>
+<b class="nc"><i class="no-highlight">166</i>&nbsp;        this.clientID = clientID;</b>
+<b class="nc"><i class="no-highlight">167</i>&nbsp;        this.homeTeamID = homeTeamID;</b>
+<b class="nc"><i class="no-highlight">168</i>&nbsp;        this.awayTeamID = awayTeamID;</b>
+<b class="nc"><i class="no-highlight">169</i>&nbsp;        this.gameStartDate = gameStartDate;</b>
+<b class="nc"><i class="no-highlight">170</i>&nbsp;        this.gameEndDate = gameEndDate;</b>
+<b class="nc"><i class="no-highlight">171</i>&nbsp;        this.winner = winner;</b>
+<b class="nc"><i class="no-highlight">172</i>&nbsp;        this.homePoints = homePoints;</b>
+<b class="nc"><i class="no-highlight">173</i>&nbsp;        this.awayPoints = awayPoints;</b>
+<b class="nc"><i class="no-highlight">174</i>&nbsp;        this.startHomePG = startHomePG;</b>
+<b class="nc"><i class="no-highlight">175</i>&nbsp;        this.startHomeSG = startHomeSG;</b>
+<b class="nc"><i class="no-highlight">176</i>&nbsp;        this.startHomeSF = startHomeSF;</b>
+<b class="nc"><i class="no-highlight">177</i>&nbsp;        this.startHomePF = startHomePF;</b>
+<b class="nc"><i class="no-highlight">178</i>&nbsp;        this.startHomeC = startHomeC;</b>
+<b class="nc"><i class="no-highlight">179</i>&nbsp;        this.homeBench1 = homeBench1;</b>
+<b class="nc"><i class="no-highlight">180</i>&nbsp;        this.homeBench2 = homeBench2;</b>
+<b class="nc"><i class="no-highlight">181</i>&nbsp;        this.startAwayPG = startAwayPG;</b>
+<b class="nc"><i class="no-highlight">182</i>&nbsp;        this.startAwaySG = startAwaySG;</b>
+<b class="nc"><i class="no-highlight">183</i>&nbsp;        this.startAwaySF = startAwaySF;</b>
+<b class="nc"><i class="no-highlight">184</i>&nbsp;        this.startAwayPF = startAwayPF;</b>
+<b class="nc"><i class="no-highlight">185</i>&nbsp;        this.startAwayC = startAwayC;</b>
+<b class="nc"><i class="no-highlight">186</i>&nbsp;        this.awayBench1 = awayBench1;</b>
+<b class="nc"><i class="no-highlight">187</i>&nbsp;        this.awayBench2 = awayBench2;</b>
+<i class="no-highlight">188</i>&nbsp;    }
+<i class="no-highlight">189</i>&nbsp;
+<i class="no-highlight">190</i>&nbsp;    public Integer getScheduleID() {
+<b class="nc"><i class="no-highlight">191</i>&nbsp;        return scheduleID;</b>
+<i class="no-highlight">192</i>&nbsp;    }
+<i class="no-highlight">193</i>&nbsp;
+<i class="no-highlight">194</i>&nbsp;    public void setScheduleID(Integer scheduleID) {
+<b class="nc"><i class="no-highlight">195</i>&nbsp;        this.scheduleID = scheduleID;</b>
+<i class="no-highlight">196</i>&nbsp;    }
+<i class="no-highlight">197</i>&nbsp;
+<i class="no-highlight">198</i>&nbsp;    public Integer getLeagueID() {
+<b class="nc"><i class="no-highlight">199</i>&nbsp;        return leagueID;</b>
+<i class="no-highlight">200</i>&nbsp;    }
+<i class="no-highlight">201</i>&nbsp;
+<i class="no-highlight">202</i>&nbsp;    public void setLeagueID(Integer leagueID) {
+<b class="nc"><i class="no-highlight">203</i>&nbsp;        this.leagueID = leagueID;</b>
+<i class="no-highlight">204</i>&nbsp;    }
+<i class="no-highlight">205</i>&nbsp;
+<i class="no-highlight">206</i>&nbsp;    public Integer getClientID() {
+<b class="nc"><i class="no-highlight">207</i>&nbsp;        return clientID;</b>
+<i class="no-highlight">208</i>&nbsp;    }
+<i class="no-highlight">209</i>&nbsp;
+<i class="no-highlight">210</i>&nbsp;    public void setClientID(Integer clientID) {
+<b class="nc"><i class="no-highlight">211</i>&nbsp;        this.clientID = clientID;</b>
+<i class="no-highlight">212</i>&nbsp;    }
+<i class="no-highlight">213</i>&nbsp;
+<i class="no-highlight">214</i>&nbsp;    public Integer getHomeTeamID() {
+<b class="nc"><i class="no-highlight">215</i>&nbsp;        return homeTeamID;</b>
+<i class="no-highlight">216</i>&nbsp;    }
+<i class="no-highlight">217</i>&nbsp;
+<i class="no-highlight">218</i>&nbsp;    public void setHomeTeamID(Integer homeTeamID) {
+<b class="nc"><i class="no-highlight">219</i>&nbsp;        this.homeTeamID = homeTeamID;</b>
+<i class="no-highlight">220</i>&nbsp;    }
+<i class="no-highlight">221</i>&nbsp;
+<i class="no-highlight">222</i>&nbsp;    public Integer getAwayTeamID() {
+<b class="nc"><i class="no-highlight">223</i>&nbsp;        return awayTeamID;</b>
+<i class="no-highlight">224</i>&nbsp;    }
+<i class="no-highlight">225</i>&nbsp;
+<i class="no-highlight">226</i>&nbsp;    public void setAwayTeamID(Integer awayTeamID) {
+<b class="nc"><i class="no-highlight">227</i>&nbsp;        this.awayTeamID = awayTeamID;</b>
+<i class="no-highlight">228</i>&nbsp;    }
+<i class="no-highlight">229</i>&nbsp;
+<i class="no-highlight">230</i>&nbsp;    public LocalDate getGameStartDate() {
+<b class="nc"><i class="no-highlight">231</i>&nbsp;        return gameStartDate;</b>
+<i class="no-highlight">232</i>&nbsp;    }
+<i class="no-highlight">233</i>&nbsp;
+<i class="no-highlight">234</i>&nbsp;    public void setGameStartDate(LocalDate gameStartDate) {
+<b class="nc"><i class="no-highlight">235</i>&nbsp;        this.gameStartDate = gameStartDate;</b>
+<i class="no-highlight">236</i>&nbsp;    }
+<i class="no-highlight">237</i>&nbsp;
+<i class="no-highlight">238</i>&nbsp;    public LocalDate getGameEndDate() {
+<b class="nc"><i class="no-highlight">239</i>&nbsp;        return gameEndDate;</b>
+<i class="no-highlight">240</i>&nbsp;    }
+<i class="no-highlight">241</i>&nbsp;
+<i class="no-highlight">242</i>&nbsp;    public void setGameEndDate(LocalDate gameEndDate) {
+<b class="nc"><i class="no-highlight">243</i>&nbsp;        this.gameEndDate = gameEndDate;</b>
+<i class="no-highlight">244</i>&nbsp;    }
+<i class="no-highlight">245</i>&nbsp;
+<i class="no-highlight">246</i>&nbsp;    public Integer getWinner() {
+<b class="nc"><i class="no-highlight">247</i>&nbsp;        return winner;</b>
+<i class="no-highlight">248</i>&nbsp;    }
+<i class="no-highlight">249</i>&nbsp;
+<i class="no-highlight">250</i>&nbsp;    public void setWinner(Integer winner) {
+<b class="nc"><i class="no-highlight">251</i>&nbsp;        this.winner = winner;</b>
+<i class="no-highlight">252</i>&nbsp;    }
+<i class="no-highlight">253</i>&nbsp;
+<i class="no-highlight">254</i>&nbsp;    public Integer getHomePoints() {
+<b class="nc"><i class="no-highlight">255</i>&nbsp;        return homePoints;</b>
+<i class="no-highlight">256</i>&nbsp;    }
+<i class="no-highlight">257</i>&nbsp;
+<i class="no-highlight">258</i>&nbsp;    public void setHomePoints(Integer homePoints) {
+<b class="nc"><i class="no-highlight">259</i>&nbsp;        this.homePoints = homePoints;</b>
+<i class="no-highlight">260</i>&nbsp;    }
+<i class="no-highlight">261</i>&nbsp;
+<i class="no-highlight">262</i>&nbsp;    public Integer getAwayPoints() {
+<b class="nc"><i class="no-highlight">263</i>&nbsp;        return awayPoints;</b>
+<i class="no-highlight">264</i>&nbsp;    }
+<i class="no-highlight">265</i>&nbsp;
+<i class="no-highlight">266</i>&nbsp;    public void setAwayPoints(Integer awayPoints) {
+<b class="nc"><i class="no-highlight">267</i>&nbsp;        this.awayPoints = awayPoints;</b>
+<i class="no-highlight">268</i>&nbsp;    }
+<i class="no-highlight">269</i>&nbsp;
+<i class="no-highlight">270</i>&nbsp;    public Integer getStartHomePG() {
+<b class="nc"><i class="no-highlight">271</i>&nbsp;        return startHomePG;</b>
+<i class="no-highlight">272</i>&nbsp;    }
+<i class="no-highlight">273</i>&nbsp;
+<i class="no-highlight">274</i>&nbsp;    public void setStartHomePG(Integer startHomePG) {
+<b class="nc"><i class="no-highlight">275</i>&nbsp;        this.startHomePG = startHomePG;</b>
+<i class="no-highlight">276</i>&nbsp;    }
+<i class="no-highlight">277</i>&nbsp;
+<i class="no-highlight">278</i>&nbsp;    public Integer getStartHomeSG() {
+<b class="nc"><i class="no-highlight">279</i>&nbsp;        return startHomeSG;</b>
+<i class="no-highlight">280</i>&nbsp;    }
+<i class="no-highlight">281</i>&nbsp;
+<i class="no-highlight">282</i>&nbsp;    public void setStartHomeSG(Integer startHomeSG) {
+<b class="nc"><i class="no-highlight">283</i>&nbsp;        this.startHomeSG = startHomeSG;</b>
+<i class="no-highlight">284</i>&nbsp;    }
+<i class="no-highlight">285</i>&nbsp;
+<i class="no-highlight">286</i>&nbsp;    public Integer getStartHomeSF() {
+<b class="nc"><i class="no-highlight">287</i>&nbsp;        return startHomeSF;</b>
+<i class="no-highlight">288</i>&nbsp;    }
+<i class="no-highlight">289</i>&nbsp;
+<i class="no-highlight">290</i>&nbsp;    public void setStartHomeSF(Integer startHomeSF) {
+<b class="nc"><i class="no-highlight">291</i>&nbsp;        this.startHomeSF = startHomeSF;</b>
+<i class="no-highlight">292</i>&nbsp;    }
+<i class="no-highlight">293</i>&nbsp;
+<i class="no-highlight">294</i>&nbsp;    public Integer getStartHomePF() {
+<b class="nc"><i class="no-highlight">295</i>&nbsp;        return startHomePF;</b>
+<i class="no-highlight">296</i>&nbsp;    }
+<i class="no-highlight">297</i>&nbsp;
+<i class="no-highlight">298</i>&nbsp;    public void setStartHomePF(Integer startHomePF) {
+<b class="nc"><i class="no-highlight">299</i>&nbsp;        this.startHomePF = startHomePF;</b>
+<i class="no-highlight">300</i>&nbsp;    }
+<i class="no-highlight">301</i>&nbsp;
+<i class="no-highlight">302</i>&nbsp;    public Integer getStartHomeC() {
+<b class="nc"><i class="no-highlight">303</i>&nbsp;        return startHomeC;</b>
+<i class="no-highlight">304</i>&nbsp;    }
+<i class="no-highlight">305</i>&nbsp;
+<i class="no-highlight">306</i>&nbsp;    public void setStartHomeC(Integer startHomeC) {
+<b class="nc"><i class="no-highlight">307</i>&nbsp;        this.startHomeC = startHomeC;</b>
+<i class="no-highlight">308</i>&nbsp;    }
+<i class="no-highlight">309</i>&nbsp;
+<i class="no-highlight">310</i>&nbsp;    public Integer getHomeBench1() {
+<b class="nc"><i class="no-highlight">311</i>&nbsp;        return homeBench1;</b>
+<i class="no-highlight">312</i>&nbsp;    }
+<i class="no-highlight">313</i>&nbsp;
+<i class="no-highlight">314</i>&nbsp;    public void setHomeBench1(Integer homeBench1) {
+<b class="nc"><i class="no-highlight">315</i>&nbsp;        this.homeBench1 = homeBench1;</b>
+<i class="no-highlight">316</i>&nbsp;    }
+<i class="no-highlight">317</i>&nbsp;
+<i class="no-highlight">318</i>&nbsp;    public Integer getHomeBench2() {
+<b class="nc"><i class="no-highlight">319</i>&nbsp;        return homeBench2;</b>
+<i class="no-highlight">320</i>&nbsp;    }
+<i class="no-highlight">321</i>&nbsp;
+<i class="no-highlight">322</i>&nbsp;    public void setHomeBench2(Integer homeBench2) {
+<b class="nc"><i class="no-highlight">323</i>&nbsp;        this.homeBench2 = homeBench2;</b>
+<i class="no-highlight">324</i>&nbsp;    }
+<i class="no-highlight">325</i>&nbsp;
+<i class="no-highlight">326</i>&nbsp;    public Integer getStartAwayPG() {
+<b class="nc"><i class="no-highlight">327</i>&nbsp;        return startAwayPG;</b>
+<i class="no-highlight">328</i>&nbsp;    }
+<i class="no-highlight">329</i>&nbsp;
+<i class="no-highlight">330</i>&nbsp;    public void setStartAwayPG(Integer startAwayPG) {
+<b class="nc"><i class="no-highlight">331</i>&nbsp;        this.startAwayPG = startAwayPG;</b>
+<i class="no-highlight">332</i>&nbsp;    }
+<i class="no-highlight">333</i>&nbsp;
+<i class="no-highlight">334</i>&nbsp;    public Integer getStartAwaySG() {
+<b class="nc"><i class="no-highlight">335</i>&nbsp;        return startAwaySG;</b>
+<i class="no-highlight">336</i>&nbsp;    }
+<i class="no-highlight">337</i>&nbsp;
+<i class="no-highlight">338</i>&nbsp;    public void setStartAwaySG(Integer startAwaySG) {
+<b class="nc"><i class="no-highlight">339</i>&nbsp;        this.startAwaySG = startAwaySG;</b>
+<i class="no-highlight">340</i>&nbsp;    }
+<i class="no-highlight">341</i>&nbsp;
+<i class="no-highlight">342</i>&nbsp;    public Integer getStartAwaySF() {
+<b class="nc"><i class="no-highlight">343</i>&nbsp;        return startAwaySF;</b>
+<i class="no-highlight">344</i>&nbsp;    }
+<i class="no-highlight">345</i>&nbsp;
+<i class="no-highlight">346</i>&nbsp;    public void setStartAwaySF(Integer startAwaySF) {
+<b class="nc"><i class="no-highlight">347</i>&nbsp;        this.startAwaySF = startAwaySF;</b>
+<i class="no-highlight">348</i>&nbsp;    }
+<i class="no-highlight">349</i>&nbsp;
+<i class="no-highlight">350</i>&nbsp;    public Integer getStartAwayPF() {
+<b class="nc"><i class="no-highlight">351</i>&nbsp;        return startAwayPF;</b>
+<i class="no-highlight">352</i>&nbsp;    }
+<i class="no-highlight">353</i>&nbsp;
+<i class="no-highlight">354</i>&nbsp;    public void setStartAwayPF(Integer startAwayPF) {
+<b class="nc"><i class="no-highlight">355</i>&nbsp;        this.startAwayPF = startAwayPF;</b>
+<i class="no-highlight">356</i>&nbsp;    }
+<i class="no-highlight">357</i>&nbsp;
+<i class="no-highlight">358</i>&nbsp;    public Integer getStartAwayC() {
+<b class="nc"><i class="no-highlight">359</i>&nbsp;        return startAwayC;</b>
+<i class="no-highlight">360</i>&nbsp;    }
+<i class="no-highlight">361</i>&nbsp;
+<i class="no-highlight">362</i>&nbsp;    public void setStartAwayC(Integer startAwayC) {
+<b class="nc"><i class="no-highlight">363</i>&nbsp;        this.startAwayC = startAwayC;</b>
+<i class="no-highlight">364</i>&nbsp;    }
+<i class="no-highlight">365</i>&nbsp;
+<i class="no-highlight">366</i>&nbsp;    public Integer getAwayBench1() {
+<b class="nc"><i class="no-highlight">367</i>&nbsp;        return awayBench1;</b>
+<i class="no-highlight">368</i>&nbsp;    }
+<i class="no-highlight">369</i>&nbsp;
+<i class="no-highlight">370</i>&nbsp;    public void setAwayBench1(Integer awayBench1) {
+<b class="nc"><i class="no-highlight">371</i>&nbsp;        this.awayBench1 = awayBench1;</b>
+<i class="no-highlight">372</i>&nbsp;    }
+<i class="no-highlight">373</i>&nbsp;
+<i class="no-highlight">374</i>&nbsp;    public Integer getAwayBench2() {
+<b class="nc"><i class="no-highlight">375</i>&nbsp;        return awayBench2;</b>
+<i class="no-highlight">376</i>&nbsp;    }
+<i class="no-highlight">377</i>&nbsp;
+<i class="no-highlight">378</i>&nbsp;    public void setAwayBench2(Integer awayBench2) {
+<b class="nc"><i class="no-highlight">379</i>&nbsp;        this.awayBench2 = awayBench2;</b>
+<i class="no-highlight">380</i>&nbsp;    }
+<i class="no-highlight">381</i>&nbsp;
+<i class="no-highlight">382</i>&nbsp;
+<i class="no-highlight">383</i>&nbsp;    // overriding toString() function
+<i class="no-highlight">384</i>&nbsp;    @Override
+<i class="no-highlight">385</i>&nbsp;    public String toString() {
+<b class="nc"><i class="no-highlight">386</i>&nbsp;        return &quot;\nFantasyGame {&quot; +</b>
+<i class="no-highlight">387</i>&nbsp;                &quot;\n\tscheduleID=&quot; + scheduleID +
+<i class="no-highlight">388</i>&nbsp;                &quot;,\n\t leagueID=&quot; + leagueID +
+<i class="no-highlight">389</i>&nbsp;                &quot;,\n\t clientID=&quot; + clientID +
+<i class="no-highlight">390</i>&nbsp;                &quot;,\n\t homeTeamID=&quot; + homeTeamID +
+<i class="no-highlight">391</i>&nbsp;                &quot;,\n\t awayTeamID=&quot; + awayTeamID +
+<i class="no-highlight">392</i>&nbsp;                &quot;,\n\t gameStartDate=&quot; + gameStartDate +
+<i class="no-highlight">393</i>&nbsp;                &quot;,\n\t gameEndDate=&quot; + gameEndDate +
+<i class="no-highlight">394</i>&nbsp;                &quot;,\n\t winner=&quot; + winner +
+<i class="no-highlight">395</i>&nbsp;                &quot;,\n\t homePoints=&quot; + homePoints +
+<i class="no-highlight">396</i>&nbsp;                &quot;,\n\t awayPoints=&quot; + awayPoints +
+<i class="no-highlight">397</i>&nbsp;                &quot;,\n\t startHomePG=&quot; + startHomePG +
+<i class="no-highlight">398</i>&nbsp;                &quot;,\n\t startHomeSG=&quot; + startHomeSG +
+<i class="no-highlight">399</i>&nbsp;                &quot;,\n\t startHomeSF=&quot; + startHomeSF +
+<i class="no-highlight">400</i>&nbsp;                &quot;,\n\t startHomePF=&quot; + startHomePF +
+<i class="no-highlight">401</i>&nbsp;                &quot;,\n\t startHomeC=&quot; + startHomeC +
+<i class="no-highlight">402</i>&nbsp;                &quot;,\n\t homeBench1=&quot; + homeBench1 +
+<i class="no-highlight">403</i>&nbsp;                &quot;,\n\t homeBench2=&quot; + homeBench2 +
+<i class="no-highlight">404</i>&nbsp;                &quot;,\n\t startAwayPG=&quot; + startAwayPG +
+<i class="no-highlight">405</i>&nbsp;                &quot;,\n\t startAwaySG=&quot; + startAwaySG +
+<i class="no-highlight">406</i>&nbsp;                &quot;,\n\t startAwaySF=&quot; + startAwaySF +
+<i class="no-highlight">407</i>&nbsp;                &quot;,\n\t startAwayPF=&quot; + startAwayPF +
+<i class="no-highlight">408</i>&nbsp;                &quot;,\n\t startAwayC=&quot; + startAwayC +
+<i class="no-highlight">409</i>&nbsp;                &quot;,\n\t awayBench1=&quot; + awayBench1 +
+<i class="no-highlight">410</i>&nbsp;                &quot;,\n\t awayBench2=&quot; + awayBench2 +
+<i class="no-highlight">411</i>&nbsp;                &quot;\n\t}&quot;;
+<i class="no-highlight">412</i>&nbsp;    }
+<i class="no-highlight">413</i>&nbsp;
+<i class="no-highlight">414</i>&nbsp;
+<i class="no-highlight">415</i>&nbsp;}
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-12-11 15:53</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,132 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > fantasyLeagueRepository</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">FantasyBasketball.repositories</a>
+</div>
+
+<h1>Coverage Summary for Class: fantasyLeagueRepository (FantasyBasketball.repositories)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+</tr>
+<tr>
+  <td class="name">fantasyLeagueRepository</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package FantasyBasketball.repositories;
+<i class="no-highlight">2</i>&nbsp;
+<i class="no-highlight">3</i>&nbsp;import FantasyBasketball.models.FantasyLeague;
+<i class="no-highlight">4</i>&nbsp;import org.springframework.data.jpa.repository.Modifying;
+<i class="no-highlight">5</i>&nbsp;import org.springframework.data.jpa.repository.Query;
+<i class="no-highlight">6</i>&nbsp;import org.springframework.data.repository.CrudRepository;
+<i class="no-highlight">7</i>&nbsp;import org.springframework.data.repository.query.Param;
+<i class="no-highlight">8</i>&nbsp;import org.springframework.stereotype.Repository;
+<i class="no-highlight">9</i>&nbsp;import org.springframework.transaction.annotation.Transactional;
+<i class="no-highlight">10</i>&nbsp;
+<i class="no-highlight">11</i>&nbsp;import java.time.LocalDate;
+<i class="no-highlight">12</i>&nbsp;import java.util.Date;
+<i class="no-highlight">13</i>&nbsp;import java.util.List;
+<i class="no-highlight">14</i>&nbsp;
+<i class="no-highlight">15</i>&nbsp;/*
+<i class="no-highlight">16</i>&nbsp;    CrudRepository already has the following functions:
+<i class="no-highlight">17</i>&nbsp;        (in the form): function_name(parameter:parameter_type):return_type
+<i class="no-highlight">18</i>&nbsp;        save(entity:S):S
+<i class="no-highlight">19</i>&nbsp;        saveAll(entities:Iterable&lt;S&gt;):Iterable&lt;S&gt;
+<i class="no-highlight">20</i>&nbsp;        findById(id:ID):Optional&lt;T&gt;
+<i class="no-highlight">21</i>&nbsp;        existsById(id:ID):boolean
+<i class="no-highlight">22</i>&nbsp;        findAll():Iterable&lt;T&gt;
+<i class="no-highlight">23</i>&nbsp;        findAllById(ids:Iterable&lt;ID&gt;)Iterable&lt;T&gt;
+<i class="no-highlight">24</i>&nbsp;        count():long
+<i class="no-highlight">25</i>&nbsp;        deleteById(idLID):void
+<i class="no-highlight">26</i>&nbsp;        delete(entity:T):void
+<i class="no-highlight">27</i>&nbsp;        deleteAllById(ids:Iterable&lt;? extends ID&gt;):void
+<i class="no-highlight">28</i>&nbsp;        deleteAll(entities:Iterable&lt;? extends T&gt;):void
+<i class="no-highlight">29</i>&nbsp;        deleteAll():void
+<i class="no-highlight">30</i>&nbsp;
+<i class="no-highlight">31</i>&nbsp;    All functions below extend the CrudRepository
+<i class="no-highlight">32</i>&nbsp; */
+<i class="no-highlight">33</i>&nbsp;
+<i class="no-highlight">34</i>&nbsp;@Repository
+<i class="no-highlight">35</i>&nbsp;public interface fantasyLeagueRepository extends CrudRepository&lt;FantasyLeague, Integer&gt; {
+<i class="no-highlight">36</i>&nbsp;
+<i class="no-highlight">37</i>&nbsp;    @Query(value = &quot;select * from fantasy_league where ((:league_id is NULL or league_id = :league_id) and\n&quot; +
+<i class="no-highlight">38</i>&nbsp;            &quot;                          (:client_id is NULL or client_id = :client_id) and\n&quot; +
+<i class="no-highlight">39</i>&nbsp;            &quot;                          (:league_name is NULL or league_name LIKE %:league_name%) and\n&quot; +
+<i class="no-highlight">40</i>&nbsp;            &quot;                          (:admin_id is NULL or admin_id = :admin_id) and\n&quot; +
+<i class="no-highlight">41</i>&nbsp;            &quot;                          (:league_size is NULL or league_size = :league_size) and\n&quot; +
+<i class="no-highlight">42</i>&nbsp;            &quot;                          (:draft_finished is NULL or draft_finished = :draft_finished) and\n&quot; +
+<i class="no-highlight">43</i>&nbsp;            &quot;                          (:league_start_date is NULL or league_start_date = :league_start_date) and\n&quot; +
+<i class="no-highlight">44</i>&nbsp;            &quot;                          (:num_weeks is NULL or num_weeks = :num_weeks))&quot;,
+<i class="no-highlight">45</i>&nbsp;            nativeQuery = true)
+<i class="no-highlight">46</i>&nbsp;    List&lt;FantasyLeague&gt; findByTemplate(@Param (&quot;league_id&quot;) Integer league_id,
+<i class="no-highlight">47</i>&nbsp;                                       @Param(&quot;client_id&quot;) Integer client_id,
+<i class="no-highlight">48</i>&nbsp;                                       @Param(&quot;league_name&quot;) String league_name,
+<i class="no-highlight">49</i>&nbsp;                                       @Param(&quot;admin_id&quot;) Integer admin_id,
+<i class="no-highlight">50</i>&nbsp;                                       @Param(&quot;league_size&quot;) Integer league_size,
+<i class="no-highlight">51</i>&nbsp;                                       @Param(&quot;draft_finished&quot;) Boolean draft_finished,
+<i class="no-highlight">52</i>&nbsp;                                       @Param(&quot;league_start_date&quot;) LocalDate league_start_date,
+<i class="no-highlight">53</i>&nbsp;                                       @Param(&quot;num_weeks&quot;) Integer num_weeks);
+<i class="no-highlight">54</i>&nbsp;
+<i class="no-highlight">55</i>&nbsp;    @Transactional
+<i class="no-highlight">56</i>&nbsp;    @Modifying
+<i class="no-highlight">57</i>&nbsp;    @Query(value = &quot;insert into fantasy_player select player_id, ball_api_id, null as team_id,&quot; +
+<i class="no-highlight">58</i>&nbsp;            &quot; (:league_id) as league_id, (:client_id) as client_id from player_data&quot;,
+<i class="no-highlight">59</i>&nbsp;            nativeQuery = true)
+<i class="no-highlight">60</i>&nbsp;    void prepLeaguePlayers(@Param (&quot;league_id&quot;) Integer league_id,
+<i class="no-highlight">61</i>&nbsp;                                       @Param(&quot;client_id&quot;) Integer client_id);
+<i class="no-highlight">62</i>&nbsp;}
+<i class="no-highlight">63</i>&nbsp;
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-12-11 15:53</div>
+</div>
+</body>
+</html>

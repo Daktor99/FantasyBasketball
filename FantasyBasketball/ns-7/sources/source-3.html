@@ -1,0 +1,461 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > fantasyLeagueService</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">FantasyBasketball.services</a>
+</div>
+
+<h1>Coverage Summary for Class: fantasyLeagueService (FantasyBasketball.services)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">fantasyLeagueService</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    4.5%
+  </span>
+  <span class="absValue">
+    (1/22)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0.8%
+  </span>
+  <span class="absValue">
+    (1/129)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package FantasyBasketball.services;
+<i class="no-highlight">2</i>&nbsp;
+<i class="no-highlight">3</i>&nbsp;import FantasyBasketball.exceptions.resourceException;
+<i class="no-highlight">4</i>&nbsp;import FantasyBasketball.exceptions.resourceNotFoundException;
+<i class="no-highlight">5</i>&nbsp;import FantasyBasketball.models.*;
+<i class="no-highlight">6</i>&nbsp;import FantasyBasketball.repositories.*;
+<i class="no-highlight">7</i>&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+<i class="no-highlight">8</i>&nbsp;import org.springframework.stereotype.Service;
+<i class="no-highlight">9</i>&nbsp;
+<i class="no-highlight">10</i>&nbsp;import java.time.LocalDate;
+<i class="no-highlight">11</i>&nbsp;import java.util.*;
+<i class="no-highlight">12</i>&nbsp;
+<i class="no-highlight">13</i>&nbsp;@Service
+<b class="fc"><i class="no-highlight">14</i>&nbsp;public class fantasyLeagueService {</b>
+<i class="no-highlight">15</i>&nbsp;
+<i class="no-highlight">16</i>&nbsp;    @Autowired
+<i class="no-highlight">17</i>&nbsp;    clientService clientService;
+<i class="no-highlight">18</i>&nbsp;
+<i class="no-highlight">19</i>&nbsp;    @Autowired
+<i class="no-highlight">20</i>&nbsp;    fantasyPlayerService fantasyPlayerService;
+<i class="no-highlight">21</i>&nbsp;
+<i class="no-highlight">22</i>&nbsp;    @Autowired
+<i class="no-highlight">23</i>&nbsp;    userRepository userRepo;
+<i class="no-highlight">24</i>&nbsp;
+<i class="no-highlight">25</i>&nbsp;    @Autowired
+<i class="no-highlight">26</i>&nbsp;    fantasyLeagueRepository leagueRepo;
+<i class="no-highlight">27</i>&nbsp;
+<i class="no-highlight">28</i>&nbsp;    @Autowired
+<i class="no-highlight">29</i>&nbsp;    fantasyTeamRepository teamRepo;
+<i class="no-highlight">30</i>&nbsp;
+<i class="no-highlight">31</i>&nbsp;    @Autowired
+<i class="no-highlight">32</i>&nbsp;    fantasyGameRepository gameRepo;
+<i class="no-highlight">33</i>&nbsp;
+<i class="no-highlight">34</i>&nbsp;    // helper function: find by leagueID
+<i class="no-highlight">35</i>&nbsp;    public List&lt;FantasyLeague&gt; getLeaguesByID(Integer leagueID) throws resourceNotFoundException {
+<b class="nc"><i class="no-highlight">36</i>&nbsp;        Optional&lt;FantasyLeague&gt; result = leagueRepo.findById(leagueID);</b>
+<b class="nc"><i class="no-highlight">37</i>&nbsp;        if (result.isPresent()) {</b>
+<b class="nc"><i class="no-highlight">38</i>&nbsp;            FantasyLeague fantasyLeagueResult = result.get();</b>
+<b class="nc"><i class="no-highlight">39</i>&nbsp;            return List.of(fantasyLeagueResult);</b>
+<i class="no-highlight">40</i>&nbsp;        } else {
+<b class="nc"><i class="no-highlight">41</i>&nbsp;            throw new resourceNotFoundException(&quot;League not found by ID in DB.&quot;);</b>
+<i class="no-highlight">42</i>&nbsp;        }
+<i class="no-highlight">43</i>&nbsp;    }
+<i class="no-highlight">44</i>&nbsp;
+<i class="no-highlight">45</i>&nbsp;    // get operation
+<i class="no-highlight">46</i>&nbsp;    public List&lt;FantasyLeague&gt; getLeaguesByTemplate(Integer league_id,
+<i class="no-highlight">47</i>&nbsp;                                                    Integer client_id,
+<i class="no-highlight">48</i>&nbsp;                                                    String league_name,
+<i class="no-highlight">49</i>&nbsp;                                                    Integer admin_id,
+<i class="no-highlight">50</i>&nbsp;                                                    Integer league_size,
+<i class="no-highlight">51</i>&nbsp;                                                    Boolean draft_finished,
+<i class="no-highlight">52</i>&nbsp;                                                    LocalDate league_start_date,
+<i class="no-highlight">53</i>&nbsp;                                                    Integer num_weeks) {
+<b class="nc"><i class="no-highlight">54</i>&nbsp;        return leagueRepo.findByTemplate(league_id,</b>
+<i class="no-highlight">55</i>&nbsp;                client_id,
+<i class="no-highlight">56</i>&nbsp;                league_name,
+<i class="no-highlight">57</i>&nbsp;                admin_id,
+<i class="no-highlight">58</i>&nbsp;                league_size,
+<i class="no-highlight">59</i>&nbsp;                draft_finished,
+<i class="no-highlight">60</i>&nbsp;                league_start_date,
+<i class="no-highlight">61</i>&nbsp;                num_weeks);
+<i class="no-highlight">62</i>&nbsp;    }
+<i class="no-highlight">63</i>&nbsp;
+<i class="no-highlight">64</i>&nbsp;    // helper function: check if admin is valid user
+<i class="no-highlight">65</i>&nbsp;    public Boolean checkAdmin(Integer adminID) {
+<b class="nc"><i class="no-highlight">66</i>&nbsp;        Optional&lt;User&gt; result = userRepo.findById(adminID);</b>
+<b class="nc"><i class="no-highlight">67</i>&nbsp;        if (result.isPresent()) {</b>
+<b class="nc"><i class="no-highlight">68</i>&nbsp;            return Boolean.TRUE;</b>
+<i class="no-highlight">69</i>&nbsp;        } else {
+<b class="nc"><i class="no-highlight">70</i>&nbsp;            return Boolean.FALSE;</b>
+<i class="no-highlight">71</i>&nbsp;        }
+<i class="no-highlight">72</i>&nbsp;    }
+<i class="no-highlight">73</i>&nbsp;
+<i class="no-highlight">74</i>&nbsp;    // helper function: check if drafting is finished
+<i class="no-highlight">75</i>&nbsp;    public Boolean checkDraftFinished(Integer leagueID) {
+<b class="nc"><i class="no-highlight">76</i>&nbsp;        Optional&lt;FantasyLeague&gt; fantasyLeagueOptional = leagueRepo.findById(leagueID);</b>
+<b class="nc"><i class="no-highlight">77</i>&nbsp;        FantasyLeague fantasyLeague = fantasyLeagueOptional.get();</b>
+<b class="nc"><i class="no-highlight">78</i>&nbsp;        if (fantasyLeague.getDraftFinished().equals(Boolean.TRUE)) {</b>
+<b class="nc"><i class="no-highlight">79</i>&nbsp;            return Boolean.TRUE;</b>
+<i class="no-highlight">80</i>&nbsp;        } else {
+<b class="nc"><i class="no-highlight">81</i>&nbsp;            return Boolean.FALSE;</b>
+<i class="no-highlight">82</i>&nbsp;        }
+<i class="no-highlight">83</i>&nbsp;    }
+<i class="no-highlight">84</i>&nbsp;
+<i class="no-highlight">85</i>&nbsp;    // helper function: check if given start date for league is valid
+<i class="no-highlight">86</i>&nbsp;    public Boolean checkDates(LocalDate league_start_date) throws resourceException {
+<b class="nc"><i class="no-highlight">87</i>&nbsp;        LocalDate today = LocalDate.now();</b>
+<b class="nc"><i class="no-highlight">88</i>&nbsp;        if (league_start_date.compareTo(today) &lt; 0) {</b>
+<b class="nc"><i class="no-highlight">89</i>&nbsp;            throw new resourceException(&quot;Attempted leagueStartDate occurs in the past.&quot;);</b>
+<i class="no-highlight">90</i>&nbsp;        }
+<b class="nc"><i class="no-highlight">91</i>&nbsp;        return true;</b>
+<i class="no-highlight">92</i>&nbsp;    }
+<i class="no-highlight">93</i>&nbsp;
+<i class="no-highlight">94</i>&nbsp;    // post operation
+<i class="no-highlight">95</i>&nbsp;    public List&lt;FantasyLeague&gt; postLeagues(FantasyLeague fantasyLeague) throws resourceException {
+<i class="no-highlight">96</i>&nbsp;
+<b class="nc"><i class="no-highlight">97</i>&nbsp;        fantasyLeague.setLeagueID(0);</b>
+<b class="nc"><i class="no-highlight">98</i>&nbsp;        fantasyLeague.setDraftFinished(false);</b>
+<i class="no-highlight">99</i>&nbsp;
+<b class="nc"><i class="no-highlight">100</i>&nbsp;        if (checkAdmin(fantasyLeague.getAdminID())) {</b>
+<b class="nc"><i class="no-highlight">101</i>&nbsp;            if (checkDates(fantasyLeague.getLeagueStartDate())) {</b>
+<i class="no-highlight">102</i>&nbsp;
+<i class="no-highlight">103</i>&nbsp;                // Player Importation is done when league is posted
+<i class="no-highlight">104</i>&nbsp;                // FantasyLeagueUtility leagueUtility = new FantasyLeagueUtility();
+<i class="no-highlight">105</i>&nbsp;                // leagueUtility.API_player_importation(playerRepo);
+<i class="no-highlight">106</i>&nbsp;
+<b class="nc"><i class="no-highlight">107</i>&nbsp;                FantasyLeague result = leagueRepo.save(fantasyLeague);</b>
+<i class="no-highlight">108</i>&nbsp;
+<b class="nc"><i class="no-highlight">109</i>&nbsp;                leagueRepo.prepLeaguePlayers(result.getLeagueID(), result.getClientID());</b>
+<i class="no-highlight">110</i>&nbsp;
+<b class="nc"><i class="no-highlight">111</i>&nbsp;                return List.of(result);</b>
+<i class="no-highlight">112</i>&nbsp;            } else {
+<b class="nc"><i class="no-highlight">113</i>&nbsp;                throw new resourceException(&quot;LeagueStartDate has to be in the future.&quot;);</b>
+<i class="no-highlight">114</i>&nbsp;            }
+<i class="no-highlight">115</i>&nbsp;        } else {
+<b class="nc"><i class="no-highlight">116</i>&nbsp;            throw new resourceException(&quot;The adminID provided is not a valid userID.&quot;);</b>
+<i class="no-highlight">117</i>&nbsp;        }
+<i class="no-highlight">118</i>&nbsp;    }
+<i class="no-highlight">119</i>&nbsp;
+<i class="no-highlight">120</i>&nbsp;    // helper function: check to make sure only league name is being changed
+<i class="no-highlight">121</i>&nbsp;    public Boolean checkOnlyChangingName(FantasyLeague league) {
+<b class="nc"><i class="no-highlight">122</i>&nbsp;        return (league.getAdminID() == null &amp;&amp; league.getLeagueSize() == null &amp;&amp;</b>
+<b class="nc"><i class="no-highlight">123</i>&nbsp;                league.getDraftFinished() == null &amp;&amp; league.getLeagueStartDate() == null &amp;&amp;</b>
+<b class="nc"><i class="no-highlight">124</i>&nbsp;                league.getNumWeeks() == null);</b>
+<i class="no-highlight">125</i>&nbsp;    }
+<i class="no-highlight">126</i>&nbsp;
+<i class="no-highlight">127</i>&nbsp;    // put operation
+<i class="no-highlight">128</i>&nbsp;    public List&lt;FantasyLeague&gt; updateLeagues(FantasyLeague fantasyLeague)
+<i class="no-highlight">129</i>&nbsp;            throws resourceNotFoundException, resourceException {
+<i class="no-highlight">130</i>&nbsp;
+<i class="no-highlight">131</i>&nbsp;        // check to see that this league exists
+<b class="nc"><i class="no-highlight">132</i>&nbsp;        Optional&lt;FantasyLeague&gt; referenceLeagueOpt = leagueRepo.findById(fantasyLeague.getLeagueID());</b>
+<b class="nc"><i class="no-highlight">133</i>&nbsp;        if (referenceLeagueOpt.isPresent()) {</b>
+<i class="no-highlight">134</i>&nbsp;            // check to make sure we are only changing league name
+<b class="nc"><i class="no-highlight">135</i>&nbsp;            if (checkOnlyChangingName(fantasyLeague)) {</b>
+<i class="no-highlight">136</i>&nbsp;                // update the referenced league in the DB to account for new name and save in db
+<b class="nc"><i class="no-highlight">137</i>&nbsp;                FantasyLeague referenceLeague = referenceLeagueOpt.get();</b>
+<b class="nc"><i class="no-highlight">138</i>&nbsp;                referenceLeague.setLeagueName(fantasyLeague.getLeagueName());</b>
+<b class="nc"><i class="no-highlight">139</i>&nbsp;                FantasyLeague result = leagueRepo.save(referenceLeague);</b>
+<b class="nc"><i class="no-highlight">140</i>&nbsp;                return List.of(result);</b>
+<i class="no-highlight">141</i>&nbsp;            } else {
+<b class="nc"><i class="no-highlight">142</i>&nbsp;                throw new resourceException(&quot;Only name of Fantasy League may be changed after creation.&quot;);</b>
+<i class="no-highlight">143</i>&nbsp;            }
+<i class="no-highlight">144</i>&nbsp;        } else {
+<b class="nc"><i class="no-highlight">145</i>&nbsp;            throw new resourceNotFoundException(&quot;League not found by ID in DB, cannot update.&quot;);</b>
+<i class="no-highlight">146</i>&nbsp;        }
+<i class="no-highlight">147</i>&nbsp;    }
+<i class="no-highlight">148</i>&nbsp;
+<i class="no-highlight">149</i>&nbsp;    // delete operation
+<i class="no-highlight">150</i>&nbsp;    public void deleteLeagues(Integer league_id) throws resourceNotFoundException {
+<b class="nc"><i class="no-highlight">151</i>&nbsp;        if(leagueRepo.existsById(league_id)) {</b>
+<b class="nc"><i class="no-highlight">152</i>&nbsp;            leagueRepo.deleteById(league_id);</b>
+<i class="no-highlight">153</i>&nbsp;            return;
+<i class="no-highlight">154</i>&nbsp;        } else {
+<b class="nc"><i class="no-highlight">155</i>&nbsp;            throw new resourceNotFoundException(&quot;League not found in DB, cannot delete&quot;);</b>
+<i class="no-highlight">156</i>&nbsp;        }
+<i class="no-highlight">157</i>&nbsp;    }
+<i class="no-highlight">158</i>&nbsp;
+<i class="no-highlight">159</i>&nbsp;    // helper function: checking valid string
+<i class="no-highlight">160</i>&nbsp;    public boolean checkIfInvalid(String string) {
+<b class="nc"><i class="no-highlight">161</i>&nbsp;        return string.length() &gt; 128 || string.isBlank();</b>
+<i class="no-highlight">162</i>&nbsp;    }
+<i class="no-highlight">163</i>&nbsp;
+<i class="no-highlight">164</i>&nbsp;    // check and sanitize inputs
+<i class="no-highlight">165</i>&nbsp;    public void checkInputs(FantasyLeague fantasyLeague) throws resourceException, resourceNotFoundException {
+<i class="no-highlight">166</i>&nbsp;        // NOTE: max league size is hardcoded to 14 for now
+<b class="nc"><i class="no-highlight">167</i>&nbsp;        Integer newClientID = fantasyLeague.getClientID();</b>
+<b class="nc"><i class="no-highlight">168</i>&nbsp;        List&lt;Client&gt; newClientList = clientService.getByID(newClientID);</b>
+<b class="nc"><i class="no-highlight">169</i>&nbsp;        Client newClient = newClientList.get(0);</b>
+<b class="nc"><i class="no-highlight">170</i>&nbsp;        Integer minLeagueSize = newClient.getMin_league_size();</b>
+<b class="nc"><i class="no-highlight">171</i>&nbsp;        Integer minLeagueDur = newClient.getMin_league_dur();</b>
+<i class="no-highlight">172</i>&nbsp;        try {
+<b class="nc"><i class="no-highlight">173</i>&nbsp;            if (checkIfInvalid(fantasyLeague.getLeagueName())) {</b>
+<b class="nc"><i class="no-highlight">174</i>&nbsp;                throw new resourceException(&quot;League name is invalid.&quot;);</b>
+<b class="nc"><i class="no-highlight">175</i>&nbsp;            } else if (fantasyLeague.getLeagueSize() &lt; minLeagueSize ||</b>
+<b class="nc"><i class="no-highlight">176</i>&nbsp;                    fantasyLeague.getLeagueSize()%2 != 0) {</b>
+<b class="nc"><i class="no-highlight">177</i>&nbsp;                throw new resourceException(&quot;League size is invalid. &quot; +</b>
+<i class="no-highlight">178</i>&nbsp;                        &quot;(League size must be an even number and greater than &quot; + minLeagueSize + &quot;).&quot;);
+<b class="nc"><i class="no-highlight">179</i>&nbsp;            } else if (fantasyLeague.getNumWeeks() &lt; minLeagueDur) {</b>
+<b class="nc"><i class="no-highlight">180</i>&nbsp;                throw new resourceException(&quot;Duration for the league&#39;s season is too short. &quot; +</b>
+<i class="no-highlight">181</i>&nbsp;                        &quot;(It has to be equal to or greater than &quot; + minLeagueDur + &quot;).&quot;);
+<i class="no-highlight">182</i>&nbsp;            }
+<b class="nc"><i class="no-highlight">183</i>&nbsp;        } catch (NullPointerException e) {</b>
+<b class="nc"><i class="no-highlight">184</i>&nbsp;            throw new resourceException(&quot;League formatted incorrectly please provide the following:\n&quot; +</b>
+<i class="no-highlight">185</i>&nbsp;                    &quot;league_name, admin_id, league_size, league_start_date, num_weeks.&quot;);
+<b class="nc"><i class="no-highlight">186</i>&nbsp;        }</b>
+<i class="no-highlight">187</i>&nbsp;        return;
+<i class="no-highlight">188</i>&nbsp;    }
+<i class="no-highlight">189</i>&nbsp;
+<i class="no-highlight">190</i>&nbsp;    // check post inputs
+<i class="no-highlight">191</i>&nbsp;    public void checkPostInputs(FantasyLeague fantasyLeague) throws resourceException, resourceNotFoundException {
+<b class="nc"><i class="no-highlight">192</i>&nbsp;        if (fantasyLeague.getLeagueID() != null) {</b>
+<b class="nc"><i class="no-highlight">193</i>&nbsp;            throw new resourceException(&quot;Do not provide league_id.&quot;);</b>
+<i class="no-highlight">194</i>&nbsp;        }
+<b class="nc"><i class="no-highlight">195</i>&nbsp;        checkInputs(fantasyLeague);</b>
+<i class="no-highlight">196</i>&nbsp;        return;
+<i class="no-highlight">197</i>&nbsp;    }
+<i class="no-highlight">198</i>&nbsp;
+<i class="no-highlight">199</i>&nbsp;    // check put inputs
+<i class="no-highlight">200</i>&nbsp;    public void checkPutInputs(FantasyLeague fantasyLeague) throws resourceException, resourceNotFoundException {
+<b class="nc"><i class="no-highlight">201</i>&nbsp;        if (fantasyLeague.getLeagueID() == null) {</b>
+<b class="nc"><i class="no-highlight">202</i>&nbsp;            throw new resourceException(&quot;Please provide league_id.&quot;);</b>
+<b class="nc"><i class="no-highlight">203</i>&nbsp;        } else if (checkIfInvalid(fantasyLeague.getLeagueName())) {</b>
+<b class="nc"><i class="no-highlight">204</i>&nbsp;            throw new resourceException(&quot;League name is invalid.&quot;);</b>
+<i class="no-highlight">205</i>&nbsp;        }
+<i class="no-highlight">206</i>&nbsp;    }
+<i class="no-highlight">207</i>&nbsp;
+<i class="no-highlight">208</i>&nbsp;    // generation and saving of games
+<i class="no-highlight">209</i>&nbsp;    public List&lt;Integer&gt; getTeamIDs(Integer league_id, Integer client_id) throws resourceException {
+<i class="no-highlight">210</i>&nbsp;
+<b class="nc"><i class="no-highlight">211</i>&nbsp;        List&lt;Integer&gt; result = teamRepo.findTeamsInLeague(league_id, client_id);</b>
+<i class="no-highlight">212</i>&nbsp;
+<i class="no-highlight">213</i>&nbsp;        // check to make sure teams registered with league is even
+<b class="nc"><i class="no-highlight">214</i>&nbsp;        if (result.size() % 2 != 0) {</b>
+<b class="nc"><i class="no-highlight">215</i>&nbsp;            throw new resourceException(&quot;Number of teams must be even.&quot;);</b>
+<i class="no-highlight">216</i>&nbsp;        } else {
+<b class="nc"><i class="no-highlight">217</i>&nbsp;            return result;</b>
+<i class="no-highlight">218</i>&nbsp;        }
+<i class="no-highlight">219</i>&nbsp;    }
+<i class="no-highlight">220</i>&nbsp;
+<i class="no-highlight">221</i>&nbsp;    public List&lt;FantasyGame&gt; postGames(Hashtable&lt;LocalDate, List&lt;List&lt;Integer&gt;&gt;&gt; schedule,
+<i class="no-highlight">222</i>&nbsp;                                       Integer league_id, Integer client_id) {
+<i class="no-highlight">223</i>&nbsp;
+<i class="no-highlight">224</i>&nbsp;        // making list of games to be saved
+<b class="nc"><i class="no-highlight">225</i>&nbsp;        List&lt;FantasyGame&gt; gameList = new ArrayList&lt;&gt;();</b>
+<i class="no-highlight">226</i>&nbsp;
+<i class="no-highlight">227</i>&nbsp;        // getting all key of schedule
+<b class="nc"><i class="no-highlight">228</i>&nbsp;        Set&lt;LocalDate&gt; startDates = schedule.keySet();</b>
+<i class="no-highlight">229</i>&nbsp;
+<i class="no-highlight">230</i>&nbsp;        // loop through each week of matchups
+<b class="nc"><i class="no-highlight">231</i>&nbsp;        for(LocalDate startDate: startDates) {</b>
+<i class="no-highlight">232</i>&nbsp;
+<i class="no-highlight">233</i>&nbsp;            // loop through each individual matchup
+<b class="nc"><i class="no-highlight">234</i>&nbsp;            for(List&lt;Integer&gt; matchup: schedule.get(startDate)) {</b>
+<i class="no-highlight">235</i>&nbsp;                // initialize variables for insertion
+<b class="nc"><i class="no-highlight">236</i>&nbsp;                Integer home_team_id = matchup.get(0);</b>
+<b class="nc"><i class="no-highlight">237</i>&nbsp;                Integer away_team_id = matchup.get(1);</b>
+<b class="nc"><i class="no-highlight">238</i>&nbsp;                LocalDate endDate    = startDate.plusWeeks(1);</b>
+<i class="no-highlight">239</i>&nbsp;
+<i class="no-highlight">240</i>&nbsp;                // initialize FantasyGame instance &amp; make sure scheduleID is not null (0 by default)
+<b class="nc"><i class="no-highlight">241</i>&nbsp;                FantasyGame game = new FantasyGame(league_id,</b>
+<i class="no-highlight">242</i>&nbsp;                        client_id,
+<i class="no-highlight">243</i>&nbsp;                        home_team_id,
+<i class="no-highlight">244</i>&nbsp;                        away_team_id,
+<i class="no-highlight">245</i>&nbsp;                        startDate,
+<i class="no-highlight">246</i>&nbsp;                        endDate);
+<b class="nc"><i class="no-highlight">247</i>&nbsp;                game.setScheduleID(0);</b>
+<i class="no-highlight">248</i>&nbsp;
+<i class="no-highlight">249</i>&nbsp;                // add this in list of games to be entered into DB
+<b class="nc"><i class="no-highlight">250</i>&nbsp;                gameList.add(game);</b>
+<b class="nc"><i class="no-highlight">251</i>&nbsp;            } // end matchup looping</b>
+<i class="no-highlight">252</i>&nbsp;
+<b class="nc"><i class="no-highlight">253</i>&nbsp;        } // end week looping</b>
+<i class="no-highlight">254</i>&nbsp;
+<i class="no-highlight">255</i>&nbsp;        // save all of the games in gameList into DB and return the list of all saved games
+<b class="nc"><i class="no-highlight">256</i>&nbsp;        gameRepo.saveAll(gameList);</b>
+<b class="nc"><i class="no-highlight">257</i>&nbsp;        return gameList;</b>
+<i class="no-highlight">258</i>&nbsp;    }
+<i class="no-highlight">259</i>&nbsp;
+<i class="no-highlight">260</i>&nbsp;    public void checkValidSize(FantasyLeague league, Integer teamSize) throws resourceException {
+<i class="no-highlight">261</i>&nbsp;
+<b class="nc"><i class="no-highlight">262</i>&nbsp;        Integer league_size = league.getLeagueSize();</b>
+<b class="nc"><i class="no-highlight">263</i>&nbsp;        if (league_size != teamSize) {</b>
+<b class="nc"><i class="no-highlight">264</i>&nbsp;            throw new resourceException(&quot;Cannot generate schedule, make sure this league has at least &quot;</b>
+<i class="no-highlight">265</i>&nbsp;                    + league_size
+<i class="no-highlight">266</i>&nbsp;                    + &quot; teams registered.&quot;);
+<i class="no-highlight">267</i>&nbsp;        }
+<i class="no-highlight">268</i>&nbsp;    }
+<i class="no-highlight">269</i>&nbsp;
+<i class="no-highlight">270</i>&nbsp;    public void checkDraftInputs(Integer league_id, Integer team_id, Integer client_id)
+<i class="no-highlight">271</i>&nbsp;            throws resourceException, resourceNotFoundException {
+<i class="no-highlight">272</i>&nbsp;
+<i class="no-highlight">273</i>&nbsp;        // Check if league is valid
+<b class="nc"><i class="no-highlight">274</i>&nbsp;        if (league_id == null) {</b>
+<b class="nc"><i class="no-highlight">275</i>&nbsp;            throw new resourceException(&quot;league_id required&quot;);</b>
+<b class="nc"><i class="no-highlight">276</i>&nbsp;        } else if (!leagueRepo.existsById(league_id)) {</b>
+<b class="nc"><i class="no-highlight">277</i>&nbsp;            throw new resourceNotFoundException(&quot;This league does not exist.&quot;);</b>
+<i class="no-highlight">278</i>&nbsp;        }
+<i class="no-highlight">279</i>&nbsp;
+<i class="no-highlight">280</i>&nbsp;        // List of all teams that are in the league
+<b class="nc"><i class="no-highlight">281</i>&nbsp;        List&lt;Integer&gt; team_ids = teamRepo.findTeamsInLeague(league_id, client_id);</b>
+<i class="no-highlight">282</i>&nbsp;
+<i class="no-highlight">283</i>&nbsp;        //check if team_id provided is in the list of team_ids that exist in the league
+<b class="nc"><i class="no-highlight">284</i>&nbsp;        boolean teamInLeague = team_ids.contains(team_id);</b>
+<i class="no-highlight">285</i>&nbsp;
+<i class="no-highlight">286</i>&nbsp;        // Check if team is valid
+<b class="nc"><i class="no-highlight">287</i>&nbsp;        if (team_id == null) {</b>
+<b class="nc"><i class="no-highlight">288</i>&nbsp;            throw new resourceNotFoundException(&quot;team_id required&quot;);</b>
+<b class="nc"><i class="no-highlight">289</i>&nbsp;        } else if (!teamRepo.existsById(team_id)) {</b>
+<b class="nc"><i class="no-highlight">290</i>&nbsp;            throw new resourceNotFoundException(&quot;This team does not exist.&quot;);</b>
+<b class="nc"><i class="no-highlight">291</i>&nbsp;        } else if (!teamInLeague) {</b>
+<b class="nc"><i class="no-highlight">292</i>&nbsp;            throw new resourceNotFoundException(&quot;This team does not exist in this league.&quot;);</b>
+<i class="no-highlight">293</i>&nbsp;        }
+<i class="no-highlight">294</i>&nbsp;    }
+<i class="no-highlight">295</i>&nbsp;
+<i class="no-highlight">296</i>&nbsp;    public void pickPlayer(FantasyPlayer fantasyPlayer, Integer client_id)
+<i class="no-highlight">297</i>&nbsp;            throws resourceException, resourceNotFoundException {
+<i class="no-highlight">298</i>&nbsp;        // If player_id given, assign that player to the specified team.
+<i class="no-highlight">299</i>&nbsp;        // Otherwise, assign a random one.
+<b class="nc"><i class="no-highlight">300</i>&nbsp;        if (fantasyPlayer.getPlayerID() == null) {</b>
+<i class="no-highlight">301</i>&nbsp;
+<i class="no-highlight">302</i>&nbsp;            // Get list of available players
+<b class="nc"><i class="no-highlight">303</i>&nbsp;            Integer league_id = fantasyPlayer.getLeagueID();</b>
+<b class="nc"><i class="no-highlight">304</i>&nbsp;            List&lt;FantasyPlayer&gt; av_players = fantasyPlayerService.getAvailablePlayers(league_id,</b>
+<i class="no-highlight">305</i>&nbsp;                    client_id,
+<i class="no-highlight">306</i>&nbsp;                    null,
+<i class="no-highlight">307</i>&nbsp;                    null,
+<i class="no-highlight">308</i>&nbsp;                    null,
+<i class="no-highlight">309</i>&nbsp;                    null);
+<i class="no-highlight">310</i>&nbsp;
+<b class="nc"><i class="no-highlight">311</i>&nbsp;            if (av_players.size() == 0) {</b>
+<b class="nc"><i class="no-highlight">312</i>&nbsp;                throw new resourceException(&quot;There are no more players to be drafted in this league.&quot;);</b>
+<i class="no-highlight">313</i>&nbsp;            }
+<i class="no-highlight">314</i>&nbsp;            // Chose random player from list of available players
+<b class="nc"><i class="no-highlight">315</i>&nbsp;            Integer idx = fantasyPlayerService.generateNumber(0, av_players.size());</b>
+<b class="nc"><i class="no-highlight">316</i>&nbsp;            FantasyPlayer chosenPlayer = av_players.get(idx);</b>
+<b class="nc"><i class="no-highlight">317</i>&nbsp;            fantasyPlayer.setPlayerID(chosenPlayer.getPlayerID());</b>
+<i class="no-highlight">318</i>&nbsp;
+<b class="nc"><i class="no-highlight">319</i>&nbsp;        } else {</b>
+<b class="nc"><i class="no-highlight">320</i>&nbsp;            List&lt;Integer&gt; undraft_players =</b>
+<b class="nc"><i class="no-highlight">321</i>&nbsp;                    fantasyPlayerService.getUndraftedPlayers(fantasyPlayer.getLeagueID(), client_id);</b>
+<b class="nc"><i class="no-highlight">322</i>&nbsp;            if (!undraft_players.contains(fantasyPlayer.getPlayerID())) {</b>
+<b class="nc"><i class="no-highlight">323</i>&nbsp;                throw new resourceException(&quot;Chosen player is not available for drafting.&quot;);</b>
+<i class="no-highlight">324</i>&nbsp;            }
+<i class="no-highlight">325</i>&nbsp;        }
+<i class="no-highlight">326</i>&nbsp;    }
+<i class="no-highlight">327</i>&nbsp;
+<i class="no-highlight">328</i>&nbsp;    public List&lt;Integer&gt; randomOrder(Integer league_id, Integer client_id) throws resourceNotFoundException {
+<b class="nc"><i class="no-highlight">329</i>&nbsp;        List&lt;Integer&gt; team_ids = teamRepo.findTeamsInLeague(league_id, client_id);</b>
+<b class="nc"><i class="no-highlight">330</i>&nbsp;        Collections.shuffle(team_ids);</b>
+<b class="nc"><i class="no-highlight">331</i>&nbsp;        List&lt;Integer&gt; order = new ArrayList&lt;&gt;();</b>
+<b class="nc"><i class="no-highlight">332</i>&nbsp;        List&lt;Client&gt; clientList = clientService.getByID(client_id);</b>
+<b class="nc"><i class="no-highlight">333</i>&nbsp;        Client client = clientList.get(0);</b>
+<b class="nc"><i class="no-highlight">334</i>&nbsp;        Integer team_size = client.getMax_team_size();</b>
+<b class="nc"><i class="no-highlight">335</i>&nbsp;        for (int i = 0; i &lt; team_size; i++) {</b>
+<b class="nc"><i class="no-highlight">336</i>&nbsp;            order.addAll(team_ids);</b>
+<i class="no-highlight">337</i>&nbsp;        }
+<b class="nc"><i class="no-highlight">338</i>&nbsp;        return order;</b>
+<i class="no-highlight">339</i>&nbsp;    }
+<i class="no-highlight">340</i>&nbsp;
+<i class="no-highlight">341</i>&nbsp;    public void checkIfValidLeague(Integer league_id) throws resourceException, resourceNotFoundException {
+<i class="no-highlight">342</i>&nbsp;        // Check if league is valid
+<b class="nc"><i class="no-highlight">343</i>&nbsp;        if (league_id == null) {</b>
+<b class="nc"><i class="no-highlight">344</i>&nbsp;            throw new resourceException(&quot;league_id required.&quot;);</b>
+<b class="nc"><i class="no-highlight">345</i>&nbsp;        } else if (!leagueRepo.existsById(league_id)) {</b>
+<b class="nc"><i class="no-highlight">346</i>&nbsp;            throw new resourceNotFoundException(&quot;This league does not exist.&quot;);</b>
+<i class="no-highlight">347</i>&nbsp;        }
+<i class="no-highlight">348</i>&nbsp;    }
+<i class="no-highlight">349</i>&nbsp;
+<i class="no-highlight">350</i>&nbsp;    public void checkIfScheduleGenerated(Integer league_id) throws resourceException{
+<b class="nc"><i class="no-highlight">351</i>&nbsp;        List&lt;FantasyGame&gt; games = gameRepo.findGamesByLeagueID(league_id);</b>
+<b class="nc"><i class="no-highlight">352</i>&nbsp;        if (games.size() != 0 || games.isEmpty()) {</b>
+<b class="nc"><i class="no-highlight">353</i>&nbsp;            throw new resourceException(&quot;Schedule already generated for this league.&quot;);</b>
+<i class="no-highlight">354</i>&nbsp;        }
+<i class="no-highlight">355</i>&nbsp;    }
+<i class="no-highlight">356</i>&nbsp;}
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-12-11 15:53</div>
+</div>
+</body>
+</html>

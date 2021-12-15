@@ -1,0 +1,221 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > robinRoundScheduler</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">FantasyBasketball.utilities</a>
+</div>
+
+<h1>Coverage Summary for Class: robinRoundScheduler (FantasyBasketball.utilities)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">robinRoundScheduler</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/34)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package FantasyBasketball.utilities;
+<i class="no-highlight">2</i>&nbsp;
+<i class="no-highlight">3</i>&nbsp;import java.time.LocalDate;
+<i class="no-highlight">4</i>&nbsp;import java.util.ArrayList;
+<i class="no-highlight">5</i>&nbsp;import java.util.Collections;
+<i class="no-highlight">6</i>&nbsp;import java.util.Hashtable;
+<i class="no-highlight">7</i>&nbsp;import java.util.List;
+<i class="no-highlight">8</i>&nbsp;import static java.time.temporal.TemporalAdjusters.next;
+<i class="no-highlight">9</i>&nbsp;import static java.time.DayOfWeek.SUNDAY;
+<i class="no-highlight">10</i>&nbsp;
+<i class="no-highlight">11</i>&nbsp;public class robinRoundScheduler {
+<i class="no-highlight">12</i>&nbsp;
+<i class="no-highlight">13</i>&nbsp;    private final List&lt;Integer&gt; teamList;
+<i class="no-highlight">14</i>&nbsp;    private final LocalDate startDate;
+<i class="no-highlight">15</i>&nbsp;    private final Integer weeksOfPlay;
+<i class="no-highlight">16</i>&nbsp;
+<i class="no-highlight">17</i>&nbsp;    // constructor
+<b class="nc"><i class="no-highlight">18</i>&nbsp;    public robinRoundScheduler(List&lt;Integer&gt; teamList, LocalDate startDate, Integer weeksOfPlay) {</b>
+<b class="nc"><i class="no-highlight">19</i>&nbsp;        this.teamList = new ArrayList&lt;&gt;(teamList);</b>
+<b class="nc"><i class="no-highlight">20</i>&nbsp;        this.startDate = startDate.with(next(SUNDAY));</b>
+<b class="nc"><i class="no-highlight">21</i>&nbsp;        this.weeksOfPlay = weeksOfPlay;</b>
+<i class="no-highlight">22</i>&nbsp;    }
+<i class="no-highlight">23</i>&nbsp;
+<i class="no-highlight">24</i>&nbsp;    // Getting first half of the team list
+<i class="no-highlight">25</i>&nbsp;    public List&lt;Integer&gt; getFirstHalf(List&lt;Integer&gt; teamList) {
+<b class="nc"><i class="no-highlight">26</i>&nbsp;        return teamList.subList(0, teamList.size() / 2);</b>
+<i class="no-highlight">27</i>&nbsp;    }
+<i class="no-highlight">28</i>&nbsp;
+<i class="no-highlight">29</i>&nbsp;    // Getting second half of the team list
+<i class="no-highlight">30</i>&nbsp;    public List&lt;Integer&gt; getSecondHalf(List&lt;Integer&gt; teamList) {
+<b class="nc"><i class="no-highlight">31</i>&nbsp;        List&lt;Integer&gt; result = teamList.subList(teamList.size() / 2, teamList.size());</b>
+<b class="nc"><i class="no-highlight">32</i>&nbsp;        Collections.reverse(result);</b>
+<b class="nc"><i class="no-highlight">33</i>&nbsp;        return result;</b>
+<i class="no-highlight">34</i>&nbsp;    }
+<i class="no-highlight">35</i>&nbsp;
+<i class="no-highlight">36</i>&nbsp;    // Updating first half for match-ups
+<i class="no-highlight">37</i>&nbsp;    public List&lt;Integer&gt; updateFirstHalf(List&lt;Integer&gt; firstHalf, Integer new_element) {
+<i class="no-highlight">38</i>&nbsp;
+<i class="no-highlight">39</i>&nbsp;        // shift all elements to the right except for first element
+<b class="nc"><i class="no-highlight">40</i>&nbsp;        for (int i = firstHalf.size() - 1; i &gt;= 1; i--) {</b>
+<b class="nc"><i class="no-highlight">41</i>&nbsp;            firstHalf.set(i, firstHalf.get(i - 1));</b>
+<i class="no-highlight">42</i>&nbsp;        }
+<i class="no-highlight">43</i>&nbsp;
+<i class="no-highlight">44</i>&nbsp;        // set second element to new_int (from secondHalf)
+<b class="nc"><i class="no-highlight">45</i>&nbsp;        firstHalf.set(1, new_element);</b>
+<i class="no-highlight">46</i>&nbsp;
+<b class="nc"><i class="no-highlight">47</i>&nbsp;        return firstHalf;</b>
+<i class="no-highlight">48</i>&nbsp;    }
+<i class="no-highlight">49</i>&nbsp;
+<i class="no-highlight">50</i>&nbsp;    // Updating second half for match-ups
+<i class="no-highlight">51</i>&nbsp;    public List&lt;Integer&gt; updateSecondHalf(List&lt;Integer&gt; secondHalf, Integer new_element) {
+<i class="no-highlight">52</i>&nbsp;
+<i class="no-highlight">53</i>&nbsp;        // shift all elements to the right except for first element
+<b class="nc"><i class="no-highlight">54</i>&nbsp;        for (int i = 0; i &lt; secondHalf.size() - 1; i++) {</b>
+<b class="nc"><i class="no-highlight">55</i>&nbsp;            secondHalf.set(i, secondHalf.get(i + 1));</b>
+<i class="no-highlight">56</i>&nbsp;        }
+<i class="no-highlight">57</i>&nbsp;
+<i class="no-highlight">58</i>&nbsp;        // set second element to new_int (from secondHalf)
+<b class="nc"><i class="no-highlight">59</i>&nbsp;        secondHalf.set(secondHalf.size() - 1, new_element);</b>
+<i class="no-highlight">60</i>&nbsp;
+<b class="nc"><i class="no-highlight">61</i>&nbsp;        return secondHalf;</b>
+<i class="no-highlight">62</i>&nbsp;    }
+<i class="no-highlight">63</i>&nbsp;
+<i class="no-highlight">64</i>&nbsp;    // Creating unique match-ups
+<i class="no-highlight">65</i>&nbsp;    public List&lt;List&lt;Integer&gt;&gt; createMatchups(List&lt;Integer&gt; firstHalf, List&lt;Integer&gt; secondHalf) {
+<i class="no-highlight">66</i>&nbsp;
+<i class="no-highlight">67</i>&nbsp;        // Initialize a list of match ups
+<b class="nc"><i class="no-highlight">68</i>&nbsp;        List&lt;List&lt;Integer&gt;&gt; matchupList = new ArrayList&lt;&gt;();</b>
+<i class="no-highlight">69</i>&nbsp;
+<i class="no-highlight">70</i>&nbsp;        // Loop through the elements of two lists and create match ups
+<b class="nc"><i class="no-highlight">71</i>&nbsp;        for (int i = 0; i &lt; firstHalf.size(); i++) {</b>
+<i class="no-highlight">72</i>&nbsp;
+<i class="no-highlight">73</i>&nbsp;            // Initialize a list of elements from first and second half that create a match up
+<b class="nc"><i class="no-highlight">74</i>&nbsp;            List&lt;Integer&gt; matchup = new ArrayList&lt;&gt;();</b>
+<b class="nc"><i class="no-highlight">75</i>&nbsp;            matchup.add(firstHalf.get(i));</b>
+<b class="nc"><i class="no-highlight">76</i>&nbsp;            matchup.add(secondHalf.get(i));</b>
+<i class="no-highlight">77</i>&nbsp;
+<b class="nc"><i class="no-highlight">78</i>&nbsp;            matchupList.add(matchup);</b>
+<i class="no-highlight">79</i>&nbsp;        }
+<b class="nc"><i class="no-highlight">80</i>&nbsp;        return matchupList;</b>
+<i class="no-highlight">81</i>&nbsp;    }
+<i class="no-highlight">82</i>&nbsp;
+<i class="no-highlight">83</i>&nbsp;    // This function combine all the functions above to create a schedule
+<i class="no-highlight">84</i>&nbsp;    public Hashtable&lt;LocalDate, List&lt;List&lt;Integer&gt;&gt;&gt; createSchedule() {
+<i class="no-highlight">85</i>&nbsp;
+<i class="no-highlight">86</i>&nbsp;        // Split the list of teams into first and second half
+<b class="nc"><i class="no-highlight">87</i>&nbsp;        List&lt;Integer&gt; firstHalf = getFirstHalf(this.teamList);</b>
+<b class="nc"><i class="no-highlight">88</i>&nbsp;        List&lt;Integer&gt; secondHalf = getSecondHalf(this.teamList);</b>
+<i class="no-highlight">89</i>&nbsp;
+<i class="no-highlight">90</i>&nbsp;        // Initialize a Hashtable for schedule where key=week number, value=list of match ups
+<b class="nc"><i class="no-highlight">91</i>&nbsp;        Hashtable&lt;LocalDate, List&lt;List&lt;Integer&gt;&gt;&gt; schedule = new Hashtable&lt;&gt;();</b>
+<i class="no-highlight">92</i>&nbsp;
+<i class="no-highlight">93</i>&nbsp;        // Initialize a list of match ups for each week
+<i class="no-highlight">94</i>&nbsp;        List&lt;List&lt;Integer&gt;&gt; matchupList;
+<i class="no-highlight">95</i>&nbsp;
+<i class="no-highlight">96</i>&nbsp;        //Assign a list of match ups for each week
+<b class="nc"><i class="no-highlight">97</i>&nbsp;        for (int i = 0; i &lt; this.weeksOfPlay; i++) {</b>
+<i class="no-highlight">98</i>&nbsp;
+<i class="no-highlight">99</i>&nbsp;            // Create match ups
+<b class="nc"><i class="no-highlight">100</i>&nbsp;            matchupList = createMatchups(firstHalf, secondHalf);</b>
+<i class="no-highlight">101</i>&nbsp;
+<i class="no-highlight">102</i>&nbsp;            // Add a list of match ups for each week
+<b class="nc"><i class="no-highlight">103</i>&nbsp;            schedule.put(startDate.plusWeeks(i), matchupList);</b>
+<i class="no-highlight">104</i>&nbsp;
+<i class="no-highlight">105</i>&nbsp;            // Update teams in both first and second for next week
+<b class="nc"><i class="no-highlight">106</i>&nbsp;            Integer last_elem_in_first = firstHalf.get(firstHalf.size() - 1);</b>
+<b class="nc"><i class="no-highlight">107</i>&nbsp;            Integer first_elem_in_second = secondHalf.get(0);</b>
+<i class="no-highlight">108</i>&nbsp;
+<b class="nc"><i class="no-highlight">109</i>&nbsp;            firstHalf = updateFirstHalf(firstHalf, first_elem_in_second);</b>
+<b class="nc"><i class="no-highlight">110</i>&nbsp;            secondHalf = updateSecondHalf(secondHalf, last_elem_in_first);</b>
+<i class="no-highlight">111</i>&nbsp;
+<i class="no-highlight">112</i>&nbsp;        }
+<b class="nc"><i class="no-highlight">113</i>&nbsp;        return schedule;</b>
+<i class="no-highlight">114</i>&nbsp;    }
+<i class="no-highlight">115</i>&nbsp;
+<i class="no-highlight">116</i>&nbsp;}
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-12-11 15:53</div>
+</div>
+</body>
+</html>

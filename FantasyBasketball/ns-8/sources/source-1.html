@@ -1,0 +1,198 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > FantasyLeagueUtility</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">FantasyBasketball.utilities</a>
+</div>
+
+<h1>Coverage Summary for Class: FantasyLeagueUtility (FantasyBasketball.utilities)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">FantasyLeagueUtility</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/39)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package FantasyBasketball.utilities;
+<i class="no-highlight">2</i>&nbsp;
+<i class="no-highlight">3</i>&nbsp;import FantasyBasketball.models.FantasyPlayer;
+<i class="no-highlight">4</i>&nbsp;import FantasyBasketball.repositories.playerDataRepository;
+<i class="no-highlight">5</i>&nbsp;import org.json.JSONArray;
+<i class="no-highlight">6</i>&nbsp;import org.json.JSONException;
+<i class="no-highlight">7</i>&nbsp;import org.json.JSONObject;
+<i class="no-highlight">8</i>&nbsp;
+<i class="no-highlight">9</i>&nbsp;import java.io.*;
+<i class="no-highlight">10</i>&nbsp;import java.net.URL;
+<i class="no-highlight">11</i>&nbsp;import java.nio.charset.StandardCharsets;
+<i class="no-highlight">12</i>&nbsp;import java.util.ArrayList;
+<i class="no-highlight">13</i>&nbsp;import java.util.List;
+<i class="no-highlight">14</i>&nbsp;import java.util.Objects;
+<i class="no-highlight">15</i>&nbsp;
+<b class="nc"><i class="no-highlight">16</i>&nbsp;public class FantasyLeagueUtility {</b>
+<i class="no-highlight">17</i>&nbsp;
+<i class="no-highlight">18</i>&nbsp;    // Try doing this only once as then copy the data from th first copy
+<i class="no-highlight">19</i>&nbsp;
+<i class="no-highlight">20</i>&nbsp;    // Convert API response to a String
+<i class="no-highlight">21</i>&nbsp;    private static String readAll(Reader rd) throws IOException {
+<b class="nc"><i class="no-highlight">22</i>&nbsp;        StringBuilder sb = new StringBuilder();</b>
+<i class="no-highlight">23</i>&nbsp;        int cp;
+<b class="nc"><i class="no-highlight">24</i>&nbsp;        while ((cp = rd.read()) != -1) {</b>
+<b class="nc"><i class="no-highlight">25</i>&nbsp;            sb.append((char) cp);</b>
+<i class="no-highlight">26</i>&nbsp;        }
+<b class="nc"><i class="no-highlight">27</i>&nbsp;        return sb.toString();</b>
+<i class="no-highlight">28</i>&nbsp;    }
+<i class="no-highlight">29</i>&nbsp;
+<i class="no-highlight">30</i>&nbsp;    // Read APi response
+<i class="no-highlight">31</i>&nbsp;    public static JSONObject readJsonFromUrl(String url) throws IOException, JSONException {
+<b class="nc"><i class="no-highlight">32</i>&nbsp;        InputStream is = new URL(url).openStream();</b>
+<i class="no-highlight">33</i>&nbsp;        try {
+<b class="nc"><i class="no-highlight">34</i>&nbsp;            BufferedReader rd = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));</b>
+<b class="nc"><i class="no-highlight">35</i>&nbsp;            String jsonText = readAll(rd);</b>
+<b class="nc"><i class="no-highlight">36</i>&nbsp;            JSONObject json = new JSONObject(jsonText);</b>
+<b class="nc"><i class="no-highlight">37</i>&nbsp;            return json;</b>
+<i class="no-highlight">38</i>&nbsp;        } finally {
+<b class="nc"><i class="no-highlight">39</i>&nbsp;            is.close();</b>
+<b class="nc"><i class="no-highlight">40</i>&nbsp;        }</b>
+<i class="no-highlight">41</i>&nbsp;    }
+<i class="no-highlight">42</i>&nbsp;
+<i class="no-highlight">43</i>&nbsp;    // Function to start API calls to get player information from BallDontLie API
+<i class="no-highlight">44</i>&nbsp;    public void API_player_importation(playerDataRepository dataRepo) throws IOException {
+<b class="nc"><i class="no-highlight">45</i>&nbsp;        JSONObject json = readJsonFromUrl(&quot;https://www.balldontlie.io/api/v1/players?per_page=100&quot;);</b>
+<b class="nc"><i class="no-highlight">46</i>&nbsp;        JSONObject API_data = (JSONObject) json.get(&quot;meta&quot;);</b>
+<i class="no-highlight">47</i>&nbsp;        // Grabbing data page by page
+<b class="nc"><i class="no-highlight">48</i>&nbsp;        for (int i = (int) API_data.get(&quot;current_page&quot;); i &lt; (int) API_data.get(&quot;total_pages&quot;); i++) {</b>
+<b class="nc"><i class="no-highlight">49</i>&nbsp;            String url = &quot;https://www.balldontlie.io/api/v1/players/?per_page=100&amp;page=&quot; + i;</b>
+<b class="nc"><i class="no-highlight">50</i>&nbsp;            API_each_page_to_player(url, dataRepo);</b>
+<i class="no-highlight">51</i>&nbsp;        }
+<i class="no-highlight">52</i>&nbsp;    }
+<i class="no-highlight">53</i>&nbsp;
+<i class="no-highlight">54</i>&nbsp;    // Function for each page url call to upload player in database
+<i class="no-highlight">55</i>&nbsp;    public void API_each_page_to_player(String url, playerDataRepository dataRepo) throws IOException {
+<b class="nc"><i class="no-highlight">56</i>&nbsp;        JSONObject json = readJsonFromUrl(url);</b>
+<b class="nc"><i class="no-highlight">57</i>&nbsp;        JSONArray json_data = (JSONArray) json.get(&quot;data&quot;);</b>
+<b class="nc"><i class="no-highlight">58</i>&nbsp;        List&lt;FantasyPlayer&gt; player_page_list = new ArrayList&lt;&gt;();</b>
+<i class="no-highlight">59</i>&nbsp;        // For each player in the page
+<b class="nc"><i class="no-highlight">60</i>&nbsp;        for (int i = 0; i &lt; json_data.length(); i++) {</b>
+<b class="nc"><i class="no-highlight">61</i>&nbsp;            JSONObject players_info = (JSONObject) json_data.get(i);</b>
+<b class="nc"><i class="no-highlight">62</i>&nbsp;            JSONObject players_team_info = (JSONObject) players_info.get(&quot;team&quot;);</b>
+<i class="no-highlight">63</i>&nbsp;
+<b class="nc"><i class="no-highlight">64</i>&nbsp;            String pos = (String) players_info.get(&quot;position&quot;);</b>
+<i class="no-highlight">65</i>&nbsp;            // Current players
+<b class="nc"><i class="no-highlight">66</i>&nbsp;            if (!Objects.equals(pos, &quot;&quot;) &amp;&amp; (players_info.get(&quot;height_feet&quot;) != JSONObject.NULL)) {</b>
+<b class="nc"><i class="no-highlight">67</i>&nbsp;                FantasyPlayer player = new FantasyPlayer();</b>
+<i class="no-highlight">68</i>&nbsp;                // Construct player
+<i class="no-highlight">69</i>&nbsp;                // TODO: make sure teamID, clientID and leagueID are assigned correctly, using default values for now
+<b class="nc"><i class="no-highlight">70</i>&nbsp;                FantasyPlayer new_player = player.setNewPlayer(0, 1, 1,</b>
+<b class="nc"><i class="no-highlight">71</i>&nbsp;                        (String) players_info.get(&quot;first_name&quot;),</b>
+<b class="nc"><i class="no-highlight">72</i>&nbsp;                        (String) players_info.get(&quot;last_name&quot;),</b>
+<b class="nc"><i class="no-highlight">73</i>&nbsp;                        (String) players_team_info.get(&quot;full_name&quot;),</b>
+<b class="nc"><i class="no-highlight">74</i>&nbsp;                        (String) players_info.get(&quot;position&quot;), 1,</b>
+<b class="nc"><i class="no-highlight">75</i>&nbsp;                        (Integer) players_info.get(&quot;id&quot;));</b>
+<i class="no-highlight">76</i>&nbsp;
+<b class="nc"><i class="no-highlight">77</i>&nbsp;                dataRepo.insertDbPlayer(new_player.getPlayerID(),</b>
+<b class="nc"><i class="no-highlight">78</i>&nbsp;                        new_player.getPosition(),</b>
+<b class="nc"><i class="no-highlight">79</i>&nbsp;                        new_player.getFirstName(),</b>
+<b class="nc"><i class="no-highlight">80</i>&nbsp;                        new_player.getLastName(),</b>
+<b class="nc"><i class="no-highlight">81</i>&nbsp;                        new_player.getNbaTeam(),</b>
+<b class="nc"><i class="no-highlight">82</i>&nbsp;                        new_player.getBallapiID(),</b>
+<b class="nc"><i class="no-highlight">83</i>&nbsp;                        0);</b>
+<i class="no-highlight">84</i>&nbsp;
+<i class="no-highlight">85</i>&nbsp;
+<i class="no-highlight">86</i>&nbsp;                // Save player in list
+<i class="no-highlight">87</i>&nbsp;//                player_page_list.add(new_player);
+<i class="no-highlight">88</i>&nbsp;            }
+<i class="no-highlight">89</i>&nbsp;        }
+<i class="no-highlight">90</i>&nbsp;        // Save player in database
+<i class="no-highlight">91</i>&nbsp;//        playerRepo.saveAll(player_page_list);
+<i class="no-highlight">92</i>&nbsp;    }
+<i class="no-highlight">93</i>&nbsp;}
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-12-11 15:53</div>
+</div>
+</body>
+</html>

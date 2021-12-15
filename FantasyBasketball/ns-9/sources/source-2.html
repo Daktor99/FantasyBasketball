@@ -1,0 +1,114 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > userRepository</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">FantasyBasketball.repositories</a>
+</div>
+
+<h1>Coverage Summary for Class: userRepository (FantasyBasketball.repositories)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+</tr>
+<tr>
+  <td class="name">userRepository</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package FantasyBasketball.repositories;
+<i class="no-highlight">2</i>&nbsp;
+<i class="no-highlight">3</i>&nbsp;import FantasyBasketball.models.User;
+<i class="no-highlight">4</i>&nbsp;import org.springframework.data.jpa.repository.Query;
+<i class="no-highlight">5</i>&nbsp;import org.springframework.data.repository.CrudRepository;
+<i class="no-highlight">6</i>&nbsp;import org.springframework.data.repository.query.Param;
+<i class="no-highlight">7</i>&nbsp;import org.springframework.stereotype.Repository;
+<i class="no-highlight">8</i>&nbsp;
+<i class="no-highlight">9</i>&nbsp;import java.util.List;
+<i class="no-highlight">10</i>&nbsp;
+<i class="no-highlight">11</i>&nbsp;/*
+<i class="no-highlight">12</i>&nbsp;    CrudRepository already has the following functions:
+<i class="no-highlight">13</i>&nbsp;        (in the form): function_name(parameter:parameter_type):return_type
+<i class="no-highlight">14</i>&nbsp;        save(entity:S):S
+<i class="no-highlight">15</i>&nbsp;        saveAll(entities:Iterable&lt;S&gt;):Iterable&lt;S&gt;
+<i class="no-highlight">16</i>&nbsp;        findById(id:T):Optional&lt;T&gt;
+<i class="no-highlight">17</i>&nbsp;        existsById(id:ID):boolean
+<i class="no-highlight">18</i>&nbsp;        findAll():Iterable&lt;T&gt;
+<i class="no-highlight">19</i>&nbsp;        findAllById(ids:Iterable&lt;ID&gt;)Iterable&lt;T&gt;
+<i class="no-highlight">20</i>&nbsp;        count():long
+<i class="no-highlight">21</i>&nbsp;        deleteById(id:ID):void
+<i class="no-highlight">22</i>&nbsp;        delete(entity:T):void
+<i class="no-highlight">23</i>&nbsp;        deleteAllById(ids:Iterable&lt;? extends ID&gt;):void
+<i class="no-highlight">24</i>&nbsp;        deleteAll(entities:Iterable&lt;? extends T&gt;):void
+<i class="no-highlight">25</i>&nbsp;        deleteAll():void
+<i class="no-highlight">26</i>&nbsp;
+<i class="no-highlight">27</i>&nbsp;    All functions below extend the CrudRepository
+<i class="no-highlight">28</i>&nbsp; */
+<i class="no-highlight">29</i>&nbsp;
+<i class="no-highlight">30</i>&nbsp;@Repository
+<i class="no-highlight">31</i>&nbsp;public interface userRepository extends CrudRepository&lt;User, Integer&gt; {
+<i class="no-highlight">32</i>&nbsp;
+<i class="no-highlight">33</i>&nbsp;    @Query(value = &quot;select * from user where ((:user_id is NULL or user_id = :user_id) and\n&quot; +
+<i class="no-highlight">34</i>&nbsp;            &quot;                          (:client_id is NULL or client_id = :client_id) and\n&quot; +
+<i class="no-highlight">35</i>&nbsp;            &quot;                          (:email is NULL or email = :email) and\n&quot; +
+<i class="no-highlight">36</i>&nbsp;            &quot;                          (:username is NULL or username LIKE %:username%) and\n&quot; +
+<i class="no-highlight">37</i>&nbsp;            &quot;                          (:first_name is NULL or first_name LIKE %:first_name%) and\n&quot; +
+<i class="no-highlight">38</i>&nbsp;            &quot;                          (:last_name is NULL or last_name LIKE %:last_name%))&quot;, nativeQuery = true)
+<i class="no-highlight">39</i>&nbsp;    List&lt;User&gt; findByTemplate(@Param(&quot;user_id&quot;) Integer user_id,
+<i class="no-highlight">40</i>&nbsp;                              @Param(&quot;client_id&quot;) Integer client_id,
+<i class="no-highlight">41</i>&nbsp;                              @Param(&quot;email&quot;) String email,
+<i class="no-highlight">42</i>&nbsp;                              @Param(&quot;username&quot;) String username,
+<i class="no-highlight">43</i>&nbsp;                              @Param(&quot;first_name&quot;) String first_name,
+<i class="no-highlight">44</i>&nbsp;                              @Param(&quot;last_name&quot;) String last_name);
+<i class="no-highlight">45</i>&nbsp;}
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-12-11 15:53</div>
+</div>
+</body>
+</html>

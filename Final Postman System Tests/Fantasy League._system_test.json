@@ -1,0 +1,164 @@
+{
+	"id": "20c7d689-d2d4-4e67-ab24-3c715d8e4316",
+	"name": "Fantasy League",
+	"timestamp": "2021-12-11T17:08:47.383Z",
+	"collection_id": "16329253-74909756-eba7-4210-b442-adacb917a162",
+	"folder_id": 0,
+	"environment_id": "0",
+	"totalPass": 4,
+	"totalFail": 0,
+	"results": [
+		{
+			"id": "0260e827-d836-495c-adeb-d48515536347",
+			"name": "get fantasyLeagues",
+			"url": "http://localhost:8080/fantasyLeagues",
+			"time": 46,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response Body Printout= ([{\"league_id\":65,\"league_name\":\"Final League Test\",\"admin_id\":69,\"league_size\":4,\"draft_finished\":false,\"league_start_date\":\"2021-12-15\",\"num_weeks\":20},{\"league_id\":66,\"league_name\":\"Final League\",\"admin_id\":76,\"league_size\":8,\"draft_finished\":false,\"league_start_date\":\"2021-12-15\",\"num_weeks\":10}])": true
+			},
+			"testPassFailCounts": {
+				"Response Body Printout= ([{\"league_id\":65,\"league_name\":\"Final League Test\",\"admin_id\":69,\"league_size\":4,\"draft_finished\":false,\"league_start_date\":\"2021-12-15\",\"num_weeks\":20},{\"league_id\":66,\"league_name\":\"Final League\",\"admin_id\":76,\"league_size\":8,\"draft_finished\":false,\"league_start_date\":\"2021-12-15\",\"num_weeks\":10}])": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				46
+			],
+			"allTests": [
+				{
+					"Response Body Printout= ([{\"league_id\":65,\"league_name\":\"Final League Test\",\"admin_id\":69,\"league_size\":4,\"draft_finished\":false,\"league_start_date\":\"2021-12-15\",\"num_weeks\":20},{\"league_id\":66,\"league_name\":\"Final League\",\"admin_id\":76,\"league_size\":8,\"draft_finished\":false,\"league_start_date\":\"2021-12-15\",\"num_weeks\":10}])": true
+				}
+			]
+		},
+		{
+			"id": "e6d1f31e-08ad-41c1-8741-f5245a1828c3",
+			"name": "get fantasyLeague by league_id",
+			"url": "http://localhost:8080/fantasyLeagues?league_id=65",
+			"time": 30,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response Body Printout= ([{\"league_id\":65,\"league_name\":\"Final League Test\",\"admin_id\":69,\"league_size\":4,\"draft_finished\":false,\"league_start_date\":\"2021-12-15\",\"num_weeks\":20}])": true
+			},
+			"testPassFailCounts": {
+				"Response Body Printout= ([{\"league_id\":65,\"league_name\":\"Final League Test\",\"admin_id\":69,\"league_size\":4,\"draft_finished\":false,\"league_start_date\":\"2021-12-15\",\"num_weeks\":20}])": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				30
+			],
+			"allTests": [
+				{
+					"Response Body Printout= ([{\"league_id\":65,\"league_name\":\"Final League Test\",\"admin_id\":69,\"league_size\":4,\"draft_finished\":false,\"league_start_date\":\"2021-12-15\",\"num_weeks\":20}])": true
+				}
+			]
+		},
+		{
+			"id": "18964281-6843-4571-b516-44a70661255d",
+			"name": "add fantasyLeague",
+			"url": "http://localhost:8080/fantasyLeagues",
+			"time": 261,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Response Body Printout= ([{\"league_id\":67,\"league_name\":\"Final League\",\"admin_id\":74,\"league_size\":8,\"draft_finished\":false,\"league_start_date\":\"2021-12-15\",\"num_weeks\":10}])": true
+			},
+			"testPassFailCounts": {
+				"Response Body Printout= ([{\"league_id\":67,\"league_name\":\"Final League\",\"admin_id\":74,\"league_size\":8,\"draft_finished\":false,\"league_start_date\":\"2021-12-15\",\"num_weeks\":10}])": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				261
+			],
+			"allTests": [
+				{
+					"Response Body Printout= ([{\"league_id\":67,\"league_name\":\"Final League\",\"admin_id\":74,\"league_size\":8,\"draft_finished\":false,\"league_start_date\":\"2021-12-15\",\"num_weeks\":10}])": true
+				}
+			]
+		},
+		{
+			"id": "c1625b7e-fd9d-44ac-b9c2-e9e274e4eb62",
+			"name": "update fantasyLeague",
+			"url": "http://localhost:8080/fantasyLeagues",
+			"time": 73,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response Body Printout= ([{\"league_id\":67,\"league_name\":\"Final League Demo\",\"admin_id\":74,\"league_size\":8,\"draft_finished\":false,\"league_start_date\":\"2021-12-15\",\"num_weeks\":10}])": true
+			},
+			"testPassFailCounts": {
+				"Response Body Printout= ([{\"league_id\":67,\"league_name\":\"Final League Demo\",\"admin_id\":74,\"league_size\":8,\"draft_finished\":false,\"league_start_date\":\"2021-12-15\",\"num_weeks\":10}])": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				73
+			],
+			"allTests": [
+				{
+					"Response Body Printout= ([{\"league_id\":67,\"league_name\":\"Final League Demo\",\"admin_id\":74,\"league_size\":8,\"draft_finished\":false,\"league_start_date\":\"2021-12-15\",\"num_weeks\":10}])": true
+				}
+			]
+		},
+		{
+			"id": "7026d2b3-6286-4fa3-8a30-85f498846def",
+			"name": "delete fantasyLeague",
+			"url": "http://localhost:8080/fantasyLeagues?league_id=67",
+			"time": 90,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				90
+			],
+			"allTests": [
+				{}
+			]
+		}
+	],
+	"count": 1,
+	"totalTime": 500,
+	"collection": {
+		"requests": [
+			{
+				"id": "0260e827-d836-495c-adeb-d48515536347",
+				"method": "GET"
+			},
+			{
+				"id": "e6d1f31e-08ad-41c1-8741-f5245a1828c3",
+				"method": "GET"
+			},
+			{
+				"id": "18964281-6843-4571-b516-44a70661255d",
+				"method": "POST"
+			},
+			{
+				"id": "c1625b7e-fd9d-44ac-b9c2-e9e274e4eb62",
+				"method": "PUT"
+			},
+			{
+				"id": "7026d2b3-6286-4fa3-8a30-85f498846def",
+				"method": "DELETE"
+			}
+		]
+	}
+}

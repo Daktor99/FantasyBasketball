@@ -1,0 +1,219 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > fantasyPlayerRepository</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">FantasyBasketball.repositories</a>
+</div>
+
+<h1>Coverage Summary for Class: fantasyPlayerRepository (FantasyBasketball.repositories)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+</tr>
+  <tr>
+    <td class="name">fantasyPlayerRepository$MockitoMock$435198610</td>
+  </tr>
+  <tr>
+    <td class="name">fantasyPlayerRepository$MockitoMock$435198610$auxiliary$EppyyThS</td>
+  </tr>
+  <tr>
+    <td class="name">fantasyPlayerRepository$MockitoMock$435198610$auxiliary$owyMVtHk</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package FantasyBasketball.repositories;
+<i class="no-highlight">2</i>&nbsp;
+<i class="no-highlight">3</i>&nbsp;import FantasyBasketball.models.FantasyPlayer;
+<i class="no-highlight">4</i>&nbsp;import org.springframework.data.jpa.repository.Modifying;
+<i class="no-highlight">5</i>&nbsp;import org.springframework.data.jpa.repository.Query;
+<i class="no-highlight">6</i>&nbsp;import org.springframework.data.repository.CrudRepository;
+<i class="no-highlight">7</i>&nbsp;import org.springframework.data.repository.query.Param;
+<i class="no-highlight">8</i>&nbsp;import org.springframework.stereotype.Repository;
+<i class="no-highlight">9</i>&nbsp;import org.springframework.transaction.annotation.Transactional;
+<i class="no-highlight">10</i>&nbsp;
+<i class="no-highlight">11</i>&nbsp;import java.util.List;
+<i class="no-highlight">12</i>&nbsp;
+<i class="no-highlight">13</i>&nbsp;/*
+<i class="no-highlight">14</i>&nbsp;    CrudRepository already has the following functions:
+<i class="no-highlight">15</i>&nbsp;        (in the form): function_name(parameter:parameter_type):return_type
+<i class="no-highlight">16</i>&nbsp;        save(entity:S):S
+<i class="no-highlight">17</i>&nbsp;        saveAll(entities:Iterable&lt;S&gt;):Iterable&lt;S&gt;
+<i class="no-highlight">18</i>&nbsp;        findById(id:ID):Optional&lt;T&gt;
+<i class="no-highlight">19</i>&nbsp;        existsById(id:ID):boolean
+<i class="no-highlight">20</i>&nbsp;        findAll():Iterable&lt;T&gt;
+<i class="no-highlight">21</i>&nbsp;        findAllById(ids:Iterable&lt;ID&gt;)Iterable&lt;T&gt;
+<i class="no-highlight">22</i>&nbsp;        count():long
+<i class="no-highlight">23</i>&nbsp;        deleteById(idLID):void
+<i class="no-highlight">24</i>&nbsp;        delete(entity:T):void
+<i class="no-highlight">25</i>&nbsp;        deleteAllById(ids:Iterable&lt;? extends ID&gt;):void
+<i class="no-highlight">26</i>&nbsp;        deleteAll(entities:Iterable&lt;? extends T&gt;):void
+<i class="no-highlight">27</i>&nbsp;        deleteAll():void
+<i class="no-highlight">28</i>&nbsp;
+<i class="no-highlight">29</i>&nbsp;    All functions below extend the CrudRepository
+<i class="no-highlight">30</i>&nbsp; */
+<i class="no-highlight">31</i>&nbsp;
+<i class="no-highlight">32</i>&nbsp;@Repository
+<i class="no-highlight">33</i>&nbsp;public interface fantasyPlayerRepository extends CrudRepository&lt;FantasyPlayer, Integer&gt; {
+<i class="no-highlight">34</i>&nbsp;
+<i class="no-highlight">35</i>&nbsp;    @Query(value = &quot;select player_id from fantasy_player where &quot; +
+<i class="no-highlight">36</i>&nbsp;            &quot;((client_id = :client_id) and\n&quot; +
+<i class="no-highlight">37</i>&nbsp;            &quot;(league_id = :league_id) and\n&quot; +
+<i class="no-highlight">38</i>&nbsp;            &quot;(team_id is NULL))&quot;, nativeQuery = true)
+<i class="no-highlight">39</i>&nbsp;    List&lt;Integer&gt; getUndraftedPlayers(@Param(&quot;client_id&quot;) Integer client_id,
+<i class="no-highlight">40</i>&nbsp;                                      @Param(&quot;league_id&quot;) Integer league_id);
+<i class="no-highlight">41</i>&nbsp;
+<i class="no-highlight">42</i>&nbsp;    @Query(value = &quot;select player_id from (select fantasy_player.player_id as player_id,\n&quot; +
+<i class="no-highlight">43</i>&nbsp;            &quot;                        fantasy_player.client_id as client_id,\n&quot; +
+<i class="no-highlight">44</i>&nbsp;            &quot;                        fantasy_player.league_id as league_id,\n&quot; +
+<i class="no-highlight">45</i>&nbsp;            &quot;                        fantasy_player.team_id as team_id,\n&quot; +
+<i class="no-highlight">46</i>&nbsp;            &quot;                        player_data.first_name as first_name,\n&quot; +
+<i class="no-highlight">47</i>&nbsp;            &quot;                        player_data.last_name as last_name,\n&quot; +
+<i class="no-highlight">48</i>&nbsp;            &quot;                        player_data.position as position,\n&quot; +
+<i class="no-highlight">49</i>&nbsp;            &quot;                        player_data.nba_team as nba_team,\n&quot; +
+<i class="no-highlight">50</i>&nbsp;            &quot;                        fantasy_player.ball_api_id as ball_api_id\n&quot; +
+<i class="no-highlight">51</i>&nbsp;            &quot;                    from fantasy_player, player_data where fantasy_player.player_id = player_data.player_id) as a\n&quot; +
+<i class="no-highlight">52</i>&nbsp;                        &quot;where team_id = :team_id&quot;, nativeQuery = true)
+<i class="no-highlight">53</i>&nbsp;    List&lt;Integer&gt; getByTeamID(@Param(&quot;team_id&quot;) Integer team_id);
+<i class="no-highlight">54</i>&nbsp;
+<i class="no-highlight">55</i>&nbsp;    @Query(value = &quot;select * from (select fantasy_player.player_id as player_id,\n&quot; +
+<i class="no-highlight">56</i>&nbsp;                        &quot;fantasy_player.client_id as client_id,\n&quot; +
+<i class="no-highlight">57</i>&nbsp;                        &quot;fantasy_player.league_id as league_id,\n&quot; +
+<i class="no-highlight">58</i>&nbsp;                        &quot;fantasy_player.team_id as team_id,\n&quot; +
+<i class="no-highlight">59</i>&nbsp;                        &quot;player_data.first_name as first_name,\n&quot; +
+<i class="no-highlight">60</i>&nbsp;                        &quot;player_data.last_name as last_name,\n&quot; +
+<i class="no-highlight">61</i>&nbsp;                        &quot;player_data.position as position,\n&quot; +
+<i class="no-highlight">62</i>&nbsp;                        &quot;player_data.nba_team as nba_team,\n&quot; +
+<i class="no-highlight">63</i>&nbsp;                        &quot;fantasy_player.ball_api_id as ball_api_id\n&quot; +
+<i class="no-highlight">64</i>&nbsp;                    &quot;from fantasy_player, player_data where fantasy_player.player_id = player_data.player_id) as a\n&quot; +
+<i class="no-highlight">65</i>&nbsp;                    &quot;where \n&quot; +
+<i class="no-highlight">66</i>&nbsp;                        &quot;((client_id = :client_id) and\n&quot; +
+<i class="no-highlight">67</i>&nbsp;                        &quot;(league_id = :league_id) and\n&quot; +
+<i class="no-highlight">68</i>&nbsp;                        &quot;(team_id is NULL) and\n&quot; +
+<i class="no-highlight">69</i>&nbsp;                        &quot;(:first_name is NULL or first_name LIKE %:first_name%) and\n&quot; +
+<i class="no-highlight">70</i>&nbsp;                        &quot;(:last_name is NULL or last_name LIKE %:last_name%) and\n&quot; +
+<i class="no-highlight">71</i>&nbsp;                        &quot;(:nba_team is NULL or nba_team LIKE %:nba_team%) and\n&quot; +
+<i class="no-highlight">72</i>&nbsp;                        &quot;(:position is NULL or position LIKE %:position%))&quot;, nativeQuery = true)
+<i class="no-highlight">73</i>&nbsp;    List&lt;FantasyPlayer&gt; getAvailablePlayers(@Param(&quot;league_id&quot;) Integer league_id,
+<i class="no-highlight">74</i>&nbsp;                                            @Param(&quot;client_id&quot;) Integer client_id,
+<i class="no-highlight">75</i>&nbsp;                                            @Param(&quot;first_name&quot;) String first_name,
+<i class="no-highlight">76</i>&nbsp;                                            @Param(&quot;last_name&quot;) String last_name,
+<i class="no-highlight">77</i>&nbsp;                                            @Param(&quot;nba_team&quot;) String nba_team,
+<i class="no-highlight">78</i>&nbsp;                                            @Param(&quot;position&quot;) String position);
+<i class="no-highlight">79</i>&nbsp;
+<i class="no-highlight">80</i>&nbsp;    @Query(value = &quot;select * from (select fantasy_player.player_id as player_id,\n&quot; +
+<i class="no-highlight">81</i>&nbsp;            &quot;       fantasy_player.client_id as client_id,\n&quot; +
+<i class="no-highlight">82</i>&nbsp;            &quot;       fantasy_player.league_id as league_id,\n&quot; +
+<i class="no-highlight">83</i>&nbsp;            &quot;       fantasy_player.team_id as team_id,\n&quot; +
+<i class="no-highlight">84</i>&nbsp;            &quot;       player_data.first_name as first_name,\n&quot; +
+<i class="no-highlight">85</i>&nbsp;            &quot;       player_data.last_name as last_name,\n&quot; +
+<i class="no-highlight">86</i>&nbsp;            &quot;       player_data.position as position,\n&quot; +
+<i class="no-highlight">87</i>&nbsp;            &quot;       player_data.nba_team as nba_team,\n&quot; +
+<i class="no-highlight">88</i>&nbsp;            &quot;       fantasy_player.ball_api_id as ball_api_id\n&quot; +
+<i class="no-highlight">89</i>&nbsp;            &quot;       from fantasy_player, player_data where fantasy_player.player_id = player_data.player_id) as a\n&quot; +
+<i class="no-highlight">90</i>&nbsp;            &quot;       where \n&quot; +
+<i class="no-highlight">91</i>&nbsp;            &quot;               ((:player_id is NULL or player_id = :player_id) and\n&quot; +
+<i class="no-highlight">92</i>&nbsp;            &quot;               (:client_id is NULL or client_id = :client_id) and\n&quot; +
+<i class="no-highlight">93</i>&nbsp;            &quot;               (:league_id is NULL or league_id = :league_id) and\n&quot; +
+<i class="no-highlight">94</i>&nbsp;            &quot;               (:team_id is NULL or team_id = :team_id) and\n&quot; +
+<i class="no-highlight">95</i>&nbsp;            &quot;               (:first_name is NULL or first_name LIKE %:first_name%) and\n&quot; +
+<i class="no-highlight">96</i>&nbsp;            &quot;               (:last_name is NULL or last_name LIKE %:last_name%) and\n&quot; +
+<i class="no-highlight">97</i>&nbsp;            &quot;               (:nba_team is NULL or nba_team LIKE %:nba_team%) and\n&quot; +
+<i class="no-highlight">98</i>&nbsp;            &quot;               (:position is NULL or position LIKE %:position%) and\n&quot; +
+<i class="no-highlight">99</i>&nbsp;            &quot;               (:ball_api_id is NULL or ball_api_id=:ball_api_id))&quot;, nativeQuery = true)
+<i class="no-highlight">100</i>&nbsp;    List&lt;FantasyPlayer&gt; findByTemplate(@Param(&quot;player_id&quot;) Integer player_id,
+<i class="no-highlight">101</i>&nbsp;                                       @Param(&quot;client_id&quot;) Integer client_id,
+<i class="no-highlight">102</i>&nbsp;                                       @Param(&quot;team_id&quot;) Integer team_id,
+<i class="no-highlight">103</i>&nbsp;                                       @Param(&quot;league_id&quot;) Integer league_id,
+<i class="no-highlight">104</i>&nbsp;                                       @Param(&quot;ball_api_id&quot;) Integer ball_api_id,
+<i class="no-highlight">105</i>&nbsp;                                       @Param(&quot;first_name&quot;) String first_name,
+<i class="no-highlight">106</i>&nbsp;                                       @Param(&quot;last_name&quot;) String last_name,
+<i class="no-highlight">107</i>&nbsp;                                       @Param(&quot;nba_team&quot;) String nba_team,
+<i class="no-highlight">108</i>&nbsp;                                       @Param(&quot;position&quot;) String position);
+<i class="no-highlight">109</i>&nbsp;
+<i class="no-highlight">110</i>&nbsp;    @Transactional
+<i class="no-highlight">111</i>&nbsp;    @Modifying
+<i class="no-highlight">112</i>&nbsp;    @Query(value = &quot;insert into fantasy_player values(:player_id, :ball_api_id, :team_id, :league_id, :client_id)&quot;,
+<i class="no-highlight">113</i>&nbsp;            nativeQuery = true)
+<i class="no-highlight">114</i>&nbsp;    void insertFantasyPlayer(@Param(&quot;player_id&quot;) Integer player_id,
+<i class="no-highlight">115</i>&nbsp;                                            @Param(&quot;client_id&quot;) Integer client_id,
+<i class="no-highlight">116</i>&nbsp;                                            @Param(&quot;team_id&quot;) Integer team_id,
+<i class="no-highlight">117</i>&nbsp;                                            @Param(&quot;league_id&quot;) Integer league_id,
+<i class="no-highlight">118</i>&nbsp;                                            @Param(&quot;ball_api_id&quot;) Integer ball_api_id);
+<i class="no-highlight">119</i>&nbsp;
+<i class="no-highlight">120</i>&nbsp;    @Transactional
+<i class="no-highlight">121</i>&nbsp;    @Modifying
+<i class="no-highlight">122</i>&nbsp;    @Query(value = &quot;update fantasy_player set team_id = :team_id where player_id = :player_id and league_id = :league_id and client_id = :client_id&quot;,
+<i class="no-highlight">123</i>&nbsp;            nativeQuery = true)
+<i class="no-highlight">124</i>&nbsp;    void setPlayerTeam(@Param(&quot;player_id&quot;) Integer player_id,
+<i class="no-highlight">125</i>&nbsp;                       @Param(&quot;client_id&quot;) Integer client_id,
+<i class="no-highlight">126</i>&nbsp;                       @Param(&quot;league_id&quot;) Integer league_id,
+<i class="no-highlight">127</i>&nbsp;                       @Param(&quot;team_id&quot;) Integer team_id);
+<i class="no-highlight">128</i>&nbsp;
+<i class="no-highlight">129</i>&nbsp;    @Transactional
+<i class="no-highlight">130</i>&nbsp;    @Modifying
+<i class="no-highlight">131</i>&nbsp;    @Query(value = &quot;delete from fantasy_player \n&quot; +
+<i class="no-highlight">132</i>&nbsp;            &quot;where \n&quot; +
+<i class="no-highlight">133</i>&nbsp;            &quot;((player_id = :player_id) and\n&quot; +
+<i class="no-highlight">134</i>&nbsp;            &quot;(client_id = :client_id) and\n&quot; +
+<i class="no-highlight">135</i>&nbsp;            &quot;(league_id = :league_id))&quot;,
+<i class="no-highlight">136</i>&nbsp;            nativeQuery = true)
+<i class="no-highlight">137</i>&nbsp;    void deleteFantasyPlayer(@Param(&quot;player_id&quot;) Integer player_id,
+<i class="no-highlight">138</i>&nbsp;                             @Param(&quot;client_id&quot;) Integer client_id,
+<i class="no-highlight">139</i>&nbsp;                             @Param(&quot;league_id&quot;) Integer league_id);
+<i class="no-highlight">140</i>&nbsp;
+<i class="no-highlight">141</i>&nbsp;}
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-12-11 15:53</div>
+</div>
+</body>
+</html>
