@@ -183,7 +183,6 @@ public class FantasyLeagueService {
             throw new ResourceException("League formatted incorrectly please provide the following:\n" +
                     "league_name, admin_id, league_size, league_start_date, num_weeks.");
         }
-        return;
     }
 
     // check post inputs
@@ -209,6 +208,9 @@ public class FantasyLeagueService {
         List<Integer> result = teamRepo.findTeamsInLeague(league_id, client_id);
 
         // check to make sure teams registered with league is even
+        if (result.size() == 0) {
+            throw new ResourceException("This league does not exist for this client.");
+        }
         if (result.size() % 2 != 0) {
             throw new ResourceException("Number of teams must be even.");
         } else {
@@ -275,6 +277,19 @@ public class FantasyLeagueService {
             throw new ResourceNotFoundException("This league does not exist.");
         }
 
+        List<FantasyLeague> leagues = leagueRepo.findByTemplate(league_id,
+                client_id,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null);
+
+        if (leagues.size() == 0) {
+            throw new ResourceNotFoundException("This league does not exist for this client. You cannot draft player to this league.");
+        }
+
         // List of all teams that are in the league
         List<Integer> team_ids = teamRepo.findTeamsInLeague(league_id, client_id);
 
@@ -325,6 +340,9 @@ public class FantasyLeagueService {
 
     public List<Integer> randomOrder(Integer league_id, Integer client_id) throws ResourceNotFoundException {
         List<Integer> team_ids = teamRepo.findTeamsInLeague(league_id, client_id);
+        if (team_ids.size() == 0) {
+            throw new ResourceNotFoundException("Cannot generate order for a league that does not exist for this client.");
+        }
         Collections.shuffle(team_ids);
         List<Integer> order = new ArrayList<>();
         List<Client> clientList = clientService.getByID(client_id);
@@ -347,7 +365,7 @@ public class FantasyLeagueService {
 
     public void checkIfScheduleGenerated(Integer league_id) throws ResourceException {
         List<FantasyGame> games = gameRepo.findGamesByLeagueID(league_id);
-        if (games.size() != 0 || games.isEmpty()) {
+        if (games.size() != 0) {
             throw new ResourceException("Schedule already generated for this league.");
         }
     }
