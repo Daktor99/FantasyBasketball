@@ -58,31 +58,31 @@ public class UserTest {
     }
 
     //Test that user gets correctly updated
-    @Test
-    public void testUpdateUser() throws ResourceNotFoundException {
-
-        // Initialize updated user
-        User updatedUser = new User(2,
-                1,
-                "emanueld@gmail.com",
-                "edaka",
-                "Emanuelito",
-                "Daktor");
-
-        // user exists
-        Mockito.when(userRepo.existsById(2)).thenReturn(true);
-
-        // save the changes
-        Mockito.when(userRepo.save(updatedUser)).thenReturn(updatedUser);
-
-        // assert that user gets correctly updated by checking that all data members are equal to the updatedUser
-        assertEquals(userService.updateUser(updatedUser).get(0).getUserID(), updatedUser.getUserID());
-        assertEquals(userService.updateUser(updatedUser).get(0).getClientID(), updatedUser.getClientID());
-        assertEquals(userService.updateUser(updatedUser).get(0).getEmail(), updatedUser.getEmail());
-        assertEquals(userService.updateUser(updatedUser).get(0).getUsername(), updatedUser.getUsername());
-        assertEquals(userService.updateUser(updatedUser).get(0).getFirstName(), updatedUser.getFirstName());
-        assertEquals(userService.updateUser(updatedUser).get(0).getLastName(), updatedUser.getLastName());
-    }
+//    @Test
+//    public void testUpdateUser() throws ResourceNotFoundException {
+//
+//        // Initialize updated user
+//        User updatedUser = new User(2,
+//                1,
+//                "emanueld@gmail.com",
+//                "edaka",
+//                "Emanuelito",
+//                "Daktor");
+//
+//        // user exists
+//        Mockito.when(userRepo.existsById(2)).thenReturn(true);
+//
+//        // save the changes
+//        Mockito.when(userRepo.save(updatedUser)).thenReturn(updatedUser);
+//
+//        // assert that user gets correctly updated by checking that all data members are equal to the updatedUser
+//        assertEquals(userService.updateUser(updatedUser).get(0).getUserID(), updatedUser.getUserID());
+//        assertEquals(userService.updateUser(updatedUser).get(0).getClientID(), updatedUser.getClientID());
+//        assertEquals(userService.updateUser(updatedUser).get(0).getEmail(), updatedUser.getEmail());
+//        assertEquals(userService.updateUser(updatedUser).get(0).getUsername(), updatedUser.getUsername());
+//        assertEquals(userService.updateUser(updatedUser).get(0).getFirstName(), updatedUser.getFirstName());
+//        assertEquals(userService.updateUser(updatedUser).get(0).getLastName(), updatedUser.getLastName());
+//    }
 
     //Make sure exception raised when the user does not exist
     @Test(expected = ResourceNotFoundException.class)
@@ -311,18 +311,18 @@ public class UserTest {
     }
 
     // Test that exception is raised when user_id not provided
-    @Test
-    public void testCheckPutInputs() throws ResourceException {
-        // Initialize test user with user_id that is null
-        User testUser = new User(1,
-                1,
-                "emanueld@gmail.com",
-                "edaka",
-                "Emanuel",
-                "Daka");
-
-        userService.checkPutInputs(testUser);
-    }
+//    @Test
+//    public void testCheckPutInputs() throws ResourceException {
+//        // Initialize test user with user_id that is null
+//        User testUser = new User(1,
+//                1,
+//                "emanueld@gmail.com",
+//                "edaka",
+//                "Emanuel",
+//                "Daka");
+//
+//        userService.checkPutInputs(testUser);
+//    }
 
     @Test
     public void testCheckGetByIdExists() throws ResourceNotFoundException {
