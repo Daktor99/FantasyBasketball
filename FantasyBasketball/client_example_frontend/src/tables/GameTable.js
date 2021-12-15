@@ -1,5 +1,5 @@
 import {Component} from "react";
-import {Button, Table} from "semantic-ui-react";
+import {Table} from "semantic-ui-react";
 
 class GameTable extends Component {
 
@@ -12,11 +12,12 @@ class GameTable extends Component {
 
         return (
             <Table.Row>
+                <Table.Cell>{game.team_name}</Table.Cell>
                 <Table.Cell>{game.game_start_date}</Table.Cell>
                 <Table.Cell>{game.game_end_date}</Table.Cell>
                 <Table.Cell>{game.home_points}</Table.Cell>
                 <Table.Cell>{game.away_points}</Table.Cell>
-                <Table.Cell>{game.winner_id}</Table.Cell>
+                <Table.Cell>{game.winner_id ? game.winner_id : "No winner yet"}</Table.Cell>
             </Table.Row>
         )
     }

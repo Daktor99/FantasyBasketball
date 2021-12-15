@@ -2,7 +2,7 @@ import {Component} from "react";
 import {withCookies} from "react-cookie";
 import {Redirect} from "react-router-dom";
 import {CLIENT_GOOGLE_ID} from "../Constants";
-import {Dimmer, Header, Loader, Table} from "semantic-ui-react";
+import {Dimmer, Divider, Header, Loader, Table} from "semantic-ui-react";
 import GameTable from "../tables/GameTable";
 import TeamTable from "../tables/TeamTable";
 
@@ -27,12 +27,11 @@ class Home extends Component {
     }
 
     async componentWillMount() {
+        this.setState({
+            isLoading: true
+        })
         this.props.cookies.set("league_id", null)
         if (this.state.loggedIn) {
-            await new Promise(r => setTimeout(r, 500));
-            this.setState({
-                isLoading: true
-            })
             const input = '/users?email=' + this.state.email
             let userList = []
             const {cookies} = this.props
@@ -89,35 +88,6 @@ class Home extends Component {
                 console.log("Successfully fetched User")
             }
 
-
-            const input1 = '/fantasyGames?user_id=' + this.state.user_id
-            //const {cookies} = this.props
-
-            await fetch(input1, {
-                headers: {
-                    Accept: 'application/json',
-                    'token': CLIENT_GOOGLE_ID
-                }
-            })
-                .then(resp => resp.json())
-                .then(data => {
-                    this.setState({
-                        games: data
-                    })
-                })
-                .catch(error => {
-                    console.log("Error Fetching User games: " + error)
-                    window.alert("Error Fetching User Games, reload page")
-                })
-
-            if (this.state.games.length > 0) {
-                this.setState(
-                    {hasGames: true});
-                console.log(this.state.games)
-            } else {
-                console.log("No games found")
-            }
-
             const input2 = '/fantasyTeams?owner_id=' + this.state.user_id
             //const {cookies} = this.props
 
@@ -143,17 +113,81 @@ class Home extends Component {
                     {hasTeams: true});
                 console.log(this.state.teams)
             } else {
-                console.log("No games found")
+                console.log("No teams found")
             }
+
+            for (const team of this.state.teams) {
+                await this.callGamesByHomeId(team)
+                await this.callGamesByAwayId(team)
+            }
+
             this.setState({
-                isLoading: false
+                games: this.state.games.sort(((a, b) => new Date(a.game_start_date) - new Date(b.game_start_date)))
             })
 
-        }
-
-         else {
+            if (this.state.games.length > 0) {
+                this.setState({
+                    hasGames: true
+                })
+            } else {
+                this.setState({
+                    hasGames: false
+                })
+            }
+        } else {
             console.log("Tried to reach home page without logging in")
         }
+        this.setState({
+            isLoading: false
+        })
+    }
+
+    async callGamesByAwayId(team) {
+        const input1 = '/fantasyGames?away_team_id=' + team.team_id
+
+        await fetch(input1, {
+            headers: {
+                Accept: 'application/json',
+                'token': CLIENT_GOOGLE_ID
+            }
+        })
+            .then(resp => resp.json())
+            .then(data => {
+                for (const game of data) {
+                    game.team_name = team.team_name
+                }
+                this.setState({
+                    games: this.state.games.concat(data),
+                })
+            })
+            .catch(error => {
+                console.log("Error Fetching User games: " + error)
+                window.alert("Error Fetching User Games, reload page")
+            })
+    }
+
+    async callGamesByHomeId(team) {
+        const input1 = '/fantasyGames?home_team_id=' + team.team_id
+
+        await fetch(input1, {
+            headers: {
+                Accept: 'application/json',
+                'token': CLIENT_GOOGLE_ID
+            }
+        })
+            .then(resp => resp.json())
+            .then(data => {
+                for (const game of data) {
+                    game.team_name = team.team_name
+                }
+                this.setState({
+                    games: this.state.games.concat(data),
+                })
+            })
+            .catch(error => {
+                console.log("Error Fetching User games: " + error)
+                window.alert("Error Fetching User Games, reload page")
+            })
     }
 
     redirectToInfo(team_id) {
@@ -171,10 +205,13 @@ class Home extends Component {
                     <Dimmer active={this.state.isLoading}>
                         <Loader size='big'/>
                     </Dimmer>
-                    {this.state.hasGames?
+                    <Header as="h2"
+                            content={"Your Games"}/>
+                    {this.state.hasGames ?
                         <Table celled>
                             <Table.Header>
                                 <Table.Row>
+                                    <Table.HeaderCell>Team Name</Table.HeaderCell>
                                     <Table.HeaderCell>Game Start Date</Table.HeaderCell>
                                     <Table.HeaderCell>Game End Date</Table.HeaderCell>
                                     <Table.HeaderCell>Home Points</Table.HeaderCell>
@@ -189,10 +226,13 @@ class Home extends Component {
                                         game={game}
                                     />)}
                             </Table.Body>
-                        </Table>:
-                        <Header>No games here for you</Header>
+                        </Table> :
+                        <Header>No games for you</Header>
                     }
-                    {this.state.hasTeams?
+                    <Divider/>
+                    <Header as="h2"
+                            content={"Your Teams"}/>
+                    {this.state.hasTeams ?
                         <Table celled>
                             <Table.Header>
                                 <Table.Row>
@@ -214,7 +254,7 @@ class Home extends Component {
                             </Table.Body>
 
                         </Table>:
-                        <Header>No Teams here for you</Header>
+                        <Header>You don't have any teams yet</Header>
                     }
                 </div>
             )

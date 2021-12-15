@@ -38,7 +38,7 @@ class PlayerTable extends Component {
                         <Table.Row>
                             <Table.HeaderCell colSpan='12'>
                                 <Button
-                                    disabled={players.length > MAX_TEAM_SIZE}
+                                    disabled={players.length >= MAX_TEAM_SIZE || !this.props.isOwner}
                                     floated='right'
                                     icon
                                     labelPosition='left'
@@ -46,7 +46,7 @@ class PlayerTable extends Component {
                                     size='small'
                                 >
                                     <Icon
-                                        name='user'/> {players.length > MAX_TEAM_SIZE ? 'Your team is full' : 'Add a Player'}
+                                        name='user'/> {players.length >= MAX_TEAM_SIZE ? 'Your team is full' : 'Add a Player'}
                                 </Button>
                             </Table.HeaderCell>
                         </Table.Row>

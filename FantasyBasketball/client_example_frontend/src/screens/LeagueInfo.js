@@ -84,7 +84,6 @@ class LeagueInfo extends Component {
 
     redirectToInfo(team_id) {
         console.log("Redirecting to team info with team_id: " + team_id)
-        // Maybe add {path: "/"}
         this.props.cookies.set("team_id", team_id);
         this.props.history.push('/team_info')
     }

@@ -19,7 +19,7 @@ class Welcome extends Component {
             return (
                 <div>
                     <Header as={'h1'}>
-                        Login
+                        Welcome to Bebeco League, Login with google
                     </Header>
                 </div>
             )

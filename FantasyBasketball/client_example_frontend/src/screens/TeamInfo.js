@@ -41,7 +41,8 @@ class TeamInfo extends Component {
             pf: null,
             c: null,
             b1: null,
-            b2: null
+            b2: null,
+            isOwner: false,
         }
         this.state.loggedIn = this.state.loggedIn === "true";
         this.getPlayers = this.getPlayers.bind(this)
@@ -81,7 +82,15 @@ class TeamInfo extends Component {
                         console.log("Error fetching team data for team_id " + this.state.team_id + ": " + error)
                         window.alert("Error fetching team data, reload page")
                     })
-
+                if (parseInt(this.state.user_id) === this.state.team.owner_id) {
+                    this.setState({
+                        isOwner: true
+                    })
+                } else {
+                    this.setState({
+                        isOwner: false
+                    })
+                }
                 this.setState({
                     isLoading: false
                 })
@@ -104,7 +113,9 @@ class TeamInfo extends Component {
     }
 
     async getPlayers() {
-
+        this.setState({
+            isLoading: true
+        })
         const input = '/fantasyPlayers?team_id=' + this.state.team_id
 
         await fetch(input, {
@@ -127,6 +138,9 @@ class TeamInfo extends Component {
             })
         this.generateDropdown()
         this.getRoster()
+        this.setState({
+            isLoading: false
+        })
     }
 
     getRoster() {
@@ -149,6 +163,9 @@ class TeamInfo extends Component {
     }
 
     updateRoster() {
+        this.setState({
+            isLoading: true
+        })
         const requestOptions = {
             method: 'PUT',
             headers: {
@@ -191,6 +208,9 @@ class TeamInfo extends Component {
                 })
                 window.location.reload()
             })
+        this.setState({
+            isLoading: false
+        })
     }
 
     handleChange = (e, {name, value}) => {
@@ -255,6 +275,7 @@ class TeamInfo extends Component {
                                     </TableCell>
                                     <TableCell>
                                         <Dropdown
+                                            disabled={!this.state.isOwner}
                                             placeholder={this.state.pg ? this.state.pg.first_name + ' ' + this.state.pg.last_name : 'Select Player'}
                                             fluid
                                             search
@@ -271,6 +292,7 @@ class TeamInfo extends Component {
                                     </TableCell>
                                     <TableCell>
                                         <Dropdown
+                                            disabled={!this.state.isOwner}
                                             placeholder={this.state.sg ? this.state.sg.first_name + ' ' + this.state.sg.last_name : 'Select Player'}
                                             fluid
                                             search
@@ -287,6 +309,7 @@ class TeamInfo extends Component {
                                     </TableCell>
                                     <TableCell>
                                         <Dropdown
+                                            disabled={!this.state.isOwner}
                                             placeholder={this.state.sf ? this.state.sf.first_name + ' ' + this.state.sf.last_name : 'Select Player'}
                                             fluid
                                             search
@@ -303,6 +326,7 @@ class TeamInfo extends Component {
                                     </TableCell>
                                     <TableCell>
                                         <Dropdown
+                                            disabled={!this.state.isOwner}
                                             placeholder={this.state.pf ? this.state.pf.first_name + ' ' + this.state.pf.last_name : 'Select Player'}
                                             fluid
                                             search
@@ -319,6 +343,7 @@ class TeamInfo extends Component {
                                     </TableCell>
                                     <TableCell>
                                         <Dropdown
+                                            disabled={!this.state.isOwner}
                                             placeholder={this.state.c ? this.state.c.first_name + ' ' + this.state.c.last_name : 'Select Player'}
                                             fluid
                                             search
@@ -335,6 +360,7 @@ class TeamInfo extends Component {
                                     </TableCell>
                                     <TableCell>
                                         <Dropdown
+                                            disabled={!this.state.isOwner}
                                             placeholder={this.state.b1 ? this.state.b1.first_name + ' ' + this.state.b1.last_name : 'Select Player'}
                                             fluid
                                             search
@@ -351,6 +377,7 @@ class TeamInfo extends Component {
                                     </TableCell>
                                     <TableCell>
                                         <Dropdown
+                                            disabled={!this.state.isOwner}
                                             placeholder={this.state.b2 ? this.state.b2.first_name + ' ' + this.state.b2.last_name : 'Select Player'}
                                             fluid
                                             search
@@ -367,6 +394,7 @@ class TeamInfo extends Component {
                                 <Table.Row>
                                     <Table.HeaderCell colSpan='12'>
                                         <Button
+                                            disabled={!this.state.isOwner}
                                             floated='right'
                                             icon
                                             labelPosition='left'
@@ -374,7 +402,7 @@ class TeamInfo extends Component {
                                             size='small'
                                             onClick={this.updateRoster}
                                         >
-                                            <Icon name='user'/> Update Roster
+                                            <Icon name='user'/> {this.state.isOwner ? 'Update Roster' : 'Not your team'}
                                         </Button>
                                     </Table.HeaderCell>
                                 </Table.Row>
@@ -386,7 +414,8 @@ class TeamInfo extends Component {
                             as="h2"
                             content={'All Players'}
                         />
-                        <PlayerTable players={this.state.players} team_id={this.state.team_id}/>
+                        <PlayerTable isOwner={this.state.isOwner} players={this.state.players}
+                                     team_id={this.state.team_id}/>
                     </div>
                 );
             } else {
