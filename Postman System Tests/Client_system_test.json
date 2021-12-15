@@ -1,0 +1,111 @@
+{
+	"id": "49c954ac-8943-493c-869a-e1278b1e287a",
+	"name": "Client",
+	"timestamp": "2021-12-11T17:31:20.622Z",
+	"collection_id": "16329253-c413bd10-68c4-4e6e-a82b-90f0449581ff",
+	"folder_id": 0,
+	"environment_id": "0",
+	"totalPass": 3,
+	"totalFail": 0,
+	"results": [
+		{
+			"id": "37fb0a68-42df-4acc-98cb-4f6a8b77ff26",
+			"name": "register client",
+			"url": "http://localhost:8080/register",
+			"time": 101,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Response Body Printout= ([{\"email\":\"testest@columbia.edu\",\"company_name\":\"Test Inc.\",\"client_name\":\"Test Test\",\"three_p_weight\":1.0,\"two_p_weight\":1.0,\"ft_weight\":1.0,\"rebound_weight\":1.0,\"assist_weight\":1.0,\"block_weight\":1.0,\"turnover_weight\":1.0,\"min_league_dur\":4,\"max_team_size\":10,\"min_league_size\":2,\"google_id\":\"10987654321\",\"steal_weight\":1.0}])": true
+			},
+			"testPassFailCounts": {
+				"Response Body Printout= ([{\"email\":\"testest@columbia.edu\",\"company_name\":\"Test Inc.\",\"client_name\":\"Test Test\",\"three_p_weight\":1.0,\"two_p_weight\":1.0,\"ft_weight\":1.0,\"rebound_weight\":1.0,\"assist_weight\":1.0,\"block_weight\":1.0,\"turnover_weight\":1.0,\"min_league_dur\":4,\"max_team_size\":10,\"min_league_size\":2,\"google_id\":\"10987654321\",\"steal_weight\":1.0}])": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				101
+			],
+			"allTests": [
+				{
+					"Response Body Printout= ([{\"email\":\"testest@columbia.edu\",\"company_name\":\"Test Inc.\",\"client_name\":\"Test Test\",\"three_p_weight\":1.0,\"two_p_weight\":1.0,\"ft_weight\":1.0,\"rebound_weight\":1.0,\"assist_weight\":1.0,\"block_weight\":1.0,\"turnover_weight\":1.0,\"min_league_dur\":4,\"max_team_size\":10,\"min_league_size\":2,\"google_id\":\"10987654321\",\"steal_weight\":1.0}])": true
+				}
+			]
+		},
+		{
+			"id": "008dce5b-b70a-42c7-9fb2-5a9211450446",
+			"name": "update client",
+			"url": "http://localhost:8080/customize",
+			"time": 132,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response Body Printout= ([{\"email\":\"testest@columbia.edu\",\"company_name\":\"Patrycja Inc.\",\"client_name\":\"Pati Przewoznik\",\"three_p_weight\":0.9,\"two_p_weight\":1.0,\"ft_weight\":1.0,\"rebound_weight\":1.0,\"assist_weight\":1.0,\"block_weight\":1.0,\"turnover_weight\":1.0,\"min_league_dur\":1,\"max_team_size\":30,\"min_league_size\":2,\"google_id\":\"10987654321\",\"steal_weight\":1.0}])": true
+			},
+			"testPassFailCounts": {
+				"Response Body Printout= ([{\"email\":\"testest@columbia.edu\",\"company_name\":\"Patrycja Inc.\",\"client_name\":\"Pati Przewoznik\",\"three_p_weight\":0.9,\"two_p_weight\":1.0,\"ft_weight\":1.0,\"rebound_weight\":1.0,\"assist_weight\":1.0,\"block_weight\":1.0,\"turnover_weight\":1.0,\"min_league_dur\":1,\"max_team_size\":30,\"min_league_size\":2,\"google_id\":\"10987654321\",\"steal_weight\":1.0}])": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				132
+			],
+			"allTests": [
+				{
+					"Response Body Printout= ([{\"email\":\"testest@columbia.edu\",\"company_name\":\"Patrycja Inc.\",\"client_name\":\"Pati Przewoznik\",\"three_p_weight\":0.9,\"two_p_weight\":1.0,\"ft_weight\":1.0,\"rebound_weight\":1.0,\"assist_weight\":1.0,\"block_weight\":1.0,\"turnover_weight\":1.0,\"min_league_dur\":1,\"max_team_size\":30,\"min_league_size\":2,\"google_id\":\"10987654321\",\"steal_weight\":1.0}])": true
+				}
+			]
+		},
+		{
+			"id": "0754fdd0-98f5-42e8-8919-f864520e48d8",
+			"name": "terminate account",
+			"url": "http://localhost:8080/terminate_account?google_id=0987654321",
+			"time": 138,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response Body Printout= ([{\"email\":\"patrycja.przewoznik@columbia.edu\",\"company_name\":\"Pati Inc.\",\"client_name\":\"Patrycja Przewoznik\",\"three_p_weight\":1.0,\"two_p_weight\":1.0,\"ft_weight\":1.0,\"rebound_weight\":1.0,\"assist_weight\":1.0,\"block_weight\":1.0,\"turnover_weight\":1.0,\"min_league_dur\":4,\"max_team_size\":10,\"min_league_size\":2,\"google_id\":\"0987654321\",\"steal_weight\":1.0}])": true
+			},
+			"testPassFailCounts": {
+				"Response Body Printout= ([{\"email\":\"patrycja.przewoznik@columbia.edu\",\"company_name\":\"Pati Inc.\",\"client_name\":\"Patrycja Przewoznik\",\"three_p_weight\":1.0,\"two_p_weight\":1.0,\"ft_weight\":1.0,\"rebound_weight\":1.0,\"assist_weight\":1.0,\"block_weight\":1.0,\"turnover_weight\":1.0,\"min_league_dur\":4,\"max_team_size\":10,\"min_league_size\":2,\"google_id\":\"0987654321\",\"steal_weight\":1.0}])": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				138
+			],
+			"allTests": [
+				{
+					"Response Body Printout= ([{\"email\":\"patrycja.przewoznik@columbia.edu\",\"company_name\":\"Pati Inc.\",\"client_name\":\"Patrycja Przewoznik\",\"three_p_weight\":1.0,\"two_p_weight\":1.0,\"ft_weight\":1.0,\"rebound_weight\":1.0,\"assist_weight\":1.0,\"block_weight\":1.0,\"turnover_weight\":1.0,\"min_league_dur\":4,\"max_team_size\":10,\"min_league_size\":2,\"google_id\":\"0987654321\",\"steal_weight\":1.0}])": true
+				}
+			]
+		}
+	],
+	"count": 1,
+	"totalTime": 371,
+	"collection": {
+		"requests": [
+			{
+				"id": "37fb0a68-42df-4acc-98cb-4f6a8b77ff26",
+				"method": "POST"
+			},
+			{
+				"id": "008dce5b-b70a-42c7-9fb2-5a9211450446",
+				"method": "PUT"
+			},
+			{
+				"id": "0754fdd0-98f5-42e8-8919-f864520e48d8",
+				"method": "DELETE"
+			}
+		]
+	}
+}

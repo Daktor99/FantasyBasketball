@@ -131,7 +131,7 @@ public class FantasyTeamService {
         if(exists) {
             teamRepo.deleteById(team_id);
         } else {
-            throw new ResourceNotFoundException("User not found in DB, cannot delete");
+            throw new ResourceNotFoundException("Team not found in DB, cannot delete");
         }
     }
 

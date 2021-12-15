@@ -33,8 +33,8 @@ import java.util.List;
 public interface fantasyPlayerRepository extends CrudRepository<FantasyPlayer, Integer> {
 
     @Query(value = "select player_id from fantasy_player where " +
-            "((client_id = :client_id) and\n" +
-            "(league_id = :league_id) and\n" +
+            "((client_id = client_id) and\n" +
+            "(league_id = league_id) and\n" +
             "(team_id is NULL))", nativeQuery = true)
     List<Integer> getUndraftedPlayers(@Param("client_id") Integer client_id,
                                       @Param("league_id") Integer league_id);

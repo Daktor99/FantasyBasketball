@@ -1,0 +1,239 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > fantasyStatsService</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">FantasyBasketball.services</a>
+</div>
+
+<h1>Coverage Summary for Class: fantasyStatsService (FantasyBasketball.services)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">fantasyStatsService</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (11/11)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (36/36)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package FantasyBasketball.services;
+<i class="no-highlight">2</i>&nbsp;
+<i class="no-highlight">3</i>&nbsp;import FantasyBasketball.exceptions.resourceException;
+<i class="no-highlight">4</i>&nbsp;import FantasyBasketball.exceptions.resourceNotFoundException;
+<i class="no-highlight">5</i>&nbsp;import FantasyBasketball.models.FantasyStats;
+<i class="no-highlight">6</i>&nbsp;import FantasyBasketball.repositories.fantasyStatsRepository;
+<i class="no-highlight">7</i>&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+<i class="no-highlight">8</i>&nbsp;import org.springframework.stereotype.Service;
+<i class="no-highlight">9</i>&nbsp;
+<i class="no-highlight">10</i>&nbsp;import java.util.HashMap;
+<i class="no-highlight">11</i>&nbsp;import java.util.List;
+<i class="no-highlight">12</i>&nbsp;import java.util.Optional;
+<i class="no-highlight">13</i>&nbsp;import java.util.Set;
+<i class="no-highlight">14</i>&nbsp;
+<i class="no-highlight">15</i>&nbsp;@Service
+<b class="fc"><i class="no-highlight">16</i>&nbsp;public class fantasyStatsService {</b>
+<i class="no-highlight">17</i>&nbsp;
+<i class="no-highlight">18</i>&nbsp;    @Autowired
+<i class="no-highlight">19</i>&nbsp;    fantasyStatsRepository statsRepo;
+<i class="no-highlight">20</i>&nbsp;
+<i class="no-highlight">21</i>&nbsp;    // find by stats_id
+<i class="no-highlight">22</i>&nbsp;    public List&lt;FantasyStats&gt; getByID(Integer statsID) throws resourceNotFoundException {
+<b class="fc"><i class="no-highlight">23</i>&nbsp;        Optional&lt;FantasyStats&gt; result = statsRepo.findById(statsID);</b>
+<b class="fc"><i class="no-highlight">24</i>&nbsp;        if (result.isPresent()) {</b>
+<b class="fc"><i class="no-highlight">25</i>&nbsp;            FantasyStats statsResult = result.get();</b>
+<b class="fc"><i class="no-highlight">26</i>&nbsp;            return List.of(statsResult);</b>
+<i class="no-highlight">27</i>&nbsp;        } else {
+<b class="fc"><i class="no-highlight">28</i>&nbsp;            throw new resourceNotFoundException(&quot;Fantasy Stats couldn&#39;t be found by ID in DB&quot;);</b>
+<i class="no-highlight">29</i>&nbsp;        }
+<i class="no-highlight">30</i>&nbsp;    }
+<i class="no-highlight">31</i>&nbsp;
+<i class="no-highlight">32</i>&nbsp;    // get operation
+<i class="no-highlight">33</i>&nbsp;    public List&lt;FantasyStats&gt; getStatsByTemplate(
+<i class="no-highlight">34</i>&nbsp;            Integer stats_id,
+<i class="no-highlight">35</i>&nbsp;            Integer player_id,
+<i class="no-highlight">36</i>&nbsp;            Integer schedule_id,
+<i class="no-highlight">37</i>&nbsp;            Integer client_id,
+<i class="no-highlight">38</i>&nbsp;            Integer league_id,
+<i class="no-highlight">39</i>&nbsp;            Integer threeP,
+<i class="no-highlight">40</i>&nbsp;            Integer twoP,
+<i class="no-highlight">41</i>&nbsp;            Integer freeThrows,
+<i class="no-highlight">42</i>&nbsp;            Integer rebounds,
+<i class="no-highlight">43</i>&nbsp;            Integer assists,
+<i class="no-highlight">44</i>&nbsp;            Integer blocks,
+<i class="no-highlight">45</i>&nbsp;            Integer steals,
+<i class="no-highlight">46</i>&nbsp;            Integer turnovers,
+<i class="no-highlight">47</i>&nbsp;            Integer totPoints) {
+<b class="fc"><i class="no-highlight">48</i>&nbsp;        return statsRepo.findByTemplate(</b>
+<i class="no-highlight">49</i>&nbsp;                stats_id,
+<i class="no-highlight">50</i>&nbsp;                player_id,
+<i class="no-highlight">51</i>&nbsp;                schedule_id,
+<i class="no-highlight">52</i>&nbsp;                client_id,
+<i class="no-highlight">53</i>&nbsp;                league_id,
+<i class="no-highlight">54</i>&nbsp;                threeP,
+<i class="no-highlight">55</i>&nbsp;                twoP,
+<i class="no-highlight">56</i>&nbsp;                freeThrows,
+<i class="no-highlight">57</i>&nbsp;                rebounds,
+<i class="no-highlight">58</i>&nbsp;                assists,
+<i class="no-highlight">59</i>&nbsp;                blocks,
+<i class="no-highlight">60</i>&nbsp;                steals,
+<i class="no-highlight">61</i>&nbsp;                turnovers,
+<i class="no-highlight">62</i>&nbsp;                totPoints);
+<i class="no-highlight">63</i>&nbsp;    }
+<i class="no-highlight">64</i>&nbsp;
+<i class="no-highlight">65</i>&nbsp;    // delete operations
+<i class="no-highlight">66</i>&nbsp;    public List&lt;FantasyStats&gt; deleteStats(Integer player_id, Integer schedule_id, Integer league_id, Integer client_id) throws resourceNotFoundException, resourceException {
+<b class="fc"><i class="no-highlight">67</i>&nbsp;        if (player_id == null &amp;&amp; schedule_id == null &amp;&amp; league_id == null){</b>
+<b class="fc"><i class="no-highlight">68</i>&nbsp;            throw new resourceException(&quot;Provide at least player_id, schedule_id, or league_id&quot;);</b>
+<i class="no-highlight">69</i>&nbsp;        }
+<b class="fc"><i class="no-highlight">70</i>&nbsp;        List&lt;FantasyStats&gt; stats_to_delete = statsRepo.findByIDs(player_id, schedule_id, league_id, client_id);</b>
+<b class="fc"><i class="no-highlight">71</i>&nbsp;        if (stats_to_delete.size() == 0) {</b>
+<b class="fc"><i class="no-highlight">72</i>&nbsp;            throw new resourceNotFoundException(&quot;Fantasy Stats not found in DB, cannot delete&quot;);</b>
+<i class="no-highlight">73</i>&nbsp;        }
+<i class="no-highlight">74</i>&nbsp;
+<b class="fc"><i class="no-highlight">75</i>&nbsp;        for (FantasyStats stat_to_delete:stats_to_delete) {</b>
+<b class="fc"><i class="no-highlight">76</i>&nbsp;            deleteStatsByID(stat_to_delete.getStats_id());</b>
+<b class="fc"><i class="no-highlight">77</i>&nbsp;        }</b>
+<i class="no-highlight">78</i>&nbsp;
+<b class="fc"><i class="no-highlight">79</i>&nbsp;        return stats_to_delete;</b>
+<i class="no-highlight">80</i>&nbsp;    }
+<i class="no-highlight">81</i>&nbsp;    // delete stats using stat_id
+<i class="no-highlight">82</i>&nbsp;    public void deleteStatsByID(Integer stats_id) throws resourceNotFoundException {
+<b class="fc"><i class="no-highlight">83</i>&nbsp;        if(statsRepo.existsById(stats_id)) {</b>
+<b class="fc"><i class="no-highlight">84</i>&nbsp;            statsRepo.deleteById(stats_id);</b>
+<i class="no-highlight">85</i>&nbsp;        } else {
+<b class="fc"><i class="no-highlight">86</i>&nbsp;            throw new resourceNotFoundException(&quot;Fantasy Stats not found in DB, cannot delete&quot;);</b>
+<i class="no-highlight">87</i>&nbsp;        }
+<i class="no-highlight">88</i>&nbsp;    }
+<i class="no-highlight">89</i>&nbsp;
+<i class="no-highlight">90</i>&nbsp;    // Post operation
+<i class="no-highlight">91</i>&nbsp;    public List&lt;FantasyStats&gt; postStats(FantasyStats stats) {
+<b class="fc"><i class="no-highlight">92</i>&nbsp;        stats.setStats_id(0);</b>
+<b class="fc"><i class="no-highlight">93</i>&nbsp;        FantasyStats result = statsRepo.save(stats);</b>
+<i class="no-highlight">94</i>&nbsp;
+<b class="fc"><i class="no-highlight">95</i>&nbsp;        return List.of(result);</b>
+<i class="no-highlight">96</i>&nbsp;    }
+<i class="no-highlight">97</i>&nbsp;    // Post operation using fantasystat list
+<i class="no-highlight">98</i>&nbsp;    public List&lt;FantasyStats&gt; postStatSheet(List&lt;FantasyStats&gt; statSheet) {
+<b class="fc"><i class="no-highlight">99</i>&nbsp;        return (List&lt;FantasyStats&gt;) statsRepo.saveAll(statSheet);</b>
+<i class="no-highlight">100</i>&nbsp;    }
+<i class="no-highlight">101</i>&nbsp;
+<i class="no-highlight">102</i>&nbsp;    // Put Operation
+<i class="no-highlight">103</i>&nbsp;    public List&lt;FantasyStats&gt; updateStats(FantasyStats stats) throws resourceNotFoundException {
+<b class="fc"><i class="no-highlight">104</i>&nbsp;        if(statsRepo.existsById(stats.getStats_id())) {</b>
+<b class="fc"><i class="no-highlight">105</i>&nbsp;            FantasyStats result = statsRepo.save(stats);</b>
+<b class="fc"><i class="no-highlight">106</i>&nbsp;            return List.of(result);</b>
+<i class="no-highlight">107</i>&nbsp;        } else {
+<b class="fc"><i class="no-highlight">108</i>&nbsp;            throw new resourceNotFoundException(&quot;Fantasy Stats not found in DB. Cannot update&quot;);</b>
+<i class="no-highlight">109</i>&nbsp;        }
+<i class="no-highlight">110</i>&nbsp;    }
+<i class="no-highlight">111</i>&nbsp;    // Checking stats_id is valid
+<i class="no-highlight">112</i>&nbsp;    public void checkPostInputs(FantasyStats stats) throws resourceException {
+<b class="fc"><i class="no-highlight">113</i>&nbsp;        if (stats.getStats_id() != null) {</b>
+<b class="fc"><i class="no-highlight">114</i>&nbsp;            throw new resourceException(&quot;Do not provide stats_id.&quot;);</b>
+<i class="no-highlight">115</i>&nbsp;        }
+<i class="no-highlight">116</i>&nbsp;    }
+<i class="no-highlight">117</i>&nbsp;
+<i class="no-highlight">118</i>&nbsp;    public List&lt;FantasyStats&gt; getStatsBySchedule(Set&lt;Integer&gt; ScheduleList){
+<b class="fc"><i class="no-highlight">119</i>&nbsp;        return statsRepo.findFantasyStatsByScheduleList(ScheduleList);</b>
+<i class="no-highlight">120</i>&nbsp;    }
+<i class="no-highlight">121</i>&nbsp;
+<i class="no-highlight">122</i>&nbsp;    public HashMap&lt;Integer, Integer&gt; generatePlayerStat(Set&lt;Integer&gt; gameList) {
+<i class="no-highlight">123</i>&nbsp;
+<b class="fc"><i class="no-highlight">124</i>&nbsp;        List&lt;FantasyStats&gt; playerStats = statsRepo.findFantasyStatsByScheduleList(gameList);</b>
+<i class="no-highlight">125</i>&nbsp;
+<b class="fc"><i class="no-highlight">126</i>&nbsp;        HashMap&lt;Integer, Integer&gt; playerStatsMap = new HashMap&lt;&gt;();</b>
+<b class="fc"><i class="no-highlight">127</i>&nbsp;        for (FantasyStats stat: playerStats) {</b>
+<b class="fc"><i class="no-highlight">128</i>&nbsp;            playerStatsMap.put(stat.getPlayer_id(), stat.getTot_points());</b>
+<b class="fc"><i class="no-highlight">129</i>&nbsp;        }</b>
+<b class="fc"><i class="no-highlight">130</i>&nbsp;        return playerStatsMap;</b>
+<i class="no-highlight">131</i>&nbsp;
+<i class="no-highlight">132</i>&nbsp;    }
+<i class="no-highlight">133</i>&nbsp;
+<i class="no-highlight">134</i>&nbsp;}
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-12-11 17:55</div>
+</div>
+</body>
+</html>

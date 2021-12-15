@@ -1,0 +1,312 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > WeeklyUpdate</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">FantasyBasketball.scheduling</a>
+</div>
+
+<h1>Coverage Summary for Class: WeeklyUpdate (FantasyBasketball.scheduling)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">WeeklyUpdate</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    25%
+  </span>
+  <span class="absValue">
+    (1/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    1.1%
+  </span>
+  <span class="absValue">
+    (1/94)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package FantasyBasketball.scheduling;
+<i class="no-highlight">2</i>&nbsp;
+<i class="no-highlight">3</i>&nbsp;import FantasyBasketball.exceptions.resourceNotFoundException;
+<i class="no-highlight">4</i>&nbsp;import FantasyBasketball.models.FantasyGame;
+<i class="no-highlight">5</i>&nbsp;import FantasyBasketball.models.FantasyStats;
+<i class="no-highlight">6</i>&nbsp;import FantasyBasketball.models.FantasyTeam;
+<i class="no-highlight">7</i>&nbsp;import FantasyBasketball.services.fantasyGameService;
+<i class="no-highlight">8</i>&nbsp;import FantasyBasketball.services.fantasyStatsService;
+<i class="no-highlight">9</i>&nbsp;import FantasyBasketball.services.fantasyTeamService;
+<i class="no-highlight">10</i>&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+<i class="no-highlight">11</i>&nbsp;import org.springframework.stereotype.Component;
+<i class="no-highlight">12</i>&nbsp;
+<i class="no-highlight">13</i>&nbsp;import java.time.LocalDate;
+<i class="no-highlight">14</i>&nbsp;import java.util.ArrayList;
+<i class="no-highlight">15</i>&nbsp;import java.util.HashMap;
+<i class="no-highlight">16</i>&nbsp;import java.util.HashSet;
+<i class="no-highlight">17</i>&nbsp;import java.util.List;
+<i class="no-highlight">18</i>&nbsp;import java.util.Set;
+<i class="no-highlight">19</i>&nbsp;
+<i class="no-highlight">20</i>&nbsp;@Component
+<b class="fc"><i class="no-highlight">21</i>&nbsp;public class WeeklyUpdate {</b>
+<i class="no-highlight">22</i>&nbsp;
+<i class="no-highlight">23</i>&nbsp;    @Autowired
+<i class="no-highlight">24</i>&nbsp;    fantasyTeamService teamService;
+<i class="no-highlight">25</i>&nbsp;
+<i class="no-highlight">26</i>&nbsp;    @Autowired
+<i class="no-highlight">27</i>&nbsp;    fantasyGameService gameService;
+<i class="no-highlight">28</i>&nbsp;
+<i class="no-highlight">29</i>&nbsp;    @Autowired
+<i class="no-highlight">30</i>&nbsp;    fantasyStatsService statService;
+<i class="no-highlight">31</i>&nbsp;
+<i class="no-highlight">32</i>&nbsp;    public void runWeekly(fantasyTeamService teamService, fantasyGameService gameService, fantasyStatsService statService) throws resourceNotFoundException {
+<i class="no-highlight">33</i>&nbsp;
+<i class="no-highlight">34</i>&nbsp;        // get a list of all teams and create a hashmap to store starters
+<b class="nc"><i class="no-highlight">35</i>&nbsp;        List&lt;FantasyTeam&gt; teamList = teamService.getTeamsByTemplate(null, null, null, null, null);</b>
+<b class="nc"><i class="no-highlight">36</i>&nbsp;        HashMap&lt;Integer, List&lt;Integer&gt;&gt; teamStarters = new HashMap&lt;&gt;();</b>
+<i class="no-highlight">37</i>&nbsp;
+<b class="nc"><i class="no-highlight">38</i>&nbsp;        for (FantasyTeam team : teamList) {</b>
+<b class="nc"><i class="no-highlight">39</i>&nbsp;            Integer team_id = team.getTeamID();</b>
+<b class="nc"><i class="no-highlight">40</i>&nbsp;            List&lt;Integer&gt; starters = new ArrayList&lt;&gt;();</b>
+<i class="no-highlight">41</i>&nbsp;
+<i class="no-highlight">42</i>&nbsp;            // TODO: check to see if NULL cases break code!!!
+<b class="nc"><i class="no-highlight">43</i>&nbsp;            starters.add(team.getStartPG());</b>
+<b class="nc"><i class="no-highlight">44</i>&nbsp;            starters.add(team.getStartSG());</b>
+<b class="nc"><i class="no-highlight">45</i>&nbsp;            starters.add(team.getStartSF());</b>
+<b class="nc"><i class="no-highlight">46</i>&nbsp;            starters.add(team.getStartPF());</b>
+<b class="nc"><i class="no-highlight">47</i>&nbsp;            starters.add(team.getStartC());</b>
+<b class="nc"><i class="no-highlight">48</i>&nbsp;            starters.add(team.getBench1());</b>
+<b class="nc"><i class="no-highlight">49</i>&nbsp;            starters.add(team.getBench2());</b>
+<b class="nc"><i class="no-highlight">50</i>&nbsp;            teamStarters.put(team_id, starters);</b>
+<b class="nc"><i class="no-highlight">51</i>&nbsp;        }</b>
+<i class="no-highlight">52</i>&nbsp;
+<i class="no-highlight">53</i>&nbsp;        // TODO: remove current date overwriting below that is being used for testing
+<b class="nc"><i class="no-highlight">54</i>&nbsp;        LocalDate current_date = LocalDate.now();</b>
+<i class="no-highlight">55</i>&nbsp;        //current_date = LocalDate.of(2021, 12, 25);
+<b class="nc"><i class="no-highlight">56</i>&nbsp;        List&lt;FantasyGame&gt; gameList = gameService.getGamesForWeek(current_date);</b>
+<i class="no-highlight">57</i>&nbsp;
+<i class="no-highlight">58</i>&nbsp;        // TODO: put this in its own function
+<b class="nc"><i class="no-highlight">59</i>&nbsp;        for (FantasyGame game : gameList) {</b>
+<b class="nc"><i class="no-highlight">60</i>&nbsp;            Integer home_team_id = game.getHomeTeamID();</b>
+<b class="nc"><i class="no-highlight">61</i>&nbsp;            Integer away_team_id = game.getAwayTeamID();</b>
+<i class="no-highlight">62</i>&nbsp;
+<b class="nc"><i class="no-highlight">63</i>&nbsp;            List&lt;Integer&gt; home_starters = teamStarters.get(home_team_id);</b>
+<b class="nc"><i class="no-highlight">64</i>&nbsp;            List&lt;Integer&gt; away_starters = teamStarters.get(away_team_id);</b>
+<i class="no-highlight">65</i>&nbsp;
+<i class="no-highlight">66</i>&nbsp;            // setting home starters
+<b class="nc"><i class="no-highlight">67</i>&nbsp;            game.setStartHomePG(home_starters.get(0));</b>
+<b class="nc"><i class="no-highlight">68</i>&nbsp;            game.setStartHomeSG(home_starters.get(1));</b>
+<b class="nc"><i class="no-highlight">69</i>&nbsp;            game.setStartHomeSF(home_starters.get(2));</b>
+<b class="nc"><i class="no-highlight">70</i>&nbsp;            game.setStartHomePF(home_starters.get(3));</b>
+<b class="nc"><i class="no-highlight">71</i>&nbsp;            game.setStartHomeC(home_starters.get(4));</b>
+<b class="nc"><i class="no-highlight">72</i>&nbsp;            game.setHomeBench1(home_starters.get(5));</b>
+<b class="nc"><i class="no-highlight">73</i>&nbsp;            game.setHomeBench2(home_starters.get(6));</b>
+<i class="no-highlight">74</i>&nbsp;
+<i class="no-highlight">75</i>&nbsp;            // setting away starters
+<b class="nc"><i class="no-highlight">76</i>&nbsp;            game.setStartAwayPG(away_starters.get(0));</b>
+<b class="nc"><i class="no-highlight">77</i>&nbsp;            game.setStartAwaySG(away_starters.get(1));</b>
+<b class="nc"><i class="no-highlight">78</i>&nbsp;            game.setStartAwaySF(away_starters.get(2));</b>
+<b class="nc"><i class="no-highlight">79</i>&nbsp;            game.setStartAwayPF(away_starters.get(3));</b>
+<b class="nc"><i class="no-highlight">80</i>&nbsp;            game.setStartAwayC(away_starters.get(4));</b>
+<b class="nc"><i class="no-highlight">81</i>&nbsp;            game.setAwayBench1(away_starters.get(5));</b>
+<b class="nc"><i class="no-highlight">82</i>&nbsp;            game.setAwayBench2(away_starters.get(6));</b>
+<i class="no-highlight">83</i>&nbsp;
+<i class="no-highlight">84</i>&nbsp;            // TODO: check exception being thrown!
+<b class="nc"><i class="no-highlight">85</i>&nbsp;            gameService.updateGame(game);</b>
+<i class="no-highlight">86</i>&nbsp;
+<b class="nc"><i class="no-highlight">87</i>&nbsp;            List&lt;FantasyStats&gt; statSheet = gameService.generateStatsSheet(game);</b>
+<b class="nc"><i class="no-highlight">88</i>&nbsp;            statService.postStatSheet(statSheet);</b>
+<i class="no-highlight">89</i>&nbsp;
+<b class="nc"><i class="no-highlight">90</i>&nbsp;        }</b>
+<i class="no-highlight">91</i>&nbsp;
+<i class="no-highlight">92</i>&nbsp;        // get games from last week
+<b class="nc"><i class="no-highlight">93</i>&nbsp;        List&lt;FantasyGame&gt; lastWeekGamesList = gameService.getGamesForWeek(current_date.minusWeeks(1));</b>
+<b class="nc"><i class="no-highlight">94</i>&nbsp;        HashMap&lt;Integer, Integer&gt; lastWeekStats = statService.generatePlayerStat(generateScheduleSet(lastWeekGamesList));</b>
+<i class="no-highlight">95</i>&nbsp;
+<i class="no-highlight">96</i>&nbsp;        // get a list of the updated games according to stats and update the games in the DB
+<i class="no-highlight">97</i>&nbsp;        // make hashmap of all teams
+<b class="nc"><i class="no-highlight">98</i>&nbsp;        HashMap&lt;Integer, FantasyTeam&gt; teamMap = new HashMap&lt;&gt;();</b>
+<b class="nc"><i class="no-highlight">99</i>&nbsp;        for (FantasyTeam team: teamList) {</b>
+<b class="nc"><i class="no-highlight">100</i>&nbsp;            teamMap.put(team.getTeamID(), team);</b>
+<b class="nc"><i class="no-highlight">101</i>&nbsp;        }</b>
+<i class="no-highlight">102</i>&nbsp;
+<b class="nc"><i class="no-highlight">103</i>&nbsp;        updateGamesAndTeams(lastWeekGamesList, lastWeekStats, teamMap, gameService, teamService);</b>
+<i class="no-highlight">104</i>&nbsp;        //List&lt;FantasyGame&gt; gamesToUpdate = getGamesToUpdate(lastWeekGamesList, lastWeekStats);
+<i class="no-highlight">105</i>&nbsp;
+<i class="no-highlight">106</i>&nbsp;        // update fantasy team teamWins, teamLosses, pointsScored, pointsAgainst accordingly
+<i class="no-highlight">107</i>&nbsp;
+<i class="no-highlight">108</i>&nbsp;
+<i class="no-highlight">109</i>&nbsp;        // look through each game and update team accordingly
+<i class="no-highlight">110</i>&nbsp;
+<i class="no-highlight">111</i>&nbsp;    }
+<i class="no-highlight">112</i>&nbsp;
+<i class="no-highlight">113</i>&nbsp;    public Set&lt;Integer&gt; generateScheduleSet(List&lt;FantasyGame&gt; lastWeekGameList) {
+<i class="no-highlight">114</i>&nbsp;
+<b class="nc"><i class="no-highlight">115</i>&nbsp;        Set&lt;Integer&gt; result = new HashSet&lt;&gt;();</b>
+<b class="nc"><i class="no-highlight">116</i>&nbsp;        for (FantasyGame game: lastWeekGameList) {</b>
+<b class="nc"><i class="no-highlight">117</i>&nbsp;            result.add(game.getScheduleID());</b>
+<b class="nc"><i class="no-highlight">118</i>&nbsp;        }</b>
+<b class="nc"><i class="no-highlight">119</i>&nbsp;        return result;</b>
+<i class="no-highlight">120</i>&nbsp;    }
+<i class="no-highlight">121</i>&nbsp;
+<i class="no-highlight">122</i>&nbsp;    public void updateGamesAndTeams(List&lt;FantasyGame&gt; lastWeekGamesList,
+<i class="no-highlight">123</i>&nbsp;                                    HashMap&lt;Integer, Integer&gt; lastWeekStats,
+<i class="no-highlight">124</i>&nbsp;                                    HashMap&lt;Integer, FantasyTeam&gt; teamMap,
+<i class="no-highlight">125</i>&nbsp;                                    fantasyGameService gameService,
+<i class="no-highlight">126</i>&nbsp;                                    fantasyTeamService teamService) {
+<i class="no-highlight">127</i>&nbsp;
+<b class="nc"><i class="no-highlight">128</i>&nbsp;        List&lt;FantasyGame&gt; gamesToUpdate = new ArrayList&lt;&gt;();</b>
+<b class="nc"><i class="no-highlight">129</i>&nbsp;        List&lt;FantasyTeam&gt; teamsToUpdate = new ArrayList&lt;&gt;();</b>
+<i class="no-highlight">130</i>&nbsp;
+<i class="no-highlight">131</i>&nbsp;        // calculate the scores from each players from fantasy stats in the game
+<b class="nc"><i class="no-highlight">132</i>&nbsp;        for (FantasyGame game: lastWeekGamesList){</b>
+<b class="nc"><i class="no-highlight">133</i>&nbsp;            Integer homePg=lastWeekStats.get(game.getStartHomePG());</b>
+<b class="nc"><i class="no-highlight">134</i>&nbsp;            Integer homeSg=lastWeekStats.get(game.getStartHomeSG());</b>
+<b class="nc"><i class="no-highlight">135</i>&nbsp;            Integer homeSf=lastWeekStats.get(game.getStartHomeSF());</b>
+<b class="nc"><i class="no-highlight">136</i>&nbsp;            Integer homePf=lastWeekStats.get(game.getStartHomePF());</b>
+<b class="nc"><i class="no-highlight">137</i>&nbsp;            Integer homeC=lastWeekStats.get(game.getStartHomeC());</b>
+<b class="nc"><i class="no-highlight">138</i>&nbsp;            Integer homeB1=lastWeekStats.get(game.getHomeBench1());</b>
+<b class="nc"><i class="no-highlight">139</i>&nbsp;            Integer homeB2=lastWeekStats.get(game.getHomeBench2());</b>
+<b class="nc"><i class="no-highlight">140</i>&nbsp;            Integer homePoints= (int) Math.round(homePg+homeSg+homeSf+homePf+homeC+</b>
+<b class="nc"><i class="no-highlight">141</i>&nbsp;                    (0.5*homeB1)+(0.5*homeB2));</b>
+<i class="no-highlight">142</i>&nbsp;
+<b class="nc"><i class="no-highlight">143</i>&nbsp;            Integer awayPg=lastWeekStats.get(game.getStartAwayPG());</b>
+<b class="nc"><i class="no-highlight">144</i>&nbsp;            Integer awaySg=lastWeekStats.get(game.getStartAwaySG());</b>
+<b class="nc"><i class="no-highlight">145</i>&nbsp;            Integer awaySf=lastWeekStats.get(game.getStartAwaySF());</b>
+<b class="nc"><i class="no-highlight">146</i>&nbsp;            Integer awayPf=lastWeekStats.get(game.getStartAwayPF());</b>
+<b class="nc"><i class="no-highlight">147</i>&nbsp;            Integer awayC=lastWeekStats.get(game.getStartAwayC());</b>
+<b class="nc"><i class="no-highlight">148</i>&nbsp;            Integer awayB1=lastWeekStats.get(game.getAwayBench1());</b>
+<b class="nc"><i class="no-highlight">149</i>&nbsp;            Integer awayB2=lastWeekStats.get(game.getAwayBench2());</b>
+<b class="nc"><i class="no-highlight">150</i>&nbsp;            Integer awayPoints= (int) Math.round(awayPg+awaySg+awaySf+awayPf+awayC+</b>
+<b class="nc"><i class="no-highlight">151</i>&nbsp;                    (0.5*awayB1)+(0.5*awayB2));</b>
+<i class="no-highlight">152</i>&nbsp;
+<b class="nc"><i class="no-highlight">153</i>&nbsp;            game.setHomePoints(homePoints);</b>
+<b class="nc"><i class="no-highlight">154</i>&nbsp;            game.setAwayPoints(awayPoints);</b>
+<i class="no-highlight">155</i>&nbsp;
+<i class="no-highlight">156</i>&nbsp;            // pull teams records to update their records
+<b class="nc"><i class="no-highlight">157</i>&nbsp;            FantasyTeam homeTeam = teamMap.get(game.getHomeTeamID());</b>
+<b class="nc"><i class="no-highlight">158</i>&nbsp;            FantasyTeam awayTeam = teamMap.get(game.getAwayTeamID());</b>
+<i class="no-highlight">159</i>&nbsp;
+<i class="no-highlight">160</i>&nbsp;            // add to points scored and points_against for home team
+<b class="nc"><i class="no-highlight">161</i>&nbsp;            homeTeam.setPointsScored(homeTeam.getPointsScored() + homePoints);</b>
+<b class="nc"><i class="no-highlight">162</i>&nbsp;            homeTeam.setPointsAgainst(homeTeam.getPointsAgainst() + awayPoints);</b>
+<i class="no-highlight">163</i>&nbsp;
+<i class="no-highlight">164</i>&nbsp;            // add to points scored and points_against for away team
+<b class="nc"><i class="no-highlight">165</i>&nbsp;            awayTeam.setPointsScored(awayTeam.getPointsScored() + awayPoints);</b>
+<b class="nc"><i class="no-highlight">166</i>&nbsp;            awayTeam.setPointsAgainst(awayTeam.getPointsAgainst() + homePoints);</b>
+<i class="no-highlight">167</i>&nbsp;
+<i class="no-highlight">168</i>&nbsp;            // update home points and away points and winner
+<b class="nc"><i class="no-highlight">169</i>&nbsp;            if(homePoints &lt; awayPoints) {</b>
+<i class="no-highlight">170</i>&nbsp;                // if home loses and away wins, set the game winner to the away team
+<b class="nc"><i class="no-highlight">171</i>&nbsp;                game.setWinner(game.getAwayTeamID());</b>
+<i class="no-highlight">172</i>&nbsp;
+<i class="no-highlight">173</i>&nbsp;                // add a loss to the home team and a win to the away team
+<b class="nc"><i class="no-highlight">174</i>&nbsp;                homeTeam.setTeamLosses(homeTeam.getTeamLosses() + 1);</b>
+<b class="nc"><i class="no-highlight">175</i>&nbsp;                awayTeam.setTeamWins(awayTeam.getTeamWins() + 1);</b>
+<i class="no-highlight">176</i>&nbsp;
+<i class="no-highlight">177</i>&nbsp;            } else {
+<i class="no-highlight">178</i>&nbsp;                // otherwise the home team wins, set the game winner to the home team
+<b class="nc"><i class="no-highlight">179</i>&nbsp;                game.setWinner(game.getHomeTeamID());</b>
+<i class="no-highlight">180</i>&nbsp;
+<i class="no-highlight">181</i>&nbsp;                // add a win to the home team and a loss to the away team
+<b class="nc"><i class="no-highlight">182</i>&nbsp;                homeTeam.setTeamWins(homeTeam.getTeamWins() + 1);</b>
+<b class="nc"><i class="no-highlight">183</i>&nbsp;                awayTeam.setTeamLosses(awayTeam.getTeamLosses() + 1);</b>
+<i class="no-highlight">184</i>&nbsp;            }
+<i class="no-highlight">185</i>&nbsp;
+<i class="no-highlight">186</i>&nbsp;            // done processing game, add it to the list to be updated
+<b class="nc"><i class="no-highlight">187</i>&nbsp;            gamesToUpdate.add(game);</b>
+<i class="no-highlight">188</i>&nbsp;
+<i class="no-highlight">189</i>&nbsp;            // done processing home team and away team, add both to teamsToUpdate
+<b class="nc"><i class="no-highlight">190</i>&nbsp;            teamsToUpdate.add(homeTeam);</b>
+<b class="nc"><i class="no-highlight">191</i>&nbsp;            teamsToUpdate.add(awayTeam);</b>
+<i class="no-highlight">192</i>&nbsp;
+<b class="nc"><i class="no-highlight">193</i>&nbsp;        }</b>
+<i class="no-highlight">194</i>&nbsp;
+<b class="nc"><i class="no-highlight">195</i>&nbsp;        gameService.postMultipleGames(gamesToUpdate);</b>
+<b class="nc"><i class="no-highlight">196</i>&nbsp;        teamService.postMultipleTeams(teamsToUpdate);</b>
+<i class="no-highlight">197</i>&nbsp;    }
+<i class="no-highlight">198</i>&nbsp;
+<i class="no-highlight">199</i>&nbsp;//    public List&lt;FantasyTeam&gt;teamPlayingThisWeek(List&lt;FantasyGame&gt; lastWeekGameList){
+<i class="no-highlight">200</i>&nbsp;//
+<i class="no-highlight">201</i>&nbsp;//        for (FantasyGame game:lastWeekGameList){
+<i class="no-highlight">202</i>&nbsp;//            teamService.getByID(game.getHomeTeamID());
+<i class="no-highlight">203</i>&nbsp;//
+<i class="no-highlight">204</i>&nbsp;//        }
+<i class="no-highlight">205</i>&nbsp;//    }
+<i class="no-highlight">206</i>&nbsp;
+<i class="no-highlight">207</i>&nbsp;}
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-12-11 15:53</div>
+</div>
+</body>
+</html>

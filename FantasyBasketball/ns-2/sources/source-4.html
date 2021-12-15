@@ -1,0 +1,409 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > fantasyLeagueController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">FantasyBasketball.controllers</a>
+</div>
+
+<h1>Coverage Summary for Class: fantasyLeagueController (FantasyBasketball.controllers)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">fantasyLeagueController</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    18.2%
+  </span>
+  <span class="absValue">
+    (2/11)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    2%
+  </span>
+  <span class="absValue">
+    (2/100)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package FantasyBasketball.controllers;
+<i class="no-highlight">2</i>&nbsp;
+<i class="no-highlight">3</i>&nbsp;import FantasyBasketball.exceptions.resourceException;
+<i class="no-highlight">4</i>&nbsp;import FantasyBasketball.exceptions.resourceNotFoundException;
+<i class="no-highlight">5</i>&nbsp;import FantasyBasketball.models.Client;
+<i class="no-highlight">6</i>&nbsp;import FantasyBasketball.models.FantasyGame;
+<i class="no-highlight">7</i>&nbsp;import FantasyBasketball.models.FantasyLeague;
+<i class="no-highlight">8</i>&nbsp;import FantasyBasketball.models.FantasyPlayer;
+<i class="no-highlight">9</i>&nbsp;import FantasyBasketball.repositories.playerDataRepository;
+<i class="no-highlight">10</i>&nbsp;import FantasyBasketball.services.fantasyLeagueService;
+<i class="no-highlight">11</i>&nbsp;import FantasyBasketball.services.fantasyPlayerService;
+<i class="no-highlight">12</i>&nbsp;import FantasyBasketball.utilities.FantasyLeagueUtility;
+<i class="no-highlight">13</i>&nbsp;import FantasyBasketball.utilities.robinRoundScheduler;
+<i class="no-highlight">14</i>&nbsp;import org.slf4j.Logger;
+<i class="no-highlight">15</i>&nbsp;import org.slf4j.LoggerFactory;
+<i class="no-highlight">16</i>&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+<i class="no-highlight">17</i>&nbsp;import org.springframework.dao.DataIntegrityViolationException;
+<i class="no-highlight">18</i>&nbsp;import org.springframework.format.annotation.DateTimeFormat;
+<i class="no-highlight">19</i>&nbsp;import org.springframework.stereotype.Controller;
+<i class="no-highlight">20</i>&nbsp;import org.springframework.http.HttpStatus;
+<i class="no-highlight">21</i>&nbsp;import org.springframework.http.ResponseEntity;
+<i class="no-highlight">22</i>&nbsp;import org.springframework.web.bind.annotation.*;
+<i class="no-highlight">23</i>&nbsp;
+<i class="no-highlight">24</i>&nbsp;import javax.servlet.http.HttpServletRequest;
+<i class="no-highlight">25</i>&nbsp;
+<i class="no-highlight">26</i>&nbsp;import java.time.LocalDate;
+<i class="no-highlight">27</i>&nbsp;import java.util.Hashtable;
+<i class="no-highlight">28</i>&nbsp;import java.util.List;
+<i class="no-highlight">29</i>&nbsp;
+<i class="no-highlight">30</i>&nbsp;import static FantasyBasketball.controllers.controllerUtils.*;
+<i class="no-highlight">31</i>&nbsp;
+<i class="no-highlight">32</i>&nbsp;@Controller
+<i class="no-highlight">33</i>&nbsp;public class fantasyLeagueController {
+<i class="no-highlight">34</i>&nbsp;
+<i class="no-highlight">35</i>&nbsp;    @Autowired
+<i class="no-highlight">36</i>&nbsp;    fantasyLeagueService fantasyLeagueService;
+<i class="no-highlight">37</i>&nbsp;
+<i class="no-highlight">38</i>&nbsp;    @Autowired
+<i class="no-highlight">39</i>&nbsp;    fantasyPlayerService fantasyPlayerService;
+<i class="no-highlight">40</i>&nbsp;
+<i class="no-highlight">41</i>&nbsp;    @Autowired
+<i class="no-highlight">42</i>&nbsp;    playerDataRepository dataRepo;
+<i class="no-highlight">43</i>&nbsp;
+<b class="fc"><i class="no-highlight">44</i>&nbsp;    private static final Logger log = LoggerFactory.getLogger(fantasyLeagueController.class);</b>
+<i class="no-highlight">45</i>&nbsp;
+<i class="no-highlight">46</i>&nbsp;    private final HttpServletRequest request;
+<i class="no-highlight">47</i>&nbsp;
+<i class="no-highlight">48</i>&nbsp;    // default constructor for fantasyLeagueController class
+<i class="no-highlight">49</i>&nbsp;    @Autowired
+<b class="fc"><i class="no-highlight">50</i>&nbsp;    public fantasyLeagueController(HttpServletRequest request) { this.request = request; }</b>
+<i class="no-highlight">51</i>&nbsp;
+<i class="no-highlight">52</i>&nbsp;    @RequestMapping(value = &quot;/fantasyLeagues&quot;, method = RequestMethod.GET)
+<i class="no-highlight">53</i>&nbsp;    public ResponseEntity&lt;?&gt; getLeaguesByTemplate(@RequestParam(value = &quot;league_id&quot;, required = false) Integer league_id,
+<i class="no-highlight">54</i>&nbsp;                                                  @RequestParam(value = &quot;league_name&quot;, required = false) String league_name,
+<i class="no-highlight">55</i>&nbsp;                                                  @RequestParam(value = &quot;admin_id&quot;, required = false) Integer admin_id,
+<i class="no-highlight">56</i>&nbsp;                                                  @RequestParam(value = &quot;league_size&quot;, required = false) Integer league_size,
+<i class="no-highlight">57</i>&nbsp;                                                  @RequestParam(value = &quot;draft_finished&quot;, required = false) Boolean draft_finished,
+<i class="no-highlight">58</i>&nbsp;                                                  @RequestParam(value = &quot;league_start_date&quot;, required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate league_start_date,
+<i class="no-highlight">59</i>&nbsp;                                                  @RequestParam(value = &quot;num_weeks&quot;, required = false) Integer num_weeks) {
+<i class="no-highlight">60</i>&nbsp;        try {
+<i class="no-highlight">61</i>&nbsp;
+<i class="no-highlight">62</i>&nbsp;            // log GET request and get client id
+<b class="nc"><i class="no-highlight">63</i>&nbsp;            logGetRequest(request, log);</b>
+<b class="nc"><i class="no-highlight">64</i>&nbsp;            Integer client_id = getClientId(request);</b>
+<i class="no-highlight">65</i>&nbsp;
+<b class="nc"><i class="no-highlight">66</i>&nbsp;            List&lt;FantasyLeague&gt; result = fantasyLeagueService.getLeaguesByTemplate(league_id,</b>
+<i class="no-highlight">67</i>&nbsp;                    client_id,
+<i class="no-highlight">68</i>&nbsp;                    league_name,
+<i class="no-highlight">69</i>&nbsp;                    admin_id,
+<i class="no-highlight">70</i>&nbsp;                    league_size,
+<i class="no-highlight">71</i>&nbsp;                    draft_finished,
+<i class="no-highlight">72</i>&nbsp;                    league_start_date,
+<i class="no-highlight">73</i>&nbsp;                    num_weeks);
+<b class="nc"><i class="no-highlight">74</i>&nbsp;            return new ResponseEntity&lt;&gt;(result, HttpStatus.OK);</b>
+<i class="no-highlight">75</i>&nbsp;
+<b class="nc"><i class="no-highlight">76</i>&nbsp;        } catch (Exception e) {</b>
+<b class="nc"><i class="no-highlight">77</i>&nbsp;            log.error(&quot;Exception on GET: &quot;, e);</b>
+<b class="nc"><i class="no-highlight">78</i>&nbsp;            return new ResponseEntity&lt;&gt;(HttpStatus.INTERNAL_SERVER_ERROR);</b>
+<i class="no-highlight">79</i>&nbsp;        }
+<i class="no-highlight">80</i>&nbsp;    }
+<i class="no-highlight">81</i>&nbsp;
+<i class="no-highlight">82</i>&nbsp;    @RequestMapping(value = &quot;/fantasyLeagues&quot;, method = RequestMethod.POST)
+<i class="no-highlight">83</i>&nbsp;    public ResponseEntity&lt;?&gt; postLeagues(@RequestBody FantasyLeague newLeague) {
+<i class="no-highlight">84</i>&nbsp;
+<i class="no-highlight">85</i>&nbsp;        try {
+<i class="no-highlight">86</i>&nbsp;
+<i class="no-highlight">87</i>&nbsp;            // log post request and get client id
+<b class="nc"><i class="no-highlight">88</i>&nbsp;            logPostRequest(request, log, newLeague.toString());</b>
+<b class="nc"><i class="no-highlight">89</i>&nbsp;            Integer client_id = getClientId(request);</b>
+<i class="no-highlight">90</i>&nbsp;
+<i class="no-highlight">91</i>&nbsp;
+<i class="no-highlight">92</i>&nbsp;            // set client id and check inputs
+<b class="nc"><i class="no-highlight">93</i>&nbsp;            newLeague.setClientID(client_id);</b>
+<b class="nc"><i class="no-highlight">94</i>&nbsp;            fantasyLeagueService.checkPostInputs(newLeague);</b>
+<i class="no-highlight">95</i>&nbsp;
+<i class="no-highlight">96</i>&nbsp;            // Regular post
+<b class="nc"><i class="no-highlight">97</i>&nbsp;            List&lt;FantasyLeague&gt; result = fantasyLeagueService.postLeagues(newLeague);</b>
+<i class="no-highlight">98</i>&nbsp;
+<i class="no-highlight">99</i>&nbsp;            // TODO: populate fantasy_player table with player_data table on creation
+<i class="no-highlight">100</i>&nbsp;
+<b class="nc"><i class="no-highlight">101</i>&nbsp;            return new ResponseEntity&lt;&gt;(result, HttpStatus.CREATED);</b>
+<i class="no-highlight">102</i>&nbsp;
+<b class="nc"><i class="no-highlight">103</i>&nbsp;        } catch(resourceException e) {</b>
+<i class="no-highlight">104</i>&nbsp;            // exception thrown if League instance is not formatted correctly
+<b class="nc"><i class="no-highlight">105</i>&nbsp;            log.error(&quot;Exception on POST: &quot; + e.getMessage());</b>
+<b class="nc"><i class="no-highlight">106</i>&nbsp;            return new ResponseEntity&lt;&gt;(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);</b>
+<b class="nc"><i class="no-highlight">107</i>&nbsp;        } catch (Exception e) {</b>
+<i class="no-highlight">108</i>&nbsp;            // other exceptions
+<b class="nc"><i class="no-highlight">109</i>&nbsp;            log.error(&quot;Exception on POST: &quot; + e.getMessage());</b>
+<b class="nc"><i class="no-highlight">110</i>&nbsp;            return new ResponseEntity&lt;&gt;(HttpStatus.INTERNAL_SERVER_ERROR);</b>
+<i class="no-highlight">111</i>&nbsp;        }
+<i class="no-highlight">112</i>&nbsp;    }
+<i class="no-highlight">113</i>&nbsp;
+<i class="no-highlight">114</i>&nbsp;    @RequestMapping(value = &quot;/fantasyLeagues&quot;, method = RequestMethod.PUT)
+<i class="no-highlight">115</i>&nbsp;    public ResponseEntity&lt;?&gt; updateLeagues(@RequestBody FantasyLeague fantasyLeague) {
+<i class="no-highlight">116</i>&nbsp;        try {
+<i class="no-highlight">117</i>&nbsp;
+<i class="no-highlight">118</i>&nbsp;            // log put request and get client id
+<b class="nc"><i class="no-highlight">119</i>&nbsp;            logPutRequest(request, log, fantasyLeague.toString());</b>
+<b class="nc"><i class="no-highlight">120</i>&nbsp;            Integer client_id = getClientId(request);</b>
+<i class="no-highlight">121</i>&nbsp;
+<i class="no-highlight">122</i>&nbsp;            // Checks to make sure the input is valid to insert in DB
+<b class="nc"><i class="no-highlight">123</i>&nbsp;            fantasyLeague.setClientID(client_id);</b>
+<b class="nc"><i class="no-highlight">124</i>&nbsp;            fantasyLeagueService.checkPutInputs(fantasyLeague);</b>
+<i class="no-highlight">125</i>&nbsp;
+<i class="no-highlight">126</i>&nbsp;            // Regular put
+<b class="nc"><i class="no-highlight">127</i>&nbsp;            List&lt;FantasyLeague&gt; result = fantasyLeagueService.updateLeagues(fantasyLeague);</b>
+<b class="nc"><i class="no-highlight">128</i>&nbsp;            return new ResponseEntity&lt;&gt;(result, HttpStatus.OK);</b>
+<i class="no-highlight">129</i>&nbsp;
+<b class="nc"><i class="no-highlight">130</i>&nbsp;        } catch (resourceException e) {</b>
+<i class="no-highlight">131</i>&nbsp;            // exception thrown if League instance is not formatted correctly
+<b class="nc"><i class="no-highlight">132</i>&nbsp;            log.error(&quot;Exception on PUT: &quot; + e.getMessage());</b>
+<b class="nc"><i class="no-highlight">133</i>&nbsp;            return new ResponseEntity&lt;&gt;(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);</b>
+<b class="nc"><i class="no-highlight">134</i>&nbsp;        } catch (resourceNotFoundException e) {</b>
+<i class="no-highlight">135</i>&nbsp;            // If league not found in the database, throw exception not found
+<b class="nc"><i class="no-highlight">136</i>&nbsp;            log.error(&quot;Exception on PUT: &quot; + e.getMessage());</b>
+<b class="nc"><i class="no-highlight">137</i>&nbsp;            return new ResponseEntity&lt;&gt;(e.getMessage(), HttpStatus.NOT_FOUND);</b>
+<b class="nc"><i class="no-highlight">138</i>&nbsp;        } catch (Exception e) {</b>
+<i class="no-highlight">139</i>&nbsp;            // other exceptions
+<b class="nc"><i class="no-highlight">140</i>&nbsp;            log.error(&quot;Exception on PUT: &quot; + e.getMessage());</b>
+<b class="nc"><i class="no-highlight">141</i>&nbsp;            return new ResponseEntity&lt;&gt;(HttpStatus.INTERNAL_SERVER_ERROR);</b>
+<i class="no-highlight">142</i>&nbsp;        }
+<i class="no-highlight">143</i>&nbsp;    }
+<i class="no-highlight">144</i>&nbsp;
+<i class="no-highlight">145</i>&nbsp;    @RequestMapping(value = &quot;/fantasyLeagues&quot;, method = RequestMethod.DELETE)
+<i class="no-highlight">146</i>&nbsp;    public ResponseEntity&lt;?&gt; deleteLeagues(@RequestParam(value = &quot;league_id&quot;) Integer league_id) {
+<i class="no-highlight">147</i>&nbsp;        try {
+<i class="no-highlight">148</i>&nbsp;
+<i class="no-highlight">149</i>&nbsp;            // log delete request
+<b class="nc"><i class="no-highlight">150</i>&nbsp;            logDeleteRequest(request, log);</b>
+<i class="no-highlight">151</i>&nbsp;
+<i class="no-highlight">152</i>&nbsp;            // deletion
+<b class="nc"><i class="no-highlight">153</i>&nbsp;            fantasyLeagueService.deleteLeagues(league_id);</b>
+<b class="nc"><i class="no-highlight">154</i>&nbsp;            return new ResponseEntity&lt;&gt;(HttpStatus.OK);</b>
+<i class="no-highlight">155</i>&nbsp;
+<b class="nc"><i class="no-highlight">156</i>&nbsp;        } catch (resourceNotFoundException e) {</b>
+<b class="nc"><i class="no-highlight">157</i>&nbsp;            log.error(&quot;Exception on DELETE: &quot;, e);</b>
+<b class="nc"><i class="no-highlight">158</i>&nbsp;            return new ResponseEntity&lt;&gt;(e.getMessage(), HttpStatus.NOT_FOUND);</b>
+<b class="nc"><i class="no-highlight">159</i>&nbsp;        } catch (Exception e) {</b>
+<i class="no-highlight">160</i>&nbsp;            // all other exceptions
+<b class="nc"><i class="no-highlight">161</i>&nbsp;            log.error(&quot;Exception on DELETE: &quot;, e);</b>
+<b class="nc"><i class="no-highlight">162</i>&nbsp;            return new ResponseEntity&lt;&gt;(HttpStatus.INTERNAL_SERVER_ERROR);</b>
+<i class="no-highlight">163</i>&nbsp;        }
+<i class="no-highlight">164</i>&nbsp;    }
+<i class="no-highlight">165</i>&nbsp;
+<i class="no-highlight">166</i>&nbsp;    @RequestMapping(value = &quot;/fantasyLeagues/scheduleGames&quot;, method = RequestMethod.POST)
+<i class="no-highlight">167</i>&nbsp;    public ResponseEntity&lt;?&gt; scheduleGames(@RequestParam(value = &quot;league_id&quot;) Integer league_id) {
+<i class="no-highlight">168</i>&nbsp;
+<i class="no-highlight">169</i>&nbsp;        try {
+<i class="no-highlight">170</i>&nbsp;
+<i class="no-highlight">171</i>&nbsp;            // log schedule generation and get client id
+<b class="nc"><i class="no-highlight">172</i>&nbsp;            logGameScheduling(request, log, league_id);</b>
+<b class="nc"><i class="no-highlight">173</i>&nbsp;            Integer client_id = getClientId(request);</b>
+<i class="no-highlight">174</i>&nbsp;
+<i class="no-highlight">175</i>&nbsp;            // get teams within league and current league
+<b class="nc"><i class="no-highlight">176</i>&nbsp;            List&lt;Integer&gt; teamIDList = fantasyLeagueService.getTeamIDs(league_id, client_id);</b>
+<b class="nc"><i class="no-highlight">177</i>&nbsp;            FantasyLeague fantasyLeague = fantasyLeagueService.getLeaguesByID(league_id).get(0);</b>
+<i class="no-highlight">178</i>&nbsp;
+<i class="no-highlight">179</i>&nbsp;            // make sure that the number of teams found in db are equal to league_size in league
+<b class="nc"><i class="no-highlight">180</i>&nbsp;            fantasyLeagueService.checkValidSize(fantasyLeague, teamIDList.size());</b>
+<i class="no-highlight">181</i>&nbsp;
+<i class="no-highlight">182</i>&nbsp;            // Check if the schedule for this league is already generated
+<b class="nc"><i class="no-highlight">183</i>&nbsp;            fantasyLeagueService.checkIfScheduleGenerated(fantasyLeague.getLeagueID());</b>
+<i class="no-highlight">184</i>&nbsp;
+<i class="no-highlight">185</i>&nbsp;            // get proposed schedule, instantiate scheduler service &amp; create schedule
+<b class="nc"><i class="no-highlight">186</i>&nbsp;            robinRoundScheduler scheduler = new robinRoundScheduler(teamIDList, fantasyLeague.getLeagueStartDate(), fantasyLeague.getNumWeeks());</b>
+<b class="nc"><i class="no-highlight">187</i>&nbsp;            Hashtable&lt;LocalDate, List&lt;List&lt;Integer&gt;&gt;&gt; schedule = scheduler.createSchedule();</b>
+<i class="no-highlight">188</i>&nbsp;
+<i class="no-highlight">189</i>&nbsp;            // save the games generated by the scheduler
+<b class="nc"><i class="no-highlight">190</i>&nbsp;            List&lt;FantasyGame&gt; result = fantasyLeagueService.postGames(schedule, league_id, client_id);</b>
+<i class="no-highlight">191</i>&nbsp;
+<i class="no-highlight">192</i>&nbsp;            // return result of schedules
+<b class="nc"><i class="no-highlight">193</i>&nbsp;            return new ResponseEntity&lt;&gt;(result, HttpStatus.CREATED);</b>
+<i class="no-highlight">194</i>&nbsp;
+<b class="nc"><i class="no-highlight">195</i>&nbsp;        } catch (resourceException e) {</b>
+<b class="nc"><i class="no-highlight">196</i>&nbsp;            log.error(&quot;Exception on schedule generation: &quot; + e.getMessage());</b>
+<b class="nc"><i class="no-highlight">197</i>&nbsp;            return new ResponseEntity&lt;&gt;(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);</b>
+<b class="nc"><i class="no-highlight">198</i>&nbsp;        } catch (Exception e) {</b>
+<i class="no-highlight">199</i>&nbsp;            // all other exceptions
+<b class="nc"><i class="no-highlight">200</i>&nbsp;            log.error(&quot;Exception on schedule generation: &quot; + e.getMessage());</b>
+<b class="nc"><i class="no-highlight">201</i>&nbsp;            return new ResponseEntity&lt;&gt;(HttpStatus.INTERNAL_SERVER_ERROR);</b>
+<i class="no-highlight">202</i>&nbsp;        }
+<i class="no-highlight">203</i>&nbsp;    }
+<i class="no-highlight">204</i>&nbsp;
+<i class="no-highlight">205</i>&nbsp;    @RequestMapping(value = &quot;/fantasyLeague/draft/draftPlayer&quot;, method = RequestMethod.PUT)
+<i class="no-highlight">206</i>&nbsp;    public ResponseEntity&lt;?&gt; updateDraftedPlayer(@RequestBody FantasyPlayer fantasyPlayer) {
+<i class="no-highlight">207</i>&nbsp;        try {
+<i class="no-highlight">208</i>&nbsp;
+<i class="no-highlight">209</i>&nbsp;            // log drafting the player and get the client id
+<b class="nc"><i class="no-highlight">210</i>&nbsp;            logPlayerDrafting(request, log, fantasyPlayer.toString());</b>
+<b class="nc"><i class="no-highlight">211</i>&nbsp;            Integer client_id = getClientId(request);</b>
+<i class="no-highlight">212</i>&nbsp;
+<i class="no-highlight">213</i>&nbsp;            // TODO: Filter and check inputs
+<i class="no-highlight">214</i>&nbsp;
+<i class="no-highlight">215</i>&nbsp;            // Check that league and team exist and that their ids are provided in the body
+<b class="nc"><i class="no-highlight">216</i>&nbsp;            fantasyLeagueService.checkDraftInputs(fantasyPlayer.getLeagueID(), fantasyPlayer.getTeamID(), client_id);</b>
+<i class="no-highlight">217</i>&nbsp;
+<i class="no-highlight">218</i>&nbsp;            // set player&#39;s client id
+<b class="nc"><i class="no-highlight">219</i>&nbsp;            fantasyPlayer.setClientID(client_id);</b>
+<b class="nc"><i class="no-highlight">220</i>&nbsp;            fantasyLeagueService.pickPlayer(fantasyPlayer, client_id);</b>
+<i class="no-highlight">221</i>&nbsp;
+<i class="no-highlight">222</i>&nbsp;            // save the draft pick into db
+<b class="nc"><i class="no-highlight">223</i>&nbsp;            List&lt;FantasyPlayer&gt; result = fantasyPlayerService.draftFantasyPlayer(fantasyPlayer);</b>
+<b class="nc"><i class="no-highlight">224</i>&nbsp;            return new ResponseEntity&lt;&gt;(result, HttpStatus.OK);</b>
+<i class="no-highlight">225</i>&nbsp;
+<b class="nc"><i class="no-highlight">226</i>&nbsp;        } catch (resourceNotFoundException | resourceException e) {</b>
+<i class="no-highlight">227</i>&nbsp;            // If league not found in the database, throw exception not found
+<b class="nc"><i class="no-highlight">228</i>&nbsp;            log.error(&quot;Exception on PUT: &quot; + e.getMessage());</b>
+<b class="nc"><i class="no-highlight">229</i>&nbsp;            return new ResponseEntity&lt;&gt;(e.getMessage(), HttpStatus.NOT_FOUND);</b>
+<b class="nc"><i class="no-highlight">230</i>&nbsp;        } catch (DataIntegrityViolationException e) {</b>
+<b class="nc"><i class="no-highlight">231</i>&nbsp;            log.error(&quot;Exception on PUT: &quot; + e.getMessage());</b>
+<b class="nc"><i class="no-highlight">232</i>&nbsp;            return new ResponseEntity&lt;&gt;(&quot;This action is not allowed, please check values and try again.&quot;,</b>
+<i class="no-highlight">233</i>&nbsp;                    HttpStatus.UNPROCESSABLE_ENTITY);
+<b class="nc"><i class="no-highlight">234</i>&nbsp;        } catch (Exception e) {</b>
+<i class="no-highlight">235</i>&nbsp;            // other exceptions
+<b class="nc"><i class="no-highlight">236</i>&nbsp;            log.error(&quot;Exception on PUT: &quot; + e.getMessage());</b>
+<b class="nc"><i class="no-highlight">237</i>&nbsp;            return new ResponseEntity&lt;&gt;(HttpStatus.INTERNAL_SERVER_ERROR);</b>
+<i class="no-highlight">238</i>&nbsp;        }
+<i class="no-highlight">239</i>&nbsp;    }
+<i class="no-highlight">240</i>&nbsp;
+<i class="no-highlight">241</i>&nbsp;    @RequestMapping(value = &quot;/fantasyLeague/draft/availablePlayers&quot;, method = RequestMethod.GET)
+<i class="no-highlight">242</i>&nbsp;    public ResponseEntity&lt;?&gt; getAvailablePlayers(@RequestParam(value = &quot;league_id&quot;, required = false) Integer league_id,
+<i class="no-highlight">243</i>&nbsp;                                                 @RequestParam(value = &quot;first_name&quot;, required = false) String first_name,
+<i class="no-highlight">244</i>&nbsp;                                                 @RequestParam(value = &quot;last_name&quot;, required = false) String last_name,
+<i class="no-highlight">245</i>&nbsp;                                                 @RequestParam(value = &quot;nba_team&quot;, required = false) String nba_team,
+<i class="no-highlight">246</i>&nbsp;                                                 @RequestParam(value = &quot;position&quot;, required = false) String position) {
+<i class="no-highlight">247</i>&nbsp;        try {
+<i class="no-highlight">248</i>&nbsp;
+<i class="no-highlight">249</i>&nbsp;            // log GET request and get client id
+<b class="nc"><i class="no-highlight">250</i>&nbsp;            logGetRequest(request, log);</b>
+<b class="nc"><i class="no-highlight">251</i>&nbsp;            Integer client_id = getClientId(request);</b>
+<i class="no-highlight">252</i>&nbsp;
+<i class="no-highlight">253</i>&nbsp;            // find available players
+<b class="nc"><i class="no-highlight">254</i>&nbsp;            List&lt;FantasyPlayer&gt; result = fantasyPlayerService.getAvailablePlayers(league_id,</b>
+<i class="no-highlight">255</i>&nbsp;                    client_id, first_name, last_name, nba_team, position);
+<i class="no-highlight">256</i>&nbsp;
+<b class="nc"><i class="no-highlight">257</i>&nbsp;            return new ResponseEntity&lt;&gt;(result, HttpStatus.OK);</b>
+<i class="no-highlight">258</i>&nbsp;
+<b class="nc"><i class="no-highlight">259</i>&nbsp;        } catch (Exception e) {</b>
+<b class="nc"><i class="no-highlight">260</i>&nbsp;            log.error(&quot;Exception on GET: &quot;, e);</b>
+<b class="nc"><i class="no-highlight">261</i>&nbsp;            return new ResponseEntity&lt;&gt;(HttpStatus.INTERNAL_SERVER_ERROR);</b>
+<i class="no-highlight">262</i>&nbsp;        }
+<i class="no-highlight">263</i>&nbsp;    }
+<i class="no-highlight">264</i>&nbsp;
+<i class="no-highlight">265</i>&nbsp;    @RequestMapping(value = &quot;/fantasyLeague/playerCreation&quot;, method = RequestMethod.POST)
+<i class="no-highlight">266</i>&nbsp;    public ResponseEntity&lt;?&gt; playerCreation() {
+<i class="no-highlight">267</i>&nbsp;        try {
+<i class="no-highlight">268</i>&nbsp;
+<i class="no-highlight">269</i>&nbsp;            // log GET request and get client id
+<b class="nc"><i class="no-highlight">270</i>&nbsp;            logGetRequest(request, log);</b>
+<b class="nc"><i class="no-highlight">271</i>&nbsp;            Integer client_id = getClientId(request);</b>
+<i class="no-highlight">272</i>&nbsp;
+<i class="no-highlight">273</i>&nbsp;
+<b class="nc"><i class="no-highlight">274</i>&nbsp;            FantasyLeagueUtility newUtility= new FantasyLeagueUtility();</b>
+<b class="nc"><i class="no-highlight">275</i>&nbsp;            newUtility.API_player_importation(dataRepo);</b>
+<b class="nc"><i class="no-highlight">276</i>&nbsp;            return new ResponseEntity&lt;&gt;(HttpStatus.OK);</b>
+<i class="no-highlight">277</i>&nbsp;
+<b class="nc"><i class="no-highlight">278</i>&nbsp;        } catch (Exception e) {</b>
+<b class="nc"><i class="no-highlight">279</i>&nbsp;            log.error(&quot;Exception on GET: &quot;, e);</b>
+<b class="nc"><i class="no-highlight">280</i>&nbsp;            return new ResponseEntity&lt;&gt;(HttpStatus.INTERNAL_SERVER_ERROR);</b>
+<i class="no-highlight">281</i>&nbsp;        }
+<i class="no-highlight">282</i>&nbsp;    }
+<i class="no-highlight">283</i>&nbsp;
+<i class="no-highlight">284</i>&nbsp;    @RequestMapping(value = &quot;/fantasyLeague/draft/generateOrder&quot;, method = RequestMethod.GET)
+<i class="no-highlight">285</i>&nbsp;    public ResponseEntity&lt;?&gt; randomizeDraftOrder(@RequestParam(value = &quot;league_id&quot;, required = false) Integer league_id) {
+<i class="no-highlight">286</i>&nbsp;        try {
+<i class="no-highlight">287</i>&nbsp;
+<i class="no-highlight">288</i>&nbsp;            // log GET request and get client id
+<b class="nc"><i class="no-highlight">289</i>&nbsp;            logGetRequest(request, log);</b>
+<b class="nc"><i class="no-highlight">290</i>&nbsp;            Integer client_id = getClientId(request);</b>
+<i class="no-highlight">291</i>&nbsp;
+<i class="no-highlight">292</i>&nbsp;            // check if we are given a valid league id
+<b class="nc"><i class="no-highlight">293</i>&nbsp;            fantasyLeagueService.checkIfValidLeague(league_id);</b>
+<i class="no-highlight">294</i>&nbsp;
+<i class="no-highlight">295</i>&nbsp;            // generate draft order
+<b class="nc"><i class="no-highlight">296</i>&nbsp;            List&lt;Integer&gt; result = fantasyLeagueService.randomOrder(league_id, client_id);</b>
+<b class="nc"><i class="no-highlight">297</i>&nbsp;            return new ResponseEntity&lt;&gt;(result, HttpStatus.OK);</b>
+<i class="no-highlight">298</i>&nbsp;
+<b class="nc"><i class="no-highlight">299</i>&nbsp;        } catch (Exception e) {</b>
+<b class="nc"><i class="no-highlight">300</i>&nbsp;            log.error(&quot;Exception on GET: &quot; + e.getMessage());</b>
+<b class="nc"><i class="no-highlight">301</i>&nbsp;            return new ResponseEntity&lt;&gt;(HttpStatus.INTERNAL_SERVER_ERROR);</b>
+<i class="no-highlight">302</i>&nbsp;        }
+<i class="no-highlight">303</i>&nbsp;    }
+<i class="no-highlight">304</i>&nbsp;}
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-12-11 15:53</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,373 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > FantasyStatsUtility</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">FantasyBasketball.utilities</a>
+</div>
+
+<h1>Coverage Summary for Class: FantasyStatsUtility (FantasyBasketball.utilities)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">FantasyStatsUtility</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/11)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/127)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package FantasyBasketball.utilities;
+<i class="no-highlight">2</i>&nbsp;
+<i class="no-highlight">3</i>&nbsp;import FantasyBasketball.exceptions.resourceNotFoundException;
+<i class="no-highlight">4</i>&nbsp;import FantasyBasketball.models.Client;
+<i class="no-highlight">5</i>&nbsp;import FantasyBasketball.models.FantasyGame;
+<i class="no-highlight">6</i>&nbsp;import FantasyBasketball.models.FantasyPlayer;
+<i class="no-highlight">7</i>&nbsp;import FantasyBasketball.models.FantasyStats;
+<i class="no-highlight">8</i>&nbsp;import FantasyBasketball.repositories.clientRepository;
+<i class="no-highlight">9</i>&nbsp;import FantasyBasketball.repositories.fantasyGameRepository;
+<i class="no-highlight">10</i>&nbsp;import FantasyBasketball.repositories.fantasyPlayerRepository;
+<i class="no-highlight">11</i>&nbsp;import FantasyBasketball.repositories.fantasyStatsRepository;
+<i class="no-highlight">12</i>&nbsp;import org.json.JSONArray;
+<i class="no-highlight">13</i>&nbsp;import org.json.JSONObject;
+<i class="no-highlight">14</i>&nbsp;
+<i class="no-highlight">15</i>&nbsp;import java.io.IOException;
+<i class="no-highlight">16</i>&nbsp;import java.time.LocalDate;
+<i class="no-highlight">17</i>&nbsp;import java.time.ZoneId;
+<i class="no-highlight">18</i>&nbsp;import java.time.format.DateTimeFormatter;
+<i class="no-highlight">19</i>&nbsp;import java.util.*;
+<i class="no-highlight">20</i>&nbsp;
+<i class="no-highlight">21</i>&nbsp;
+<i class="no-highlight">22</i>&nbsp;
+<i class="no-highlight">23</i>&nbsp;// TODO: current_date and use start_date and end_date of the game, add new data to the already added stats
+<i class="no-highlight">24</i>&nbsp;
+<b class="nc"><i class="no-highlight">25</i>&nbsp;public class FantasyStatsUtility {</b>
+<i class="no-highlight">26</i>&nbsp;
+<i class="no-highlight">27</i>&nbsp;    // Try doing this only once as then copy the data from th first copy
+<i class="no-highlight">28</i>&nbsp;
+<i class="no-highlight">29</i>&nbsp;    // Function to start API calls to get player information from BallDontLie API
+<i class="no-highlight">30</i>&nbsp;    public void API_player_stats_importation(fantasyPlayerRepository playerRepo, fantasyGameRepository gameRepo,
+<i class="no-highlight">31</i>&nbsp;                                             fantasyStatsRepository statsRepo, clientRepository clientRepo,
+<i class="no-highlight">32</i>&nbsp;                                             Date end_date) throws IOException {
+<i class="no-highlight">33</i>&nbsp;        // Format for the Date
+<b class="nc"><i class="no-highlight">34</i>&nbsp;        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(&quot;yyyy-MM-dd&quot;);</b>
+<i class="no-highlight">35</i>&nbsp;
+<i class="no-highlight">36</i>&nbsp;        // Convert Date type to LocalDate
+<b class="nc"><i class="no-highlight">37</i>&nbsp;        LocalDate end_date1 = convertToLocalDate(end_date);</b>
+<i class="no-highlight">38</i>&nbsp;        
+<i class="no-highlight">39</i>&nbsp;        // Finding List of Games that happened during the given date
+<b class="nc"><i class="no-highlight">40</i>&nbsp;        List&lt;FantasyGame&gt; games_within_dates = gameRepo.findGamesGivenDate(end_date1);</b>
+<i class="no-highlight">41</i>&nbsp;        // if the list has game, then we get the API data
+<b class="nc"><i class="no-highlight">42</i>&nbsp;        if (games_within_dates.size()&gt;0) {</b>
+<i class="no-highlight">43</i>&nbsp;            
+<i class="no-highlight">44</i>&nbsp;            // Converting dates to string for API calls
+<b class="nc"><i class="no-highlight">45</i>&nbsp;            String start_date_game=(games_within_dates.get(0).getGameStartDate()).format(formatter);</b>
+<b class="nc"><i class="no-highlight">46</i>&nbsp;            String end_date_game=(games_within_dates.get(0).getGameEndDate()).format(formatter);</b>
+<i class="no-highlight">47</i>&nbsp;            
+<i class="no-highlight">48</i>&nbsp;            // Getting JSONObject from API calls
+<b class="nc"><i class="no-highlight">49</i>&nbsp;            JSONObject json = FantasyLeagueUtility.readJsonFromUrl(&quot;https://www.balldontlie.io/api/v1/stats?per_page=100&amp;start_date=&quot; +</b>
+<i class="no-highlight">50</i>&nbsp;                    start_date_game + &quot;&amp;end_date=&quot; + end_date_game);
+<i class="no-highlight">51</i>&nbsp;            
+<i class="no-highlight">52</i>&nbsp;            // Getting Metadata to find no. of pages
+<b class="nc"><i class="no-highlight">53</i>&nbsp;            JSONObject API_data = (JSONObject) json.get(&quot;meta&quot;);</b>
+<i class="no-highlight">54</i>&nbsp;            
+<i class="no-highlight">55</i>&nbsp;            // List of Players who played within this week
+<b class="nc"><i class="no-highlight">56</i>&nbsp;            List&lt;FantasyPlayer&gt; players_play_this_week = players_from_games(playerRepo, games_within_dates);</b>
+<i class="no-highlight">57</i>&nbsp;            
+<i class="no-highlight">58</i>&nbsp;            // HashMap of clients to get desired weights
+<b class="nc"><i class="no-highlight">59</i>&nbsp;            HashMap&lt;Integer, Client&gt; client_map = clientHashMap(clientRepo, games_within_dates);</b>
+<i class="no-highlight">60</i>&nbsp;
+<i class="no-highlight">61</i>&nbsp;            // Looping through all pages of the API
+<b class="nc"><i class="no-highlight">62</i>&nbsp;            for (int i = (int) API_data.get(&quot;current_page&quot;); i &lt; (int) API_data.get(&quot;total_pages&quot;); i++) {</b>
+<b class="nc"><i class="no-highlight">63</i>&nbsp;                String url = &quot;https://www.balldontlie.io/api/v1/stats?per_page=100&amp;start_date=&quot; + start_date_game</b>
+<i class="no-highlight">64</i>&nbsp;                        + &quot;&amp;end_date=&quot; + end_date_game + &quot;&amp;page=&quot; + i;
+<i class="no-highlight">65</i>&nbsp;                
+<i class="no-highlight">66</i>&nbsp;                // Putting the url in this function to add stats 
+<b class="nc"><i class="no-highlight">67</i>&nbsp;                API_player_to_stats(url, statsRepo, players_play_this_week, games_within_dates, client_map);</b>
+<i class="no-highlight">68</i>&nbsp;            }
+<i class="no-highlight">69</i>&nbsp;        }
+<i class="no-highlight">70</i>&nbsp;    }
+<i class="no-highlight">71</i>&nbsp;
+<i class="no-highlight">72</i>&nbsp;    // Function for each page url call to add stats for all players
+<i class="no-highlight">73</i>&nbsp;    public void API_player_to_stats(String url, fantasyStatsRepository statsRepo,
+<i class="no-highlight">74</i>&nbsp;                                    List&lt;FantasyPlayer&gt; players_play_this_week,
+<i class="no-highlight">75</i>&nbsp;                                    List&lt;FantasyGame&gt; games_within_dates,
+<i class="no-highlight">76</i>&nbsp;                                    HashMap&lt;Integer, Client&gt; client_map) throws IOException {
+<i class="no-highlight">77</i>&nbsp;        // Getting JSONObject from API calls
+<b class="nc"><i class="no-highlight">78</i>&nbsp;        JSONObject json = FantasyLeagueUtility.readJsonFromUrl(url);</b>
+<i class="no-highlight">79</i>&nbsp;        // Getting player data from json
+<b class="nc"><i class="no-highlight">80</i>&nbsp;        JSONArray json_data = (JSONArray) json.get(&quot;data&quot;);</b>
+<i class="no-highlight">81</i>&nbsp;        // For each player in the page
+<b class="nc"><i class="no-highlight">82</i>&nbsp;        for (int i = 0; i &lt; json_data.length(); i++) {</b>
+<i class="no-highlight">83</i>&nbsp;            // Getting stats and ID
+<b class="nc"><i class="no-highlight">84</i>&nbsp;            JSONObject players_all_data = (JSONObject) json_data.get(i);</b>
+<b class="nc"><i class="no-highlight">85</i>&nbsp;            JSONObject players_info = (JSONObject) players_all_data.get(&quot;player&quot;);</b>
+<b class="nc"><i class="no-highlight">86</i>&nbsp;            Integer ball_api_id = (Integer) players_info.get(&quot;id&quot;);</b>
+<i class="no-highlight">87</i>&nbsp;            // Confirming that Ball_API_ID is within the players playing this week 
+<b class="nc"><i class="no-highlight">88</i>&nbsp;            Integer cur_player_id = getPlayerId(players_play_this_week, ball_api_id);</b>
+<i class="no-highlight">89</i>&nbsp;            // If ball_api_id match confirmed we get a player_id, or -1
+<b class="nc"><i class="no-highlight">90</i>&nbsp;            if (cur_player_id != -1) {</b>
+<i class="no-highlight">91</i>&nbsp;                //System.out.println((String) players_info.get(&quot;first_name&quot;)+&quot; &quot;+(String) players_info.get(&quot;last_name&quot;));
+<i class="no-highlight">92</i>&nbsp;                // Creating new Fantasystats for the player and putting information for each stats
+<b class="nc"><i class="no-highlight">93</i>&nbsp;                FantasyStats stats = new FantasyStats();</b>
+<b class="nc"><i class="no-highlight">94</i>&nbsp;                stats.setPlayer_id(cur_player_id);</b>
+<b class="nc"><i class="no-highlight">95</i>&nbsp;                stats.setThree_points((Integer) players_all_data.get(&quot;fg3m&quot;));</b>
+<b class="nc"><i class="no-highlight">96</i>&nbsp;                stats.setTwo_points((Integer) players_all_data.get(&quot;fgm&quot;) - (Integer) players_all_data.get(&quot;fg3m&quot;));</b>
+<b class="nc"><i class="no-highlight">97</i>&nbsp;                stats.setFree_throws((Integer) players_all_data.get(&quot;ftm&quot;));</b>
+<b class="nc"><i class="no-highlight">98</i>&nbsp;                stats.setRebounds((Integer) players_all_data.get(&quot;reb&quot;));</b>
+<b class="nc"><i class="no-highlight">99</i>&nbsp;                stats.setAssists((Integer) players_all_data.get(&quot;ast&quot;));</b>
+<b class="nc"><i class="no-highlight">100</i>&nbsp;                stats.setBlocks((Integer) players_all_data.get(&quot;blk&quot;));</b>
+<b class="nc"><i class="no-highlight">101</i>&nbsp;                stats.setSteals((Integer) players_all_data.get(&quot;stl&quot;));</b>
+<b class="nc"><i class="no-highlight">102</i>&nbsp;                stats.setTurnovers((Integer) players_all_data.get(&quot;turnover&quot;));</b>
+<i class="no-highlight">103</i>&nbsp;                
+<i class="no-highlight">104</i>&nbsp;                // Finding all the client_id, leagues_id, schedule_id for the same player and updating them to stats
+<b class="nc"><i class="no-highlight">105</i>&nbsp;                ArrayList&lt;ArrayList&lt;Integer&gt;&gt; client_league_schedule_info = all_client_league_schedule_info(cur_player_id, games_within_dates);</b>
+<b class="nc"><i class="no-highlight">106</i>&nbsp;                for (int j = 0; j &lt; client_league_schedule_info.size(); j++) {</b>
+<b class="nc"><i class="no-highlight">107</i>&nbsp;                    ArrayList&lt;Integer&gt; each_list = client_league_schedule_info.get(j);</b>
+<b class="nc"><i class="no-highlight">108</i>&nbsp;                    Integer client_id = each_list.get(0);</b>
+<b class="nc"><i class="no-highlight">109</i>&nbsp;                    Integer league_id = each_list.get(1);</b>
+<b class="nc"><i class="no-highlight">110</i>&nbsp;                    Integer schedule_id = each_list.get(2);</b>
+<i class="no-highlight">111</i>&nbsp;                    // Confirming that the stats already exist, so we can update it
+<b class="nc"><i class="no-highlight">112</i>&nbsp;                    Integer stats_id = getStatID(statsRepo, client_id, league_id, schedule_id, cur_player_id);</b>
+<b class="nc"><i class="no-highlight">113</i>&nbsp;                    if (stats_id &gt; -1) {</b>
+<i class="no-highlight">114</i>&nbsp;                        // Saving the stats information
+<b class="nc"><i class="no-highlight">115</i>&nbsp;                        stats.setStats_id(stats_id);</b>
+<b class="nc"><i class="no-highlight">116</i>&nbsp;                        stats.setClient_id(client_id);</b>
+<b class="nc"><i class="no-highlight">117</i>&nbsp;                        stats.setLeague_id(league_id);</b>
+<b class="nc"><i class="no-highlight">118</i>&nbsp;                        stats.setSchedule_id(schedule_id);</b>
+<i class="no-highlight">119</i>&nbsp;                        
+<i class="no-highlight">120</i>&nbsp;                        // Finding total points through client weights
+<b class="nc"><i class="no-highlight">121</i>&nbsp;                        Integer total_points = total_points(client_map.get(client_id), stats);</b>
+<b class="nc"><i class="no-highlight">122</i>&nbsp;                        stats.setTot_points(total_points);</b>
+<i class="no-highlight">123</i>&nbsp;                        
+<i class="no-highlight">124</i>&nbsp;                        // Updating the stats
+<b class="nc"><i class="no-highlight">125</i>&nbsp;                        statsRepo.save(stats);</b>
+<i class="no-highlight">126</i>&nbsp;                    }
+<i class="no-highlight">127</i>&nbsp;                    //statsRepo.save(stats);
+<i class="no-highlight">128</i>&nbsp;                }
+<i class="no-highlight">129</i>&nbsp;            }
+<i class="no-highlight">130</i>&nbsp;        }
+<i class="no-highlight">131</i>&nbsp;    }
+<i class="no-highlight">132</i>&nbsp;
+<i class="no-highlight">133</i>&nbsp;    // Date to LocalDate convertor 
+<i class="no-highlight">134</i>&nbsp;    public LocalDate convertToLocalDate(Date dateToConvert) {
+<b class="nc"><i class="no-highlight">135</i>&nbsp;        return dateToConvert.toInstant()</b>
+<b class="nc"><i class="no-highlight">136</i>&nbsp;                .atZone(ZoneId.systemDefault())</b>
+<b class="nc"><i class="no-highlight">137</i>&nbsp;                .toLocalDate();</b>
+<i class="no-highlight">138</i>&nbsp;    }
+<i class="no-highlight">139</i>&nbsp;
+<i class="no-highlight">140</i>&nbsp;    // Getting a list of all players from list of games
+<i class="no-highlight">141</i>&nbsp;    public List&lt;FantasyPlayer&gt; players_from_games(fantasyPlayerRepository playerRepo,
+<i class="no-highlight">142</i>&nbsp;                                                  List&lt;FantasyGame&gt; games_within_dates) {
+<b class="nc"><i class="no-highlight">143</i>&nbsp;        List&lt;FantasyPlayer&gt; players = new ArrayList&lt;&gt;();</b>
+<b class="nc"><i class="no-highlight">144</i>&nbsp;        for (FantasyGame each_game : games_within_dates) {</b>
+<b class="nc"><i class="no-highlight">145</i>&nbsp;            Integer client_id = each_game.getClientID();</b>
+<b class="nc"><i class="no-highlight">146</i>&nbsp;            Integer league_id = each_game.getLeagueID();</b>
+<i class="no-highlight">147</i>&nbsp;            //Integer schedule_id=each_game.getScheduleID();
+<b class="nc"><i class="no-highlight">148</i>&nbsp;            Integer home_id = each_game.getHomeTeamID();</b>
+<i class="no-highlight">149</i>&nbsp;
+<b class="nc"><i class="no-highlight">150</i>&nbsp;            players.add(getPlayer(playerRepo, each_game.getStartHomePG(), client_id, league_id, home_id));</b>
+<b class="nc"><i class="no-highlight">151</i>&nbsp;            players.add(getPlayer(playerRepo, each_game.getStartHomeSG(), client_id, league_id, home_id));</b>
+<b class="nc"><i class="no-highlight">152</i>&nbsp;            players.add(getPlayer(playerRepo, each_game.getStartHomeSF(), client_id, league_id, home_id));</b>
+<b class="nc"><i class="no-highlight">153</i>&nbsp;            players.add(getPlayer(playerRepo, each_game.getStartHomePF(), client_id, league_id, home_id));</b>
+<b class="nc"><i class="no-highlight">154</i>&nbsp;            players.add(getPlayer(playerRepo, each_game.getStartHomeC(), client_id, league_id, home_id));</b>
+<b class="nc"><i class="no-highlight">155</i>&nbsp;            players.add(getPlayer(playerRepo, each_game.getHomeBench1(), client_id, league_id, home_id));</b>
+<b class="nc"><i class="no-highlight">156</i>&nbsp;            players.add(getPlayer(playerRepo, each_game.getHomeBench2(), client_id, league_id, home_id));</b>
+<i class="no-highlight">157</i>&nbsp;
+<b class="nc"><i class="no-highlight">158</i>&nbsp;            Integer away_id = each_game.getAwayTeamID();</b>
+<b class="nc"><i class="no-highlight">159</i>&nbsp;            players.add(getPlayer(playerRepo, each_game.getStartAwayPG(), client_id, league_id, away_id));</b>
+<b class="nc"><i class="no-highlight">160</i>&nbsp;            players.add(getPlayer(playerRepo, each_game.getStartAwaySG(), client_id, league_id, away_id));</b>
+<b class="nc"><i class="no-highlight">161</i>&nbsp;            players.add(getPlayer(playerRepo, each_game.getStartAwaySF(), client_id, league_id, away_id));</b>
+<b class="nc"><i class="no-highlight">162</i>&nbsp;            players.add(getPlayer(playerRepo, each_game.getStartAwayPF(), client_id, league_id, away_id));</b>
+<b class="nc"><i class="no-highlight">163</i>&nbsp;            players.add(getPlayer(playerRepo, each_game.getStartAwayC(), client_id, league_id, away_id));</b>
+<b class="nc"><i class="no-highlight">164</i>&nbsp;            players.add(getPlayer(playerRepo, each_game.getAwayBench1(), client_id, league_id, away_id));</b>
+<b class="nc"><i class="no-highlight">165</i>&nbsp;            players.add(getPlayer(playerRepo, each_game.getAwayBench2(), client_id, league_id, away_id));</b>
+<i class="no-highlight">166</i>&nbsp;
+<b class="nc"><i class="no-highlight">167</i>&nbsp;        }</b>
+<i class="no-highlight">168</i>&nbsp;        // Removing Null values form the list
+<b class="nc"><i class="no-highlight">169</i>&nbsp;        while (players.remove(null)) {</b>
+<i class="no-highlight">170</i>&nbsp;        }
+<b class="nc"><i class="no-highlight">171</i>&nbsp;        return players;</b>
+<i class="no-highlight">172</i>&nbsp;
+<i class="no-highlight">173</i>&nbsp;    }
+<i class="no-highlight">174</i>&nbsp;
+<i class="no-highlight">175</i>&nbsp;    // From the list of players playing this week and ball_api_id, find the player_id
+<i class="no-highlight">176</i>&nbsp;    Integer getPlayerId(List&lt;FantasyPlayer&gt; players_play_this_week, Integer ball_api_id) {
+<i class="no-highlight">177</i>&nbsp;        // Checking each player with ball_api_id
+<b class="nc"><i class="no-highlight">178</i>&nbsp;        for (FantasyPlayer each_player : players_play_this_week) {</b>
+<b class="nc"><i class="no-highlight">179</i>&nbsp;            Integer test_id = each_player.getBallapiID();</b>
+<b class="nc"><i class="no-highlight">180</i>&nbsp;            if (Objects.equals(test_id, ball_api_id)) {</b>
+<b class="nc"><i class="no-highlight">181</i>&nbsp;                return each_player.getPlayerID();</b>
+<i class="no-highlight">182</i>&nbsp;            }
+<b class="nc"><i class="no-highlight">183</i>&nbsp;        }</b>
+<i class="no-highlight">184</i>&nbsp;        // Or return -1
+<b class="nc"><i class="no-highlight">185</i>&nbsp;        return -1;</b>
+<i class="no-highlight">186</i>&nbsp;    }
+<i class="no-highlight">187</i>&nbsp;
+<i class="no-highlight">188</i>&nbsp;    // Given list games and player_id; get client_ID, league_ID, schedule_ID for each player_id
+<i class="no-highlight">189</i>&nbsp;    ArrayList&lt;ArrayList&lt;Integer&gt;&gt; all_client_league_schedule_info(Integer player_id, List&lt;FantasyGame&gt; games_within_dates) {
+<b class="nc"><i class="no-highlight">190</i>&nbsp;        ArrayList&lt;ArrayList&lt;Integer&gt;&gt; client_league_sch_info = new ArrayList&lt;&gt;();</b>
+<b class="nc"><i class="no-highlight">191</i>&nbsp;        for (FantasyGame each_game : games_within_dates) {</b>
+<i class="no-highlight">192</i>&nbsp;            // Checking player through all positions
+<b class="nc"><i class="no-highlight">193</i>&nbsp;            if (Objects.equals(each_game.getStartHomePG(), player_id) ||</b>
+<b class="nc"><i class="no-highlight">194</i>&nbsp;                    Objects.equals(each_game.getStartHomeSG(), player_id) ||</b>
+<b class="nc"><i class="no-highlight">195</i>&nbsp;                    Objects.equals(each_game.getStartHomeSF(), player_id) ||</b>
+<b class="nc"><i class="no-highlight">196</i>&nbsp;                    Objects.equals(each_game.getStartHomePF(), player_id) ||</b>
+<b class="nc"><i class="no-highlight">197</i>&nbsp;                    Objects.equals(each_game.getStartHomeC(), player_id) ||</b>
+<b class="nc"><i class="no-highlight">198</i>&nbsp;                    Objects.equals(each_game.getHomeBench1(), player_id) ||</b>
+<b class="nc"><i class="no-highlight">199</i>&nbsp;                    Objects.equals(each_game.getHomeBench2(), player_id) ||</b>
+<b class="nc"><i class="no-highlight">200</i>&nbsp;                    Objects.equals(each_game.getStartAwayPG(), player_id) ||</b>
+<b class="nc"><i class="no-highlight">201</i>&nbsp;                    Objects.equals(each_game.getStartAwaySG(), player_id) ||</b>
+<b class="nc"><i class="no-highlight">202</i>&nbsp;                    Objects.equals(each_game.getStartAwaySF(), player_id) ||</b>
+<b class="nc"><i class="no-highlight">203</i>&nbsp;                    Objects.equals(each_game.getStartAwayPF(), player_id) ||</b>
+<b class="nc"><i class="no-highlight">204</i>&nbsp;                    Objects.equals(each_game.getStartAwayC(), player_id) ||</b>
+<b class="nc"><i class="no-highlight">205</i>&nbsp;                    Objects.equals(each_game.getAwayBench1(), player_id) ||</b>
+<b class="nc"><i class="no-highlight">206</i>&nbsp;                    Objects.equals(each_game.getAwayBench2(), player_id)) {</b>
+<b class="nc"><i class="no-highlight">207</i>&nbsp;                ArrayList&lt;Integer&gt; new_list = new ArrayList&lt;&gt;();</b>
+<b class="nc"><i class="no-highlight">208</i>&nbsp;                new_list.add(each_game.getClientID());</b>
+<b class="nc"><i class="no-highlight">209</i>&nbsp;                new_list.add(each_game.getLeagueID());</b>
+<b class="nc"><i class="no-highlight">210</i>&nbsp;                new_list.add(each_game.getScheduleID());</b>
+<b class="nc"><i class="no-highlight">211</i>&nbsp;                client_league_sch_info.add(new_list);</b>
+<i class="no-highlight">212</i>&nbsp;            }
+<b class="nc"><i class="no-highlight">213</i>&nbsp;        }</b>
+<b class="nc"><i class="no-highlight">214</i>&nbsp;        return client_league_sch_info;</b>
+<i class="no-highlight">215</i>&nbsp;    }
+<i class="no-highlight">216</i>&nbsp;
+<i class="no-highlight">217</i>&nbsp;    // Getting player from playerRepo using player_id,client_id,league_id,team_id
+<i class="no-highlight">218</i>&nbsp;    FantasyPlayer getPlayer(fantasyPlayerRepository playerRepo, Integer player_id,
+<i class="no-highlight">219</i>&nbsp;                            Integer client_id, Integer league_id, Integer team_id) {
+<i class="no-highlight">220</i>&nbsp;
+<b class="nc"><i class="no-highlight">221</i>&nbsp;        List&lt;FantasyPlayer&gt; player = playerRepo.findByTemplate(player_id, client_id, team_id, league_id,</b>
+<i class="no-highlight">222</i>&nbsp;                null, null, null, null, null);
+<b class="nc"><i class="no-highlight">223</i>&nbsp;        if (player.size()&gt;0){</b>
+<b class="nc"><i class="no-highlight">224</i>&nbsp;            return player.get(0);</b>
+<i class="no-highlight">225</i>&nbsp;        }
+<b class="nc"><i class="no-highlight">226</i>&nbsp;        return null;</b>
+<i class="no-highlight">227</i>&nbsp;    }
+<i class="no-highlight">228</i>&nbsp;
+<i class="no-highlight">229</i>&nbsp;    // Getting stats_id from statsRepo using client_id, league_id, schedule_id, player_id
+<i class="no-highlight">230</i>&nbsp;    Integer getStatID(fantasyStatsRepository statsRepo, Integer client_id,
+<i class="no-highlight">231</i>&nbsp;                      Integer league_id, Integer schedule_id,
+<i class="no-highlight">232</i>&nbsp;                      Integer player_id) {
+<b class="nc"><i class="no-highlight">233</i>&nbsp;        List&lt;FantasyStats&gt; stats = statsRepo.findByTemplate(null, player_id, schedule_id, client_id,</b>
+<i class="no-highlight">234</i>&nbsp;                league_id, null, null, null, null, null, null,
+<i class="no-highlight">235</i>&nbsp;                null, null, null);
+<b class="nc"><i class="no-highlight">236</i>&nbsp;        if (stats.size() &gt; 0) {</b>
+<b class="nc"><i class="no-highlight">237</i>&nbsp;            return stats.get(0).getStats_id();</b>
+<i class="no-highlight">238</i>&nbsp;        }
+<b class="nc"><i class="no-highlight">239</i>&nbsp;        return -1;</b>
+<i class="no-highlight">240</i>&nbsp;    }
+<i class="no-highlight">241</i>&nbsp;
+<i class="no-highlight">242</i>&nbsp;    // Getting hashmap of clients from list of games_within_dates, with client ID as the key
+<i class="no-highlight">243</i>&nbsp;    HashMap&lt;Integer, Client&gt; clientHashMap(clientRepository clientRepo, List&lt;FantasyGame&gt; games_within_dates) {
+<b class="nc"><i class="no-highlight">244</i>&nbsp;        HashMap&lt;Integer, Client&gt; clientMap = new HashMap&lt;&gt;();</b>
+<b class="nc"><i class="no-highlight">245</i>&nbsp;        for (FantasyGame each_game : games_within_dates) {</b>
+<b class="nc"><i class="no-highlight">246</i>&nbsp;            Integer client_id = each_game.getClientID();</b>
+<b class="nc"><i class="no-highlight">247</i>&nbsp;            Client cl1 = clientRepo.findByTemplate(client_id,null,</b>
+<b class="nc"><i class="no-highlight">248</i>&nbsp;                    null,null).get(0);</b>
+<b class="nc"><i class="no-highlight">249</i>&nbsp;            clientMap.put(client_id,cl1);</b>
+<b class="nc"><i class="no-highlight">250</i>&nbsp;        }</b>
+<b class="nc"><i class="no-highlight">251</i>&nbsp;        return clientMap;</b>
+<i class="no-highlight">252</i>&nbsp;    }
+<i class="no-highlight">253</i>&nbsp;
+<i class="no-highlight">254</i>&nbsp;    // TODO: Test with changes in playerRepo courtesy of Emmanuel
+<i class="no-highlight">255</i>&nbsp;    // Calculating total points through each client weights
+<i class="no-highlight">256</i>&nbsp;    Integer total_points(Client client, FantasyStats stats) {
+<b class="nc"><i class="no-highlight">257</i>&nbsp;        double points = (client.getThree_p_weight() * stats.getThree_points())</b>
+<b class="nc"><i class="no-highlight">258</i>&nbsp;                + (client.getTwo_p_weight() * stats.getTwo_points()) +</b>
+<b class="nc"><i class="no-highlight">259</i>&nbsp;                (client.getFt_weight() * stats.getFree_throws()) +</b>
+<b class="nc"><i class="no-highlight">260</i>&nbsp;                (client.getRebound_weight() * stats.getRebounds()) +</b>
+<b class="nc"><i class="no-highlight">261</i>&nbsp;                (client.getAssist_weight() * stats.getAssists()) +</b>
+<b class="nc"><i class="no-highlight">262</i>&nbsp;                (client.getBlock_weight() * stats.getBlocks()) +</b>
+<b class="nc"><i class="no-highlight">263</i>&nbsp;                (client.getTurnover_weight() * stats.getTurnovers())+</b>
+<b class="nc"><i class="no-highlight">264</i>&nbsp;                (client.getSteal_weight()*stats.getSteals());</b>
+<b class="nc"><i class="no-highlight">265</i>&nbsp;        return (int) Math.round(points);</b>
+<i class="no-highlight">266</i>&nbsp;    }
+<i class="no-highlight">267</i>&nbsp;
+<i class="no-highlight">268</i>&nbsp;}
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-12-11 15:53</div>
+</div>
+</body>
+</html>

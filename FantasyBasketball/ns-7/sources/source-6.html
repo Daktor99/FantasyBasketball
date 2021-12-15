@@ -1,0 +1,647 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > fantasyTeamService</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">FantasyBasketball.services</a>
+</div>
+
+<h1>Coverage Summary for Class: fantasyTeamService (FantasyBasketball.services)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">fantasyTeamService</td>
+<td class="coverageStat">
+  <span class="percent">
+    4.3%
+  </span>
+  <span class="absValue">
+    (1/23)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    1.7%
+  </span>
+  <span class="absValue">
+    (3/172)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">fantasyTeamService$MockitoMock$1752817949</td>
+  </tr>
+  <tr>
+    <td class="name">fantasyTeamService$MockitoMock$1752817949$auxiliary$2e5DcRPD</td>
+  </tr>
+  <tr>
+    <td class="name">fantasyTeamService$MockitoMock$1752817949$auxiliary$2hkITCfp</td>
+  </tr>
+  <tr>
+    <td class="name">fantasyTeamService$MockitoMock$1752817949$auxiliary$7kplmQGW</td>
+  </tr>
+  <tr>
+    <td class="name">fantasyTeamService$MockitoMock$1752817949$auxiliary$8NlxpEK1</td>
+  </tr>
+  <tr>
+    <td class="name">fantasyTeamService$MockitoMock$1752817949$auxiliary$bKmQ8V47</td>
+  </tr>
+  <tr>
+    <td class="name">fantasyTeamService$MockitoMock$1752817949$auxiliary$bMZkEYVr</td>
+  </tr>
+  <tr>
+    <td class="name">fantasyTeamService$MockitoMock$1752817949$auxiliary$d0HZT642</td>
+  </tr>
+  <tr>
+    <td class="name">fantasyTeamService$MockitoMock$1752817949$auxiliary$dDHl2qdd</td>
+  </tr>
+  <tr>
+    <td class="name">fantasyTeamService$MockitoMock$1752817949$auxiliary$DT9qMf6G</td>
+  </tr>
+  <tr>
+    <td class="name">fantasyTeamService$MockitoMock$1752817949$auxiliary$E7NkG0ve</td>
+  </tr>
+  <tr>
+    <td class="name">fantasyTeamService$MockitoMock$1752817949$auxiliary$fZStS8Y0</td>
+  </tr>
+  <tr>
+    <td class="name">fantasyTeamService$MockitoMock$1752817949$auxiliary$jzHkADlp</td>
+  </tr>
+  <tr>
+    <td class="name">fantasyTeamService$MockitoMock$1752817949$auxiliary$K4rGxuK5</td>
+  </tr>
+  <tr>
+    <td class="name">fantasyTeamService$MockitoMock$1752817949$auxiliary$KKUNmz4u</td>
+  </tr>
+  <tr>
+    <td class="name">fantasyTeamService$MockitoMock$1752817949$auxiliary$KUnK13Er</td>
+  </tr>
+  <tr>
+    <td class="name">fantasyTeamService$MockitoMock$1752817949$auxiliary$nv6pbIM3</td>
+  </tr>
+  <tr>
+    <td class="name">fantasyTeamService$MockitoMock$1752817949$auxiliary$ov2pVNdW</td>
+  </tr>
+  <tr>
+    <td class="name">fantasyTeamService$MockitoMock$1752817949$auxiliary$Ro6QZnKr</td>
+  </tr>
+  <tr>
+    <td class="name">fantasyTeamService$MockitoMock$1752817949$auxiliary$UJBxILU1</td>
+  </tr>
+  <tr>
+    <td class="name">fantasyTeamService$MockitoMock$1752817949$auxiliary$vBX9mw9L</td>
+  </tr>
+  <tr>
+    <td class="name">fantasyTeamService$MockitoMock$1752817949$auxiliary$zdbhzQ8W</td>
+  </tr>
+  <tr>
+    <td class="name">fantasyTeamService$MockitoMock$1752817949$auxiliary$zg5RjL2y</td>
+  </tr>
+  <tr>
+    <td class="name">fantasyTeamService$MockitoMock$1752817949$auxiliary$ZtUIp9MT</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    4.3%
+  </span>
+  <span class="absValue">
+    (1/23)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    1.7%
+  </span>
+  <span class="absValue">
+    (3/172)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package FantasyBasketball.services;
+<i class="no-highlight">2</i>&nbsp;
+<i class="no-highlight">3</i>&nbsp;import FantasyBasketball.exceptions.resourceException;
+<i class="no-highlight">4</i>&nbsp;import FantasyBasketball.exceptions.resourceNotFoundException;
+<i class="no-highlight">5</i>&nbsp;import FantasyBasketball.models.FantasyGame;
+<i class="no-highlight">6</i>&nbsp;import FantasyBasketball.models.FantasyLeague;
+<i class="no-highlight">7</i>&nbsp;import FantasyBasketball.models.FantasyPlayer;
+<i class="no-highlight">8</i>&nbsp;import FantasyBasketball.models.FantasyTeam;
+<i class="no-highlight">9</i>&nbsp;import FantasyBasketball.repositories.fantasyTeamRepository;
+<i class="no-highlight">10</i>&nbsp;import FantasyBasketball.repositories.fantasyLeagueRepository;
+<i class="no-highlight">11</i>&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+<i class="no-highlight">12</i>&nbsp;import org.springframework.stereotype.Service;
+<i class="no-highlight">13</i>&nbsp;
+<i class="no-highlight">14</i>&nbsp;import java.util.*;
+<i class="no-highlight">15</i>&nbsp;
+<i class="no-highlight">16</i>&nbsp;@Service
+<b class="nc"><i class="no-highlight">17</i>&nbsp;public class fantasyTeamService {</b>
+<i class="no-highlight">18</i>&nbsp;
+<i class="no-highlight">19</i>&nbsp;    @Autowired
+<i class="no-highlight">20</i>&nbsp;    fantasyLeagueService FantasyLeague;
+<i class="no-highlight">21</i>&nbsp;
+<i class="no-highlight">22</i>&nbsp;    @Autowired
+<i class="no-highlight">23</i>&nbsp;    fantasyTeamRepository teamRepo;
+<i class="no-highlight">24</i>&nbsp;
+<i class="no-highlight">25</i>&nbsp;    @Autowired
+<i class="no-highlight">26</i>&nbsp;    fantasyLeagueRepository leagueRepo;
+<i class="no-highlight">27</i>&nbsp;
+<i class="no-highlight">28</i>&nbsp;    @Autowired
+<i class="no-highlight">29</i>&nbsp;    fantasyPlayerService playerService;
+<i class="no-highlight">30</i>&nbsp;
+<i class="no-highlight">31</i>&nbsp;    // positions for pg &amp; sg
+<b class="fc"><i class="no-highlight">32</i>&nbsp;    static final List&lt;String&gt; guardPositions = Arrays.asList(&quot;G&quot;, &quot;G-F&quot;, &quot;F-G&quot;);</b>
+<i class="no-highlight">33</i>&nbsp;
+<i class="no-highlight">34</i>&nbsp;    // positions for sf &amp; pf
+<b class="fc"><i class="no-highlight">35</i>&nbsp;    static final List&lt;String&gt; forwardPositions = Arrays.asList(&quot;G-F&quot;, &quot;F-G&quot;, &quot;F&quot;, &quot;F-C&quot;, &quot;C-F&quot;);</b>
+<i class="no-highlight">36</i>&nbsp;
+<i class="no-highlight">37</i>&nbsp;    // positions for c
+<b class="fc"><i class="no-highlight">38</i>&nbsp;    static final List&lt;String&gt; centerPositions = Arrays.asList(&quot;F-C&quot;, &quot;C-F&quot;, &quot;C&quot;);</b>
+<i class="no-highlight">39</i>&nbsp;
+<i class="no-highlight">40</i>&nbsp;    // find by ID
+<i class="no-highlight">41</i>&nbsp;    public List&lt;FantasyTeam&gt; getByID(Integer teamID) throws resourceNotFoundException {
+<b class="nc"><i class="no-highlight">42</i>&nbsp;        Optional&lt;FantasyTeam&gt; result = teamRepo.findById(teamID);</b>
+<b class="nc"><i class="no-highlight">43</i>&nbsp;        if (result.isPresent()) {</b>
+<b class="nc"><i class="no-highlight">44</i>&nbsp;            FantasyTeam teamResult = result.get();</b>
+<b class="nc"><i class="no-highlight">45</i>&nbsp;            return List.of(teamResult);</b>
+<i class="no-highlight">46</i>&nbsp;        }
+<i class="no-highlight">47</i>&nbsp;        else {
+<b class="nc"><i class="no-highlight">48</i>&nbsp;            throw new resourceNotFoundException(&quot;Team not found by ID in DB, cannot update&quot;);</b>
+<i class="no-highlight">49</i>&nbsp;        }
+<i class="no-highlight">50</i>&nbsp;    }
+<i class="no-highlight">51</i>&nbsp;
+<i class="no-highlight">52</i>&nbsp;    // get operation
+<i class="no-highlight">53</i>&nbsp;    public List&lt;FantasyTeam&gt; getTeamsByTemplate(Integer team_id,
+<i class="no-highlight">54</i>&nbsp;                                                Integer client_id,
+<i class="no-highlight">55</i>&nbsp;                                                String team_name,
+<i class="no-highlight">56</i>&nbsp;                                                Integer owner_id,
+<i class="no-highlight">57</i>&nbsp;                                                Integer league_id) {
+<b class="nc"><i class="no-highlight">58</i>&nbsp;        return teamRepo.findByTemplate(team_id,</b>
+<i class="no-highlight">59</i>&nbsp;                client_id,
+<i class="no-highlight">60</i>&nbsp;                team_name,
+<i class="no-highlight">61</i>&nbsp;                owner_id,
+<i class="no-highlight">62</i>&nbsp;                league_id);
+<i class="no-highlight">63</i>&nbsp;    }
+<i class="no-highlight">64</i>&nbsp;
+<i class="no-highlight">65</i>&nbsp;    // helper function to check if the league is full or not yet to apply constraint to posting new team to a league
+<i class="no-highlight">66</i>&nbsp;    public Boolean checkLeagueFull(FantasyLeague league) {
+<b class="nc"><i class="no-highlight">67</i>&nbsp;        Integer leagueID = league.getLeagueID();</b>
+<b class="nc"><i class="no-highlight">68</i>&nbsp;        Integer leagueClientID = league.getClientID();</b>
+<b class="nc"><i class="no-highlight">69</i>&nbsp;        Integer leagueSize = league.getLeagueSize();</b>
+<i class="no-highlight">70</i>&nbsp;
+<b class="nc"><i class="no-highlight">71</i>&nbsp;        List&lt;Integer&gt; teamsInLeague = teamRepo.findTeamsInLeague(leagueID, leagueClientID);</b>
+<b class="nc"><i class="no-highlight">72</i>&nbsp;        Integer currentLeagueSize = teamsInLeague.size();</b>
+<i class="no-highlight">73</i>&nbsp;
+<b class="nc"><i class="no-highlight">74</i>&nbsp;        if (leagueSize &gt; currentLeagueSize) {</b>
+<b class="nc"><i class="no-highlight">75</i>&nbsp;            return Boolean.FALSE;</b>
+<i class="no-highlight">76</i>&nbsp;        } else {
+<b class="nc"><i class="no-highlight">77</i>&nbsp;            return Boolean.TRUE;</b>
+<i class="no-highlight">78</i>&nbsp;        }
+<i class="no-highlight">79</i>&nbsp;    }
+<i class="no-highlight">80</i>&nbsp;
+<i class="no-highlight">81</i>&nbsp;    // post operation
+<i class="no-highlight">82</i>&nbsp;    public List&lt;FantasyTeam&gt; postTeam(FantasyTeam team) throws resourceException{
+<b class="nc"><i class="no-highlight">83</i>&nbsp;        Integer leagueID = team.getLeagueID();</b>
+<b class="nc"><i class="no-highlight">84</i>&nbsp;        Optional&lt;FantasyBasketball.models.FantasyLeague&gt; fantasyLeagueOptional = leagueRepo.findById(leagueID);</b>
+<b class="nc"><i class="no-highlight">85</i>&nbsp;        FantasyBasketball.models.FantasyLeague league = fantasyLeagueOptional.get();</b>
+<i class="no-highlight">86</i>&nbsp;
+<b class="nc"><i class="no-highlight">87</i>&nbsp;        if (checkLeagueFull(league)) {</b>
+<b class="nc"><i class="no-highlight">88</i>&nbsp;            throw new resourceException(&quot;Cannot create another team. This league is already full.&quot;);</b>
+<i class="no-highlight">89</i>&nbsp;        };
+<i class="no-highlight">90</i>&nbsp;
+<b class="nc"><i class="no-highlight">91</i>&nbsp;        team.setTeamID(0);</b>
+<i class="no-highlight">92</i>&nbsp;
+<b class="nc"><i class="no-highlight">93</i>&nbsp;        FantasyTeam result = teamRepo.save(team);</b>
+<b class="nc"><i class="no-highlight">94</i>&nbsp;        return List.of(result);</b>
+<i class="no-highlight">95</i>&nbsp;    }
+<i class="no-highlight">96</i>&nbsp;
+<i class="no-highlight">97</i>&nbsp;    public List&lt;FantasyTeam&gt; postMultipleTeams(List&lt;FantasyTeam&gt; teams) {
+<b class="nc"><i class="no-highlight">98</i>&nbsp;        return (List&lt;FantasyTeam&gt;) teamRepo.saveAll(teams);</b>
+<i class="no-highlight">99</i>&nbsp;    }
+<i class="no-highlight">100</i>&nbsp;
+<i class="no-highlight">101</i>&nbsp;    // put operation
+<i class="no-highlight">102</i>&nbsp;    public List&lt;FantasyTeam&gt; updateTeam(FantasyTeam team) throws resourceNotFoundException, resourceException {
+<i class="no-highlight">103</i>&nbsp;
+<b class="nc"><i class="no-highlight">104</i>&nbsp;        Integer team_id = team.getTeamID();</b>
+<b class="nc"><i class="no-highlight">105</i>&nbsp;        if (team_id == null) {</b>
+<b class="nc"><i class="no-highlight">106</i>&nbsp;            throw new resourceException(&quot;team_id is required.&quot;);</b>
+<i class="no-highlight">107</i>&nbsp;        }
+<i class="no-highlight">108</i>&nbsp;
+<b class="nc"><i class="no-highlight">109</i>&nbsp;        if(teamRepo.existsById(team.getTeamID())) {</b>
+<i class="no-highlight">110</i>&nbsp;
+<i class="no-highlight">111</i>&nbsp;            // pull team from DB
+<b class="nc"><i class="no-highlight">112</i>&nbsp;            FantasyTeam dbTeam = teamRepo.findByTemplate(team.getTeamID(),</b>
+<b class="nc"><i class="no-highlight">113</i>&nbsp;                    team.getClientID(), null, null, null).get(0);</b>
+<i class="no-highlight">114</i>&nbsp;
+<b class="nc"><i class="no-highlight">115</i>&nbsp;            FantasyTeam updatedTeam = updateValues(dbTeam, team);</b>
+<i class="no-highlight">116</i>&nbsp;
+<b class="nc"><i class="no-highlight">117</i>&nbsp;            checkPutInputs(updatedTeam);</b>
+<i class="no-highlight">118</i>&nbsp;
+<b class="nc"><i class="no-highlight">119</i>&nbsp;            FantasyTeam result = teamRepo.save(updatedTeam);</b>
+<b class="nc"><i class="no-highlight">120</i>&nbsp;            return List.of(result);</b>
+<i class="no-highlight">121</i>&nbsp;        } else {
+<b class="nc"><i class="no-highlight">122</i>&nbsp;            throw new resourceNotFoundException(&quot;Team not found by ID in DB, cannot update&quot;);</b>
+<i class="no-highlight">123</i>&nbsp;        }
+<i class="no-highlight">124</i>&nbsp;    }
+<i class="no-highlight">125</i>&nbsp;
+<i class="no-highlight">126</i>&nbsp;    // delete operation
+<i class="no-highlight">127</i>&nbsp;    public void deleteTeamById(Integer team_id) throws resourceNotFoundException {
+<b class="nc"><i class="no-highlight">128</i>&nbsp;        if(teamRepo.existsById(team_id)) {</b>
+<b class="nc"><i class="no-highlight">129</i>&nbsp;            teamRepo.deleteById(team_id);</b>
+<i class="no-highlight">130</i>&nbsp;        } else {
+<b class="nc"><i class="no-highlight">131</i>&nbsp;            throw new resourceNotFoundException(&quot;User not found in DB, cannot delete&quot;);</b>
+<i class="no-highlight">132</i>&nbsp;        }
+<i class="no-highlight">133</i>&nbsp;    }
+<i class="no-highlight">134</i>&nbsp;
+<i class="no-highlight">135</i>&nbsp;    // Checking correct teamID and Length before posting
+<i class="no-highlight">136</i>&nbsp;    public void checkPostInputs(FantasyTeam team) throws resourceException {
+<i class="no-highlight">137</i>&nbsp;        try {
+<i class="no-highlight">138</i>&nbsp;
+<i class="no-highlight">139</i>&nbsp;            // check to make sure teamID has been passed
+<b class="nc"><i class="no-highlight">140</i>&nbsp;            if (team.getTeamID() != null) {</b>
+<b class="nc"><i class="no-highlight">141</i>&nbsp;                throw new resourceException(&quot;Do not provide team_id.&quot;);</b>
+<i class="no-highlight">142</i>&nbsp;            }
+<i class="no-highlight">143</i>&nbsp;
+<b class="nc"><i class="no-highlight">144</i>&nbsp;            String teamName = team.getTeamName();</b>
+<b class="nc"><i class="no-highlight">145</i>&nbsp;            if (teamName.length() &gt; 128 || teamName.isBlank()) {</b>
+<b class="nc"><i class="no-highlight">146</i>&nbsp;                throw new resourceException(&quot;Team name must be between 1-128 characters.&quot;);</b>
+<i class="no-highlight">147</i>&nbsp;            }
+<i class="no-highlight">148</i>&nbsp;
+<b class="nc"><i class="no-highlight">149</i>&nbsp;            if (team.getOwnerID() == null) {</b>
+<b class="nc"><i class="no-highlight">150</i>&nbsp;                throw new resourceException(&quot;Please provide owner_id.&quot;);</b>
+<i class="no-highlight">151</i>&nbsp;            }
+<i class="no-highlight">152</i>&nbsp;
+<b class="nc"><i class="no-highlight">153</i>&nbsp;            if (team.getLeagueID() == null) {</b>
+<b class="nc"><i class="no-highlight">154</i>&nbsp;                throw new resourceException(&quot;Please provide league_id corresponding to team.&quot;);</b>
+<i class="no-highlight">155</i>&nbsp;            }
+<i class="no-highlight">156</i>&nbsp;
+<b class="nc"><i class="no-highlight">157</i>&nbsp;        } catch (NullPointerException e) {</b>
+<b class="nc"><i class="no-highlight">158</i>&nbsp;            throw new resourceException(&quot;Post to team formatted incorrectly please provide the following:\n&quot; +</b>
+<i class="no-highlight">159</i>&nbsp;                                        &quot;team_name,\n&quot; +
+<i class="no-highlight">160</i>&nbsp;                                        &quot;owner_id,\n&quot; +
+<i class="no-highlight">161</i>&nbsp;                                        &quot;league_id,\n&quot;);
+<b class="nc"><i class="no-highlight">162</i>&nbsp;        }</b>
+<i class="no-highlight">163</i>&nbsp;    }
+<i class="no-highlight">164</i>&nbsp;
+<i class="no-highlight">165</i>&nbsp;    // Checking correct teamID and Length before putting
+<i class="no-highlight">166</i>&nbsp;    public void checkPutInputs(FantasyTeam team) throws resourceException {
+<i class="no-highlight">167</i>&nbsp;        try {
+<i class="no-highlight">168</i>&nbsp;
+<i class="no-highlight">169</i>&nbsp;            // check to make sure user provided a teamID
+<b class="nc"><i class="no-highlight">170</i>&nbsp;            if (team.getTeamID() == null) {</b>
+<b class="nc"><i class="no-highlight">171</i>&nbsp;                throw new resourceException(&quot;You have to provide teamID.&quot;);</b>
+<i class="no-highlight">172</i>&nbsp;            }
+<b class="nc"><i class="no-highlight">173</i>&nbsp;            String teamName = team.getTeamName();</b>
+<b class="nc"><i class="no-highlight">174</i>&nbsp;            if (teamName.length() &gt; 128 || teamName.isBlank()) {</b>
+<b class="nc"><i class="no-highlight">175</i>&nbsp;                throw new resourceException(&quot;Team name must be between 1-128 characters.&quot;);</b>
+<i class="no-highlight">176</i>&nbsp;            }
+<b class="nc"><i class="no-highlight">177</i>&nbsp;        } catch (NullPointerException e) {</b>
+<b class="nc"><i class="no-highlight">178</i>&nbsp;            throw new resourceException(&quot;Team formatted incorrectly please provide at least the following:\n&quot; +</b>
+<i class="no-highlight">179</i>&nbsp;                                        &quot;client_id,\n&quot; +
+<i class="no-highlight">180</i>&nbsp;                                        &quot;team_id,\n&quot; +
+<i class="no-highlight">181</i>&nbsp;                                        &quot;team_name,\n&quot; +
+<i class="no-highlight">182</i>&nbsp;                                        &quot;owner_id,\n&quot; +
+<i class="no-highlight">183</i>&nbsp;                                        &quot;league_id,\n&quot; +
+<i class="no-highlight">184</i>&nbsp;                                        &quot;start_pg_id,\n&quot; +
+<i class="no-highlight">185</i>&nbsp;                                        &quot;start_sg_id,\n&quot; +
+<i class="no-highlight">186</i>&nbsp;                                        &quot;start_sf_id,\n&quot; +
+<i class="no-highlight">187</i>&nbsp;                                        &quot;start_pf_id,\n&quot; +
+<i class="no-highlight">188</i>&nbsp;                                        &quot;start_c_id,\n&quot; +
+<i class="no-highlight">189</i>&nbsp;                                        &quot;bench_1_id,\n&quot; +
+<i class="no-highlight">190</i>&nbsp;                                        &quot;bench_2_id,\n&quot; +
+<i class="no-highlight">191</i>&nbsp;                                        &quot;team_wins,\n&quot; +
+<i class="no-highlight">192</i>&nbsp;                                        &quot;team_losses,\n&quot; +
+<i class="no-highlight">193</i>&nbsp;                                        &quot;points_scored,\n&quot; +
+<i class="no-highlight">194</i>&nbsp;                                        &quot;points_against&quot;);
+<b class="nc"><i class="no-highlight">195</i>&nbsp;        }</b>
+<i class="no-highlight">196</i>&nbsp;    }
+<i class="no-highlight">197</i>&nbsp;
+<i class="no-highlight">198</i>&nbsp;    public List&lt;Integer&gt; getPlayersOnTeam(Integer teamID) {
+<b class="nc"><i class="no-highlight">199</i>&nbsp;        return playerService.getPlayerIDsByTeam(teamID);</b>
+<i class="no-highlight">200</i>&nbsp;    }
+<i class="no-highlight">201</i>&nbsp;
+<i class="no-highlight">202</i>&nbsp;    public HashMap&lt;Integer, String&gt; getPlayerPositionMap(Integer teamID) {
+<i class="no-highlight">203</i>&nbsp;
+<b class="nc"><i class="no-highlight">204</i>&nbsp;        HashMap&lt;Integer, String&gt; playerPositionMap = new HashMap&lt;&gt;();</b>
+<b class="nc"><i class="no-highlight">205</i>&nbsp;        List&lt;FantasyPlayer&gt; playerList =</b>
+<b class="nc"><i class="no-highlight">206</i>&nbsp;                playerService.getPlayerByTemplate(null,</b>
+<i class="no-highlight">207</i>&nbsp;                        null,
+<i class="no-highlight">208</i>&nbsp;                        teamID,
+<i class="no-highlight">209</i>&nbsp;                        null,
+<i class="no-highlight">210</i>&nbsp;                        null,
+<i class="no-highlight">211</i>&nbsp;                        null,
+<i class="no-highlight">212</i>&nbsp;                        null,
+<i class="no-highlight">213</i>&nbsp;                        null,
+<i class="no-highlight">214</i>&nbsp;                        null);
+<i class="no-highlight">215</i>&nbsp;
+<b class="nc"><i class="no-highlight">216</i>&nbsp;        for (FantasyPlayer player: playerList) {</b>
+<b class="nc"><i class="no-highlight">217</i>&nbsp;            playerPositionMap.put(player.getPlayerID(), player.getPosition());</b>
+<b class="nc"><i class="no-highlight">218</i>&nbsp;        }</b>
+<i class="no-highlight">219</i>&nbsp;
+<b class="nc"><i class="no-highlight">220</i>&nbsp;        return playerPositionMap;</b>
+<i class="no-highlight">221</i>&nbsp;    }
+<i class="no-highlight">222</i>&nbsp;
+<i class="no-highlight">223</i>&nbsp;    public void checkOwnerAndLeagueNotUpdated(Integer ownerID, Integer leagueID) throws resourceException {
+<b class="nc"><i class="no-highlight">224</i>&nbsp;        if (ownerID != null) {</b>
+<b class="nc"><i class="no-highlight">225</i>&nbsp;            throw new resourceException(&quot;Cannot reassign team owner once team is created. Please delete team and create a new one.&quot;);</b>
+<b class="nc"><i class="no-highlight">226</i>&nbsp;        } else if (leagueID != null) {</b>
+<b class="nc"><i class="no-highlight">227</i>&nbsp;            throw new resourceException(&quot;Cannot reassign team league once team is created. Please delete team and create a new one.&quot;);</b>
+<i class="no-highlight">228</i>&nbsp;        }
+<i class="no-highlight">229</i>&nbsp;    }
+<i class="no-highlight">230</i>&nbsp;
+<i class="no-highlight">231</i>&nbsp;    public void updatePG(FantasyTeam currentTeam,
+<i class="no-highlight">232</i>&nbsp;                          HashMap&lt;Integer, String&gt; playerPositionMap,
+<i class="no-highlight">233</i>&nbsp;                          List&lt;Integer&gt; teamPlayerList,
+<i class="no-highlight">234</i>&nbsp;                          Integer playerID) throws resourceException {
+<i class="no-highlight">235</i>&nbsp;
+<i class="no-highlight">236</i>&nbsp;        // only if request is trying to change
+<b class="nc"><i class="no-highlight">237</i>&nbsp;        if (playerID != null) {</b>
+<i class="no-highlight">238</i>&nbsp;
+<b class="nc"><i class="no-highlight">239</i>&nbsp;            String position = playerPositionMap.get(playerID);</b>
+<b class="nc"><i class="no-highlight">240</i>&nbsp;            boolean playerOnTeam = teamPlayerList.contains(playerID);</b>
+<b class="nc"><i class="no-highlight">241</i>&nbsp;            boolean correctPosition = guardPositions.contains(position);</b>
+<i class="no-highlight">242</i>&nbsp;
+<b class="nc"><i class="no-highlight">243</i>&nbsp;            if (!playerOnTeam) {</b>
+<b class="nc"><i class="no-highlight">244</i>&nbsp;                throw new resourceException(&quot;Point guard provided does not belong to this team, check values and try again.&quot;);</b>
+<b class="nc"><i class="no-highlight">245</i>&nbsp;            } else if (!correctPosition) {</b>
+<b class="nc"><i class="no-highlight">246</i>&nbsp;                throw new resourceException(&quot;This player cannot be assigned point guard because of their position. \n&quot;</b>
+<i class="no-highlight">247</i>&nbsp;                        + &quot;Please provide a player with one of the following positions: &quot;
+<i class="no-highlight">248</i>&nbsp;                        + guardPositions);
+<i class="no-highlight">249</i>&nbsp;            }
+<i class="no-highlight">250</i>&nbsp;
+<b class="nc"><i class="no-highlight">251</i>&nbsp;            currentTeam.setStartPG(playerID);</b>
+<b class="nc"><i class="no-highlight">252</i>&nbsp;        } else {</b>
+<b class="nc"><i class="no-highlight">253</i>&nbsp;            throw new resourceException(&quot;playerID is null.&quot;);</b>
+<i class="no-highlight">254</i>&nbsp;        }
+<i class="no-highlight">255</i>&nbsp;    }
+<i class="no-highlight">256</i>&nbsp;
+<i class="no-highlight">257</i>&nbsp;    public void updateSG(FantasyTeam currentTeam,
+<i class="no-highlight">258</i>&nbsp;                          HashMap&lt;Integer, String&gt; playerPositionMap,
+<i class="no-highlight">259</i>&nbsp;                          List&lt;Integer&gt; teamPlayerList,
+<i class="no-highlight">260</i>&nbsp;                          Integer playerID) throws resourceException {
+<i class="no-highlight">261</i>&nbsp;
+<i class="no-highlight">262</i>&nbsp;        // only if request is trying to change
+<b class="nc"><i class="no-highlight">263</i>&nbsp;        if (playerID != null) {</b>
+<i class="no-highlight">264</i>&nbsp;
+<b class="nc"><i class="no-highlight">265</i>&nbsp;            String position = playerPositionMap.get(playerID);</b>
+<b class="nc"><i class="no-highlight">266</i>&nbsp;            boolean playerOnTeam = teamPlayerList.contains(playerID);</b>
+<b class="nc"><i class="no-highlight">267</i>&nbsp;            boolean correctPosition = guardPositions.contains(position);</b>
+<i class="no-highlight">268</i>&nbsp;
+<b class="nc"><i class="no-highlight">269</i>&nbsp;            if (!playerOnTeam) {</b>
+<b class="nc"><i class="no-highlight">270</i>&nbsp;                throw new resourceException(&quot;Shooting guard provided does not belong to this team, check values and try again.&quot;);</b>
+<b class="nc"><i class="no-highlight">271</i>&nbsp;            } else if (!correctPosition) {</b>
+<b class="nc"><i class="no-highlight">272</i>&nbsp;                throw new resourceException(&quot;This player cannot be assigned shooting guard because of their position. \n&quot;</b>
+<i class="no-highlight">273</i>&nbsp;                        + &quot;Please provide a player with one of the following positions: &quot;
+<i class="no-highlight">274</i>&nbsp;                        + guardPositions);
+<i class="no-highlight">275</i>&nbsp;            }
+<i class="no-highlight">276</i>&nbsp;
+<b class="nc"><i class="no-highlight">277</i>&nbsp;            currentTeam.setStartSG(playerID);</b>
+<i class="no-highlight">278</i>&nbsp;        }
+<i class="no-highlight">279</i>&nbsp;    }
+<i class="no-highlight">280</i>&nbsp;
+<i class="no-highlight">281</i>&nbsp;    public void updateSF(FantasyTeam currentTeam,
+<i class="no-highlight">282</i>&nbsp;                          HashMap&lt;Integer, String&gt; playerPositionMap,
+<i class="no-highlight">283</i>&nbsp;                          List&lt;Integer&gt; teamPlayerList,
+<i class="no-highlight">284</i>&nbsp;                          Integer playerID) throws resourceException {
+<i class="no-highlight">285</i>&nbsp;
+<b class="nc"><i class="no-highlight">286</i>&nbsp;        if (playerID != null) {</b>
+<i class="no-highlight">287</i>&nbsp;
+<b class="nc"><i class="no-highlight">288</i>&nbsp;            String position = playerPositionMap.get(playerID);</b>
+<b class="nc"><i class="no-highlight">289</i>&nbsp;            boolean playerOnTeam = teamPlayerList.contains(playerID);</b>
+<b class="nc"><i class="no-highlight">290</i>&nbsp;            boolean correctPosition = forwardPositions.contains(position);</b>
+<i class="no-highlight">291</i>&nbsp;
+<b class="nc"><i class="no-highlight">292</i>&nbsp;            if (!playerOnTeam) {</b>
+<b class="nc"><i class="no-highlight">293</i>&nbsp;                throw new resourceException(&quot;Small forward provided does not belong to this team, check values and try again.&quot;);</b>
+<b class="nc"><i class="no-highlight">294</i>&nbsp;            } else if (!correctPosition) {</b>
+<b class="nc"><i class="no-highlight">295</i>&nbsp;                throw new resourceException(&quot;This player cannot be assigned small forward because of their position. \n&quot;</b>
+<i class="no-highlight">296</i>&nbsp;                        + &quot;Please provide a player with one of the following positions: &quot;
+<i class="no-highlight">297</i>&nbsp;                        + forwardPositions);
+<i class="no-highlight">298</i>&nbsp;            }
+<i class="no-highlight">299</i>&nbsp;
+<b class="nc"><i class="no-highlight">300</i>&nbsp;            currentTeam.setStartSF(playerID);</b>
+<i class="no-highlight">301</i>&nbsp;        }
+<i class="no-highlight">302</i>&nbsp;    }
+<i class="no-highlight">303</i>&nbsp;
+<i class="no-highlight">304</i>&nbsp;    public void updatePF(FantasyTeam currentTeam,
+<i class="no-highlight">305</i>&nbsp;                          HashMap&lt;Integer, String&gt; playerPositionMap,
+<i class="no-highlight">306</i>&nbsp;                          List&lt;Integer&gt; teamPlayerList,
+<i class="no-highlight">307</i>&nbsp;                          Integer playerID) throws resourceException {
+<i class="no-highlight">308</i>&nbsp;
+<i class="no-highlight">309</i>&nbsp;
+<b class="nc"><i class="no-highlight">310</i>&nbsp;        if (playerID != null) {</b>
+<i class="no-highlight">311</i>&nbsp;
+<b class="nc"><i class="no-highlight">312</i>&nbsp;            String position = playerPositionMap.get(playerID);</b>
+<b class="nc"><i class="no-highlight">313</i>&nbsp;            boolean playerOnTeam = teamPlayerList.contains(playerID);</b>
+<b class="nc"><i class="no-highlight">314</i>&nbsp;            boolean correctPosition = forwardPositions.contains(position);</b>
+<i class="no-highlight">315</i>&nbsp;
+<b class="nc"><i class="no-highlight">316</i>&nbsp;            if (!playerOnTeam) {</b>
+<b class="nc"><i class="no-highlight">317</i>&nbsp;                throw new resourceException(&quot;Power forward provided does not belong to this team, check values and try again.&quot;);</b>
+<b class="nc"><i class="no-highlight">318</i>&nbsp;            } else if (!correctPosition) {</b>
+<b class="nc"><i class="no-highlight">319</i>&nbsp;                throw new resourceException(&quot;This player cannot be assigned power forward because of their position. \n&quot;</b>
+<i class="no-highlight">320</i>&nbsp;                        + &quot;Please provide a player with one of the following positions: &quot;
+<i class="no-highlight">321</i>&nbsp;                        + forwardPositions);
+<i class="no-highlight">322</i>&nbsp;            }
+<i class="no-highlight">323</i>&nbsp;
+<b class="nc"><i class="no-highlight">324</i>&nbsp;            currentTeam.setStartPF(playerID);</b>
+<i class="no-highlight">325</i>&nbsp;        }
+<i class="no-highlight">326</i>&nbsp;    }
+<i class="no-highlight">327</i>&nbsp;
+<i class="no-highlight">328</i>&nbsp;    public void updateC(FantasyTeam currentTeam,
+<i class="no-highlight">329</i>&nbsp;                         HashMap&lt;Integer, String&gt; playerPositionMap,
+<i class="no-highlight">330</i>&nbsp;                         List&lt;Integer&gt; teamPlayerList,
+<i class="no-highlight">331</i>&nbsp;                         Integer playerID) throws resourceException {
+<i class="no-highlight">332</i>&nbsp;
+<b class="nc"><i class="no-highlight">333</i>&nbsp;        if (playerID != null) {</b>
+<i class="no-highlight">334</i>&nbsp;
+<b class="nc"><i class="no-highlight">335</i>&nbsp;            String position = playerPositionMap.get(playerID);</b>
+<b class="nc"><i class="no-highlight">336</i>&nbsp;            boolean playerOnTeam = teamPlayerList.contains(playerID);</b>
+<b class="nc"><i class="no-highlight">337</i>&nbsp;            boolean correctPosition = centerPositions.contains(position);</b>
+<i class="no-highlight">338</i>&nbsp;
+<b class="nc"><i class="no-highlight">339</i>&nbsp;            if (!playerOnTeam) {</b>
+<b class="nc"><i class="no-highlight">340</i>&nbsp;                throw new resourceException(&quot;Center provided does not belong to this team, check values and try again.&quot;);</b>
+<b class="nc"><i class="no-highlight">341</i>&nbsp;            } else if (!correctPosition) {</b>
+<b class="nc"><i class="no-highlight">342</i>&nbsp;                throw new resourceException(&quot;This player cannot be assigned center because of their position. \n&quot;</b>
+<i class="no-highlight">343</i>&nbsp;                        + &quot;Please provide a player with one of the following positions: &quot;
+<i class="no-highlight">344</i>&nbsp;                        + centerPositions);
+<i class="no-highlight">345</i>&nbsp;            }
+<i class="no-highlight">346</i>&nbsp;
+<b class="nc"><i class="no-highlight">347</i>&nbsp;            currentTeam.setStartC(playerID);</b>
+<i class="no-highlight">348</i>&nbsp;        }
+<i class="no-highlight">349</i>&nbsp;    }
+<i class="no-highlight">350</i>&nbsp;
+<i class="no-highlight">351</i>&nbsp;    public void updateBench1(FantasyTeam currentTeam,
+<i class="no-highlight">352</i>&nbsp;                              List&lt;Integer&gt; teamPlayerList,
+<i class="no-highlight">353</i>&nbsp;                              Integer playerID) throws resourceException {
+<i class="no-highlight">354</i>&nbsp;
+<b class="nc"><i class="no-highlight">355</i>&nbsp;        if (playerID != null) {</b>
+<i class="no-highlight">356</i>&nbsp;
+<b class="nc"><i class="no-highlight">357</i>&nbsp;            boolean playerOnTeam = teamPlayerList.contains(playerID);</b>
+<b class="nc"><i class="no-highlight">358</i>&nbsp;            if (!playerOnTeam) {</b>
+<b class="nc"><i class="no-highlight">359</i>&nbsp;                throw new resourceException(&quot;Bench player 1 provided does not belong to this team, check values and try again.&quot;);</b>
+<i class="no-highlight">360</i>&nbsp;            }
+<i class="no-highlight">361</i>&nbsp;
+<b class="nc"><i class="no-highlight">362</i>&nbsp;            currentTeam.setBench1(playerID);</b>
+<i class="no-highlight">363</i>&nbsp;        }
+<i class="no-highlight">364</i>&nbsp;    }
+<i class="no-highlight">365</i>&nbsp;
+<i class="no-highlight">366</i>&nbsp;    public void updateBench2(FantasyTeam currentTeam,
+<i class="no-highlight">367</i>&nbsp;                              List&lt;Integer&gt; teamPlayerList,
+<i class="no-highlight">368</i>&nbsp;                              Integer playerID) throws resourceException {
+<i class="no-highlight">369</i>&nbsp;
+<b class="nc"><i class="no-highlight">370</i>&nbsp;        if (playerID != null) {</b>
+<i class="no-highlight">371</i>&nbsp;
+<b class="nc"><i class="no-highlight">372</i>&nbsp;            boolean playerOnTeam = teamPlayerList.contains(playerID);</b>
+<b class="nc"><i class="no-highlight">373</i>&nbsp;            if (!playerOnTeam) {</b>
+<b class="nc"><i class="no-highlight">374</i>&nbsp;                throw new resourceException(&quot;Bench player 2 provided does not belong to this team, check values and try again.&quot;);</b>
+<i class="no-highlight">375</i>&nbsp;            }
+<i class="no-highlight">376</i>&nbsp;
+<b class="nc"><i class="no-highlight">377</i>&nbsp;            currentTeam.setBench2(playerID);</b>
+<i class="no-highlight">378</i>&nbsp;        }
+<i class="no-highlight">379</i>&nbsp;    }
+<i class="no-highlight">380</i>&nbsp;
+<i class="no-highlight">381</i>&nbsp;    public boolean checkDuplicatePlayers(List&lt;Integer&gt; playerList) {
+<i class="no-highlight">382</i>&nbsp;
+<b class="nc"><i class="no-highlight">383</i>&nbsp;        HashMap&lt;Integer, Integer&gt; playerMap = new HashMap&lt;&gt;();</b>
+<b class="nc"><i class="no-highlight">384</i>&nbsp;        for(Integer id: playerList) {</b>
+<i class="no-highlight">385</i>&nbsp;
+<b class="nc"><i class="no-highlight">386</i>&nbsp;            if (playerMap.containsKey(id)) {</b>
+<b class="nc"><i class="no-highlight">387</i>&nbsp;                return true;</b>
+<b class="nc"><i class="no-highlight">388</i>&nbsp;            } else if (id != null) {</b>
+<b class="nc"><i class="no-highlight">389</i>&nbsp;                playerMap.put(id, 1);</b>
+<i class="no-highlight">390</i>&nbsp;            }
+<i class="no-highlight">391</i>&nbsp;
+<b class="nc"><i class="no-highlight">392</i>&nbsp;        }</b>
+<i class="no-highlight">393</i>&nbsp;
+<b class="nc"><i class="no-highlight">394</i>&nbsp;        return false;</b>
+<i class="no-highlight">395</i>&nbsp;    }
+<i class="no-highlight">396</i>&nbsp;
+<i class="no-highlight">397</i>&nbsp;    // takes a FantasyPlayer object and updates its values to match updatedTeam
+<i class="no-highlight">398</i>&nbsp;    //      function will be used to help facilitate PUT operations, updating fields where they are not null
+<i class="no-highlight">399</i>&nbsp;    //      checks:
+<i class="no-highlight">400</i>&nbsp;    //          - ownerID and leagueID not reassigned
+<i class="no-highlight">401</i>&nbsp;    //          - non-null values are updated
+<i class="no-highlight">402</i>&nbsp;    //          - checks to make sure starter/bench players actually belong to current team
+<i class="no-highlight">403</i>&nbsp;    //          - does not update wins, losses, or points because client should not change this,
+<i class="no-highlight">404</i>&nbsp;    //                  and should be done automatically by backend server
+<i class="no-highlight">405</i>&nbsp;    public FantasyTeam updateValues(FantasyTeam dbTeam, FantasyTeam updatedTeam) throws resourceException {
+<i class="no-highlight">406</i>&nbsp;
+<i class="no-highlight">407</i>&nbsp;        // should not be able to change ownerID or leagueID after team has been created
+<i class="no-highlight">408</i>&nbsp;        //      if ownerID exists, raise exception
+<b class="nc"><i class="no-highlight">409</i>&nbsp;        Integer ownerID = updatedTeam.getOwnerID();</b>
+<b class="nc"><i class="no-highlight">410</i>&nbsp;        Integer leagueID = updatedTeam.getLeagueID();</b>
+<b class="nc"><i class="no-highlight">411</i>&nbsp;        checkOwnerAndLeagueNotUpdated(ownerID, leagueID);</b>
+<i class="no-highlight">412</i>&nbsp;
+<i class="no-highlight">413</i>&nbsp;        // find all players that are drafted to this team
+<b class="nc"><i class="no-highlight">414</i>&nbsp;        Integer teamID = updatedTeam.getTeamID();</b>
+<b class="nc"><i class="no-highlight">415</i>&nbsp;        List&lt;Integer&gt; teamPlayerIDs = getPlayersOnTeam(teamID);</b>
+<b class="nc"><i class="no-highlight">416</i>&nbsp;        HashMap&lt;Integer, String&gt; playerPositionMap = getPlayerPositionMap(teamID);</b>
+<i class="no-highlight">417</i>&nbsp;
+<i class="no-highlight">418</i>&nbsp;        // should not update teamID, skip it
+<i class="no-highlight">419</i>&nbsp;
+<i class="no-highlight">420</i>&nbsp;        // if team name is not null, update it
+<b class="nc"><i class="no-highlight">421</i>&nbsp;        String teamName = updatedTeam.getTeamName();</b>
+<b class="nc"><i class="no-highlight">422</i>&nbsp;        if (teamName != null) {</b>
+<b class="nc"><i class="no-highlight">423</i>&nbsp;            dbTeam.setTeamName(teamName);</b>
+<i class="no-highlight">424</i>&nbsp;        }
+<i class="no-highlight">425</i>&nbsp;
+<i class="no-highlight">426</i>&nbsp;        // get values for players passed in
+<b class="nc"><i class="no-highlight">427</i>&nbsp;        Integer start_pg = updatedTeam.getStartPG();</b>
+<b class="nc"><i class="no-highlight">428</i>&nbsp;        Integer start_sg = updatedTeam.getStartSG();</b>
+<b class="nc"><i class="no-highlight">429</i>&nbsp;        Integer start_sf = updatedTeam.getStartSF();</b>
+<b class="nc"><i class="no-highlight">430</i>&nbsp;        Integer start_pf = updatedTeam.getStartPF();</b>
+<b class="nc"><i class="no-highlight">431</i>&nbsp;        Integer start_c = updatedTeam.getStartC();</b>
+<b class="nc"><i class="no-highlight">432</i>&nbsp;        Integer bench_1 = updatedTeam.getBench1();</b>
+<b class="nc"><i class="no-highlight">433</i>&nbsp;        Integer bench_2 = updatedTeam.getBench2();</b>
+<i class="no-highlight">434</i>&nbsp;
+<i class="no-highlight">435</i>&nbsp;        // for each player, only assign to current team
+<i class="no-highlight">436</i>&nbsp;        //          if position is correct and player is on correct team
+<b class="nc"><i class="no-highlight">437</i>&nbsp;        updatePG(dbTeam, playerPositionMap, teamPlayerIDs, start_pg);</b>
+<b class="nc"><i class="no-highlight">438</i>&nbsp;        updateSG(dbTeam, playerPositionMap, teamPlayerIDs, start_sg);</b>
+<b class="nc"><i class="no-highlight">439</i>&nbsp;        updateSF(dbTeam, playerPositionMap, teamPlayerIDs, start_sf);</b>
+<b class="nc"><i class="no-highlight">440</i>&nbsp;        updatePF(dbTeam, playerPositionMap, teamPlayerIDs, start_pf);</b>
+<b class="nc"><i class="no-highlight">441</i>&nbsp;        updateC(dbTeam, playerPositionMap, teamPlayerIDs, start_c);</b>
+<b class="nc"><i class="no-highlight">442</i>&nbsp;        updateBench1(dbTeam, teamPlayerIDs, bench_1);</b>
+<b class="nc"><i class="no-highlight">443</i>&nbsp;        updateBench2(dbTeam, teamPlayerIDs, bench_2);</b>
+<i class="no-highlight">444</i>&nbsp;
+<i class="no-highlight">445</i>&nbsp;        // check if there are any duplicate players in the starting lineup
+<i class="no-highlight">446</i>&nbsp;        // create a set to make sure there are no duplicate players
+<i class="no-highlight">447</i>&nbsp;
+<b class="nc"><i class="no-highlight">448</i>&nbsp;        List&lt;Integer&gt; playerList = Arrays.asList(dbTeam.getStartPG(),</b>
+<b class="nc"><i class="no-highlight">449</i>&nbsp;                dbTeam.getStartSG(),</b>
+<b class="nc"><i class="no-highlight">450</i>&nbsp;                dbTeam.getStartSF(),</b>
+<b class="nc"><i class="no-highlight">451</i>&nbsp;                dbTeam.getStartPF(),</b>
+<b class="nc"><i class="no-highlight">452</i>&nbsp;                dbTeam.getStartC(),</b>
+<b class="nc"><i class="no-highlight">453</i>&nbsp;                dbTeam.getBench1(),</b>
+<b class="nc"><i class="no-highlight">454</i>&nbsp;                dbTeam.getBench2());</b>
+<b class="nc"><i class="no-highlight">455</i>&nbsp;        boolean hasDuplicatePlayers = checkDuplicatePlayers(playerList);</b>
+<i class="no-highlight">456</i>&nbsp;
+<b class="nc"><i class="no-highlight">457</i>&nbsp;        if (hasDuplicatePlayers) {</b>
+<b class="nc"><i class="no-highlight">458</i>&nbsp;            throw new resourceException(&quot;Making this assignment will create duplicate players in the lineup, check values and try again.&quot;);</b>
+<i class="no-highlight">459</i>&nbsp;        }
+<i class="no-highlight">460</i>&nbsp;
+<b class="nc"><i class="no-highlight">461</i>&nbsp;        return dbTeam;</b>
+<i class="no-highlight">462</i>&nbsp;    }
+<i class="no-highlight">463</i>&nbsp;}
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-12-11 15:53</div>
+</div>
+</body>
+</html>
