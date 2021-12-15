@@ -82,11 +82,14 @@ public class FantasyTeamService {
     public List<FantasyTeam> postTeam(FantasyTeam team) throws ResourceException {
         Integer leagueID = team.getLeagueID();
         Optional<FantasyBasketball.models.FantasyLeague> fantasyLeagueOptional = leagueRepo.findById(leagueID);
-        FantasyBasketball.models.FantasyLeague league = fantasyLeagueOptional.get();
-
-        if (checkLeagueFull(league)) {
-            throw new ResourceException("Cannot create another team. This league is already full.");
-        };
+        if (fantasyLeagueOptional.isPresent()) {
+            FantasyBasketball.models.FantasyLeague league = fantasyLeagueOptional.get();
+            if (checkLeagueFull(league)) {
+                throw new ResourceException("Cannot create another team. This league is already full.");
+            }
+        } else {
+            throw new ResourceException("This league does not exist");
+        }
 
         team.setTeamID(0);
 
@@ -114,6 +117,9 @@ public class FantasyTeamService {
             // pull team from DB
             List<FantasyTeam> dblist = teamRepo.findByTemplate(team.getTeamID(), team.getClientID(),
                     null, null, null);
+            if (dblist.size() == 0) {
+                throw new ResourceNotFoundException("You do not have access to this team and cannot make changes.");
+            }
 
             FantasyTeam updatedTeam = updateValues(dblist.get(0), team);
 
@@ -165,6 +171,13 @@ public class FantasyTeamService {
         if (league) {
             throw new ResourceException("Please provide league_id corresponding to team.");
         }
+
+        // set numerical values to 0, to make sure values are not tampered with
+        team.setTeamWins(0);
+        team.setTeamLosses(0);
+        team.setPointsScored(0);
+        team.setPointsAgainst(0);
+
     }
 
     // Checking correct teamID and Length before putting
@@ -234,8 +247,6 @@ public class FantasyTeamService {
             }
 
             currentTeam.setStartPG(playerID);
-        } else {
-            throw new ResourceException("playerID is null.");
         }
     }
 
@@ -260,8 +271,6 @@ public class FantasyTeamService {
             }
 
             currentTeam.setStartSG(playerID);
-        } else {
-            throw new ResourceException("playerID is null.");
         }
     }
 
@@ -285,8 +294,6 @@ public class FantasyTeamService {
             }
 
             currentTeam.setStartSF(playerID);
-        } else {
-            throw new ResourceException("playerID is null.");
         }
 
     }
@@ -312,8 +319,6 @@ public class FantasyTeamService {
             }
 
             currentTeam.setStartPF(playerID);
-        } else {
-            throw new ResourceException("playerID is null.");
         }
     }
 
@@ -337,8 +342,6 @@ public class FantasyTeamService {
             }
 
             currentTeam.setStartC(playerID);
-        } else {
-            throw new ResourceException("playerID is null.");
         }
     }
 
@@ -354,8 +357,6 @@ public class FantasyTeamService {
             }
 
             currentTeam.setBench1(playerID);
-        } else {
-            throw new ResourceException("playerID is null.");
         }
     }
 
@@ -371,8 +372,6 @@ public class FantasyTeamService {
             }
 
             currentTeam.setBench2(playerID);
-        } else {
-            throw new ResourceException("playerID is null.");
         }
     }
 
