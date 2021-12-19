@@ -129,7 +129,6 @@ class TeamInfo extends Component {
                 this.setState({
                     players: data
                 })
-                console.log(data)
                 console.log("Success fetching players data for team_id " + this.state.team_id)
             })
             .catch(error => {
@@ -170,17 +169,17 @@ class TeamInfo extends Component {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
-                'token': this.state.googleId
+                'token': CLIENT_GOOGLE_ID
             },
             body: JSON.stringify({
                 team_id: this.state.team_id,
-                start_pg_id: this.state.pg,
-                start_sg_id: this.state.sg,
-                start_sf_id: this.state.sf,
-                start_pf_id: this.state.pf,
-                start_c_id: this.state.c,
-                bench_1_id: this.state.b1,
-                bench_2_id: this.state.b2
+                start_pg_id: this.state.pg instanceof Object ? this.state.pg.player_id : this.state.pg,
+                start_sg_id: this.state.sg instanceof Object ? this.state.sg.player_id : this.state.sg,
+                start_sf_id: this.state.sf instanceof Object ? this.state.sf.player_id : this.state.sf,
+                start_pf_id: this.state.pf instanceof Object ? this.state.pf.player_id : this.state.pf,
+                start_c_id: this.state.c instanceof Object ? this.state.c.player_id : this.state.c,
+                bench_1_id: this.state.b1 instanceof Object ? this.state.b1.player_id : this.state.b1,
+                bench_2_id: this.state.b2 instanceof Object ? this.state.b2.player_id : this.state.b2
             })
         };
         fetch('/fantasyTeams', requestOptions)
@@ -192,7 +191,7 @@ class TeamInfo extends Component {
                     // get error message from body or default to response status
                     const error = (data && data.message) || response.status;
                     console.log("Error Updating Team: " + error)
-                    window.alert("Error updating team, verify your choices and try again")
+                    window.alert("Error updating team, verify that all players are set on their position")
                     this.setState({
                         requestFailed: true,
                         isLoading: false
@@ -207,6 +206,10 @@ class TeamInfo extends Component {
                     isLoading: false,
                 })
                 window.location.reload()
+            })
+            .catch(error => {
+                console.log("Error Updating Team: " + error)
+                window.alert("Error updating team, verify your choices and try again")
             })
         this.setState({
             isLoading: false

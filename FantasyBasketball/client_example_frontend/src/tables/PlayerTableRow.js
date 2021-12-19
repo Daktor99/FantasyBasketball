@@ -27,8 +27,7 @@ class PlayerTableRow extends Component {
                 this.setState({
                     player_data: data[0]
                 })
-                console.log(data)
-                console.log("Success fetching player data for player " + player_id)
+                console.log("Success fetching player data for player_id " + player_id)
                 // Get Players
 
             })
